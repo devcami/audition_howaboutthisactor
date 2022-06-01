@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-        <img src="/semi/image/photographer-header1920.jpg" >
+        <img src="<%= request.getContextPath() %>/images/photographer-header1920.jpg" >
         
 
     <div class="main" >
