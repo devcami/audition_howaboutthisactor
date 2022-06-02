@@ -1,7 +1,6 @@
 .nav{
   font-family: 'Hahmlet', serif;
   height: 70px;
-  border-bottom: 1px solid black;
   display: flex;
   align-items: center;
 }
@@ -9,6 +8,7 @@
 .nav-right-items {
   display: flex;
   margin-left:auto;
+  margin-right: 30px;
 }
 
 .nav-item a{
@@ -43,11 +43,19 @@
   font-size: 15px;
   font-weight: 300;
 }
-
+.carousel-inner{
+  overflow: hidden;
+  height: 300px;
+}
+.carousel-item img{
+	width: 100%;
+	opacity: 0.8;
+}
 .main {
   width: 1000px;
   margin: 0 auto;
   margin-top: 60px;
+  margin-bottom: 160px;
 }
 
 .list{
@@ -99,4 +107,8 @@
   background-color: #8ac6d1;
   /* bottom: 20px;
   right: 20px; */
+}
+footer{
+	height: 200px;
+	background-color:  #ffb6b9;
 }
