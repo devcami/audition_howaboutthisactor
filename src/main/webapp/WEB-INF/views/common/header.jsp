@@ -21,7 +21,7 @@
         </div>
         <div class="nav-right-items">
             <div class="nav-item"><a href="actor.html">배우찾기</a></div>
-            <div class="nav-item"><a href="choice.html">공고찾기</a></div>
+            <div class="nav-item"><a href="<%= request.getContextPath() %>/ann/annList">공고찾기</a></div>
             <div class="nav-item"><a href="actorboard.html">게시판</a></div>
             <div class="nav-item"><a href="mypage.html">마이페이지</a></div>
             <div class="nav-item"><a href="actorjoin.html">로그인&회원가입</a></div>
