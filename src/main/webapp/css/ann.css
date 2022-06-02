@@ -1,0 +1,46 @@
+@charset "UTF-8";
+#ann-list-container{
+  font-family: 'Hahmlet', serif;
+}
+.top-logo{
+  overflow: hidden;
+  height: 180px;
+}
+.top-logo img{
+  width: 100%;
+  position:relative;
+  bottom: 170px;
+  opacity: 0.7;
+}
+.container{
+  padding: 60px;
+}
+.form-select{
+  width: 100px !important;
+  margin-bottom: 20px;
+}
+.inner .form-select{
+  display: inline;
+}
+.inner .btn{
+  float: right;
+  margin-right: 20px;
+  background-color: #bbded6;
+  transition: .2s;
+  border: none;
+}
+.inner .btn:hover{
+  background-color: #fae3d9;
+  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+}
+.row{
+  width: 100%;
+}
+#ann-card:hover{
+  cursor: pointer;
+  background-color: #fae3d942;
+}
+.pagebar{
+  margin: 10px;
+  font-family: '고딕체';
+}
