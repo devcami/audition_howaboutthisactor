@@ -2,10 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-<img src="<%= request.getContextPath() %>/images/photographer-header1920.jpg" >
+    <div class="main-img">
+	    <img src="<%= request.getContextPath() %>/images/photographer-header1920.jpg" style="opacity : 0.7" >
+    </div>
         
 
-    <div class="main">
+    <div class="main" >
         <div class="title">
             배우어때
         </div>
@@ -33,7 +35,7 @@
                 <div class="list-item-detail">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 </div>
-                <button class="list-item-button">
+                <button class="list-item-button" onclick="location.href='<%= request.getContextPath() %>/ann/annList'">
                     click 
                 </button>
             </div>
@@ -49,8 +51,11 @@
                 </button>
             </div>
         </div>
-        <div class="fourth position-fixed"></div>
-   
+        <div class="fourth position-fixed">
+        </div>
+<script>
+
+</script> 
    <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 
 
