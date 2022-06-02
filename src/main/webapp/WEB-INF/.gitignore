@@ -18,6 +18,7 @@ local.properties
 .project
 datasource.properties
 
+
 # External tool builders
 .externalToolBuilders/
 
