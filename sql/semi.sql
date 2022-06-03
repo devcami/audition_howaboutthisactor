@@ -189,6 +189,10 @@ CREATE TABLE announcement (
 );
 create sequence seq_ann_no;
 
+--20220603 수정
+alter table announcement drop constraint fk_ann_work_no;
+commit;
+
 -------------------------------------------
 -- cast  배역
 -------------------------------------------
@@ -252,5 +256,84 @@ CREATE TABLE report (
 create sequence seq_report_no;
 
 COMMENT ON COLUMN report.report_status IS '처리상태 U undo I ing E end';
+
+
+
+
+------------------------------------------------
+-- member sample insert
+-- id pwd name email memberRole phone gender birthday enroll_date
+------------------------------------------------
+insert into member values ('director', '1234', '디렉터', 'director@naver.com', 'D', '01015971597', 'M', to_date('19900909','yyyymmdd'), default);
+
+
+------------------------------------------------
+-- production sample insert
+-- 
+------------------------------------------------
+insert into production values ('director', 'testProduction', '디렉터', '01015971597', 'director@naver.com');
+
+
+------------------------------------------------
+-- ann 찾기 sample insert
+-- ann: no, id, work_no, area(null), end_date, reg_date default, pay(n), gender(n), age(n), height(n), body(n)
+------------------------------------------------
+insert into semi.announcement values (
+    seq_ann_no.nextval, 'director', seq_work_no.nextval, '서울시 강남구',
+    to_date('20220606','yyyymmdd'), default, 1000000, 'F', 25, 165, '마름'
+);
+
+------------------------------------------------
+-- work sample insert
+------------------------------------------------
+insert into work values (
+    seq_work_no.nextval, '영화', '테스트영화제목', 'testProduction', '디렉터', '뭐 어떤 말을 써야되나'
+);
+
+
+------------------------------------------------
+-- work_attachment sample insert
+------------------------------------------------
+insert into work_attachment values(
+    SEQ_WORK_ATTACHMENT_NO.nextval, 3, 'test.jpg', '20220603_12345.jpg',default
+);
+
+
+
+
+
+
+-------------------------------------
+--테이블 정보보기
+-------------------------------------
+select * from member;
+select * from board;
+select * from board_attachment;
+select * from board_comment;
+select * from actor_info;
+select * from portfolio;
+select * from production;
+select * from work;
+select * from work_attachment;
+select * from announcement;
+select * from cast;
+select * from actor_apply;
+select * from wishlist_actor;
+select * from wishlist_ann;
+select * from report;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

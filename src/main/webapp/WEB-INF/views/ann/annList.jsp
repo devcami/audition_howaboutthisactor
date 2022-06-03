@@ -17,7 +17,7 @@
 		<div class="row row-cols-1 row-cols-md-3 g-4">
 		<% for(int i = 0; i < 12; i++){ %>
 		  <div class="col">
-		    <div class="card h-100" id="ann-card">
+		    <div class="card h-100 ann-card">
 				<div class="card-body">
 					<h5 class="card-title">공고 제목</h5>
 					<p class="card-text">공고 작성자</p>
@@ -30,28 +30,18 @@
 		 <% } %>
 		</div>
 	</div>
-	<nav class="pagebar" aria-label="Page navigation example">
-	  <ul class="pagination justify-content-center">
-	    <li class="page-item disabled">
-	    	<a class="page-link" href="#" aria-label="Previous">
-	        	<span aria-hidden="true">&laquo;</span>
-	     	</a>
-	    </li>
-	    <li class="page-item"><a class="page-link" href="#">1</a></li>
-	    <li class="page-item"><a class="page-link" href="#">2</a></li>
-	    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	    <li class="page-item">
-    		<a class="page-link" href="#" aria-label="Next">
-    	    	<span aria-hidden="true">&raquo;</span>
-      		</a>
-	    </li>
-	  </ul>
-	</nav>
+	<div class="btn-more d-grid gap-2 col-6 mx-auto">
+		<button type="button" class="btn btn-secondary btn-lg" id="btn-more">더보기</button>
+	</div>
+	
 </section>
 <script>
-document.querySelector("#ann-card").onclick = (e) => {
-	
-};
+<%-- 공고 클릭 시 공고 상세보기 --%>
+const annList = document.querySelectorAll(".ann-card").forEach((ann) => {
+	ann.onclick = (e) => {
+		location.href="<%= request.getContextPath() %>/ann/annView?no=1"
+	};
+});
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
