@@ -36,9 +36,16 @@
 .row{
   width: 100%;
 }
+#ann-card .card-footer{
+  background-color: #bbded6;
+}
+#ann-card .text-muted{
+  color: white !important;
+}
 #ann-card:hover{
   cursor: pointer;
-  background-color: #fae3d942;
+  background-color: #bbded645;
+  box-shadow: 0px 0px 8px rgba(172, 172, 172, 0.5);
 }
 .pagebar{
   margin: 10px;
