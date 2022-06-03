@@ -9,7 +9,7 @@
 .top-logo img{
   width: 100%;
   position:relative;
-  bottom: 170px;
+  bottom: 200px;
   opacity: 0.7;
 }
 .container{
@@ -31,16 +31,35 @@
 }
 .inner .btn:hover{
   background-color: #fae3d9;
-  box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
 }
 .row{
   width: 100%;
 }
-#ann-card:hover{
+.ann-card .card-footer{
+  background-color: #bbded6;
+}
+.ann-card .text-muted{
+  color: white !important;
+}
+.ann-card:hover{
   cursor: pointer;
-  background-color: #fae3d942;
+  background-color: #bbded645;
+  box-shadow: 0px 0px 8px rgba(172, 172, 172, 0.5);
 }
-.pagebar{
-  margin: 10px;
-  font-family: '고딕체';
+.btn-more{
+	text-align: center;
+	margin: 20px;
 }
+.btn-more .btn{
+  color: #bbded6;
+  font-size: 25px;
+  background-color: #ffffff;
+  letter-spacing:10px;
+	border: none;
+}
+.btn-more .btn:hover{
+  background-color: #fae3d963;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+}
+
