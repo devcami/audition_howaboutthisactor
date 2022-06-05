@@ -192,7 +192,8 @@ create sequence seq_ann_no;
 --20220603 수정
 alter table announcement drop constraint fk_ann_work_no;
 commit;
-
+alter table announcement modify ann_gender char constraint ck_ann_gender check(ann_gender in('M', 'F'));
+alter table announcement add ann_title varchar2(50) not null;
 -------------------------------------------
 -- cast  배역
 -------------------------------------------
@@ -278,9 +279,17 @@ insert into production values ('director', 'testProduction', '디렉터', '01015
 -- ann 찾기 sample insert
 -- ann: no, id, work_no, area(null), end_date, reg_date default, pay(n), gender(n), age(n), height(n), body(n)
 ------------------------------------------------
-insert into semi.announcement values (
+insert into announcement values (
     seq_ann_no.nextval, 'director', seq_work_no.nextval, '서울시 강남구',
-    to_date('20220606','yyyymmdd'), default, 1000000, 'F', 25, 165, '마름'
+    to_date('20220606','yyyymmdd'), default, 1000000, 'F', 25, 165, '마름', '테스트제목'
+);
+insert into announcement values (
+    seq_ann_no.nextval, 'director', seq_work_no.nextval, '서울시 서초구',
+    to_date('20220620','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목2'
+);
+insert into announcement values (
+    seq_ann_no.nextval, 'director', 21, '서울시 서초구',
+    to_date('20220604','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목2'
 );
 
 ------------------------------------------------
@@ -289,15 +298,19 @@ insert into semi.announcement values (
 insert into work values (
     seq_work_no.nextval, '영화', '테스트영화제목', 'testProduction', '디렉터', '뭐 어떤 말을 써야되나'
 );
+delete from work where work_no = 3;
+insert into work values (
+    4, '영화', '테스트영화제목2', 'testProduction', '디렉터', '뭐 어떤 말을 써야되나2'
+);
 
 
 ------------------------------------------------
 -- work_attachment sample insert
 ------------------------------------------------
 insert into work_attachment values(
-    SEQ_WORK_ATTACHMENT_NO.nextval, 3, 'test.jpg', '20220603_12345.jpg',default
+    SEQ_WORK_ATTACHMENT_NO.nextval, 4, 'test2.jpg', '20220603_12345.jpg',default
 );
-
+commit;
 
 
 
@@ -321,7 +334,6 @@ select * from actor_apply;
 select * from wishlist_actor;
 select * from wishlist_ann;
 select * from report;
-
 
 
 
