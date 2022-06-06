@@ -40,15 +40,6 @@
 	
 </section>
 <script>
-<%-- 최신순, 마감순 정렬 --%>
-
-<%-- 공고 클릭 시 공고 상세보기 --%>
-const annList = document.querySelectorAll(".ann-card").forEach((ann) => {
-	ann.onclick = (e) => {
-		location.href="<%= request.getContextPath() %>/ann/annView?no=1"
-	};
-});
-
 document.querySelector("#btn-more").onclick = () => {
 	const cPageVal = Number(document.querySelector("#cPage").innerText) + 1;
 	getRegDatePage(cPageVal);
@@ -64,13 +55,14 @@ const getRegDatePage = (cPage) => {
 			
 			const container = document.querySelector("#ann-container");
 			resp.forEach((ann) => {
-				const {no, memberId, annTitle, annRegDate, annEndDate} = ann;
+				const {annNo, memberId, annTitle, annRegDate, annEndDate} = ann;
 				const div = `
 				  <div class="col">
 				    <div class="card h-100 ann-card">
 						<div class="card-body">
 							<h5 class="card-title">\${annTitle}</h5>
 							<p class="card-text">\${memberId}</p>
+							<input type="hidden" name="annNo" id="annNo" value=\${annNo} />
 						</div>
 						<div class="card-footer">
 							<small class="text-muted">\${annRegDate}</small>~
@@ -84,15 +76,25 @@ const getRegDatePage = (cPage) => {
 		},
 		error : console.log,
 		complete(){
-			
+			addEvent();
 			if(cPage === <%= totalPage %>){
-				const btn = document.querySelector("#btn-more")
+				const btn = document.querySelector("#btn-more");
 				btn.disabled = "disabled";
 				btn.style.cursor = "not-allowed";
 			}
 		}
 	});
 };
+
+const addEvent = () => {
+	document.querySelectorAll(".ann-card").forEach((ann) => {
+		console.log(ann);
+		ann.addEventListener('click', (e) => {
+			console.log(e.target.lastElementChild.value);
+			location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${e.target.lastElementChild.value}`;
+		});
+	});
+}
 
 window.addEventListener('load', () => {
 	// 페이지 로딩 시 첫 페이지 요청
@@ -141,9 +143,9 @@ const getEndDatePage = (cPage) => {
 		},
 		error : console.log,
 		complete(){
-			
+			addEvent();
 			if(cPage === <%= totalPage %>){
-				const btn = document.querySelector("#btn-more")
+				const btn = document.querySelector("#btn-more");
 				btn.disabled = "disabled";
 				btn.style.cursor = "not-allowed";
 			}
