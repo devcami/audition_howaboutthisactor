@@ -19,8 +19,8 @@ import ann.model.service.AnnService;
 /**
  * Servlet implementation class AnnMorePageServlet
  */
-@WebServlet("/ann/morePage")
-public class AnnMorePageServlet extends HttpServlet {
+@WebServlet("/ann/regDatePage")
+public class AnnRegDateSortPageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AnnService annService = new AnnService();
 
@@ -38,7 +38,7 @@ public class AnnMorePageServlet extends HttpServlet {
 			param.put("end", cPage * numPerPage);
 			
 			// 2. 업무로직
-			List<Ann> list = annService .findMorePage(param);
+			List<Ann> list = annService.regDatePage(param);
 			System.out.println("list = " + list);
 			
 			// 3. 응답처리 json

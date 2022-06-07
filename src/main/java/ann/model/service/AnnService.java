@@ -1,6 +1,8 @@
 package ann.model.service;
 
-import static common.JdbcTemplate.*;
+import static common.JdbcTemplate.close;
+import static common.JdbcTemplate.getConnection;
+
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +21,23 @@ public class AnnService {
 		return totalContent;
 	}
 
-	public List<Ann> findMorePage(Map<String, Integer> param) {
+	public List<Ann> regDatePage(Map<String, Integer> param) {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.findMorePage(conn, param);
+		List<Ann> list = annDao.regDatePage(conn, param);
+		close(conn);
+		return list;
+	}
+
+	public List<Ann> findByTitle(Map<String, String> param) {
+		Connection conn = getConnection();
+		List<Ann> list = annDao.findByTitle(conn, param);
+		close(conn);
+		return list;
+	}
+
+	public List<Ann> endDatePage(Map<String, Integer> param) {
+		Connection conn = getConnection();
+		List<Ann> list = annDao.endDatePage(conn, param);
 		close(conn);
 		return list;
 	}
