@@ -1,7 +1,5 @@
 package ann.model.dao;
 
-import static common.JdbcTemplate.close;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import static common.JdbcTemplate.*;
 
 import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
@@ -49,10 +48,10 @@ public class AnnDao {
 		return totalContent;
 	}
 
-	public List<Ann> findMorePage(Connection conn, Map<String, Integer> param) {
+	public List<Ann> regDatePage(Connection conn, Map<String, Integer> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("findMorePage");
+		String sql = prop.getProperty("regDatePage");
 		List<Ann> list = new ArrayList<>();
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -60,7 +59,7 @@ public class AnnDao {
 			pstmt.setInt(2, param.get("end"));
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				Ann ann = handlePhotoResultSet(rset);
+				Ann ann = handleAnnResultSet(rset);
 				list.add(ann);
 			}
 		} catch (Exception e) {
@@ -71,8 +70,53 @@ public class AnnDao {
 		}
 		return list;
 	}
+	
+	public List<Ann> endDatePage(Connection conn, Map<String, Integer> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("endDatePage");
+		List<Ann> list = new ArrayList<>();
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, param.get("start"));
+			pstmt.setInt(2, param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				list.add(ann);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 더보기 페이지 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public List<Ann> findByTitle(Connection conn, Map<String, String> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Ann> list = new ArrayList<>();
+		String sql = prop.getProperty("findByTitle");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, param.get("searchKeyword"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				list.add(ann);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고 검색 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 
-	private Ann handlePhotoResultSet(ResultSet rset) throws SQLException {
+	private Ann handleAnnResultSet(ResultSet rset) throws SQLException {
 		Ann ann = new Ann();
 		ann.setAnnNo(rset.getInt("ann_no"));
 		ann.setMemberId(rset.getString("member_id"));
