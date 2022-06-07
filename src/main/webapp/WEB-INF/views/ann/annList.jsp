@@ -21,27 +21,8 @@
 			<input type="button" value="공고등록" class="btn btn-secondary btn-lg" onclick="location.href='<%= request.getContextPath() %>/ann/annEnroll';" />
 		</div>
 		<div class="row row-cols-1 row-cols-md-3 g-4" id="ann-container">
-
-		</div>
-	</div>
-	<div class="btn-more d-grid gap-2 col-6 mx-auto">
-		<button type="button" class="btn btn-secondary btn-lg" id="btn-more">더보기</button>
-	</div>
-	
-</section>
-<script>
-document.querySelector("#btn-more").onclick = () => {
-	
-};
-window.addEventListener('load', ()=>{
-	morePage(1);
-});
-const morePage = (cPage) => {
-	const container = document.querySelector("#ann-container");
-	<%
-	if(list != null && !list.isEmpty()){
+		<% if(list != null && !list.isEmpty()){
 		for(Ann ann : list){ %>
-			let div = `
 			 <div class="col">
 			    <div class="card h-100 ann-card">
 					<div class="card-body">
@@ -54,13 +35,23 @@ const morePage = (cPage) => {
 						<small class="text-muted"><%= ann.getAnnEndDate() %></small>
 					</div>
 				</div>
-			  </div>`;
-			  container.insertAdjacentHTML('beforeend', div);
+			  </div>
 	<% 	} %>
 	<% } else { %>
 			<div><p>조회된 공고가 없습니다.</p></div>
 	<% } %>
-};
+		</div>
+	</div>
+<!-- 	<div class="btn-more d-grid gap-2 col-6 mx-auto">
+		<button type="button" class="btn btn-secondary btn-lg" id="btn-more">더보기</button>
+	</div> -->
+	<div id="pagebar">
+		<%= pagebar %>
+	</div>
+	
+</section>
+<script>
+
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

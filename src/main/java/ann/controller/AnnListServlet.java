@@ -46,11 +46,9 @@ public class AnnListServlet extends HttpServlet {
 			param.put("end", end);
 			
 			List<Ann> list = annService.findAll(param);
-			System.out.println("list = " + list);
 			
 			String url = request.getRequestURI(); // /mvc/admin/memberList
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-			System.out.println("pagebar = " + pagebar);
 			
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);

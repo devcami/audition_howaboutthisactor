@@ -47,6 +47,24 @@
   background-color: #bbded645;
   box-shadow: 0px 0px 8px rgba(172, 172, 172, 0.5);
 }
+.ann-card .card-footer {
+  color: #ffffff;
+}
+#pagebar{
+  text-align: center;
+  font-size: 25px;
+  color: #639488;
+}
+#pagebar a{
+  padding: 10px;
+  text-decoration: none;
+  color: #bbded6;
+  transition:all 0.2s ease-in-out;
+}
+#pagebar a:hover{
+  color: #639488;
+}
+
 .btn-more{
 	text-align: center;
 	margin: 20px;
