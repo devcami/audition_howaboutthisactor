@@ -9,7 +9,7 @@
 .top-logo img{
   width: 100%;
   position:relative;
-  bottom: 200px;
+  bottom: 300px;
   opacity: 0.7;
 }
 .container{
@@ -53,6 +53,7 @@
 #pagebar{
   text-align: center;
   font-size: 25px;
+  margin: 20px;
   color: #639488;
 }
 #pagebar a{
@@ -60,6 +61,10 @@
   text-decoration: none;
   color: #bbded6;
   transition:all 0.2s ease-in-out;
+}
+#pagebar span{
+  padding: 10px;
+  color: #639488;
 }
 #pagebar a:hover{
   color: #639488;
