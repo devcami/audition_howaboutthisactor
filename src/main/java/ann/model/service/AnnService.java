@@ -21,23 +21,16 @@ public class AnnService {
 		return totalContent;
 	}
 
-	public List<Ann> regDatePage(Map<String, Integer> param) {
+	public List<Ann> findAll(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.regDatePage(conn, param);
+		List<Ann> list = annDao.findAll(conn, param);
 		close(conn);
 		return list;
 	}
 
-	public List<Ann> findByTitle(Map<String, String> param) {
+	public List<Ann> annEndDateSort(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.findByTitle(conn, param);
-		close(conn);
-		return list;
-	}
-
-	public List<Ann> endDatePage(Map<String, Integer> param) {
-		Connection conn = getConnection();
-		List<Ann> list = annDao.endDatePage(conn, param);
+		List<Ann> list = annDao.annEndDateSort(conn, param);
 		close(conn);
 		return list;
 	}

@@ -16,10 +16,10 @@ import ann.model.service.AnnService;
 import common.HelloMvcUtils;
 
 /**
- * Servlet implementation class AnnListServlet
+ * Servlet implementation class AnnEndDateServlet
  */
-@WebServlet("/ann/annList")
-public class AnnListServlet extends HttpServlet {
+@WebServlet("/ann/annEndDateList")
+public class AnnEndDateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AnnService annService = new AnnService();
 
@@ -27,10 +27,11 @@ public class AnnListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		try {
 			int numPerPage = AnnService.NUM_PER_PAGE; //12
 			int totalContent = annService.getTotalContent();
-			
+
 			int cPage = 1; 
 			
 			try {
@@ -47,16 +48,12 @@ public class AnnListServlet extends HttpServlet {
 			
 			String sortType = request.getParameter("sortType");
 			List<Ann> list = null;
-			if("end_date".equals(sortType)) {
+			if(sortType.equals("end_date")) {
 				list = annService.annEndDateSort(param);
-			} else {
-				list = annService.findAll(param);
 			}
-			
 			
 			String url = request.getRequestURI(); // /mvc/admin/memberList
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-			System.out.println(pagebar);
 			
 			request.setAttribute("sortType", sortType);
 			request.setAttribute("list", list);
@@ -67,6 +64,7 @@ public class AnnListServlet extends HttpServlet {
 			e.printStackTrace();
 			throw e;
 		}
+
 	}
 
 }

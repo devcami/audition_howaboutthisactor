@@ -48,74 +48,6 @@ public class AnnDao {
 		return totalContent;
 	}
 
-	public List<Ann> regDatePage(Connection conn, Map<String, Integer> param) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("regDatePage");
-		List<Ann> list = new ArrayList<>();
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, param.get("start"));
-			pstmt.setInt(2, param.get("end"));
-			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				Ann ann = handleAnnResultSet(rset);
-				list.add(ann);
-			}
-		} catch (Exception e) {
-			throw new AnnException("> 더보기 페이지 조회 오류");
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
-	
-	public List<Ann> endDatePage(Connection conn, Map<String, Integer> param) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		String sql = prop.getProperty("endDatePage");
-		List<Ann> list = new ArrayList<>();
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, param.get("start"));
-			pstmt.setInt(2, param.get("end"));
-			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				Ann ann = handleAnnResultSet(rset);
-				list.add(ann);
-			}
-		} catch (Exception e) {
-			throw new AnnException("> 더보기 페이지 조회 오류");
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
-	
-	public List<Ann> findByTitle(Connection conn, Map<String, String> param) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		List<Ann> list = new ArrayList<>();
-		String sql = prop.getProperty("findByTitle");
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, param.get("searchKeyword"));
-			rset = pstmt.executeQuery();
-			while(rset.next()) {
-				Ann ann = handleAnnResultSet(rset);
-				list.add(ann);
-			}
-		} catch (Exception e) {
-			throw new AnnException("> 공고 검색 오류");
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		return list;
-	}
-
 	private Ann handleAnnResultSet(ResultSet rset) throws SQLException {
 		Ann ann = new Ann();
 		ann.setAnnNo(rset.getInt("ann_no"));
@@ -132,5 +64,53 @@ public class AnnDao {
 		ann.setAnnTitle(rset.getString("ann_title"));
 		
 		return ann;
+	}
+
+	public List<Ann> findAll(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Ann> list = new ArrayList<>();
+		String sql = prop.getProperty("findAll");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				list.add(ann);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 전체목록 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<Ann> annEndDateSort(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Ann> list = new ArrayList<>();
+		String sql = prop.getProperty("annEndDateSort");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				list.add(ann);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 마감순정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 }

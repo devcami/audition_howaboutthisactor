@@ -291,6 +291,25 @@ insert into announcement values (
     seq_ann_no.nextval, 'director', 21, '서울시 서초구',
     to_date('20220604','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목2'
 );
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220610','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목4');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220611','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목5');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220612','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목6');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220613','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목7');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220614','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목8');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220615','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목9');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220616','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목10');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220617','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목11');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220618','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목12');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220619','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목13');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220620','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목14');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220621','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목15');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220622','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목16');
+insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220623','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목17');
+
+commit;
+
+
+
 
 ------------------------------------------------
 -- work sample insert
