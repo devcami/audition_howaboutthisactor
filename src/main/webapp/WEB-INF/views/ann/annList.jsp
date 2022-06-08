@@ -23,17 +23,18 @@
 		</div>
 		<div class="row row-cols-1 row-cols-md-3 g-4" id="ann-container">
 		<% if(list != null && !list.isEmpty()){
-		for(Ann ann : list){ %>
+		for(int i = 0; i < list.size(); i++){ 
+		%>
 			 <div class="col">
-			    <div class="card h-100 ann-card">
+			    <div class="card h-100 ann-card" onclick="annView(this);">
 					<div class="card-body">
-						<h5 class="card-title"><%= ann.getAnnTitle() %></h5>
-						<p class="card-text"><%= ann.getMemberId() %></p>
-						<input type="hidden" name="annNo" id="annNo" value="<%= ann.getAnnNo() %>" />
+						<h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
+						<p class="card-text"><%= list.get(i).getMemberId() %></p>
+						<input type="hidden" name="annNo" class="annNo" value="<%= list.get(i).getAnnNo() %>" />
 					</div>
 					<div class="card-footer">
-						<small class="text-muted"><%= ann.getAnnRegDate() %></small> ~ 
-						<small class="text-muted"><%= ann.getAnnEndDate() %></small>
+						<small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
+						<small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
 					</div>
 				</div>
 			  </div>
@@ -55,6 +56,11 @@ sortType.addEventListener('change', (e) => {
 	// 공고 마감순 선택 시 페이지 요청
 	location.href=`<%= request.getContextPath() %>/ann/annList?sortType=\${value}`;
 });
+
+const annView = (ann) => {
+	const annNo = ann.firstElementChild.lastElementChild.value;
+	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
+};
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
