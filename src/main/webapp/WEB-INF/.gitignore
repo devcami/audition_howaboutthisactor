@@ -3,6 +3,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,java,macos,eclipse
 
 ### Eclipse ###
+.classpath
+.project
 .metadata
 bin/
 tmp/
@@ -14,8 +16,6 @@ local.properties
 .settings/
 .loadpath
 .recommenders
-.classpath
-.project
 /datasource.properties
 
 # External tool builders

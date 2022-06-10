@@ -30,7 +30,7 @@ public class AnnListServlet extends HttpServlet {
 		try {
 			int numPerPage = AnnService.NUM_PER_PAGE; //12
 			int totalContent = annService.getTotalContent();
-			
+		
 			int cPage = 1; 
 			
 			try {
