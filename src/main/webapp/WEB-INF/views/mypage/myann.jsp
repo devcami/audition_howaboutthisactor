@@ -10,11 +10,11 @@
   <div id="Pmypage-submenu" class="submenu">
     <ul>
       <li><a href="#" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 관리</a></li>
-      <li><a href="#" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
-      <li><a href="#" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
-      <li><a href="#" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원자 관리</a></li>
-      <li><a href="#" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
-      <li><a href="#" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/myboard" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원자 관리</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
     </ul>
   </div>
   <div id="myboard">

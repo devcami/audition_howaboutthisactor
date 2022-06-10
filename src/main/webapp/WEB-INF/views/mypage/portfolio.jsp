@@ -19,7 +19,7 @@
   <div id="portfolio-container">
     <div id="portfolio_head">
       <h2>포트폴리오</h2>
-      <input type="button" id="update-btn" value="수정하기" class="btn" 
+      <input type="button" id="update-btn" value="저장" class="btn" 
               onclick="location.href='/app/ann/annEnroll';">
     </div>
     <form name="portfolioFrm" method="post">
@@ -91,7 +91,9 @@
           </tr>
           <tr>
               <th colspan="2" id="work-wrap-th">경력</th>
-              <td colspan="4" style="text-align:right;"><button id="plus-btn" class="btn">+</button></td>
+              <td colspan="4" style="text-align:right;">
+              	<button type="button" id="plus-btn" class="btn" onclick="enrollWork();">+</button>
+              </td>
           </tr>
           <tr>
             <td colspan="6" style="border-top: 1px solid grey;"></td>
@@ -129,7 +131,6 @@
                 <img src="img/hosi3.jpg" id="work-img">
               </div>
               <td><br><br></td>
-            </td>
           </tr>
           <tr class="work-tr">
             <th>작품명</th>
@@ -146,13 +147,24 @@
           <tr>
             <td><br><br></td>
           </tr>
-
-          
         </tbody>
       </table>
     </form>
   </div>
+  <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/enrollWork">
+  	<input type="hidden" name="memberId" />
+  </form>
   <script>
+  	const enrollWork = () => {
+  		const title = "enrollWorkPopup";
+  		const spec = "width=700px, height=600px";
+  		const popup = open("", title, spec);
+  		
+  		const frm = document.enrollWorkFrm;
+  		frm.target = title; // 해당 팝업에서 폼을 제출
+  		frm.memberId.value = "actor";
+  		frm.submit();
+  	}
   
     const mousein = (menu) => {
       now_menu.classList.remove('current');
