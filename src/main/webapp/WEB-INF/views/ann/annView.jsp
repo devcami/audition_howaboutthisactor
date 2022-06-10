@@ -1,14 +1,14 @@
+<%@page import="ann.model.dto.Ann"%>
 <%@page import="common.model.dto.Cast"%>
 <%@page import="common.model.dto.WorkAttachment"%>
 <%@page import="java.util.List"%>
 <%@page import="common.model.dto.Work"%>
-<%@page import="ann.model.dto.AnnExt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <% 
-	AnnExt ann = (AnnExt) request.getAttribute("ann");
+	Ann ann = (Ann) request.getAttribute("ann");
 	Work work = ann.getWork();
 	List<WorkAttachment> workAttachments = work.getAttachments();
 	Cast cast = work.getCast();
@@ -76,22 +76,28 @@
 						<button class="accordion-button" type="button"
 							data-bs-toggle="collapse"
 							data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-							aria-controls="panelsStayOpen-collapseOne">Accordion
-							Item #1</button>
+							aria-controls="panelsStayOpen-collapseOne">
+						<%= cast.getCastRole() %> • <%= cast.getCastName() %> 역 
+						<br />
+						<%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> 	
+						</button>
 					</h2>
 					<div id="panelsStayOpen-collapseOne"
 						class="accordion-collapse collapse show"
 						aria-labelledby="panelsStayOpen-headingOne">
 						<div class="accordion-body">
-							<strong>This is the first item's accordion body.</strong> It is
-							shown by default, until the collapse plugin adds the appropriate
-							classes that we use to style each element. These classes control
-							the overall appearance, as well as the showing and hiding via CSS
-							transitions. You can modify any of this with custom CSS or
-							overriding our default variables. It's also worth noting that
-							just about any HTML can go within the
-							<code>.accordion-body</code>
-							, though the transition does limit overflow.
+							<table class="table table-borderless" id="tbl-cast-info">
+							<tbody>
+								<tr>
+									<th>배역 이름</th>
+									<td><%= cast.getCastName() %>역 (<%= cast.getCastRole() %>)</td>
+								</tr>
+								<tr>
+									<th>기본 조건</th>
+									<td><%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> </td>
+								</tr>
+							</tbody>
+							</table>
 						</div>
 					</div>
 				</div>
