@@ -1,0 +1,169 @@
+#container {
+  display: flex;
+  font-family: 'Hahmlet', serif;
+  justify-content: center;
+  margin: 0 130px 0 30px;
+}
+.top-logo{
+  height: 180px;
+  background-color: #bbded6;
+  position: relative;
+}
+.top-logo span {
+  position: absolute;
+  left: 2%;
+  bottom: 7%;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  font-weight: 900;
+  font-size: 320%;
+  
+}
+#Pmypage-submenu {
+  margin-top: 100px;
+  text-align: right;
+  width: 18%;
+}
+#Pmypage-submenu ul {
+  padding: 0;
+}
+#Pmypage-submenu li {
+  list-style: none;
+  margin: 15px 0;
+  font-weight: 500;
+  font-size: x-large;
+}
+/* #Pmypage-submenu a:hover {
+  color: #bbded6;
+} */
+#Pmypage-submenu a {
+  color: black;
+  text-decoration: none;
+}
+.current {
+  color: #bbded6 !important;
+}
+/* 여기까지 submenu */
+
+#portfolio-container{
+  width: 80%;
+  margin-left: 4%;
+  margin-bottom: 100px;
+}
+#portfolio-container h2 {
+  font-size: 40px;
+  padding: 10px;
+  margin: 20px 0 10px;
+  
+}
+
+/* 제목 & 수정하기 버튼 */
+#portfolio_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2px solid gray;
+}
+.btn {
+  font-size: medium;
+  font-family: 'Hahmlet', serif;
+  border: none;
+  background-color: #bbded6;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  transition: all 0.3s ease 0s;
+}
+#update-btn {
+  margin-bottom: 13px;
+  padding: 6px 11px;
+}
+#plus-btn {
+  padding: 0 11px 5px;
+  transform: translateY(10px);
+}
+
+.btn:hover {
+  background-color: #fae3d9;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  border: none;
+  box-shadow: 1px 3px 5px rgb(0 0 0 / 20%);
+}
+
+/* 포트폴리오 내용 */
+#portfolio-container form {
+  margin: 40px 0;
+}
+#portfolio-container table {
+  /* margin: 30px 30px; */
+  border-collapse: separate;
+  border-spacing: 0 20px;
+}
+#portfolio-container table tr {
+}
+
+#portfolio-container table th:not(#img-th):not(#work-wrap-th):not(.work-no):not(.work-tr th){
+  padding: 0 15px 0 25px;
+  text-align: left;
+  font-size: medium;
+  font-weight: 400;
+}
+
+.work-tr th {
+  padding: 0;
+  text-align: left;
+  font-size: medium;
+  font-weight: 600;
+}
+
+#img-th, .work-no{
+  padding: 0 10px;
+  font-size: large;
+  font-weight: 400;
+}
+#work-wrap-th {
+  /* 경력 */
+  padding: 0 10px;
+  text-align: left;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+#profile-img-container{
+  width: 350px;
+  height: 450px;
+  padding: 10px;
+  overflow: hidden;
+  border: 2px dashed darkgray;
+}
+#profile-img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#work-img-container{
+  width: 320px;
+  height: 280px;
+  padding: 10px;
+  border: 2px dashed darkgray;
+}
+#work-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+#portfolio-container input:not(#height):not(#weight):not(.btn) {
+  font-family: 'Hahmlet', serif;
+  font-size: large;
+  font-weight: 500;
+  border: none;
+  width: 400px;
+}
+#height, #weight {
+  font-family: 'Hahmlet', serif;
+  font-size: large;
+  font-weight: 500;
+  border: none;
+  width: 80px;
+}

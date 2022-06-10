@@ -8,24 +8,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class PmypageServlet
+ * Servlet implementation class MyBoardServlet
  */
-@WebServlet("/mypage/Pmypage")
-public class PmypageServlet extends HttpServlet {
+@WebServlet("/mypage/myboard")
+public class MyBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.getRequestDispatcher("/WEB-INF/views/mypage/Pmypage.jsp")
+			request.getRequestDispatcher("/WEB-INF/views/mypage/myboard.jsp")
 				.forward(request, response);
 				
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
