@@ -2,6 +2,11 @@
 #ann-list-container{
   font-family: 'Hahmlet', serif;
 }
+/* boardList */
+
+.mrgbtm{
+  margin: 50px 0;
+}
 .top-logo{
   overflow: hidden;
   height: 180px;
@@ -86,3 +91,64 @@
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* boardView */
+
+#btn-apply{
+  position: relative;
+  bottom: 150px;
+  right: 80px;
+  float: right;
+  width: 280px;
+  height: 80px;
+
+  border: none;
+  background-color: #ffb6b9;
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 15px;
+  text-align: center;
+}
+
+#btn-wish{
+  display: inline;
+  position: relative;
+  float: right;
+  width: 60px;
+  height: 60px;
+  bottom: 50px;
+  left: 200px;
+
+  background-color: #bbded6;
+}
+#btn-apply:hover{
+  background-color: #fae3d9;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#ann-view-container{
+  font-family: 'Hahmlet', serif;
+}
+
+#tbl-work-info{
+  margin: 20px 0;
+  border-collapse: separate;
+  border-style: hidden;
+  border: solid #ffb6b9 2px;
+  border-radius: .4rem!important;
+  font-size: 20px;
+}
+#tbl-work-info th{
+  padding: 15px 0;
+  width: 200px;
+  text-align: center;
+}
+#tbl-work-info td{
+  padding: 15px 0;
+}
+.figure{
+  margin: 10px 10px;
+}
+.figure img{
+  width: 360px;
+}

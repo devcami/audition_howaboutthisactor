@@ -2,15 +2,15 @@
 -- 관리자계정
 --============================================
 -- web계정 생성
---alter session set "_oracle_script" = true; -- c##으로 시작하지 않는 일반계정생성 허용 (MAC  X)
+--alter session set "_oracle_script" = true; -- c##으로 시작하지 않는 일반계정생성 허용
 
-create user semi
-identified by semi
+create user "5zizoyeyo"
+identified by "5zizodkssuD!"
 default tablespace users;
 
-grant connect, resource to semi;
+grant connect, resource, create view to "5zizoyeyo";
 
-alter user semi quota unlimited on users;
+alter user "5zizoyeyo" quota unlimited on users;
 
 
 -------------------------------------------
@@ -110,35 +110,8 @@ CREATE TABLE actor_info (
 
 create sequence seq_actor_info_no;
 
--------------------------------------------
--- portfolio
--------------------------------------------
-CREATE TABLE portfolio (
-	portfolio_no	number	NOT NULL,
-	member_id	varchar2(20)		NOT NULL,
-	work_no	number		NOT NULL,
-	period	varchar2(50),
-	youtube_url	varchar2(300),
-    constraint pk_portfolio_no primary key (portfolio_no),
-    constraint fk_portfolio_member_id foreign key(member_id) references member(member_id) on delete cascade,
-    constraint fk_portfolio_work_no foreign key(work_no) references work(work_no) on delete set null
-);
-create sequence seq_portfolio_no;
 
-
--------------------------------------------
--- production 제작사
--------------------------------------------
-CREATE TABLE production (
-	member_id	varchar2(20)	NOT NULL,
-	production_name	varchar2(100)	NOT NULL,
-	caster_name	varchar2(50),
-	caster_phone	char(11)	NOT NULL,
-	caster_email	varchar2(200),
-    constraint pk_production_member_id primary key (member_id),
-    constraint fk_production_member_id foreign key(member_id) references member(member_id) on delete cascade
-);
-
+-- portfolio & announcement에 insert되기 전에 work, work_attachment, cast가 먼저 insert되어야 한다
 -------------------------------------------
 -- work
 -------------------------------------------
@@ -151,7 +124,6 @@ CREATE TABLE work (
 	description	varchar2(1000),
     constraint pk_work_no primary key (work_no)
 );
-
 create sequence seq_work_no;
 
 -------------------------------------------
@@ -169,32 +141,6 @@ CREATE TABLE work_attachment (
 create sequence seq_work_attachment_no;
 
 -------------------------------------------
--- announcement
--------------------------------------------
-CREATE TABLE announcement (
-	ann_no	number	NOT NULL,
-	member_id	varchar2(20)		NOT NULL,
-	work_no	number		NOT NULL,
-	ann_area	varchar(50)		NULL,
-	ann_end_date	date		NOT NULL,
-	ann_reg_date	date	DEFAULT sysdate	NOT NULL,
-	ann_pay	number		NULL,
-	ann_gender	char(1)		NULL,
-	ann_age	number		NULL,
-	ann_height	number		NULL,
-	ann_body	varchar2(200)		NULL,
-    constraint pk_ann_no primary key (ann_no),
-    constraint fk_ann_member_id foreign key(member_id) references member(member_id) on delete cascade,
-    constraint fk_ann_work_no foreign key(work_no) references work(work_no) on delete set null
-);
-create sequence seq_ann_no;
-
---20220603 수정
-alter table announcement drop constraint fk_ann_work_no;
-commit;
-alter table announcement modify ann_gender char constraint ck_ann_gender check(ann_gender in('M', 'F'));
-alter table announcement add ann_title varchar2(50) not null;
--------------------------------------------
 -- cast  배역
 -------------------------------------------
 CREATE TABLE cast (
@@ -207,6 +153,61 @@ CREATE TABLE cast (
     constraint fk_cast_work_no foreign key(work_no) references work(work_no) on delete cascade
 );
 create sequence seq_cast_no;
+
+
+-------------------------------------------
+-- portfolio
+-------------------------------------------
+CREATE TABLE portfolio (
+	portfolio_no	number	NOT NULL,
+	member_id	varchar2(20)		NOT NULL,
+	work_no	number		NOT NULL,
+	period	varchar2(50),
+	youtube_url	varchar2(300),
+    constraint pk_portfolio_no primary key (portfolio_no),
+    constraint fk_portfolio_member_id foreign key(member_id) references member(member_id) on delete cascade,
+    constraint fk_portfolio_work_no foreign key(work_no) references work(work_no) on delete set null
+);
+create sequence seq_portfolio_no;
+
+-------------------------------------------
+-- production 제작사
+-------------------------------------------
+CREATE TABLE production (
+	member_id	varchar2(20)	NOT NULL,
+	production_name	varchar2(100)	NOT NULL,
+	caster_name	varchar2(50),
+	caster_phone	char(11)	NOT NULL,
+	caster_email	varchar2(200),
+    constraint pk_production_member_id primary key (member_id),
+    constraint fk_production_member_id foreign key(member_id) references member(member_id) on delete cascade
+);
+
+
+-------------------------------------------
+-- announcement
+-------------------------------------------
+CREATE TABLE announcement (
+	ann_no	number	NOT NULL,
+	member_id	varchar2(20)		NOT NULL,
+	work_no	number		NOT NULL,
+    ann_title varchar2(200) not null,
+	ann_area	varchar2(50)		NULL,
+	ann_end_date	date		NOT NULL,
+	ann_reg_date	date	DEFAULT sysdate	NOT NULL,
+	ann_pay	varchar2(100)		NULL,
+	ann_gender	varchar2(10)		NULL,
+	ann_age	varchar2(50)		NULL,
+	ann_height	varchar2(50)		NULL,
+	ann_body	varchar2(200)		NULL,
+    constraint pk_ann_no primary key (ann_no),
+    constraint fk_ann_member_id foreign key(member_id) references member(member_id) on delete cascade,
+    constraint fk_announcement_work_no foreign key(work_no) references work(work_no) on delete set null,
+    constraint ck_ann_gender check(ann_gender in('남', '여', '무관'))
+);
+create sequence seq_ann_no;
+
+alter table announcement add ann_nop number not null;
 
 -------------------------------------------
 -- actor_apply  지원내역
@@ -265,78 +266,97 @@ COMMENT ON COLUMN report.report_status IS '처리상태 U undo I ing E end';
 -- member sample insert
 -- id pwd name email memberRole phone gender birthday enroll_date
 ------------------------------------------------
-insert into member values ('director', '1234', '디렉터', 'director@naver.com', 'D', '01015971597', 'M', to_date('19900909','yyyymmdd'), default);
+insert into member values ('director', '1234', '디렉터샘플', 'director@naver.com', 'D', '01015971597', 'M', to_date('19900909','yyyymmdd'), default);
+insert into member values ('actor', '1234', '배우샘플', 'actor@naver.com', 'P', '01019291929', 'F', to_date('19990202','yyyymmdd'), default);
+insert into member values ('admin', '1234', '관리자샘플', 'admin@naver.com', 'A', '01012391239', 'M', to_date('19930203','yyyymmdd'), default);
+insert into member values ('actor2', '1234', '배우샘플2', 'actor2@naver.com', 'P', '01011111111', 'F', to_date('19990204','yyyymmdd'), default);
+insert into member values ('actor3', '1234', '배우샘플3', 'actor3@naver.com', 'P', '01011111112', 'F', to_date('19990205','yyyymmdd'), default);
+insert into member values ('actor4', '1234', '배우샘플4', 'actor4@naver.com', 'P', '01011111113', 'F', to_date('19990206','yyyymmdd'), default);
+insert into member values ('actor5', '1234', '배우샘플5', 'actor5@naver.com', 'P', '01011111114', 'F', to_date('19990207','yyyymmdd'), default);
+insert into member values ('actor6', '1234', '배우샘플6', 'actor6@naver.com', 'P', '01011111115', 'F', to_date('19990208','yyyymmdd'), default);
+insert into member values ('actor7', '1234', '배우샘플7', 'actor7@naver.com', 'P', '01011111116', 'F', to_date('19990209','yyyymmdd'), default);
+insert into member values ('actor8', '1234', '배우샘플8', 'actor8@naver.com', 'P', '01011111117', 'F', to_date('19990210','yyyymmdd'), default);
+insert into member values ('actor9', '1234', '배우샘플9', 'actor9@naver.com', 'P', '01011111118', 'F', to_date('19990211','yyyymmdd'), default);
+insert into member values ('actor10', '1234', '배우샘플10', 'actor10@naver.com', 'P', '01011111119', 'F', to_date('19990212','yyyymmdd'), default);
+insert into member values ('actor11', '1234', '배우샘플11', 'actor11@naver.com', 'P', '01011111110', 'F', to_date('19990213','yyyymmdd'), default);
+insert into member values ('actor12', '1234', '배우샘플12', 'actor12@naver.com', 'P', '01011111122', 'F', to_date('19990214','yyyymmdd'), default);
+insert into member values ('actor13', '1234', '배우샘플13', 'actor13@naver.com', 'P', '01011111123', 'F', to_date('19990215','yyyymmdd'), default);
+insert into member values ('actor14', '1234', '배우샘플14', 'actor14@naver.com', 'P', '01011111124', 'F', to_date('19990216','yyyymmdd'), default);
 
 
-------------------------------------------------
+-- actor_info sample insert
+insert into actor_info values('actor', SEQ_ACTOR_INFO_NO.nextval, 25, '한양대 연극영화과', 165, 50, '샘플소속사', '노래', '@actorsampleinsta', 'actorProfileSampleImg.jpg');
 -- production sample insert
--- 
-------------------------------------------------
 insert into production values ('director', 'testProduction', '디렉터', '01015971597', 'director@naver.com');
+
+
+
+------------------------------------------------
+-- work sample insert 20220610
+------------------------------------------------
+insert into work values (seq_work_no.nextval, '영화', '테스트영화제목', 'testProduction', '디렉터', '뭐 어떤 말을 써야되나 작품에 대한 설명입니다~');
+insert into work values (seq_work_no.nextval, '드라마', '테스트드라마제목', 'testProduction', '디렉터', '뭐 어떤 말을 써야되나 드라마 작품에 대한 설명입니다~');
+insert into work values (seq_work_no.nextval, '연극', '테스트연극제목', 'testProduction', '디렉터', '뭐 어떤 말을 써야되나 연극 작품에 대한 설명입니다~');
+
+select * from work_attachment;
+------------------------------------------------
+-- work_attachment sample insert 20220610
+------------------------------------------------
+insert into work_attachment values(SEQ_WORK_ATTACHMENT_NO.nextval, 1, 'test1.jpg', '20220603_12345.jpg',default);
+insert into work_attachment values(SEQ_WORK_ATTACHMENT_NO.nextval, 2, 'test2.jpg', '20220603_12346.jpg',default);
+insert into work_attachment values(SEQ_WORK_ATTACHMENT_NO.nextval, 3, 'test3.jpg', '20220603_12347.jpg',default);
+
+------------------------------------------------
+-- cast sample insert 20220610
+------------------------------------------------
+insert into cast values(SEQ_CAST_NO.nextval, 1, '주연', '여배우', '안녕하세요 ! 여배우를 구합니다');
+insert into cast values(SEQ_CAST_NO.nextval, 2, '조연', '여주인공', '안녕하세요 ! 여주인공을 구합니다');
+insert into cast values(SEQ_CAST_NO.nextval, 3, '주연', '아무개', '안녕하세요 ! 아무개를 구합니다');
+
+
+
+
 
 
 ------------------------------------------------
 -- ann 찾기 sample insert
--- ann: no, id, work_no, area(null), end_date, reg_date default, pay(n), gender(n), age(n), height(n), body(n)
+
+-- 급여   String
+-- 나이   ~10세 11~17세 18~25세 26세~35세 36세~45세 45세~ 연령무관 
+-- 키    ~110 111~150 151~160 161~170 171~180 180~ 신장무관
+-- 체형   마름 보통 통통 체형무관
+
+-- ann: no, id, work_no, title, area(null), end_date, reg_date default, pay(n), gender(n), age(n), height(n), body(n), nop
 ------------------------------------------------
-insert into announcement values (
-    seq_ann_no.nextval, 'director', seq_work_no.nextval, '서울시 강남구',
-    to_date('20220606','yyyymmdd'), default, 1000000, 'F', 25, 165, '마름', '테스트제목'
-);
-insert into announcement values (
-    seq_ann_no.nextval, 'director', seq_work_no.nextval, '서울시 서초구',
-    to_date('20220620','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목2'
-);
-insert into announcement values (
-    seq_ann_no.nextval, 'director', 21, '서울시 서초구',
-    to_date('20220604','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목2'
-);
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220610','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목4');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220611','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목5');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220612','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목6');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220613','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목7');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220614','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목8');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220615','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목9');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220616','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목10');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220617','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목11');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220618','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목12');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220619','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목13');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220620','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목14');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220621','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목15');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220622','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목16');
-insert into announcement values (seq_ann_no.nextval, 'director', 21, '서울시 서초구', to_date('20220623','yyyymmdd'), default, 1200000, 'F', 20, 170, '보통', '테스트제목17');
-
-commit;
+insert into announcement values (seq_ann_no.nextval, 'director', 1, '테스트제목1','서울시 서초구', to_date('20220620','yyyymmdd'), default, '300만원', '여', '18~23세', '신장무관', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 2, '테스트제목2','서울시 서초구', to_date('20220615','yyyymmdd'), default, '회당 80만원', '여', '23~30세', '161~170', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 3, '테스트제목3','서울시 서초구', to_date('20220615','yyyymmdd'), default, '회당 8만원', '남', '30세~40세', '신장무관', '보통', 10);
+insert into announcement values (seq_ann_no.nextval, 'director', 1, '테스트제목4','서울시 서초구', to_date('20220608','yyyymmdd'), default, '추후협의', '남', '연령무관', '171~180', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 2, '테스트제목5','서울시 서초구', to_date('20220619','yyyymmdd'), default, '회당 10만원', '여', '연령무관', '신장무관', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 2, '테스트제목6','서울시 서초구', to_date('20220620','yyyymmdd'), default, '회당 10만원', '여', '연령무관', '신장무관', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 2, '테스트제목7','서울시 서초구', to_date('20220621','yyyymmdd'), default, '회당 10만원', '여', '연령무관', '신장무관', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 1, '테스트제목8','서울시 서초구', to_date('20220608','yyyymmdd'), default, '추후협의', '남', '연령무관', '171~180', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 1, '테스트제목9','서울시 서초구', to_date('20220618','yyyymmdd'), default, '추후협의', '남', '연령무관', '171~180', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 1, '테스트제목10','서울시 서초구', to_date('20220615','yyyymmdd'), default, '추후협의', '남', '연령무관', '171~180', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 1, '테스트제목11','서울시 서초구', to_date('20220608','yyyymmdd'), default, '추후협의', '남', '연령무관', '171~180', '보통', 1);
+insert into announcement values (seq_ann_no.nextval, 'director', 3, '테스트제목12','서울시 서초구', to_date('20220702','yyyymmdd'), default, '회당 8만원', '남', '30세~40세', '신장무관', '보통', 10);
+insert into announcement values (seq_ann_no.nextval, 'director', 3, '테스트제목13','서울시 서초구', to_date('20220703','yyyymmdd'), default, '회당 8만원', '남', '30세~40세', '신장무관', '보통', 10);
+insert into announcement values (seq_ann_no.nextval, 'director', 3, '테스트제목14','서울시 서초구', to_date('20220714','yyyymmdd'), default, '회당 8만원', '남', '30세~40세', '신장무관', '보통', 10);
+insert into announcement values (seq_ann_no.nextval, 'director', 3, '테스트제목15','서울시 서초구', to_date('20220722','yyyymmdd'), default, '회당 8만원', '남', '30세~40세', '신장무관', '보통', 10);
+insert into announcement values (seq_ann_no.nextval, 'director', 3, '테스트제목16','서울시 서초구', to_date('20220707','yyyymmdd'), default, '회당 8만원', '남', '30세~40세', '신장무관', '보통', 10);
 
 
+-- commit;
 
 
-------------------------------------------------
--- work sample insert
-------------------------------------------------
-insert into work values (
-    seq_work_no.nextval, '영화', '테스트영화제목', 'testProduction', '디렉터', '뭐 어떤 말을 써야되나'
-);
-delete from work where work_no = 3;
-insert into work values (
-    4, '영화', '테스트영화제목2', 'testProduction', '디렉터', '뭐 어떤 말을 써야되나2'
-);
+-------------------------------------
+-- insert portfolio
 
+-- 기간 String
+-------------------------------------
+insert into portfolio values (SEQ_PORTFOLIO_NO.nextval, 'actor', 2, '2018년 10월~2018년 11월', null);
+insert into portfolio values (SEQ_PORTFOLIO_NO.nextval, 'actor', 1, '2019년 10월~2019년 11월', null);
 
-------------------------------------------------
--- work_attachment sample insert
-------------------------------------------------
-insert into work_attachment values(
-    SEQ_WORK_ATTACHMENT_NO.nextval, 4, 'test2.jpg', '20220603_12345.jpg',default
-);
-commit;
-
-------------------------------------------------
--- cast sample insert
-------------------------------------------------
-insert into cast values(
-    SEQ_CAST_NO.nextval, 4, '주연', '여배우', '안녕하세요 ! 여배우를 구합니다'
-);
 
 
 
@@ -352,7 +372,7 @@ select * from portfolio;
 select * from production;
 select * from work;
 select * from work_attachment;
-select * from announcement where work_no = 4;
+select * from announcement;
 select * from cast;
 select * from actor_apply;
 select * from wishlist_actor;
