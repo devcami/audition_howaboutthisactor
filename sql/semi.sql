@@ -331,7 +331,12 @@ insert into work_attachment values(
 );
 commit;
 
-
+------------------------------------------------
+-- cast sample insert
+------------------------------------------------
+insert into cast values(
+    SEQ_CAST_NO.nextval, 4, '주연', '여배우', '안녕하세요 ! 여배우를 구합니다'
+);
 
 
 
@@ -347,7 +352,7 @@ select * from portfolio;
 select * from production;
 select * from work;
 select * from work_attachment;
-select * from announcement;
+select * from announcement where work_no = 4;
 select * from cast;
 select * from actor_apply;
 select * from wishlist_actor;
