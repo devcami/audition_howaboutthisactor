@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ann.model.dto.AnnExt;
+import ann.model.dto.Ann;
 import ann.model.service.AnnService;
 
 /**
@@ -26,7 +26,7 @@ public class AnnViewServlet extends HttpServlet {
 			int annNo = Integer.parseInt(request.getParameter("annNo"));
 			
 			// 게시글 조회
-			AnnExt ann = annService.findByAnnNo(annNo);
+			Ann ann = annService.findByAnnNo(annNo);
 			
 			// XSS공격(Cross-site Scripting공격) 대비 변환 : 개행처리 <br> 이전에 나와야됨!
 			ann.setAnnTitle(ann.getAnnTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
