@@ -89,7 +89,12 @@
           <tr>
             <td><br></td>
           </tr>
-          <tr>
+        </tbody>
+      </table>
+    </form>
+    <table>
+    	<tbody>
+    	  <tr>
               <th colspan="2" id="work-wrap-th">경력</th>
               <td colspan="4" style="text-align:right;">
               	<button type="button" id="plus-btn" class="btn" onclick="enrollWork();">+</button>
@@ -148,10 +153,9 @@
             <td><br><br></td>
           </tr>
         </tbody>
-      </table>
-    </form>
+    </table>
   </div>
-  <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/enrollWork">
+  <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/showpopup">
   	<input type="hidden" name="memberId" />
   </form>
   <script>
