@@ -118,8 +118,10 @@
   height: 60px;
   bottom: 50px;
   left: 200px;
-
-  background-color: #bbded6;
+}
+#btn-wish img{
+  width: 100%;
+  height: 100%;
 }
 #btn-apply:hover{
   background-color: #fae3d9;
@@ -151,4 +153,29 @@
 }
 .figure img{
   width: 360px;
+}
+.accordion-button{
+  font-size: 18px;
+}
+#tbl-cast-info{
+  font-size: 18px;
+}
+#tbl-cast-info th{
+  width: 200px;
+  padding: 15px 0;
+  text-align: center;
+}
+#tbl-cast-info td{
+  padding: 15px 0;
+}
+#tbl-cast-info .underline{
+  border-bottom: solid gainsboro 1px;
+}
+.accordion-button{
+}
+
+.accordion-button:not(.collapsed) {
+  color: #3a7f6f;
+  background-color: #d9eae6;
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
 }
