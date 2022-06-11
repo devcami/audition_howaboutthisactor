@@ -99,6 +99,25 @@ public class MypageDao {
 		
 		return result;
 	}
+
+	public int deleteWorks(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteWorks");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new MypageException("포트폴리오 경력 삭제오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 	
 	
 	

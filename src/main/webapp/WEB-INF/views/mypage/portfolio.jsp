@@ -134,7 +134,7 @@
         <tbody id="work12">
        	 <tr>
           <th rowspan="5" class="work-no">
-            <input type="checkbox" name="ck" id="28" class="ckbox">
+            <input type="checkbox" name="ck" value="26" class="ckbox">
           </th>
           <td rowspan="5">
             <div id="work-img-container">
@@ -166,6 +166,7 @@
   <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/showpopup">
   	<input type="hidden" name="memberId" />
   </form>
+  
   <script>
 	const enrollWork = () => {
   		const title = "enrollWorkPopup";
@@ -177,35 +178,43 @@
   		frm.memberId.value = "actor";
   		frm.submit();
   	}
-  
+	
   	const deleteWork = () => {
   		
-  		const delWork = new Array();
+  		const noArr = [];
   		
   		$('input:checkbox[name=ck]').each(function (index) {
   			if($(this).is(":checked")==true){
   		    	// console.log($(this).val());
-  		    	delWork.push($(this).val());
+  		    	noArr.push($(this).val());
   		    }
   		});
   		
-  		console.log(delWork);
+  		console.log("noArr", noArr);
   		
   		$.ajax({
   			url : "<%= request.getContextPath() %>/mypage/deletework",
   			method : "POST",
   			dataType: "json",
   			data : {
-  				id: "actor",
-  				delWork
-  			}
-  			success(work){
+  				"memberId": "actor",
+  				"deleteWork" : noArr 
+  			},
+  			success(deleteArr){
+  				console.log("deleteArr = ", deleteArr);
+  				$.each(deleteArr, function(index, num){
+ 					let tbodyName = "#work" + num;
+ 					console.log(tbodyName);
+ 					
+ 					$("tbody").remove(tbodyName);
+  				});
   				
   			},
   			error : console.log
   		});
   		
   	}
+ 
   
     const mousein = (menu) => {
       now_menu.classList.remove('current');
@@ -228,7 +237,8 @@
         let position = $(window).scrollTop();
         $("#Pmypage-submenu").stop().animate({"top":position+currentPosition+"px"},1000);
       });
-  
   </script>
+  
+  
 </section>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

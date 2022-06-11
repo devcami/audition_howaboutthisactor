@@ -1,5 +1,5 @@
 package mypage.model.service;
-import static common.JdbcTemplate.close;
+import static common.JdbcTemplate.*;
 import static common.JdbcTemplate.getConnection;
 import static common.JdbcTemplate.rollback;
 
@@ -31,8 +31,6 @@ public class MypageService {
 			resultNo.add(result);
 			resultNo.add(no);
 			
-			
-			
 			// 3. attachment에 등록 
 			PortAttachment attachment = work.getAttachment();
 			if(attachment != null) {
@@ -40,6 +38,7 @@ public class MypageService {
 				result = mypageDao.insertAttachment(conn, attachment);
 			}
 			
+			commit(conn);
 		} catch(Exception e) {
 			rollback(conn);
 		 	throw e;
@@ -51,11 +50,11 @@ public class MypageService {
 	}
 	
 	public int findCurrentWorkNo() {
-		int result = 0;
 		Connection conn = getConnection();
+		int no = 0;
 		
 		try {	
-			int no = mypageDao.findCurrentWorkNo(conn); // seq_board_no.currval
+			no = mypageDao.findCurrentWorkNo(conn); // seq_board_no.currval
 			System.out.println("방금 등록된 Work.no = " + no);
 			
 		} catch(Exception e) {
@@ -64,6 +63,29 @@ public class MypageService {
 		} finally {
 			close(conn);
 		}
+		return no;
+	}
+
+	public int deleteWorks(String[] deleteArr) {
+		int result = 0;
+		Connection conn = getConnection();
+		
+		try {
+
+			
+			for(String no : deleteArr) {   
+	            result = mypageDao.deleteWorks(conn, Integer.parseInt(no));
+	            System.out.println(no + "번 지우기 성공!");
+			}
+			commit(conn);
+			
+		} catch(Exception e) {
+			rollback(conn);
+		 	throw e;
+		} finally {
+			close(conn);
+		}
+		
 		return result;
 	}
 	
