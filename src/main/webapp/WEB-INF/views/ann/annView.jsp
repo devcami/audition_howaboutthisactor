@@ -21,7 +21,7 @@
 			<h5 id="work-title"> <%= work.getProduction() %>&nbsp;|&nbsp;<%= work.getDirector() %>&nbsp;|&nbsp;<<%= work.getTitle() %>> </h5>
 			<p><%= ann.getAnnEndDate() %> 마감 | <%= ann.getAnnRegDate() %> 게시</p>
 			<button id="btn-apply" class="rounded">간편지원</button>
-			<div id="btn-wish">찜하트</div>
+			<div id="btn-wish"><img src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" /></div>
 		</div>
 		<div class="work-info mrgbtm">
 			<h2>작품 정보</h2>
@@ -79,7 +79,7 @@
 							aria-controls="panelsStayOpen-collapseOne">
 						<%= cast.getCastRole() %> • <%= cast.getCastName() %> 역 
 						<br />
-						<%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> 	
+						<%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> | <%= ann.getAnnNop() %>명	
 						</button>
 					</h2>
 					<div id="panelsStayOpen-collapseOne"
@@ -92,9 +92,29 @@
 									<th>배역 이름</th>
 									<td><%= cast.getCastName() %>역 (<%= cast.getCastRole() %>)</td>
 								</tr>
+								<tr class="underline">
+									<th>모집 인원</th>
+									<td><%= ann.getAnnNop() %>명</td>
+								</tr>
 								<tr>
 									<th>기본 조건</th>
 									<td><%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> </td>
+								</tr>
+								<tr class="underline">
+									<th>신체 조건</th>
+									<td><%= ann.getAnnHeight() %> | <%= ann.getAnnBody() %> </td>
+								</tr>
+								<tr>
+									<th>출연료</th>
+									<td><%= ann.getAnnPay() %></td>
+								</tr>
+								<tr class="underline">
+									<th>촬영 지역</th>
+									<td><%= ann.getAnnArea() %></td>
+								</tr>
+								<tr>
+									<th>배역 설명</th>
+									<td><%= cast.getCastContents() %></td>
 								</tr>
 							</tbody>
 							</table>
@@ -133,5 +153,22 @@
 	</div>
 
 </section>
+<script>
+const btnApply = document.querySelector("#btn-apply"); 
+btnApply.addEventListener('click', (e) => {
+	//console.log(e.target);
+	// 공고 지원하기
+});
+<%
+if(ann.getIsClose().equals("Y")){
+%>
+	btnApply.innerText = "모집 마감";
+	btnApply.style.backgroundColor = "gainsboro";
+	btnApply.style.boxShadow = "none";
+	btnApply.disabled = 'disabled';
+<%	
+}
+%>
+</script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

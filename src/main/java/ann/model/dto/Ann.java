@@ -17,6 +17,8 @@ public class Ann {
 	private String annAge;	  // ~10세 11~17세 18~25세 26세~35세 36세~45세 45세~ 연령무관
 	private String annHeight; // ~110 111~150 151~160 161~170 171~180 180~ 신장무관
 	private String annBody;   // 마름 보통 통통 체형무관
+	private int annNop;
+	private String isClose;
 	private Work work;
 	
 	
@@ -27,7 +29,7 @@ public class Ann {
 
 	public Ann(int annNo, String memberId, int workNo, String annTitle, String annArea, Date annEndDate,
 			Date annRegDate, String annPay, String annGender, String annAge, String annHeight, String annBody,
-			Work work) {
+			int annNop, String isClose, Work work) {
 		super();
 		this.annNo = annNo;
 		this.memberId = memberId;
@@ -41,9 +43,10 @@ public class Ann {
 		this.annAge = annAge;
 		this.annHeight = annHeight;
 		this.annBody = annBody;
+		this.annNop = annNop;
+		this.isClose = isClose;
 		this.work = work;
 	}
-
 
 	public int getAnnNo() {
 		return annNo;
@@ -174,14 +177,37 @@ public class Ann {
 		this.work = work;
 	}
 
+	
+
+	public int getAnnNop() {
+		return annNop;
+	}
+
+
+	public void setAnnNop(int annNop) {
+		this.annNop = annNop;
+	}
+
+
+	public String getIsClose() {
+		return isClose;
+	}
+
+
+	public void setIsClose(String isClose) {
+		this.isClose = isClose;
+	}
+
 
 	@Override
 	public String toString() {
 		return "Ann [annNo=" + annNo + ", memberId=" + memberId + ", workNo=" + workNo + ", annTitle=" + annTitle
 				+ ", annArea=" + annArea + ", annEndDate=" + annEndDate + ", annRegDate=" + annRegDate + ", annPay="
 				+ annPay + ", annGender=" + annGender + ", annAge=" + annAge + ", annHeight=" + annHeight + ", annBody="
-				+ annBody + ", work=" + work + "]";
+				+ annBody + ", annNop=" + annNop + ", isClose=" + isClose + ", work=" + work + "]";
 	}
+
+
 	
 	
 }
