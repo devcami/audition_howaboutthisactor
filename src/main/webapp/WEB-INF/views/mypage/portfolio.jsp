@@ -23,7 +23,7 @@
               onclick="location.href='/app/ann/annEnroll';">
     </div>
     <form name="portfolioFrm" method="post">
-      <table>
+      <table id="portTable">
         <tbody>
           <tr>
             <th rowspan="8" id="img-th">대표사진</th>
@@ -85,30 +85,31 @@
               <input type="text" name="Psns" id="Psns" value="instagram - @ho5hi_kwon">
             </td>
           </tr>
-
           <tr>
             <td><br></td>
           </tr>
         </tbody>
-      </table>
-    </form>
-    <table>
-    	<tbody>
+        
+        <tbody id="addWork-tbody">
     	  <tr>
               <th colspan="2" id="work-wrap-th">경력</th>
               <td colspan="4" style="text-align:right;">
-              	<button type="button" id="plus-btn" class="btn" onclick="enrollWork();">+</button>
+              	<button type="button" id="plus-btn" class="btn" onclick="enrollWork();">➕</button>
+              	<button type="button" id="minus-btn" class="btn" onclick="deleteWork();">➖</button>
               </td>
           </tr>
           <tr>
             <td colspan="6" style="border-top: 1px solid grey;"></td>
           </tr>
-
+		</tbody>
+		<tbody id="work11">
           <tr>
-            <th rowspan="5" class="work-no">1</th>
+            <th rowspan="5" class="work-no">
+            	<input type="checkbox" name="ck" value="26" class="ckbox" />
+            </th>
             <td rowspan="5">
               <div id="work-img-container">
-                <img src="img/hosi8.jpg" id="work-img">
+                <img src="<%= request.getContextPath() %>/upload/portfolio/20220610_231526783_055.jpg" class="work-img">
               </div>
             </td>
             <td><br><br></td>
@@ -128,38 +129,45 @@
           <tr>
             <td><br><br></td>
           </tr>
-
-          <tr>
-            <th rowspan="5" class="work-no">2</th>
-            <td rowspan="5">
-              <div id="work-img-container">
-                <img src="img/hosi3.jpg" id="work-img">
-              </div>
-              <td><br><br></td>
-          </tr>
-          <tr class="work-tr">
-            <th>작품명</th>
-            <td colspan="3">스파이더</td>
-          </tr>
-          <tr class="work-tr">
-            <th>배역</th>
-            <td colspan="3">호랑이</td>
-          </tr>
-          <tr class="work-tr">
-            <th>기간</th>
-            <td colspan="3">2022.04 ~ 2022.05</td>
-          </tr>
-          <tr>
-            <td><br><br></td>
-          </tr>
         </tbody>
-    </table>
+        
+        <tbody id="work12">
+       	 <tr>
+          <th rowspan="5" class="work-no">
+            <input type="checkbox" name="ck" id="28" class="ckbox">
+          </th>
+          <td rowspan="5">
+            <div id="work-img-container">
+              <img src="img/hosi3.jpg" id="work-img">
+            </div>
+          </td>
+          <td><br><br></td>
+        </tr>
+        <tr class="work-tr">
+          <th>작품명</th>
+          <td colspan="3">스파이더</td>
+        </tr>
+        <tr class="work-tr">
+          <th>배역</th>
+          <td colspan="3">호랑이</td>
+        </tr>
+        <tr class="work-tr">
+          <th>기간</th>
+          <td colspan="3">2022.04 ~ 2022.05</td>
+        </tr>
+        <tr>
+          <td><br><br></td>
+        </tr>
+       </tbody>
+        
+      </table>
+    </form>
   </div>
   <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/showpopup">
   	<input type="hidden" name="memberId" />
   </form>
   <script>
-  	const enrollWork = () => {
+	const enrollWork = () => {
   		const title = "enrollWorkPopup";
   		const spec = "width=700px, height=600px";
   		const popup = open("", title, spec);
@@ -168,6 +176,35 @@
   		frm.target = title; // 해당 팝업에서 폼을 제출
   		frm.memberId.value = "actor";
   		frm.submit();
+  	}
+  
+  	const deleteWork = () => {
+  		
+  		const delWork = new Array();
+  		
+  		$('input:checkbox[name=ck]').each(function (index) {
+  			if($(this).is(":checked")==true){
+  		    	// console.log($(this).val());
+  		    	delWork.push($(this).val());
+  		    }
+  		});
+  		
+  		console.log(delWork);
+  		
+  		$.ajax({
+  			url : "<%= request.getContextPath() %>/mypage/deletework",
+  			method : "POST",
+  			dataType: "json",
+  			data : {
+  				id: "actor",
+  				delWork
+  			}
+  			success(work){
+  				
+  			},
+  			error : console.log
+  		});
+  		
   	}
   
     const mousein = (menu) => {

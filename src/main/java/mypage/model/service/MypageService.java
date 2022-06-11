@@ -4,6 +4,8 @@ import static common.JdbcTemplate.getConnection;
 import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 import mypage.model.dao.MypageDao;
 import mypage.model.dto.PortAttachment;
@@ -13,7 +15,8 @@ public class MypageService {
 	
 	private MypageDao mypageDao = new MypageDao();
 
-	public int insertPortWork(PortfolioWork work) {
+	public List<Integer> insertPortWork(PortfolioWork work) {
+		List<Integer> resultNo = new ArrayList<>();
 		int result = 0;
 		Connection conn = getConnection();
 		
@@ -24,6 +27,11 @@ public class MypageService {
 			// 2. portfolio_work pk 가져오기
 			int no = mypageDao.findCurrentWorkNo(conn); // seq_board_no.currval
 			System.out.println("방금 등록된 Work.no = " + no);
+			
+			resultNo.add(result);
+			resultNo.add(no);
+			
+			
 			
 			// 3. attachment에 등록 
 			PortAttachment attachment = work.getAttachment();
@@ -38,7 +46,7 @@ public class MypageService {
 		} finally {
 			close(conn);
 		}
-		return result;
+		return resultNo;
 		
 	}
 	

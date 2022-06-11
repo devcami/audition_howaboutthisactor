@@ -14,7 +14,7 @@
     <form name="addWorkFrm">
       <legend>경력 등록</legend>
       <table>
-        <tbody id="addWork-tbody">
+        <tbody>
           <tr>
             <th><label for="pic">대표사진</label></th>
             <td>
@@ -62,14 +62,16 @@
   			}
   		}
   	}
+	
   	
   	document.addWorkFrm.addEventListener('submit', (e) => {
   		e.preventDefault();
   		
   		// 비동기요청 파일업로드 FormData 객체 사용
   		const frmData = new FormData(e.target);
-  		console.log(frmData.values());
 
+  		const ptable = opener.document.getElementById("portTable"); 		
+ 
   		
   		$.ajax({
   			url : "<%= request.getContextPath() %>/mypage/enrollwork",
@@ -82,11 +84,43 @@
   				console.log("work = ", work);
   				alert('등록이 완료되었습니다.');
 
-  				const tbody = $(opener.document).querySelector("#addWork-tbody");
-  				console(tbody);
+  				const img_src = `<%= request.getContextPath() %>/upload/portfolio/\${work.attachment.renamedFilename}`;
+				const tbodyId = "work" + work.no;
+					
+  				const trs = `
+  				<tbody id="\${tbodyId}">
+  		          <tr>
+  		            <th rowspan="5" class="work-no">
+  		            	<input type="checkbox" name="ck" value="\${work.no}" class="ckbox" />
+  		            </th>
+  		            <td rowspan="5">
+  		              <div id="work-img-container">
+  		                <img src="\${img_src}" class="work-img">
+  		              </div>
+  		            </td>
+  		            <td><br><br></td>
+  		          </tr>
+  		          <tr class="work-tr">
+  		            <th>작품명</th>
+  		            <td colspan="3">\${work.title}</td>
+  		          </tr>
+  		          <tr class="work-tr">
+  		            <th>배역</th>
+  		            <td colspan="3">\${work.myrole}</td>
+  		          </tr>
+  		          <tr class="work-tr">
+  		            <th>기간</th>
+  		            <td colspan="3">\${work.period}</td>
+  		          </tr>
+  		          <tr>
+  		            <td><br><br></td>
+  		          </tr>
+  		         <tbody>
+  				`;
+  				
+  				ptable.insertAdjacentHTML('beforeend', trs);
   				
   				self.close();
-  				
   				
   			},
   			error : console.log

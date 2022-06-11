@@ -79,8 +79,10 @@ public class EnrollWorkServlet extends HttpServlet {
 		
 		
 		// 3. 업무로직 work에 추가
-		int result = mypageService.insertPortWork(work);
-
+		int result = mypageService.insertPortWork(work).get(0);
+		int no = mypageService.insertPortWork(work).get(1);
+		work.setNo(no);
+		
 //		System.out.println("방금 등록된 게시물의 no는?? = " + no);
 		
 		// 4. 응답 : 생성된 work객체 반환
