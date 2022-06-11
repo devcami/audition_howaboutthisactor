@@ -99,11 +99,9 @@
   border-collapse: separate;
   border-spacing: 0 20px;
 }
-#portfolio-container table tr {
-}
 
 #portfolio-container table th:not(#img-th):not(#work-wrap-th):not(.work-no):not(.work-tr th){
-  padding: 0 15px 0 25px;
+  padding: 0 15px 0 40px;
   text-align: left;
   font-size: medium;
   font-weight: 400;
@@ -116,7 +114,7 @@
   font-weight: 600;
 }
 #img-th, #work-table th:not(#work-wrap-th){
-  padding: 0 10px;
+  padding: 0 23px;
   font-size: large;
   font-weight: 400;
 }
@@ -152,19 +150,26 @@
   object-fit: contain;
 }
 
-#portfolio-container input:not(#height):not(#weight):not(.btn):not(.ckbox) {
+#portfolio-container input:not(#height):not(#weight):not(.btn):not(.ckbox):not(#Pbirth):not(#Page) {
   font-family: 'Hahmlet', serif;
   font-size: large;
   font-weight: 500;
   border: none;
   width: 400px;
 }
-#height, #weight {
+#height, #weight, #Page {
   font-family: 'Hahmlet', serif;
   font-size: large;
   font-weight: 500;
   border: none;
   width: 80px;
+}
+#Pbirth {
+  font-family: 'Hahmlet', serif;
+  font-size: large;
+  font-weight: 500;
+  border: none;
+  width: 150px;
 }
 #minus-btn {
   padding: 1px 8px 5px 8px;
@@ -178,4 +183,28 @@
   transform : scale(1.5);
   /* accent-color: #F2D1D1; */
   accent-color: #94B49F;
+}
+  input::file-selector-button, button{
+  margin-top: 10px;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 4px;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  cursor: pointer;
+  font-size: small;
+  background-color: #bbded6;
+  border-radius: 0.3rem;
+}
+input::file-selector-button:hover, button:hover{
+  background-color: #fae3d9;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  border: none;
+}
+span{
+  font-family: 'Hahmlet', serif;
+  font-size: large;
+  font-weight: 500;
 }

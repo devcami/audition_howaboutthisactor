@@ -8,12 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mypage.model.dao.MypageDao;
+import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
 
 public class MypageService {
 	
 	private MypageDao mypageDao = new MypageDao();
+	public static final int WISH_NUM_PER_PAGE = 8;
 
 	public List<Integer> insertPortWork(PortfolioWork work) {
 		List<Integer> resultNo = new ArrayList<>();
@@ -87,6 +89,13 @@ public class MypageService {
 		}
 		
 		return result;
+	}
+
+	public ActorInfo findActorInfo(String memberId) {
+		Connection conn = getConnection();	
+		ActorInfo actorInfo = mypageDao.findActorInfo(conn, memberId);
+		close(conn);
+		return actorInfo;
 	}
 	
 	

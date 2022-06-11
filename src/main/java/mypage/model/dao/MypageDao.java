@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 
+import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
 import mypage.model.exception.MypageException;
@@ -117,6 +118,40 @@ public class MypageDao {
 		}
 		
 		return result;
+	}
+
+	public ActorInfo findActorInfo(Connection conn, String memberId) {
+		ActorInfo actorInfo = new ActorInfo();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("findActorInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				actorInfo.setMemberId(rset.getString("member_id"));
+				actorInfo.setActorNo(rset.getInt("actor_no"));
+				actorInfo.setActorNo(rset.getInt("actor_age"));
+				actorInfo.setEducation(rset.getString("actor_education"));
+				actorInfo.setHeight(rset.getDouble("actor_height"));
+				actorInfo.setWeight(rset.getDouble("actor_weight"));
+				actorInfo.setCompany(rset.getString("actor_company"));
+				actorInfo.setSpeciality(rset.getString("actor_speciality"));
+				actorInfo.setSns(rset.getString("actor_sns"));
+			}
+			
+		} catch (SQLException e) {
+			throw new MypageException("포트폴리오 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return actorInfo;
 	}
 	
 	
