@@ -50,7 +50,7 @@ public class EditPortfolio extends HttpServlet {
 			String speciality = multiReq.getParameter("Pspeciality");
 			
 //			System.out.println(memberId);
-			System.out.println("이름: " + name);
+//			System.out.println("이름: " + name);
 //			System.out.println(birth);
 //			System.out.println(age);
 //			System.out.println(company);
@@ -61,6 +61,8 @@ public class EditPortfolio extends HttpServlet {
 //			System.out.println(email);
 //			System.out.println(sns);
 //			System.out.println(speciality);
+			
+			
 			
 			
 //			request.setAttribute("img_src", img_src);
