@@ -97,9 +97,7 @@
 #portfolio-container table {
   /* margin: 30px 30px; */
   border-collapse: separate;
-  border-spacing: 0 20px;
-}
-#portfolio-container table tr {
+  border-spacing: 0 15px;
 }
 
 #portfolio-container table th:not(#img-th):not(#work-wrap-th):not(.work-no):not(.work-tr th){
@@ -115,8 +113,7 @@
   font-size: medium;
   font-weight: 600;
 }
-
-#img-th, .work-no{
+#img-th, #work-table th:not(#work-wrap-th){
   padding: 0 10px;
   font-size: large;
   font-weight: 400;
@@ -147,23 +144,72 @@
   padding: 10px;
   border: 2px dashed darkgray;
 }
-#work-img {
+.work-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
 
-#portfolio-container input:not(#height):not(#weight):not(.btn) {
+#portfolio-container input:not(#height):not(#weight):not(.btn):not(.ckbox):not(#Pbirth):not(#Page):not(#profilePic) {
   font-family: 'Hahmlet', serif;
   font-size: large;
   font-weight: 500;
   border: none;
   width: 400px;
+  border-bottom: solid 2px #bbded6;
 }
-#height, #weight {
+#height, #weight, #Page {
   font-family: 'Hahmlet', serif;
   font-size: large;
   font-weight: 500;
   border: none;
   width: 80px;
+  border-bottom: solid 2px #bbded6;
+}
+#Pbirth {
+  font-family: 'Hahmlet', serif;
+  font-size: large;
+  font-weight: 500;
+  border: none;
+  width: 150px;
+  border-bottom: solid 2px #bbded6;
+}
+#work-table{
+	width:80%
+}
+#minus-btn {
+  padding: 1px 8px 5px 8px;
+  transform: translateY(10px);
+  font-weight: 400;
+}
+.work-no{
+  text-align: center;  
+}
+.ckbox{
+  transform : scale(1.5);
+  accent-color: #94B49F;
+}
+input::file-selector-button, button{
+  margin-top: 10px;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 4px;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  cursor: pointer;
+  font-size: small;
+  /* background-color: #bbded6; */
+  background-color: #fae3d9;
+  border-radius: 0.3rem;
+}
+input::file-selector-button:hover, button:hover{
+  /* background-color: #fae3d9; */
+  background-color: #bbded6;
+  cursor: pointer;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  border: none;
+}
+.current {
+  color: #bbded6 !important;
 }

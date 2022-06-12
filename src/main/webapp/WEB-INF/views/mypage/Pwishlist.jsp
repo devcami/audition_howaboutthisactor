@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%
+	// String memberId = 'hosi';
+	// String memberId = loginMember.getMemberId();
+	
+	// char memberRole = 'P';
+	// char memberRole = loginMember.getMemberRole();
+%>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Pwishlist.css" />
 <div class="top-logo">
   <span>MYPAGE</span>
@@ -8,7 +15,7 @@
 <section id="container">
   <div id="Pmypage-submenu" class="submenu">
     <ul id="sub">
-      <li><a href="<%= request.getContextPath() %>/mypage/portfolio"  onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/portfolio?memberId=<%= memberId %>"  onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/myboard" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
       <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/applylist" onmouseout="mouseout(this)">지원한 공고</a></li>
@@ -18,11 +25,19 @@
   </div>
   <div id="mywish">
     <div>
-      <h2>찜 목록</h2>
+      <div id="wishlist-head">
+        <h2>찜 목록</h2>
+        <div id="sortType-wrap">
+          <select id="sortType">
+            <option value="reg_date" id="reg_date">최신순</option>
+            <option value="end_date" id="end_date">마감순</option>
+          </select>
+        </div>
+      </div>
       <div id="updown-container">
         <div id="up">
           <div class="col">
-            <div class="card">
+            <div class="card" onclick="annView(this);">
               <div class="card-body">
                 <h5 class="card-title">테스트제목6</h5>
                 <p class="card-text">director</p>
@@ -142,6 +157,18 @@
   </div>
 
   <script>
+  sortType.addEventListener('change', (e) => {
+		document.querySelector("#ann-container").innerHTML = "";
+		const {value} = e.target;
+		// 공고 마감순 선택 시 페이지 요청
+		location.href=`/app/ann/annList?sortType=${value}`;
+	});
+
+	const annView = (ann) => {
+		const annNo = ann.firstElementChild.lastElementChild.value;
+		location.href=`/app/ann/annView?annNo=${annNo}`;
+	};
+	
     const mousein = (menu) => {
       now_menu.classList.remove('current');
       menu.classList.add('current');
