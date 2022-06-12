@@ -38,6 +38,12 @@ public class PortfolioServlet extends HttpServlet {
 					.forward(request, response);
 			}
 			else {
+				
+				int attachNo = Integer.parseInt(actorInfo.getAttachNo());
+				String fileName = mypageService.getRenamedFilename(attachNo);
+				String img_src = request.getContextPath() + "/upload/portfolio/" + fileName;
+				
+				request.setAttribute("img_src", img_src);
 				request.setAttribute("actorInfo", actorInfo);
 				request.setAttribute("portType", "exist");
 				request.getRequestDispatcher("/WEB-INF/views/mypage/viewPortfolio.jsp")

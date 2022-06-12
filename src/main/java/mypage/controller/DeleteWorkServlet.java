@@ -24,7 +24,8 @@ public class DeleteWorkServlet extends HttpServlet {
 		try {
 //			String memberId = request.getParameter("memberId"); // 여기서 안씀
 			String[] deleteArr = request.getParameterValues("deleteWork[]");
-		
+			String memberId = request.getParameter("memberId");
+			System.out.println("DeleteWorkServlet@memberId = " + memberId);
 			
 			for(String no : deleteArr) {
 				System.out.println("삭제할 no = " + no);

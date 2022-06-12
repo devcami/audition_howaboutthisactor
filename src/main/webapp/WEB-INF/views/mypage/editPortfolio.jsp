@@ -1,10 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page import="mypage.model.dto.PortAttachment"%>
+<%@page import="mypage.model.dto.ActorInfo"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-	
 	String portType = (String) request.getAttribute("portType");
+	ActorInfo actor = (ActorInfo) request.getAttribute("actorInfo");
 
+	String memberName = actor.getActorName() != null ? actor.getActorName() : "";
+	String birth = actor.getBirth() != null ? actor.getBirth() : "";
+	String age = actor.getAge() != 0 ? Integer.toString(actor.getAge()) : "";
+
+	String company = actor.getCompany() != null ? actor.getCompany() : "";
+	String education = actor.getEducation() != null ? actor.getEducation() : "";
+	String height = actor.getHeight() != 0 ? Double.toString(actor.getHeight()) : "";
+	String weight = actor.getWeight() != 0 ? Double.toString(actor.getWeight()) : "";
+	
+	String phone = actor.getPhone() != null ? actor.getPhone() : "";
+	String email = actor.getEmail() != null ? actor.getEmail() : "";
+	String sns = actor.getSns() != null ? actor.getSns() : "";
+	String speciality = actor.getSpeciality() != null ? actor.getSpeciality() : "";
+	
+	String img_src = (String) request.getAttribute("img_src");
+	
 	System.out.println("editPortfolio.jsp@memberId = " + memberId);
 	System.out.println("editPortfolio.jsp@portType = " + portType);
 	
@@ -28,62 +45,60 @@
     <div id="portfolio_head">
       <h2>포트폴리오</h2>
       <input type="button" id="update-btn" value="저장" class="btn" 
-              onclick="location.href='/app/ann/annEnroll';">
+              onclick="viewPort();">
     </div>
-    <form name="portfolioFrm" method="post">
+    <form 
+    	name="portfolioFrm" 
+    	method="post"
+    	action="<%=request.getContextPath()%>/mypage/viewPortfolio"
+    	enctype="multipart/form-data">
+    	<input type="hidden" name="memberId" value="<%= memberId %>" />
       <table id="portTable">
         <tbody>
           <tr>
             <th rowspan="9" id="img-th">대표사진</th>
             <td rowspan="9">
               <div id="profile-img-container">
-                <img src="img/hosi2.jpg" id="profile-img">
+                <img src="<%= img_src %>" id="profile-img">
               </div>
-              <input type="file" name="profilePic" id="profilePic">
+              <input type="file" name="profilePic" id="profilePic" accept="image/*" onchange="loadImage(this);">
             </td>
             <th>이름</th>
             <td colspan="3">
-              <!-- <span>호시</span> -->
-              <input type="text" name="Pname" id="Pname" value="호시">
+		      <input type="text" name="Pname" id="Pname" value="<%= memberName %>">
             </td>
           </tr>
           <tr>
-            <th>생년</th>
+            <th>생년월일</th>
             <td style="width: 150px;">
-            	<!-- <span>1996-06-15</span> -->
-              <input type="text" name="Pbirth" id="Pbirth" value="1996-06-15">
+              <input type="text" name="Pbirth" id="Pbirth" value="<%= birth %>">
             </td>
             <th style="text-align: right;">나이</th>
             <td>
-            	<!-- <span>27</span>세 -->
-              <input type="text" name="Page" id="Page" value="27" style="text-align:right;">세
+              <input type="text" name="Page" id="Page" value="<%= age %>" style="text-align:right;">세
             </td>
           </tr>
           <tr>
             <th>소속사</th>
             <td colspan="3">
-            	<!-- <span>플레디스</span> -->
-              <input type="text" name="company" id="company" value="플레디스">
+              <input type="text" name="company" id="company" value="<%= company %>">
             </td>
           </tr>
           <tr>
             <th>학력</th>
             <td colspan="3">
-            	<!-- <span>한양대학교 미래인재교육원</span> -->
-              <input type="text" name="school" id="school" value="한양대학교 미래인재교육원">
+              <input type="text" name="school" id="school" value="<%= education %>">
             </td>
           </tr>
           <tr>
             <th>키</th>
             <td style="width: 150px;">
-              <!-- <span>177</span>cm -->
-              <input type="text" name="height" id="height" value="177" style="text-align:right;">
+              <input type="text" name="height" id="height" value="<%= height %>" style="text-align:right;">
               <span>cm</span>
             </td>
             <th style="text-align: right;">체중</th>
             <td>
-            	<!-- <span>60.9</span>kg -->
-              <input type="text" name="weight" id="weight" value="60.9" style="text-align:right;">
+              <input type="text" name="weight" id="weight" value="<%= weight %>" style="text-align:right;">
               <span>kg</span>
             </td>
           </tr>
@@ -91,28 +106,28 @@
             <th>휴대폰</th>
             <td colspan="3">
             	<!-- <span>010-1234-1234</span> -->
-              <input type="tel" name="Pphone" id="Pphone" value="010-1234-124">
+              <input type="tel" name="Pphone" id="Pphone" value="<%= phone %>">
             </td>
           </tr>
           <tr>
             <th>이메일</th>
             <td colspan="3">
               <!-- <span>hosi@naver.com</span> -->
-              <input type="email" name="Pemail" id="Pemail" value="hosi@naver.com">
+              <input type="email" name="Pemail" id="Pemail" value="<%= email %>">
             </td>
           </tr>
           <tr>
             <th>sns</th>
             <td colspan="3">
             	<!-- <span>@ho5hi_kwon</span> -->
-              <input type="text" name="Psns" id="Psns" value="instagram - @ho5hi_kwon">
+              <input type="text" name="Psns" id="Psns" value="<%= sns %>">
             </td>
           </tr>
           <tr>
             <th>특기</th>
             <td colspan="3">
             	<!-- <span>춤</span> -->
-              	<input type="text" name="Pspeciality" id="Pspeciality" value="춤">
+              	<input type="text" name="Pspeciality" id="Pspeciality" value="<%= speciality %>">
             </td>
           </tr>
           <tr>
@@ -194,10 +209,88 @@
     </form>
   </div>
   <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/showpopup">
-  	<input type="hidden" name="memberId" />
+  	<input type="hidden" name="memberId" value="<%= memberId %>"/>
   </form>
   
   <script>
+	window.onload = () => {
+  		const ptable = document.getElementById("portTable"); 
+  		console.log("ptable", ptable);
+  		$.ajax({
+  			url: "<%= request.getContextPath() %>/mypage/viewWork",
+  			dataType: "json",
+  			data : {
+  				"memberId": "<%= memberId %>"
+  			},
+  			success(works){
+  				
+  				works.forEach((work) => {
+  					console.log(work)
+  					
+  					const img_src = `<%= request.getContextPath() %>/upload/portfolio/\${work.attachment.renamedFilename}`;
+  					const tbodyId = "work" + work.no;
+  					
+  	  				const trs = `
+  	  				<tbody id="\${tbodyId}">
+  	  		          <tr>
+  	  		            <th rowspan="5" class="work-no">
+  	  		        		<input type="checkbox" name="ck" value="\${work.no}" class="ckbox" />
+  	  		            </th>
+  	  		            <td rowspan="5">
+  	  		              <div id="work-img-container">
+  	  		                <img src="\${img_src}" class="work-img">
+  	  		              </div>
+  	  		            </td>
+  	  		            <td><br><br></td>
+  	  		          </tr>
+  	  		          <tr class="work-tr">
+  	  		            <th>작품명</th>
+  	  		            <td colspan="3">\${work.title}</td>
+  	  		          </tr>
+  	  		          <tr class="work-tr">
+  	  		            <th>배역</th>
+  	  		            <td colspan="3">\${work.myrole}</td>
+  	  		          </tr>
+  	  		          <tr class="work-tr">
+  	  		            <th>기간</th>
+  	  		            <td colspan="3">\${work.period}</td>
+  	  		          </tr>
+  	  		          <tr>
+  	  		            <td><br><br></td>
+  	  		          </tr>
+  	  		         <tbody>
+  	  				`;
+  	  				
+  	  				ptable.insertAdjacentHTML('beforeend', trs);
+  					
+  				});
+  				
+  			},
+  			error : console.log
+  			
+  		});  		
+  		
+  	}
+	
+	
+  	const viewPort = () => {
+  		document.portfolioFrm.submit();
+  	}
+	
+  const loadImage = (input) => {
+  		console.log(input.files);
+  		if(input.files[0]){
+  			const fr = new FileReader();
+  			fr.readAsDataURL(input.files[0]);
+  			fr.onload = (e) => {
+  				console.log(e.target.result);
+  				document.querySelector("#profile-img").src = e.target.result
+  			}
+  		}
+  	}	
+  
+
+  	
   	console.log("<%= memberId %>");  // actor2 
   	console.log("<%= portType %>");  // auto
   
@@ -207,8 +300,7 @@
   		const popup = open("", title, spec);
   		
   		const frm = document.enrollWorkFrm;
-  		frm.target = title; // 해당 팝업에서 폼을 제출
-  		frm.memberId.value = "actor";
+  		frm.target = title; // 해당 팝업에서 폼을 제출 
   		frm.submit();
   	}
 	
@@ -230,7 +322,7 @@
   			method : "POST",
   			dataType: "json",
   			data : {
-  				"memberId": "actor",
+  				"memberId": "<%= memberId %>",
   				"deleteWork" : noArr 
   			},
   			success(deleteArr){

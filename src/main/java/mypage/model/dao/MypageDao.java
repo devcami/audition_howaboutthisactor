@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import mypage.model.dto.ActorInfo;
@@ -134,14 +136,19 @@ public class MypageDao {
 			
 			while(rset.next()) {
 				actorInfo.setMemberId(rset.getString("member_id"));
+				actorInfo.setActorName(rset.getString("actor_name"));
 				actorInfo.setActorNo(rset.getInt("actor_no"));
-				actorInfo.setActorNo(rset.getInt("actor_age"));
+				actorInfo.setBirth(rset.getString("actor_birth"));
+				actorInfo.setAge(rset.getInt("actor_age"));
 				actorInfo.setEducation(rset.getString("actor_education"));
 				actorInfo.setHeight(rset.getDouble("actor_height"));
 				actorInfo.setWeight(rset.getDouble("actor_weight"));
 				actorInfo.setCompany(rset.getString("actor_company"));
+				actorInfo.setPhone(rset.getString("actor_phone"));
+				actorInfo.setEmail(rset.getString("actor_email"));
 				actorInfo.setSpeciality(rset.getString("actor_speciality"));
 				actorInfo.setSns(rset.getString("actor_sns"));
+				actorInfo.setAttachNo(rset.getString("actor_photo"));
 			}
 			
 		} catch (SQLException e) {
@@ -152,6 +159,98 @@ public class MypageDao {
 		}
 		
 		return actorInfo;
+	}
+
+	public String getRenamedFilename(Connection conn, int attachNo) {
+		String fileName = "";
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("getRenamedFilename");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, attachNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				fileName = rset.getString(1);
+			}
+		
+		} catch (SQLException e) {
+			throw new MypageException("프로필사진 RenamedFilename 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return fileName;
+	}
+
+	public List<PortfolioWork> findAllWork(Connection conn, String memberId) {
+		List<PortfolioWork> works = new ArrayList<>();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("findAllWork");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				PortfolioWork work = new PortfolioWork();
+				
+				work.setNo(rset.getInt("no"));
+				work.setMemberId(rset.getString("member_id"));
+				work.setTitle(rset.getString("title"));
+				work.setPeriod(rset.getString("period"));
+				work.setMyrole(rset.getString("myrole"));
+				work.setVideolink(rset.getString("youtube"));
+				
+				works.add(work);	
+			}
+		
+		} catch (SQLException e) {
+			throw new MypageException("포트폴리오 경력 조회오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return works;
+
+	}
+
+	public PortAttachment findWorkAttachment(Connection conn, int workNo) {
+		PortAttachment attach = new PortAttachment();
+		ResultSet rset = null;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("findWorkAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, workNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				attach.setAttachType(rset.getString("attach_type"));
+				attach.setMemberId(rset.getString("memberId"));
+				attach.setNo(rset.getInt("no"));
+				attach.setOriginalFilename(rset.getString("original_filename"));
+				attach.setRenamedFilename(rset.getString("renamed_filename"));
+				attach.setRegDate(rset.getDate("reg_date"));				
+			}
+			
+		} catch (SQLException e) {
+			throw new MypageException("포트폴리오 경력 파일 조회오류!", e);
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return attach;
 	}
 	
 	

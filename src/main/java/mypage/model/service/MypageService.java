@@ -73,8 +73,6 @@ public class MypageService {
 		Connection conn = getConnection();
 		
 		try {
-
-			
 			for(String no : deleteArr) {   
 	            result = mypageDao.deleteWorks(conn, Integer.parseInt(no));
 	            System.out.println(no + "번 지우기 성공!");
@@ -97,6 +95,34 @@ public class MypageService {
 		close(conn);
 		return actorInfo;
 	}
+
+	public String getRenamedFilename(int attachNo) {
+		Connection conn = getConnection();
+		String fileName = mypageDao.getRenamedFilename(conn, attachNo);
+		close(conn);
+		return fileName;
+	}
+
+	public List<PortfolioWork> findAllWork(String memberId) {
+		Connection conn = getConnection();
+		List<PortfolioWork> works = new ArrayList<>();
+		try {
+			works = mypageDao.findAllWork(conn, memberId);
+			
+			// works에서 번호 하나씩 꺼내서 port_attachment에서 그 번호에   맞는 renamedFilename 찾아서 삽입
+			for(int i = 0; i < works.size(); i++) {
+				int workNo = works.get(i).getNo();
+				PortAttachment attach = mypageDao.findWorkAttachment(conn, workNo);	
+				works.get(i).setAttachment(attach);
+			}
+			
+		} catch(Exception e) {
+			close(conn);			
+		}
+		
+		return works;
+	}
+
 	
 	
 

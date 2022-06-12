@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	String memberId = (String) request.getAttribute("memberId");
+	System.out.println("addWork.jsp@memberId = " + memberId);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +47,7 @@
           </tr>
           <tr>
           	<td>
-          		<input type="hidden" name="member" value="actor"/>
+          		<input type="hidden" name="member" value="<%= memberId %>"/>
            		<button>저장</button>          	
           	</td>
           </tr>

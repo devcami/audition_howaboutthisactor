@@ -181,7 +181,6 @@
 }
 .ckbox{
   transform : scale(1.5);
-  /* accent-color: #F2D1D1; */
   accent-color: #94B49F;
 }
   input::file-selector-button, button{

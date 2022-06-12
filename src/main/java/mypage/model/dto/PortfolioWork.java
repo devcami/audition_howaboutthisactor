@@ -82,11 +82,16 @@ public class PortfolioWork {
 		this.attachment = attachment;
 	}
 
+
 	@Override
 	public String toString() {
 		return "PortfolioWork [no=" + no + ", memberId=" + memberId + ", title=" + title + ", period=" + period
 				+ ", myrole=" + myrole + ", videolink=" + videolink + ", attachment=" + attachment + "]";
 	}
+	
+	
+	
+
 	
 	
 }

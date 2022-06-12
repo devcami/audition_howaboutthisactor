@@ -37,12 +37,13 @@
       </form>
     </div>
   </div>
-  <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/enrollPort">
+  <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/gotoEditPortfolio">
   	<input type="hidden" name="memberId" value="<%= memberId %>"/>
   	<input type="hidden" name="portType" value="New"/>
   </form>
   
   <script>
+   
 	const enrollPort = () => {
 		
 		document.enrollWorkFrm.submit();

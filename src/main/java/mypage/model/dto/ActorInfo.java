@@ -2,34 +2,43 @@ package mypage.model.dto;
 
 public class ActorInfo {
 	private String memberId;
+	private String actorName;
 	private int actorNo;
+	private String birth;
 	private int age;
 	private String education;
 	private double height;
 	private double weight;
 	private String company;
+	private String phone;
+	private String email;
 	private String speciality;
 	private String sns;	
-	private PortAttachment attachment;
+	private String attachNo;
 	
 	public ActorInfo() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public ActorInfo(String memberId, int actorNo, int age, String education, double height, double weight,
-			String company, String speciality, String sns, PortAttachment attachment) {
+	public ActorInfo(String memberId, String actorName, int actorNo, String birth, int age, String education,
+			double height, double weight, String company, String phone, String email, String speciality, String sns,
+			String attachNo) {
 		super();
 		this.memberId = memberId;
+		this.actorName = actorName;
 		this.actorNo = actorNo;
+		this.birth = birth;
 		this.age = age;
 		this.education = education;
 		this.height = height;
 		this.weight = weight;
 		this.company = company;
+		this.phone = phone;
+		this.email = email;
 		this.speciality = speciality;
 		this.sns = sns;
-		this.attachment = attachment;
+		this.attachNo = attachNo;
 	}
 
 	public String getMemberId() {
@@ -40,12 +49,28 @@ public class ActorInfo {
 		this.memberId = memberId;
 	}
 
+	public String getActorName() {
+		return actorName;
+	}
+
+	public void setActorName(String actorName) {
+		this.actorName = actorName;
+	}
+
 	public int getActorNo() {
 		return actorNo;
 	}
 
 	public void setActorNo(int actorNo) {
 		this.actorNo = actorNo;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 
 	public int getAge() {
@@ -88,6 +113,22 @@ public class ActorInfo {
 		this.company = company;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	public String getSpeciality() {
 		return speciality;
 	}
@@ -104,20 +145,20 @@ public class ActorInfo {
 		this.sns = sns;
 	}
 
-	public PortAttachment getAttachment() {
-		return attachment;
+	public String getAttachNo() {
+		return attachNo;
 	}
 
-	public void setAttachment(PortAttachment attachment) {
-		this.attachment = attachment;
+	public void setAttachNo(String attachNo) {
+		this.attachNo = attachNo;
 	}
 
 	@Override
 	public String toString() {
-		return "ActorInfo [memberId=" + memberId + ", actorNo=" + actorNo + ", age=" + age + ", education=" + education
-				+ ", height=" + height + ", weight=" + weight + ", company=" + company + ", speciality=" + speciality
-				+ ", sns=" + sns + ", attachment=" + attachment + "]";
+		return "ActorInfo [memberId=" + memberId + ", actorName=" + actorName + ", actorNo=" + actorNo + ", birth="
+				+ birth + ", age=" + age + ", education=" + education + ", height=" + height + ", weight=" + weight
+				+ ", company=" + company + ", phone=" + phone + ", email=" + email + ", speciality=" + speciality
+				+ ", sns=" + sns + ", attachNo=" + attachNo + "]";
 	}
 
-	
 }
