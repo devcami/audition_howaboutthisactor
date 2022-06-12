@@ -53,18 +53,9 @@ public class MypageService {
 	
 	public int findCurrentWorkNo() {
 		Connection conn = getConnection();
-		int no = 0;
-		
-		try {	
-			no = mypageDao.findCurrentWorkNo(conn); // seq_board_no.currval
-			System.out.println("방금 등록된 Work.no = " + no);
-			
-		} catch(Exception e) {
-			rollback(conn);
-		 	throw e;
-		} finally {
-			close(conn);
-		}
+		int no = mypageDao.findCurrentWorkNo(conn); // seq_board_no.currval
+		System.out.println("방금 등록된 Work.no = " + no);
+		close(conn);
 		return no;
 	}
 
@@ -117,10 +108,79 @@ public class MypageService {
 			}
 			
 		} catch(Exception e) {
-			close(conn);			
+			throw e;	
+		} finally {
+			close(conn);
 		}
 		
 		return works;
+	}
+
+	public List<Integer> insertPortAttachment(PortAttachment attachment, int oldAttachNo) {
+		List<Integer> resultNo = new ArrayList<>();
+		int result = 0;
+		Connection conn = getConnection();
+		
+		try {
+			// 1. PortAttachment에 attachment insert
+			result = mypageDao.insertPortAttachment(conn, attachment); // pk no값 결정 - seq_port_attachment_no
+						
+			// 2. portAttachment pk 가져오기
+			int attachNo = mypageDao.findCurrentPortAttachmentNo(conn); // seq_port_attachment_no.currval
+			System.out.println("MypageService@방금 등록된 PortAttachment.no = " + attachNo);
+			
+			// 3. 예전 프로필사진 삭제
+			result = mypageDao.deleteOldProfilePic(conn, oldAttachNo);
+			
+			resultNo.add(result);
+			resultNo.add(attachNo);
+			
+			commit(conn);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			close(conn);
+		}		
+		return resultNo;
+	}
+
+	
+	public int updatePortfolio(ActorInfo actorInfo) {
+		int result = 0;
+		Connection conn = getConnection();
+		
+		try {
+			result = mypageDao.updatePortfolio(conn, actorInfo);
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			e.printStackTrace();
+			throw e;
+		} finally {
+			close(conn);
+		}
+	
+		return result;
+	}
+
+	public int enrollPortfolio(ActorInfo actorInfo) {
+		int result = 0;
+		Connection conn = getConnection();
+		
+		try {
+			result = mypageDao.enrollPortfolio(conn, actorInfo);
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+			e.printStackTrace();
+			throw e;
+		} finally {
+			close(conn);
+		}
+		
+		return result;
 	}
 
 	

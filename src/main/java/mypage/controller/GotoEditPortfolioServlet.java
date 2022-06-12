@@ -23,20 +23,25 @@ public class GotoEditPortfolioServlet extends HttpServlet {
 		try {
 			String memberId = request.getParameter("memberId");
 			String portType = request.getParameter("portType");
-			
+			int attachNo = Integer.parseInt(request.getParameter("attachNo"));
+					
 			System.out.println("GotoEditPortfolioServlet@memberId = " + memberId);
 			System.out.println("GotoEditPortfolioServlet@portType = " + portType);
+			System.out.println("GotoEditPortfolioServlet@attachNo 첫번째 = " + attachNo);
 		
 			ActorInfo actorInfo = mypageService.findActorInfo(memberId);
-
+			System.out.println("GotoEditPortfolioServlet@attachNo 두번째 = " + actorInfo.getAttachNo());
+			
 			String img_src = request.getContextPath() + "/images/default.png"; 
 //			const img_src = `<%= request.getContextPath() %>/upload/portfolio/\${work.attachment.renamedFilename}`;
 			
 			if(portType.equals("exist")) {
-				int attachNo = Integer.parseInt(actorInfo.getAttachNo());
+				attachNo = actorInfo.getAttachNo();
 				String fileName = mypageService.getRenamedFilename(attachNo);
-				
 				img_src = request.getContextPath() + "/upload/portfolio/" + fileName;
+				
+			} else {
+				actorInfo.setAttachNo(130);
 			}
 			
 			System.out.println("GotoEditPortfolioServlet@actorInfo = " + actorInfo.toString());
@@ -48,14 +53,8 @@ public class GotoEditPortfolioServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/views/mypage/editPortfolio.jsp")
 			.forward(request, response);
 		} catch(Exception e) {
-			
+			e.printStackTrace();
 		}
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
 	}
 
 }

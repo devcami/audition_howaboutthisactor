@@ -28,18 +28,17 @@ public class PortfolioServlet extends HttpServlet {
 			String memberId = request.getParameter("memberId");
 			System.out.println("memberId = " + memberId);
 			
-			ActorInfo actorInfo = new ActorInfo();			
-			
-			actorInfo = mypageService.findActorInfo(memberId);
+			ActorInfo actorInfo = mypageService.findActorInfo(memberId);
 			System.out.println(actorInfo.toString());
 			
 			if(actorInfo.getMemberId() == null) {
+
 				request.getRequestDispatcher("/WEB-INF/views/mypage/enrollPortfolio.jsp")
 					.forward(request, response);
 			}
 			else {
 				
-				int attachNo = Integer.parseInt(actorInfo.getAttachNo());
+				int attachNo = actorInfo.getAttachNo();
 				String fileName = mypageService.getRenamedFilename(attachNo);
 				String img_src = request.getContextPath() + "/upload/portfolio/" + fileName;
 				
@@ -49,7 +48,7 @@ public class PortfolioServlet extends HttpServlet {
 				request.getRequestDispatcher("/WEB-INF/views/mypage/viewPortfolio.jsp")
 				.forward(request, response);
 			}
-				
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

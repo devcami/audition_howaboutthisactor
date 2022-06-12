@@ -19,12 +19,14 @@
 	String email = actor.getEmail() != null ? actor.getEmail() : "";
 	String sns = actor.getSns() != null ? actor.getSns() : "";
 	String speciality = actor.getSpeciality() != null ? actor.getSpeciality() : "";
+	int attachNo = actor.getAttachNo();
 	
 	String img_src = (String) request.getAttribute("img_src");
 	
 	System.out.println("editPortfolio.jsp@memberId = " + memberId);
 	System.out.println("editPortfolio.jsp@portType = " + portType);
-	
+	System.out.println("editPortfolio.jsp@attachNo = " + attachNo);
+
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/editPortfolio.css" />
 <div class="top-logo">
@@ -53,6 +55,8 @@
     	action="<%=request.getContextPath()%>/mypage/viewPortfolio"
     	enctype="multipart/form-data">
     	<input type="hidden" name="memberId" value="<%= memberId %>" />
+    	<input type="hidden" name="portType" value="<%= portType %>" />
+    	<input type="hidden" name="attachNo" value="<%= attachNo %>" />
       <table id="portTable">
         <tbody>
           <tr>
@@ -147,64 +151,7 @@
             <td colspan="6" style="border-top: 1px solid grey;"></td>
           </tr>
 		</tbody>
-		<tbody id="work11">
-          <tr>
-            <th rowspan="5" class="work-no">
-            	<input type="checkbox" name="ck" value="26" class="ckbox" />
-            </th>
-            <td rowspan="5">
-              <div id="work-img-container">
-                <img src="<%= request.getContextPath() %>/upload/portfolio/20220610_231526783_055.jpg" class="work-img">
-              </div>
-            </td>
-            <td><br><br></td>
-          </tr>
-          <tr class="work-tr">
-            <th>작품명</th>
-            <td colspan="3">스파이더</td>
-          </tr>
-          <tr class="work-tr">
-            <th>배역</th>
-            <td colspan="3">호랑이</td>
-          </tr>
-          <tr class="work-tr">
-            <th>기간</th>
-            <td colspan="3">2022.04 ~ 2022.05</td>
-          </tr>
-          <tr>
-            <td><br><br></td>
-          </tr>
-        </tbody>
-        
-        <tbody id="work12">
-       	 <tr>
-          <th rowspan="5" class="work-no">
-            <input type="checkbox" name="ck" value="26" class="ckbox">
-          </th>
-          <td rowspan="5">
-            <div id="work-img-container">
-              <img src="img/hosi3.jpg" id="work-img">
-            </div>
-          </td>
-          <td><br><br></td>
-        </tr>
-        <tr class="work-tr">
-          <th>작품명</th>
-          <td colspan="3">스파이더</td>
-        </tr>
-        <tr class="work-tr">
-          <th>배역</th>
-          <td colspan="3">호랑이</td>
-        </tr>
-        <tr class="work-tr">
-          <th>기간</th>
-          <td colspan="3">2022.04 ~ 2022.05</td>
-        </tr>
-        <tr>
-          <td><br><br></td>
-        </tr>
-       </tbody>
-        
+		<!-- 여기에 경력이 하나씩 추가됨 -->
       </table>
     </form>
   </div>
@@ -316,27 +263,37 @@
   		});
   		
   		console.log("noArr", noArr);
+  		console.log(noArr.length);
+  		const msg = "총 " + noArr.length + "개의 파일이 선택되었습니다. 삭제하시겠습니까?"
   		
-  		$.ajax({
-  			url : "<%= request.getContextPath() %>/mypage/deletework",
-  			method : "POST",
-  			dataType: "json",
-  			data : {
-  				"memberId": "<%= memberId %>",
-  				"deleteWork" : noArr 
-  			},
-  			success(deleteArr){
-  				console.log("deleteArr = ", deleteArr);
-  				$.each(deleteArr, function(index, num){
- 					let tbodyName = "#work" + num;
- 					console.log(tbodyName);
- 					
- 					$("tbody").remove(tbodyName);
-  				});
-  				
-  			},
-  			error : console.log
-  		});
+  		const check = confirm(msg);
+  		
+  		if(check){
+  	  		$.ajax({
+  	  			url : "<%= request.getContextPath() %>/mypage/deletework",
+  	  			method : "POST",
+  	  			dataType: "json",
+  	  			data : {
+  	  				"memberId": "<%= memberId %>",
+  	  				"deleteWork" : noArr 
+  	  			},
+  	  			success(deleteArr){
+  	  				console.log("deleteArr = ", deleteArr);
+  	  				$.each(deleteArr, function(index, num){
+  	 					let tbodyName = "#work" + num;
+  	 					console.log(tbodyName);
+  	 					
+  	 					$("tbody").remove(tbodyName);
+  	  				});
+  	  				alert('경력이 삭제되었습니다.');
+  	  			},
+  	  			error : console.log
+  	  		});
+  		} else {
+  	  		$('input:checkbox[name=ck]').prop('checked', false);
+  		}
+  		
+
   		
   	}
  

@@ -14,7 +14,8 @@ public class ActorInfo {
 	private String email;
 	private String speciality;
 	private String sns;	
-	private String attachNo;
+	private int attachNo;
+	private PortAttachment attachment;
 	
 	public ActorInfo() {
 		super();
@@ -23,7 +24,7 @@ public class ActorInfo {
 
 	public ActorInfo(String memberId, String actorName, int actorNo, String birth, int age, String education,
 			double height, double weight, String company, String phone, String email, String speciality, String sns,
-			String attachNo) {
+			int attachNo, PortAttachment attachment) {
 		super();
 		this.memberId = memberId;
 		this.actorName = actorName;
@@ -39,6 +40,7 @@ public class ActorInfo {
 		this.speciality = speciality;
 		this.sns = sns;
 		this.attachNo = attachNo;
+		this.attachment = attachment;
 	}
 
 	public String getMemberId() {
@@ -145,12 +147,20 @@ public class ActorInfo {
 		this.sns = sns;
 	}
 
-	public String getAttachNo() {
+	public int getAttachNo() {
 		return attachNo;
 	}
 
-	public void setAttachNo(String attachNo) {
+	public void setAttachNo(int attachNo) {
 		this.attachNo = attachNo;
+	}
+
+	public PortAttachment getAttachment() {
+		return attachment;
+	}
+
+	public void setAttachment(PortAttachment attachment) {
+		this.attachment = attachment;
 	}
 
 	@Override
@@ -158,7 +168,9 @@ public class ActorInfo {
 		return "ActorInfo [memberId=" + memberId + ", actorName=" + actorName + ", actorNo=" + actorNo + ", birth="
 				+ birth + ", age=" + age + ", education=" + education + ", height=" + height + ", weight=" + weight
 				+ ", company=" + company + ", phone=" + phone + ", email=" + email + ", speciality=" + speciality
-				+ ", sns=" + sns + ", attachNo=" + attachNo + "]";
+				+ ", sns=" + sns + ", attachNo=" + attachNo + ", attachment=" + attachment + "]";
 	}
+
+	
 
 }

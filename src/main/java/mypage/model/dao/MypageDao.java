@@ -148,7 +148,7 @@ public class MypageDao {
 				actorInfo.setEmail(rset.getString("actor_email"));
 				actorInfo.setSpeciality(rset.getString("actor_speciality"));
 				actorInfo.setSns(rset.getString("actor_sns"));
-				actorInfo.setAttachNo(rset.getString("actor_photo"));
+				actorInfo.setAttachNo(rset.getInt("actor_photo"));
 			}
 			
 		} catch (SQLException e) {
@@ -251,6 +251,141 @@ public class MypageDao {
 		}
 		
 		return attach;
+	}
+
+	public int insertPortAttachment(Connection conn, PortAttachment attachment) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertPortAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, attachment.getMemberId());
+			pstmt.setString(2, attachment.getOriginalFilename());
+			pstmt.setString(3, attachment.getRenamedFilename());
+			pstmt.setString(4, attachment.getAttachType());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new MypageException("insertPortAttachment@프로필사진 등록오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int findCurrentPortAttachmentNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int no = 0;
+		String sql = prop.getProperty("findCurrentPortAttachmentNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				no = rset.getInt(1);
+			}
+			
+		} catch(SQLException e) {
+			throw new MypageException("findCurrentPortAttachmentNo@프로필사진파일 번호 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		System.out.println("PortfolioWork@no = " + no);
+		
+		return no;
+	}
+
+	public int updatePortfolio(Connection conn, ActorInfo actorInfo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updatePortfolio");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, actorInfo.getAge());
+			pstmt.setString(2, actorInfo.getEducation());
+			pstmt.setDouble(3, actorInfo.getHeight());
+			pstmt.setDouble(4, actorInfo.getWeight());
+			pstmt.setString(5, actorInfo.getCompany());
+			pstmt.setString(6, actorInfo.getSpeciality());
+			pstmt.setString(7, actorInfo.getSns());
+			pstmt.setString(8, Integer.toString(actorInfo.getAttachNo()));
+			pstmt.setString(9, actorInfo.getActorName());
+			pstmt.setString(10, actorInfo.getBirth());
+			pstmt.setString(11, actorInfo.getPhone());
+			pstmt.setString(12, actorInfo.getEmail());
+			pstmt.setString(13, actorInfo.getMemberId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			throw new MypageException("updatePortfolio@프로필 업데이트 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+	public int enrollPortfolio(Connection conn, ActorInfo actorInfo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("enrollPortfolio");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, actorInfo.getMemberId());
+			
+			pstmt.setInt(2, actorInfo.getAge());
+			pstmt.setString(3, actorInfo.getEducation());
+			pstmt.setDouble(4, actorInfo.getHeight());
+			pstmt.setDouble(5, actorInfo.getWeight());
+			pstmt.setString(6, actorInfo.getCompany());
+			pstmt.setString(7, actorInfo.getSpeciality());
+			pstmt.setString(8, actorInfo.getSns());
+			pstmt.setString(9, Integer.toString(actorInfo.getAttachNo()));
+			pstmt.setString(10, actorInfo.getActorName());
+			pstmt.setString(11, actorInfo.getBirth());
+			pstmt.setString(12, actorInfo.getPhone());
+			pstmt.setString(13, actorInfo.getEmail());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch(SQLException e) {
+			throw new MypageException("enrollPortfolio@프로필 삽입 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteOldProfilePic(Connection conn, int oldAttachNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteOldProfilePic");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, oldAttachNo);
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			throw new MypageException("insertPortAttachment@예전 프로필사진 삭제오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	

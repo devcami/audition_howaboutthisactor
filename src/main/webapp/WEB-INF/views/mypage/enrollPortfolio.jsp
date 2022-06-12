@@ -40,6 +40,7 @@
   <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/gotoEditPortfolio">
   	<input type="hidden" name="memberId" value="<%= memberId %>"/>
   	<input type="hidden" name="portType" value="New"/>
+  	<input type="hidden" name="attachNo" value="130">
   </form>
   
   <script>
@@ -49,41 +50,6 @@
 		document.enrollWorkFrm.submit();
   	}
 	
-  	const deleteWork = () => {
-  		
-  		const noArr = [];
-  		
-  		$('input:checkbox[name=ck]').each(function (index) {
-  			if($(this).is(":checked")==true){
-  		    	// console.log($(this).val());
-  		    	noArr.push($(this).val());
-  		    }
-  		});
-  		
-  		console.log("noArr", noArr);
-  		
-  		$.ajax({
-  			url : "<%= request.getContextPath() %>/mypage/deletework",
-  			method : "POST",
-  			dataType: "json",
-  			data : {
-  				"memberId": "actor",
-  				"deleteWork" : noArr 
-  			},
-  			success(deleteArr){
-  				console.log("deleteArr = ", deleteArr);
-  				$.each(deleteArr, function(index, num){
- 					let tbodyName = "#work" + num;
- 					console.log(tbodyName);
- 					
- 					$("tbody").remove(tbodyName);
-  				});
-  				
-  			},
-  			error : console.log
-  		});
-  		
-  	}
  
   
     const mousein = (menu) => {

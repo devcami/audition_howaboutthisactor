@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
 import mypage.model.service.MypageService;
 
@@ -33,9 +32,9 @@ public class ViewWorkServlet extends HttpServlet {
 			
 			works = mypageService.findAllWork(memberId);
 			
-			for(int i = 0; i < works.size(); i++) {
-				System.out.println(i + " " + works.get(i).toString());
-			}
+//			for(int i = 0; i < works.size(); i++) {
+//				System.out.println(i + " " + works.get(i).toString());
+//			}
 			
 			// 4. 응답 : 생성된 work객체 반환
 			response.setContentType("application/json; charset=utf-8");

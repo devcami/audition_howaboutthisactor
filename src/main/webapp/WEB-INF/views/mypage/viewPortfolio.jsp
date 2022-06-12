@@ -8,22 +8,32 @@
 	ActorInfo actorInfo = (ActorInfo) request.getAttribute("actorInfo");
 	String img_src = (String) request.getAttribute("img_src");
 	
-	String actorName = actorInfo.getActorName();
-	int actorNo = actorInfo.getActorNo();
-	String birth = actorInfo.getBirth();
-	int age = actorInfo.getAge();
-	String education = actorInfo.getEducation();
-	double height = actorInfo.getHeight();
-	double weight = actorInfo.getWeight();
-	String company = actorInfo.getCompany();
-	String phone = actorInfo.getPhone();
-	String email = actorInfo.getEmail();
-	String speciality = actorInfo.getSpeciality(); 
-	String sns = actorInfo.getSns();
 	
-	System.out.println("viewPortfolio.jsp@memberId" + memberId + " 회원 포폴 조회(기존회원)");
-	System.out.println("viewPortfolio.jsp@actorInfo" + actorInfo.toString());
-	System.out.println("viewPortfolio.jsp@img_src" + img_src);
+	String actorName = actorInfo.getActorName() != null ? actorInfo.getActorName() : "";
+	int actorNo = actorInfo.getActorNo();
+	String birth = actorInfo.getBirth() != null ? actorInfo.getBirth() : "";
+	String education = actorInfo.getEducation() != null ? actorInfo.getEducation() : "";
+	String company = actorInfo.getCompany() != null ? actorInfo.getCompany() : "";
+	String phone = actorInfo.getPhone() != null ? actorInfo.getPhone() : "";
+	String email = actorInfo.getEmail() != null ? actorInfo.getEmail() : "";
+	String speciality = actorInfo.getSpeciality() != null ? actorInfo.getSpeciality() : ""; 
+	String sns = actorInfo.getSns() != null ? actorInfo.getSns() : "";
+	int attachNo = actorInfo.getAttachNo();
+	
+	int _age = actorInfo.getAge();
+	String age = _age != 0 ? Integer.toString(_age) : "";	
+	
+	double _height = actorInfo.getHeight();
+	String height = _height != 0 ? Double.toString(_height) : "";
+	
+	double _weight = actorInfo.getWeight();
+	String weight = _weight != 0 ? Double.toString(_weight) : "";
+	
+	System.out.println("viewPortfolio.jsp@memberId = " + memberId + " 회원 포폴 조회(기존회원)");
+	System.out.println("viewPortfolio.jsp@actorInfo = " + actorInfo.toString());
+	System.out.println("viewPortfolio.jsp@img_src = " + img_src);
+	System.out.println("viewPortfolio.jsp@attachNo = " + attachNo);
+	
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/viewPortfolio.css" />
 <div class="top-logo">
@@ -46,7 +56,8 @@
       <form action="<%= request.getContextPath() %>/mypage/gotoEditPortfolio" style="margin: 0;">
       	  <input type="submit" id="update-btn" value="수정" class="btn" >
           <input type="hidden" name="memberId" value="<%= memberId %>" />
-          <input type="hidden" name="portType" value = "<%= portType %>" />
+          <input type="hidden" name="portType" value = "<%= portType %>" />        
+          <input type="hidden" name="attachNo" value = "<%=  attachNo %>" />        
       </form>
 
     </div>
@@ -74,7 +85,7 @@
             </td>
             <th style="text-align: right;">나이</th>
             <td>
-            	<span><%= age %></span>세
+            	<span><%= age %></span><% if(!age.isEmpty()) { %>세<% } %>
               <!-- <input type="text" name="Page" id="Page" value="27" style="text-align:right;">세 -->
             </td>
           </tr>
@@ -95,13 +106,13 @@
           <tr>
             <th>키</th>
             <td style="width: 150px;">
-              <span><%= height %></span>cm
+              <span><%= height %></span><% if(!height.isEmpty()) { %>cm<% } %>
               <!-- <input type="text" name="height" id="height" value="177" style="text-align:right;">
               <span>cm</span> -->
             </td>
             <th style="text-align: right;">체중</th>
             <td>
-            	<span><%= weight %></span>kg
+            	<span><%= weight %></span><% if(!weight.isEmpty()) { %>kg<% } %>
               <!-- <input type="text" name="weight" id="weight" value="60.9" style="text-align:right;">
               <span>kg</span> -->
             </td>
