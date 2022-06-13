@@ -58,6 +58,7 @@ public class PwishListServlet extends HttpServlet {
 			System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
 			System.out.println("PwishListServlet@list.get(2)" + list.get(2));
 			
+			// 여기
 //			
 //			String url = request.getRequestURI(); // /mvc/admin/memberList
 ////			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
