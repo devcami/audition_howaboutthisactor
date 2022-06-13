@@ -15,7 +15,7 @@ import mypage.model.dto.PortfolioWork;
 public class MypageService {
 	
 	private MypageDao mypageDao = new MypageDao();
-	public static final int WISH_NUM_PER_PAGE = 8;
+	public static final int APPLY_NUM_PER_PAGE = 8;
 
 	public List<Integer> insertPortWork(PortfolioWork work) {
 		List<Integer> resultNo = new ArrayList<>();

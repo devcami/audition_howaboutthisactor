@@ -14,6 +14,7 @@
 	List<Ann> list = (List<Ann>) request.getAttribute("list");
 	String pagebar = (String) request.getAttribute("pagebar");
 	String sortType = request.getParameter("sortType");
+	
 %>
 
 <div class="top-logo">
@@ -31,7 +32,7 @@
     </ul>
   </div>
   
-<div id="mywish">
+  <div id="mywish">
     <div>
       <div id="wishlist-head">
         <h2>찜 목록</h2>
@@ -43,134 +44,46 @@
         </div>
       </div>
       <div id="updown-container">
+      <% if(list != null && !list.isEmpty()){
+		for(int i = 0; i < list.size(); i++){ 
+		%>
+
         <div class="col">
-          <div class="card">
+          <div class="card" onclick="annView(this);">
             <div class="card-body">
-              <h5 class="card-title">테스트제목6</h5>
-              <p class="card-text">director</p>
-              <input type="hidden" name="annNo" id="annNo" value="23">
+              <h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
+              <p class="card-text"><%= list.get(i).getMemberId() %></p>
+              <input type="hidden" name="annNo" id="annNo" value="<%= list.get(i).getAnnNo() %>">
             </div>
             <div class="card-footer">
-              <small class="text-muted">2022-06-07</small> ~ 
-              <small class="text-muted">2022-06-12</small>
+              <small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
+              <small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
             </div>
           </div>
         </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">테스트제목6</h5>
-              <p class="card-text">director</p>
-              <input type="hidden" name="annNo" id="annNo" value="23">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">2022-06-07</small> ~ 
-              <small class="text-muted">2022-06-12</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">테스트제목6</h5>
-              <p class="card-text">director</p>
-              <input type="hidden" name="annNo" id="annNo" value="23">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">2022-06-07</small> ~ 
-              <small class="text-muted">2022-06-12</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">테스트제목6</h5>
-              <p class="card-text">director</p>
-              <input type="hidden" name="annNo" id="annNo" value="23">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">2022-06-07</small> ~ 
-              <small class="text-muted">2022-06-12</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">테스트제목6</h5>
-              <p class="card-text">director</p>
-              <input type="hidden" name="annNo" id="annNo" value="23">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">2022-06-07</small> ~ 
-              <small class="text-muted">2022-06-12</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">테스트제목6</h5>
-              <p class="card-text">director</p>
-              <input type="hidden" name="annNo" id="annNo" value="23">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">2022-06-07</small> ~ 
-              <small class="text-muted">2022-06-12</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">테스트제목6</h5>
-              <p class="card-text">director</p>
-              <input type="hidden" name="annNo" id="annNo" value="23">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">2022-06-07</small> ~ 
-              <small class="text-muted">2022-06-12</small>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">테스트제목6</h5>
-              <p class="card-text">director</p>
-              <input type="hidden" name="annNo" id="annNo" value="23">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted">2022-06-07</small> ~ 
-              <small class="text-muted">2022-06-12</small>
-            </div>
-          </div>
-        </div>
+        		<% 	} %>
+		<% } else { %>
+			<div><p>조회된 공고가 없습니다.</p></div>
+		<% } %>
       </div>
     </div>
-    <div id="pagebar">
-      <a href='/mvc/admin/memberList?cPage=1' class="page">1</a>
-      <a href='/mvc/admin/memberList?cPage=1' class="page">2</a>
-      <a href='/mvc/admin/memberList?cPage=1' class="page">3</a>
-      <a href='/mvc/admin/memberList?cPage=1' class="page">4</a>
-      <a href='/mvc/admin/memberList?cPage=1' class="page">5</a>
-      <a href='/mvc/admin/memberList?cPage=6' class="page">next</a>
-    </div>
+	<div id="pagebar">
+		<%= pagebar %>
+	</div>
 
   </div>
 
   <script>
   sortType.addEventListener('change', (e) => {
-      document.querySelector("#ann-container").innerHTML = "";
+      document.querySelector("#updown-container").innerHTML = "";
       const {value} = e.target;
       // 공고 마감순 선택 시 페이지 요청
-      location.href=`/app/ann/annList?sortType=${value}`;
+      location.href=`/app/mypage/Pmywish?sortType=\${value}`;
    });
 
    const annView = (ann) => {
       const annNo = ann.firstElementChild.lastElementChild.value;
-      location.href=`/app/ann/annView?annNo=${annNo}`;
+   	  location.href=`/app/ann/annView?annNo=\${annNo}`;
    };
    
     const mousein = (menu) => {

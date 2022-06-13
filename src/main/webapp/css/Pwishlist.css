@@ -63,15 +63,20 @@
   margin: 15px 0 10px;
 }
 #pagebar {
-  display: flex;
-  justify-content: center;
-  margin-top: 100px;
+text-align: center;
+    font-size: 20px;
+    margin: 100px 0 20px;
+    color: #639488;
 }
-.page {
-  margin: 3px;
-  text-decoration: none;
-  color: #bbded6;
-  font-size: 23px;
+#pagebar span {
+	padding: 6px;
+    color: #639488;
+}
+#pagebar a {
+	padding: 10px;
+    text-decoration: none;
+    color: #bbded6;
+    transition: all 0.2s ease-in-out;
 }
 #updown-container{
   width: 100%;

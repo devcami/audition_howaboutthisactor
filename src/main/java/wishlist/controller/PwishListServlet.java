@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ann.model.dto.Ann;
+import common.HelloMvcUtils;
 import wishlist.model.service.WishListService;
 
 /**
@@ -24,7 +25,10 @@ public class PwishListServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String memberId = request.getParameter("memberId");
+//		String memberId = request.getParameter("memberId");
+//		System.out.println("PwishListServlet@memberId = " + memberId);
+		
+		String memberId = "hosi";
 		
 		try {
 			int numPerPage = wishListService.WISH_NUM_PER_PAGE; // 12
@@ -53,23 +57,23 @@ public class PwishListServlet extends HttpServlet {
 				list = wishListService.findAll(memberId, param);
 			}
 			
-			System.out.println("PwishListServlet@list 길이 = " + list.size());
-			System.out.println("PwishListServlet@list.get(0) = " + list.get(0));
-			System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
-			System.out.println("PwishListServlet@list.get(2)" + list.get(2));
+//			System.out.println("PwishListServlet@list 길이 = " + list.size());
+//			System.out.println("PwishListServlet@list.get(0) = " + list.get(0));
+//			System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
+//			System.out.println("PwishListServlet@list.get(2)" + list.get(2));
+
 			
-			// 여기
-//			
-//			String url = request.getRequestURI(); // /mvc/admin/memberList
-////			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-////			System.out.println(pagebar);
-//			
-//			request.setAttribute("sortType", sortType);
-//			request.setAttribute("list", list);
-////			request.setAttribute("pagebar", pagebar);
-//			
-//			request.getRequestDispatcher("/WEB-INF/views/mypage/Pwishlist.jsp")
-//				.forward(request, response);
+			String url = request.getRequestURI(); // /app/mypage/Pmywish
+			System.out.println(url);
+			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
+//			System.out.println("pagebaor =" + pagebar);
+			
+			request.setAttribute("sortType", sortType);
+			request.setAttribute("list", list);
+			request.setAttribute("pagebar", pagebar);
+			
+			request.getRequestDispatcher("/WEB-INF/views/mypage/Pwishlist.jsp")
+				.forward(request, response);
 				
 		} catch (Exception e) {
 			e.printStackTrace();

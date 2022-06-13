@@ -26,28 +26,44 @@ public class PortfolioServlet extends HttpServlet {
 		try {
 			
 			String memberId = request.getParameter("memberId");
-			System.out.println("memberId = " + memberId);
+			String memberRole = request.getParameter("memberRole");
 			
-			ActorInfo actorInfo = mypageService.findActorInfo(memberId);
-			System.out.println(actorInfo.toString());
-			
-			if(actorInfo.getMemberId() == null) {
+			if("A".equals(memberRole)) {
+				// 관리자회원인 경우
+				
+			}
+			if("D".equals(memberRole)) {
+				// 로그인한 회원이 캐스팅디렉터 회원인 경우
+				ActorInfo actorInfo = mypageService.findActorInfo(memberId);
+				System.out.println(actorInfo.toString());
+				
+			}
+			if("P".equals(memberRole)) {
+				// 로그인한 회원이 배우회원인 경우 
+				ActorInfo actorInfo = mypageService.findActorInfo(memberId);
+				System.out.println(actorInfo.toString());
+				
+				if(actorInfo.getMemberId() == null) {
 
-				request.getRequestDispatcher("/WEB-INF/views/mypage/enrollPortfolio.jsp")
+					request.getRequestDispatcher("/WEB-INF/views/mypage/enrollPortfolio.jsp")
+						.forward(request, response);
+				}
+				else {
+					
+					int attachNo = actorInfo.getAttachNo();
+					String fileName = mypageService.getRenamedFilename(attachNo);
+					String img_src = request.getContextPath() + "/upload/portfolio/" + fileName;
+					
+					request.setAttribute("img_src", img_src);
+					request.setAttribute("actorInfo", actorInfo);
+					request.setAttribute("portType", "exist");
+					request.getRequestDispatcher("/WEB-INF/views/mypage/viewPortfolio.jsp")
 					.forward(request, response);
-			}
-			else {
+				}
 				
-				int attachNo = actorInfo.getAttachNo();
-				String fileName = mypageService.getRenamedFilename(attachNo);
-				String img_src = request.getContextPath() + "/upload/portfolio/" + fileName;
-				
-				request.setAttribute("img_src", img_src);
-				request.setAttribute("actorInfo", actorInfo);
-				request.setAttribute("portType", "exist");
-				request.getRequestDispatcher("/WEB-INF/views/mypage/viewPortfolio.jsp")
-				.forward(request, response);
 			}
+			
+
 			
 		} catch (Exception e) {
 			e.printStackTrace();

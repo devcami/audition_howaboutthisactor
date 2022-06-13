@@ -104,17 +104,17 @@ public class WishListDao {
 		Ann ann = new Ann();
 		ann.setAnnNo(rset.getInt("ann_no"));
 		ann.setMemberId(rset.getString("member_id"));
-		ann.setWorkNo(rset.getInt("work_no"));
+//		ann.setWorkNo(rset.getInt("work_no"));
 		ann.setAnnTitle(rset.getString("ann_title"));
-		ann.setAnnArea(rset.getString("ann_area"));
+//		ann.setAnnArea(rset.getString("ann_area"));
 		ann.setAnnEndDate(rset.getDate("ann_end_date"));
 		ann.setAnnRegDate(rset.getDate("ann_reg_date"));
-		ann.setAnnPay(rset.getString("ann_pay"));
-		ann.setAnnGender(rset.getString("ann_gender"));
-		ann.setAnnAge(rset.getString("ann_age"));
-		ann.setAnnHeight(rset.getString("ann_height"));
-		ann.setAnnBody(rset.getString("ann_body"));
-		ann.setAnnNop(rset.getInt("ann_nop"));
+//		ann.setAnnPay(rset.getString("ann_pay"));
+//		ann.setAnnGender(rset.getString("ann_gender"));
+//		ann.setAnnAge(rset.getString("ann_age"));
+//		ann.setAnnHeight(rset.getString("ann_height"));
+//		ann.setAnnBody(rset.getString("ann_body"));
+//		ann.setAnnNop(rset.getInt("ann_nop"));
 		ann.setIsClose(rset.getString("is_close"));
 		
 		return ann;
