@@ -15,6 +15,7 @@ import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
 import mypage.model.exception.MypageException;
+import wishlist.model.exception.WishListException;
 
 
 public class MypageDao {
@@ -386,6 +387,27 @@ public class MypageDao {
 		}
 		
 		return result;
+	}
+
+	public int getTotalMyAnn(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalMyAnn");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new WishListException("> getTotalMyAnn@마이페이지 내 전체공고 수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
 	}
 	
 	

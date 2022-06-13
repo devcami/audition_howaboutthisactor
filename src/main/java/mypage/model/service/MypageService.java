@@ -1,7 +1,5 @@
 package mypage.model.service;
 import static common.JdbcTemplate.*;
-import static common.JdbcTemplate.getConnection;
-import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -16,6 +14,7 @@ public class MypageService {
 	
 	private MypageDao mypageDao = new MypageDao();
 	public static final int APPLY_NUM_PER_PAGE = 8;
+	public static final int ANN_NUM_PER_PAGE = 8;
 
 	public List<Integer> insertPortWork(PortfolioWork work) {
 		List<Integer> resultNo = new ArrayList<>();
@@ -181,6 +180,14 @@ public class MypageService {
 		}
 		
 		return result;
+	}
+
+	public int getTotalMyAnn(String memberId) {
+		
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalMyAnn(conn, memberId);
+		close(conn);
+		return totalContent;
 	}
 
 	
