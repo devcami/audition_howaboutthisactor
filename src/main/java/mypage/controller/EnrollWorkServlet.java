@@ -76,6 +76,7 @@ public class EnrollWorkServlet extends HttpServlet {
 			
 			System.out.println(attachment.getOriginalFilename());
 			System.out.println(attachment.getRenamedFilename());
+			// test
 		}
 		
 		
