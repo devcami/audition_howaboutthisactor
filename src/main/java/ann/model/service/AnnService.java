@@ -9,6 +9,9 @@ import java.util.Map;
 
 import ann.model.dao.AnnDao;
 import ann.model.dto.Ann;
+import common.model.dto.Cast;
+import common.model.dto.Work;
+import common.model.dto.WorkAttachment;
 
 public class AnnService {
 	public static final int NUM_PER_PAGE = 12;
@@ -21,24 +24,40 @@ public class AnnService {
 		return totalContent;
 	}
 
-	public List<Ann> regDatePage(Map<String, Integer> param) {
+	public List<Ann> findAll(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.regDatePage(conn, param);
+		List<Ann> list = annDao.findAll(conn, param);
 		close(conn);
 		return list;
 	}
 
-	public List<Ann> findByTitle(Map<String, String> param) {
+	public List<Ann> annEndDateSort(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.findByTitle(conn, param);
+		List<Ann> list = annDao.annEndDateSort(conn, param);
 		close(conn);
 		return list;
 	}
 
-	public List<Ann> endDatePage(Map<String, Integer> param) {
+	public Ann findByAnnNo(int annNo) {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.endDatePage(conn, param);
+		Ann ann = annDao.findByAnnNo(conn, annNo);
+		Work work = annDao.findWorkByWorkNo(conn, ann.getWorkNo());
+		ann.setWork(work);
+		
+		List<WorkAttachment> workAttachments = annDao.findAttachmentByWorkNo(conn, ann.getWorkNo());
+		if(workAttachments != null && !workAttachments.isEmpty()) {
+			work.setAttachments(workAttachments);
+			for(WorkAttachment wa : workAttachments) {
+				System.out.println("WorkAttachment : " + wa);
+			}
+		}
+		Cast cast = annDao.findCastByWorkNo(conn, ann.getWorkNo());
+		if(cast != null) {
+			work.setCast(cast);
+			System.out.println("Cast : " + cast);
+		}
+		
 		close(conn);
-		return list;
+		return ann;
 	}
 }

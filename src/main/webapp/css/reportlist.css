@@ -1,0 +1,150 @@
+#container {
+  display: flex;
+  font-family: 'Hahmlet', serif;
+  justify-content: center;
+  /* margin: 0 130px 0 30px; */
+}
+.top-logo{
+  height: 180px;
+  background-color: #bbded6;
+  position: relative;
+}
+.top-logo span {
+  position: absolute;
+  left: 2%;
+  bottom: 7%;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  font-weight: 900;
+  font-size: 320%;
+  
+}
+#Pmypage-submenu {
+  margin-top: 100px;
+  text-align: right;
+}
+#Pmypage-submenu ul {
+  padding: 0;
+}
+#Pmypage-submenu li {
+  list-style: none;
+  margin: 15px 0;
+  font-weight: 500;
+  font-size: x-large;
+}
+/* #Pmypage-submenu a:hover {
+  color: #bbded6;
+} */
+#Pmypage-submenu a {
+  color: black;
+  text-decoration: none;
+}
+.current {
+  color: #bbded6 !important;
+}
+/* 여기까지 submenu */
+
+/* 내 공고 조회 + 공고 등록 버튼 */
+#myann_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+}
+#myboard h2 {
+  font-size: 40px;
+  padding: 10px;
+  margin: 20px 0 10px;
+  display: inline-block;
+
+}
+.btn {
+  font-size: medium;
+  font-family: 'Hahmlet', serif;
+  padding: 1px 6px 6px;
+  border: none;
+  background-color: #bbded6;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  transition: all 0.3s ease 0s;
+}
+.btn:hover {
+  background-color: #fae3d9;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  border: none;
+  box-shadow: 1px 3px 5px rgb(0 0 0 / 20%);
+}
+
+/* 테이블 */
+#myboard{
+  height: 70vh;
+  width: 80%;
+  margin-left: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 100px;
+}
+#myboard table {
+  width: 100%;
+  border-collapse: collapse
+}
+#pagebar {
+  display: flex;
+  justify-content: center;
+}
+.page {
+  margin: 3px;
+  text-decoration: none;
+  color: #bbded6;
+  font-size: 23px;
+}
+#list-head {
+  font-size: medium;
+  border-top: 2px solid gray;
+  border-bottom: 2px solid gray;
+}
+#list-head th{
+  padding-bottom: 7px;
+}
+#list-content{
+  text-align: center;
+}
+
+#condition {
+  display: flex;
+  align-items: center;
+}
+#searchType{
+  margin-bottom: 15px;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  height: 35px;
+  padding: 0.375rem 2rem 0.375rem 0.75rem;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+.search-type {
+  margin: 15px 10px;
+}
+.keyword-input{
+  width: 250px;
+  height: 30px;
+  border-radius: 0.25rem;
+}
+
+div#search-memberType {
+}
+
+.radio-btn {
+  width: 20px;
+  height: 16px;
+}
+#search-memberType button {
+  margin-left: 10px;
+}
