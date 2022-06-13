@@ -3,6 +3,7 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,java,macos,eclipse
 
 ### Eclipse ###
+.DS_Store
 .classpath
 .project
 .metadata
