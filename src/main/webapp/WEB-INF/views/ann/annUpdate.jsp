@@ -13,12 +13,12 @@
 <%
 	Ann ann = (Ann) request.getAttribute("ann");
 	Work work = ann.getWork();
-	List<WorkAttachment> workAttachments = work.getAttachments();
+	List<WorkAttachment> attachments = work.getAttachments();
 	Cast cast = work.getCast();
 
 	Date birthday = Date.valueOf("1990-09-09");
 	Date enrollDate = Date.valueOf("2022-06-10");
-	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate);
+	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
 	Production p = new Production("director", "testProduction", "디렉터", "01015971597", "director@naver.com", "N", "N");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />
@@ -55,57 +55,73 @@
 			  </optgroup>
 			  <optgroup label="TV">
 				  <option <%= work.getWorkField().equals("드라마") ? "selected" : "" %> value="드라마">드라마</option>
-				  <option value="예능">예능</option>
-				  <option value="다큐멘터리">다큐멘터리</option>
+				  <option <%= work.getWorkField().equals("예능") ? "selected" : "" %>  value="예능">예능</option>
+				  <option <%= work.getWorkField().equals("다큐멘터리") ? "selected" : "" %>  value="다큐멘터리">다큐멘터리</option>
 			  </optgroup>
 			  <optgroup label="무대">
-				  <option value="뮤지컬">뮤지컬</option>
-				  <option value="연극">연극</option>
-				  <option value="무용">무용</option>
+				  <option <%= work.getWorkField().equals("뮤지컬") ? "selected" : "" %>  value="뮤지컬">뮤지컬</option>
+				  <option <%= work.getWorkField().equals("연극") ? "selected" : "" %>  value="연극">연극</option>
+				  <option <%= work.getWorkField().equals("무용") ? "selected" : "" %>  value="무용">무용</option>
 			  </optgroup>
 			  <optgroup label="영상">
-				  <option value="웹드라마">웹드라마</option>
-				  <option value="인터넷 방송">인터넷 방송</option>
-				  <option value="뮤직 비디오">뮤직 비디오</option>
+				  <option <%= work.getWorkField().equals("웹드라마") ? "selected" : "" %>  value="웹드라마">웹드라마</option>
+				  <option <%= work.getWorkField().equals("인터넷 방송") ? "selected" : "" %>  value="인터넷 방송">인터넷 방송</option>
+				  <option <%= work.getWorkField().equals("뮤직 비디오") ? "selected" : "" %>  value="뮤직 비디오">뮤직 비디오</option>
 			  </optgroup>
 			  <optgroup label="광고">
-				  <option value="화보">화보</option>
-				  <option value="영상 광고">영상 광고</option>
-				  <option value="사진 광고">사진 광고</option>
-				  <option value="바이럴 광고">바이럴 광고</option>
-				  <option value="기타 광고">기타 광고</option>
-				  <option value="라이브 커머스">라이브 커머스</option>
+				  <option <%= work.getWorkField().equals("화보") ? "selected" : "" %>  value="화보">화보</option>
+				  <option <%= work.getWorkField().equals("영상 광고") ? "selected" : "" %>  value="영상 광고">영상 광고</option>
+				  <option <%= work.getWorkField().equals("사진 광고") ? "selected" : "" %>  value="사진 광고">사진 광고</option>
+				  <option <%= work.getWorkField().equals("바이럴 광고") ? "selected" : "" %>  value="바이럴 광고">바이럴 광고</option>
+				  <option <%= work.getWorkField().equals("기타 광고") ? "selected" : "" %>  value="기타 광고">기타 광고</option>
+				  <option <%= work.getWorkField().equals("라이브 커머스") ? "selected" : "" %>  value="라이브 커머스">라이브 커머스</option>
 			  </optgroup>
 			  <optgroup label="기타">
-				  <option value="기타 사진 및 영상">기타 사진 및 영상</option>
+				  <option <%= work.getWorkField().equals("기타 사진 및 영상") ? "selected" : "" %>  value="기타 사진 및 영상">기타 사진 및 영상</option>
 			  </optgroup>
 			</select>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput3" class="form-label">감독 이름<span class="need">*</span></label> 
-			<input type="text" name="director" class="form-control" id="exampleFormControlInput3" placeholder="ex. 봉준호" required>
+			<input type="text" name="director" value="<%= work.getDirector() %>" class="form-control" id="exampleFormControlInput3" placeholder="ex. 봉준호" required>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput4" class="form-label">제작사<span class="need">*</span></label> 
-			<input type="text" name="production" class="form-control" id="exampleFormControlInput4" placeholder="ex. 패러사이트 스튜디오" required>
+			<input type="text" name="production" value="<%= work.getProduction() %>" class="form-control" id="exampleFormControlInput4" placeholder="ex. 패러사이트 스튜디오" required>
 		</div>
 		<div class="mb-3 lastInput">
 			<label for="exampleFormControlTextarea1" class="form-label">작품 설명</label>
 			<a tabindex="0" id="btn-dscr" class="btn btn-sm btn-info" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="배역과 관련된 정보는 다음페이지에서 적을 수 있어요. 시나리오나 작품에 대한 전반적인 정보를 알려주세요!">?</a>
-			<textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3" placeholder="ex. (300자 이내)상류층과 하류층, 두 가족의 만남을 다룬 대한민국의 블랙 코미디 가족 드라마 영화입니다."></textarea>
+			<textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3" placeholder="ex. (300자 이내)상류층과 하류층, 두 가족의 만남을 다룬 대한민국의 블랙 코미디 가족 드라마 영화입니다."><%= work.getDescription() %></textarea>
 		</div>
 		<hr />
 		<h2>공고 마감일</h2>
 		<p class="description">마감 날짜를 설정해주세요.</p>
 		<p class="description">오늘 이후의 날짜만 설정 가능합니다.</p>
-		<input type="text" name="annEndDate" id="annEndDate" class="lastInput" required/><span class="need">*</span>
+		<input type="text" name="annEndDate" value="<%= ann.getAnnEndDate() %>" id="annEndDate" class="lastInput" required/><span class="need">*</span>
 		<hr />
 		<h2>추가 정보</h2>
 		<p class="description">캐스팅 공고에 사진이나 영상을 추가할 수 있어요. (최대 5개)</p>
 		<button type="button" id="btn-attach-add" class="btn btn-primary">파일 추가하기</button>
-		<div class="mb-3" id="addAttachmentDiv">
-		  <input class="form-control" type="file" name="attach1" id="attach1" multiple>
-		</div>
+		<%
+			if(attachments != null && !attachments.isEmpty()){
+				for(int i = 0; i < attachments.size(); i++){
+					WorkAttachment wa = attachments.get(i);			
+		%>
+			<br />
+			<div id="attachImg<%= i + 1 %>" name="attachImg">
+				<img src="<%= request.getContextPath() %>/upload/ann/<%= wa.getRenamedFilename() %>" width="200px" alt="첨부파일 미리보기" />
+				<br />
+				<button type="button" name="delFile" id="delFile<%= i + 1 %>" value="<%= wa.getWorkAttachmentNo() %>" onclick="fileDelete(this);">삭제</button>
+			</div>
+			<br />
+			<div class="mb-3" id="addAttachmentDiv">
+				<input class="form-control" type="file" name="attach<%= i + 2 %>" id="attach<%= i + 2 %>" multiple>
+			</div>
+		<%
+				}
+			}
+		%>
 		
 		<button type="button" id="btn-first-enroll" class="btn-next" onclick="nextStep(this);" >다음</button>
 	</div>
@@ -120,7 +136,7 @@
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput5" class="form-label">배역 이름<span class="need">*</span></label> 
-			<input type="text" name="castName" class="form-control" id="exampleFormControlInput5" placeholder="ex. 김기택, 편의점 알바생 등" required>
+			<input type="text" name="castName" value="<%= cast.getCastName() %>" class="form-control" id="exampleFormControlInput5" placeholder="ex. 김기택, 편의점 알바생 등" required>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput6" class="form-label">배역 구분<span class="need">*</span></label> 
@@ -273,7 +289,7 @@
 <%-- 상단 프로그레스바 --%>
 <%-- 유효성검사 : * 항목 입력하지 않을 시 제출 방지 & description 300자 이상 작성 시 제출 방지 --%>
 // 필수항목 입력
-document.annEnrollFrm.onsubmit = (e) => {
+document.annUpdateFrm.onsubmit = (e) => {
 	const f = e.target;
 	// 공고 제목
 	const annTitleVal = f.annTitle.value.trim();
@@ -410,13 +426,26 @@ $(addAttachBtn).click(function(){
     newAttach.attr("name","attach"+(parseInt(lastAttachNo)+1));
     console.log(newAttach);
     
-    if(lastAttachNo == 5){
+    const nowAttachCnt = document.querySelectorAll("input[type=file]").length;
+    const nowImgCnt = document.querySelectorAll("[name=attachImg]").length;
+    if(nowAttachCnt + nowImgCnt == 5){
     	//첨부파일은 5개 이상 생성할수 없도록 제한
         alert("5개 이상 파일 추가 하실 수 없습니다.");
     } else {
     	$("#addAttachmentDiv").append(newAttach);
     }
 });
+
+/**
+ *  업로드 가능한 첨부파일 수 제한하기
+ */
+const fileDelete = (e) => {
+	const fileNo = e.id.replace("delFile", "");
+	if(confirm('첨부파일을 삭제하시겠습니까?')){
+		const fileId = "attachImg" + fileNo;
+		document.getElementById(fileId).remove();
+	}
+};
 
 <%-- 다음버튼 클릭 시 다음장 + 스크롤 다운 --%>
 const nextStep = (e) => {
