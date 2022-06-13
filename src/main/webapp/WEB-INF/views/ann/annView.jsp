@@ -179,7 +179,7 @@
 					<div class="modal-body">
 						<div class="mb-3">
 							<label for="message-text" class="col-form-label">신고자:</label>
-							<input type="text" name="report-writer" id="report-writer" value="loginMember.getMemberId()" readonly>
+							<input type="text" name="report-writer" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
 						</div>
 						<div class="mb-3">
 							<label for="message-text" class="col-form-label">신고내용:</label>
@@ -194,6 +194,10 @@
 				</div>
 			</div>
 		</div>
+		<% if(canEdit){ %>
+				<input type="button" value="수정하기" class="btn-update" onclick="updateBoard()">
+				<input type="button" value="삭제하기" class="btn-delete" onclick="deleteBoard()">
+		<%} %>
 	</div>
 
 </section>
