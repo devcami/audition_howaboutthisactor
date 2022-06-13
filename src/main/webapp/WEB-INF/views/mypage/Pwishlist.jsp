@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<%
-	// String memberId = 'hosi';
-	// String memberId = loginMember.getMemberId();
-	
-	// char memberRole = 'P';
-	// char memberRole = loginMember.getMemberRole();
-%>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/Pwishlist.css" />
+<%
+   // String memberId = 'hosi';
+   // String memberId = loginMember.getMemberId();
+   
+   // char memberRole = 'P';
+   // char memberRole = loginMember.getMemberRole();
+%>
+
 <div class="top-logo">
   <span>MYPAGE</span>
 </div>
@@ -23,7 +24,8 @@
       <li><a href="<%= request.getContextPath() %>/mypage/ckpwDelete" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
     </ul>
   </div>
-  <div id="mywish">
+  
+<div id="mywish">
     <div>
       <div id="wishlist-head">
         <h2>찜 목록</h2>
@@ -35,111 +37,107 @@
         </div>
       </div>
       <div id="updown-container">
-        <div id="up">
-          <div class="col">
-            <div class="card" onclick="annView(this);">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">테스트제목6</h5>
+              <p class="card-text">director</p>
+              <input type="hidden" name="annNo" id="annNo" value="23">
             </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
+            <div class="card-footer">
+              <small class="text-muted">2022-06-07</small> ~ 
+              <small class="text-muted">2022-06-12</small>
             </div>
           </div>
         </div>
-        <div id="down">
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">테스트제목6</h5>
+              <p class="card-text">director</p>
+              <input type="hidden" name="annNo" id="annNo" value="23">
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">2022-06-07</small> ~ 
+              <small class="text-muted">2022-06-12</small>
             </div>
           </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">테스트제목6</h5>
+              <p class="card-text">director</p>
+              <input type="hidden" name="annNo" id="annNo" value="23">
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">2022-06-07</small> ~ 
+              <small class="text-muted">2022-06-12</small>
             </div>
           </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">테스트제목6</h5>
+              <p class="card-text">director</p>
+              <input type="hidden" name="annNo" id="annNo" value="23">
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">2022-06-07</small> ~ 
+              <small class="text-muted">2022-06-12</small>
             </div>
           </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">테스트제목6</h5>
+              <p class="card-text">director</p>
+              <input type="hidden" name="annNo" id="annNo" value="23">
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">2022-06-07</small> ~ 
+              <small class="text-muted">2022-06-12</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">테스트제목6</h5>
+              <p class="card-text">director</p>
+              <input type="hidden" name="annNo" id="annNo" value="23">
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">2022-06-07</small> ~ 
+              <small class="text-muted">2022-06-12</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">테스트제목6</h5>
+              <p class="card-text">director</p>
+              <input type="hidden" name="annNo" id="annNo" value="23">
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">2022-06-07</small> ~ 
+              <small class="text-muted">2022-06-12</small>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">테스트제목6</h5>
+              <p class="card-text">director</p>
+              <input type="hidden" name="annNo" id="annNo" value="23">
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">2022-06-07</small> ~ 
+              <small class="text-muted">2022-06-12</small>
             </div>
           </div>
         </div>
@@ -158,17 +156,17 @@
 
   <script>
   sortType.addEventListener('change', (e) => {
-		document.querySelector("#ann-container").innerHTML = "";
-		const {value} = e.target;
-		// 공고 마감순 선택 시 페이지 요청
-		location.href=`/app/ann/annList?sortType=${value}`;
-	});
+      document.querySelector("#ann-container").innerHTML = "";
+      const {value} = e.target;
+      // 공고 마감순 선택 시 페이지 요청
+      location.href=`/app/ann/annList?sortType=${value}`;
+   });
 
-	const annView = (ann) => {
-		const annNo = ann.firstElementChild.lastElementChild.value;
-		location.href=`/app/ann/annView?annNo=${annNo}`;
-	};
-	
+   const annView = (ann) => {
+      const annNo = ann.firstElementChild.lastElementChild.value;
+      location.href=`/app/ann/annView?annNo=${annNo}`;
+   };
+   
     const mousein = (menu) => {
       now_menu.classList.remove('current');
       menu.classList.add('current');

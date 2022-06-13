@@ -1,3 +1,4 @@
+@charset "UTF-8";
 #container {
   display: flex;
   font-family: 'Hahmlet', serif;
@@ -61,6 +62,25 @@
   padding: 10px;
   margin: 15px 0 10px;
 }
+#pagebar {
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+.page {
+  margin: 3px;
+  text-decoration: none;
+  color: #bbded6;
+  font-size: 23px;
+}
+#updown-container{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30px;
+}
+
+
 #wishlist-head{
   display: flex;
   border-bottom: 2px solid gray;
@@ -89,37 +109,10 @@
   border-radius: 0.25rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
-
-
-#pagebar {
-  display: flex;
-  justify-content: center;
-  margin-top: 100px;
-}
-.page {
-  margin: 3px;
-  text-decoration: none;
-  color: #bbded6;
-  font-size: 23px;
-}
-
-#updown-container{
-  display: flex;
-  flex-direction: column;
-  margin-top: 30px;
-  
-}
-#up, #down {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-
 /* 공고 하나하나 */
 .col{
-  /* flex: 0 0 auto; */
-  width: 22%;
+  flex: 0 0 auto;
+  width: 23%;
   margin: 10px;
 }
 .card {
