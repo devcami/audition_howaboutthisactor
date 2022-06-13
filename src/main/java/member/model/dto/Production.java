@@ -7,7 +7,7 @@ public class Production {
 	private String casterPhone;
 	private String casterEmail;
 	private String isPhoneOpen;
-	private String isPhoneClose;
+	private String isEmailOpen;
 	
 	public Production() {
 		super();
@@ -15,7 +15,7 @@ public class Production {
 	}
 
 	public Production(String memberId, String productionName, String casterName, String casterPhone, String casterEmail,
-			String isPhoneOpen, String isPhoneClose) {
+			String isPhoneOpen, String isEmailOpen) {
 		super();
 		this.memberId = memberId;
 		this.productionName = productionName;
@@ -23,7 +23,7 @@ public class Production {
 		this.casterPhone = casterPhone;
 		this.casterEmail = casterEmail;
 		this.isPhoneOpen = isPhoneOpen;
-		this.isPhoneClose = isPhoneClose;
+		this.isEmailOpen = isEmailOpen;
 	}
 
 	public String getMemberId() {
@@ -74,19 +74,19 @@ public class Production {
 		this.isPhoneOpen = isPhoneOpen;
 	}
 
-	public String getIsPhoneClose() {
-		return isPhoneClose;
+	public String getIsEmailOpen() {
+		return isEmailOpen;
 	}
 
-	public void setIsPhoneClose(String isPhoneClose) {
-		this.isPhoneClose = isPhoneClose;
+	public void setIsEmailOpen(String isEmailOpen) {
+		this.isEmailOpen = isEmailOpen;
 	}
 
 	@Override
 	public String toString() {
 		return "Production [memberId=" + memberId + ", productionName=" + productionName + ", casterName=" + casterName
 				+ ", casterPhone=" + casterPhone + ", casterEmail=" + casterEmail + ", isPhoneOpen=" + isPhoneOpen
-				+ ", isPhoneClose=" + isPhoneClose + "]";
+				+ ", isEmailOpen=" + isEmailOpen + "]";
 	}
 	
 	

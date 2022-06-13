@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import ann.model.dto.Ann;
 import ann.model.service.AnnService;
+import member.model.dto.Production;
 
 /**
  * Servlet implementation class AnnViewServlet
@@ -27,14 +28,17 @@ public class AnnViewServlet extends HttpServlet {
 			
 			// 게시글 조회
 			Ann ann = annService.findByAnnNo(annNo);
+			Production p = annService.findProductionByMemberId(ann.getMemberId());
 			
 			// XSS공격(Cross-site Scripting공격) 대비 변환 : 개행처리 <br> 이전에 나와야됨!
 			ann.setAnnTitle(ann.getAnnTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
 			
-			System.out.println("annView@ann = " + ann);
+			//System.out.println("annView@ann = " + ann);
 			
 			// 3. view단 위임
 			request.setAttribute("ann", ann);
+			request.setAttribute("production", p);
+			System.out.println("production : " + p);
 			request.getRequestDispatcher("/WEB-INF/views/ann/annView.jsp").forward(request, response);
 				
 		} catch (Exception e) {
