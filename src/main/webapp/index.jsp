@@ -61,7 +61,9 @@
 			<div class="list-item-title">배우찾기</div>
 			<div class="list-item-detail">Lorem ipsum dolor sit amet
 				consectetur adipisicing elit.</div>
-			<button class="list-item-button">click</button>
+			<button class="list-item-button" 
+			onclick="location.href='<%= request.getContextPath() %>/actor/actorSearch'">
+			click</button>
 		</div>
 
 		<div class="list-item">
