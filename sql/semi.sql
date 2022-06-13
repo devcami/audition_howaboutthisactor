@@ -188,6 +188,7 @@ CREATE TABLE production (
 alter table production add is_phone_open char(1) default 'N' not null;
 alter table production add is_email_open char(1) default 'N' not null;
 
+
 -------------------------------------------
 -- announcement
 -------------------------------------------
