@@ -241,6 +241,13 @@ document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
 		console.log('신고진행');
 	}
 });
+
+/**
+ * 수정하기 삭제하기
+ */
+<% if(canEdit) {%>
+ 
+<% } %>
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
