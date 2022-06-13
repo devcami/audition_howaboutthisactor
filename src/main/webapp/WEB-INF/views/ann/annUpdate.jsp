@@ -1,3 +1,8 @@
+<%@page import="common.model.dto.WorkAttachment"%>
+<%@page import="common.model.dto.Cast"%>
+<%@page import="java.util.List"%>
+<%@page import="common.model.dto.Work"%>
+<%@page import="ann.model.dto.Ann"%>
 <%@page import="member.model.dto.Production"%>
 <%@page import="java.sql.Date"%>
 <%@page import="member.model.dto.MemberRole"%>
@@ -6,6 +11,11 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
+	Ann ann = (Ann) request.getAttribute("ann");
+	Work work = ann.getWork();
+	List<WorkAttachment> workAttachments = work.getAttachments();
+	Cast cast = work.getCast();
+
 	Date birthday = Date.valueOf("1990-09-09");
 	Date enrollDate = Date.valueOf("2022-06-10");
 	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate);
@@ -16,10 +26,10 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <form 
-	id = "annEnrollFrm" 
-	name = "annEnrollFrm" 
+	id = "annUpdateFrm" 
+	name = "annUpdateFrm" 
 	method = "post" 
-	action = "<%= request.getContextPath() %>/ann/annEnroll"
+	action = "<%= request.getContextPath() %>/ann/annUpdate"
 	enctype="multipart/form-data">
 <%-- 작품정보섹션 --%>
 <section id="ann-enroll-first">
@@ -28,23 +38,23 @@
 		<p class="description">작품에 대해 자세히 알려주세요.</p>
 		<div class="mb-3">
 			<label for="exampleFormControlInput0" class="form-label">공고 제목<span class="need">*</span></label> 
-			<input type="text" name="annTitle" class="form-control" id="exampleFormControlInput0" placeholder="ex. 함께할 주연 배우님을 모집합니다." required>
+			<input type="text" name="annTitle" class="form-control" value="<%= ann.getAnnTitle() %>" id="exampleFormControlInput0" placeholder="ex. 함께할 주연 배우님을 모집합니다." required>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">작품 제목<span class="need">*</span></label> 
-			<input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="ex. 기생충 (가제)" required>
+			<input type="text" name="title" value="<%= work.getTitle() %>" class="form-control" id="exampleFormControlInput1" placeholder="ex. 기생충 (가제)" required>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput2" class="form-label">작품 분야<span class="need">*</span></label> 
 			<select class="form-select" name="workField" id="exampleFormControlInput2" aria-label="Default select example" required>
-			  <option selected>선택해주세요</option>
+			  <option>선택해주세요</option>
 			  <optgroup label="영화">
-				  <option value="장편 상업 영화">장편 상업 영화</option>
-				  <option value="장편 독립 영화">장편 독립 영화</option>
-				  <option value="단편 영화">단편 영화</option>
+				  <option <%= work.getWorkField().equals("장편 상업 영화") ? "selected" : "" %> value="장편 상업 영화">장편 상업 영화</option>
+				  <option <%= work.getWorkField().equals("장편 독립 영화") ? "selected" : "" %> value="장편 독립 영화">장편 독립 영화</option>
+				  <option <%= work.getWorkField().equals("단편 영화") ? "selected" : "" %> value="단편 영화">단편 영화</option>
 			  </optgroup>
 			  <optgroup label="TV">
-				  <option value="드라마">드라마</option>
+				  <option <%= work.getWorkField().equals("드라마") ? "selected" : "" %> value="드라마">드라마</option>
 				  <option value="예능">예능</option>
 				  <option value="다큐멘터리">다큐멘터리</option>
 			  </optgroup>

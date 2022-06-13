@@ -117,4 +117,19 @@ public class AnnService {
 		return p;
 	}
 
+	public int deleteAnn(int annNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = annDao.deleteAnn(conn, annNo);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
 }

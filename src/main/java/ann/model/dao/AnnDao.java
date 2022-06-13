@@ -1,5 +1,7 @@
 package ann.model.dao;
 
+import static common.JdbcTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -10,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import static common.JdbcTemplate.*;
 
 import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
@@ -399,6 +400,22 @@ public class AnnDao {
 		p.setIsPhoneOpen(rset.getString("is_phone_open"));
 		p.setIsEmailOpen(rset.getString("is_email_open"));
 		return p;
+	}
+
+	public int deleteAnn(Connection conn, int annNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("deleteAnn");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, annNo);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 }

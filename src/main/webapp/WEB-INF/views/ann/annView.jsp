@@ -59,7 +59,7 @@
 				</tr>
 				<tr>
 					<th>담당자</th>
-					<td><%= cast.getCastName() %></td>
+					<td><%= p.getCasterName() %></td>
 				</tr>
 				<tr>
 					<th>연락처</th>
@@ -195,8 +195,8 @@
 			</div>
 		</div>
 		<% if(canEdit){ %>
-				<input type="button" value="수정하기" class="btn-update" onclick="updateBoard()">
-				<input type="button" value="삭제하기" class="btn-delete" onclick="deleteBoard()">
+				<input type="button" value="수정하기" class="btn-update" onclick="updateAnn()">
+				<input type="button" value="삭제하기" class="btn-delete" onclick="deleteAnn()">
 		<%} %>
 	</div>
 
@@ -241,12 +241,24 @@ document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
 		console.log('신고진행');
 	}
 });
+</script>
 
-/**
- * 수정하기 삭제하기
- */
+<%-- 수정하기 삭제하기 --%>
 <% if(canEdit) {%>
- 
+<form 
+	name="annDelFrm" 
+	action="<%= request.getContextPath() %>/ann/annDelete"
+	method="POST">
+	<input type="hidden" name="annNo" value="<%= ann.getAnnNo() %>" />
+</form> 
+<script>
+const deleteAnn = () => {
+	if(confirm('확인을 누르시면 되돌이킬 수 없습니다. 공고를 삭제하시겠습니까?'))
+		document.annDelFrm.submit();
+}
+const updateAnn = () => {
+	location.href = "<%= request.getContextPath() %>/ann/annUpdate?annNo=<%= ann.getAnnNo() %>";
+}
 <% } %>
 </script>
 
