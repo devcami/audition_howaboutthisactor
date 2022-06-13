@@ -386,7 +386,7 @@ select * from wishlist_actor;
 select * from wishlist_ann;
 select * from report;
 
-
+update production set is_phone_open = 'N', is_email_open = 'N';
 
 
 
