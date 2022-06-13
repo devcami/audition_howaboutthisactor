@@ -27,6 +27,10 @@
 		<h1>작품 정보</h1>
 		<p class="description">작품에 대해 자세히 알려주세요.</p>
 		<div class="mb-3">
+			<label for="exampleFormControlInput0" class="form-label">공고 제목<span class="need">*</span></label> 
+			<input type="text" name="annTitle" class="form-control" id="exampleFormControlInput0" placeholder="ex. 함께할 주연 배우님을 모집합니다.">
+		</div>
+		<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">작품 제목<span class="need">*</span></label> 
 			<input type="text" name="title" value="기생충" class="form-control" id="exampleFormControlInput1" placeholder="ex. 기생충 (가제)">
 		</div>
@@ -35,35 +39,35 @@
 			<select class="form-select" name="workField" id="exampleFormControlInput2" aria-label="Default select example">
 			  <option selected>선택해주세요</option>
 			  <optgroup label="영화">
-				  <option value="lcf" selected>장편 상업 영화</option>
-				  <option value="lif">장편 독립 영화</option>
-				  <option value="sf">단편 영화</option>
+				  <option value="장편 상업 영화" selected>장편 상업 영화</option>
+				  <option value="장편 독립 영화">장편 독립 영화</option>
+				  <option value="단편 영화">단편 영화</option>
 			  </optgroup>
 			  <optgroup label="TV">
-				  <option value="dr">드라마</option>
-				  <option value="et">예능</option>
-				  <option value="dc">다큐멘터리</option>
+				  <option value="드라마">드라마</option>
+				  <option value="예능">예능</option>
+				  <option value="다큐멘터리">다큐멘터리</option>
 			  </optgroup>
 			  <optgroup label="무대">
-				  <option value="mu">뮤지컬</option>
-				  <option value="pl">연극</option>
-				  <option value="da">무용</option>
+				  <option value="뮤지컬">뮤지컬</option>
+				  <option value="연극">연극</option>
+				  <option value="무용">무용</option>
 			  </optgroup>
 			  <optgroup label="영상">
-				  <option value="wd">웹드라마</option>
-				  <option value="stm">인터넷 방송</option>
-				  <option value="mv">뮤직 비디오</option>
+				  <option value="웹드라마">웹드라마</option>
+				  <option value="인터넷 방송">인터넷 방송</option>
+				  <option value="뮤직 비디오">뮤직 비디오</option>
 			  </optgroup>
 			  <optgroup label="광고">
-				  <option value="ps">화보</option>
-				  <option value="vAdv">영상 광고</option>
-				  <option value="pAdv">사진 광고</option>
-				  <option value="bAdv">바이럴 광고</option>
-				  <option value="etcAdv">기타 광고</option>
-				  <option value="lic">라이브 커머스</option>
+				  <option value="화보">화보</option>
+				  <option value="영상 광고">영상 광고</option>
+				  <option value="사진 광고">사진 광고</option>
+				  <option value="바이럴 광고">바이럴 광고</option>
+				  <option value="기타 광고">기타 광고</option>
+				  <option value="라이브 커머스">라이브 커머스</option>
 			  </optgroup>
 			  <optgroup label="기타">
-				  <option value="etc">기타 사진 및 영상</option>
+				  <option value="기타 사진 및 영상">기타 사진 및 영상</option>
 			  </optgroup>
 			</select>
 		</div>
@@ -112,10 +116,10 @@
 			<label for="exampleFormControlInput6" class="form-label">배역 구분<span class="need">*</span></label> 
 			<select class="form-select" name="castRole" id="exampleFormControlInput6" aria-label="Default select example">
 			  <option selected>선택해주세요</option>
-			  <option value="lead" selected>주연</option>
-			  <option value="sup">조연</option>
-			  <option value="minor">단역</option>
-			  <option value="extra">엑스트라</option>
+			  <option value="주연" selected>주연</option>
+			  <option value="조연">조연</option>
+			  <option value="단역">단역</option>
+			  <option value="엑스트라">엑스트라</option>
 			</select>
 		   <input class="form-check-input" type="checkbox" name="hasTO" value="" id="flexCheckDefault">
 		   <label class="form-check-label" for="flexCheckDefault">노출장면 포함</label>
@@ -139,13 +143,13 @@
 			<label for="exampleFormControlInput8" class="form-label">나이<span class="need">*</span></label> 
 			<select class="form-select" name="annAge" id="exampleFormControlInput8" aria-label="Default select example">
 			  <option selected>선택해주세요</option>
-			  <option value="age" selected>나이무관</option>
-			  <option value="1">~10세</option>
-			  <option value="10">11~17세</option>
-			  <option value="20">18~25세</option>
-			  <option value="30">26~35세</option>
-			  <option value="40">36~45세</option>
-			  <option value="50">45세~</option>
+			  <option value="나이무관" selected>나이무관</option>
+			  <option value="~10세">~10세</option>
+			  <option value="11~17세">11~17세</option>
+			  <option value="18~25세">18~25세</option>
+			  <option value="26~35세">26~35세</option>
+			  <option value="36~45세">36~45세</option>
+			  <option value="45세~">45세~</option>
 			</select>
 		</div>
 		<div class="mb-3">
@@ -157,13 +161,13 @@
 			<label for="exampleFormControlInput10" class="form-label">키</label> 
 			<select class="form-select" name="annHeight" id="exampleFormControlInput10" aria-label="Default select example">
 			  <option selected>선택해주세요</option>
-			  <option value="age" selected>신장무관</option>
-			  <option value="110">~110cm</option>
-			  <option value="150">111~150cm</option>
-			  <option value="160">151~160cm</option>
-			  <option value="170">161~170cm</option>
-			  <option value="180">171~180cm</option>
-			  <option value="190">180cm~</option>
+			  <option value="신장무관" selected>신장무관</option>
+			  <option value="~110cm">~110cm</option>
+			  <option value="111~150cm">111~150cm</option>
+			  <option value="151~160cm">151~160cm</option>
+			  <option value="161~170cm">161~170cm</option>
+			  <option value="171~180cm">171~180cm</option>
+			  <option value="180cm~">180cm~</option>
 			</select>
 		</div>
 		<div class="mb-3">
@@ -225,8 +229,7 @@
 			<label for="exampleFormControlInput14" class="form-label">담당자 이름</label> 
 			<p class="description">공고에서 담당자 이름은 기본적으로 공개됩니다.</p>
 			<input type="text" class="form-control" name="casterName" id="exampleFormControlInput14" value="<%= p.getCasterName() %>" readonly> 
-			<input type="hidden" class="form-control" name="casterPhone" id="exampleFormControlInput15" value="<%= p.getCasterPhone() %>"> 
-			<input type="hidden" class="form-control" name="casterEmail" id="exampleFormControlInput16" value="<%= p.getCasterEmail() %>"> 
+			<input type="hidden" class="form-control" name="loginMemberId" id="exampleFormControlInput17" value="<%= loginMember.getMemberId() %>"> 
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput15" class="form-label">담당자 휴대폰 번호</label> 
@@ -262,11 +265,17 @@
 // 필수항목 입력
 document.annEnrollFrm.onsubmit = (e) => {
 	const f = e.target;
+	// 공고 제목
+	const annTitleVal = f.annTitle.value.trim();
+	if(!/^.+$/.test(annTitleVal)){
+		alert('공고 제목을 작성해주세요.');
+		f.annTitle.select();
+		return false;
+	}
 	// 작품 제목
 	const titleVal = f.title.value.trim();
 	if(!/^.+$/.test(titleVal)){
-		console.log(titleVal)
-		alert('제목을 작성해주세요.');
+		alert('작품 제목을 작성해주세요.');
 		f.title.select();
 		return false;
 	}
@@ -426,7 +435,7 @@ flexCheckDefault.onchange = () =>{
 		flexCheckDefault.value = "Y";
 	}
 	else{
-		flexCheckDefault.value = "";
+		flexCheckDefault.value = "N";
 	}
 }
 

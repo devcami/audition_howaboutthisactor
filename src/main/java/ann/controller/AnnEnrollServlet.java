@@ -22,6 +22,7 @@ import common.HelloMvcFileRenamePolicy;
 import common.model.dto.Cast;
 import common.model.dto.Work;
 import common.model.dto.WorkAttachment;
+import member.model.dto.Member;
 import member.model.dto.Production;
 
 @WebServlet("/ann/annEnroll")
@@ -38,7 +39,7 @@ public class AnnEnrollServlet extends HttpServlet {
 			ServletContext application = getServletContext(); 
 			
 			String webRoot = application.getRealPath("/"); 
-			String saveDirectory = webRoot + "upload/board";
+			String saveDirectory = webRoot + "upload/ann";
 			int maxPostSize = 1024 * 1024 * 10;
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new HelloMvcFileRenamePolicy();
@@ -48,6 +49,7 @@ public class AnnEnrollServlet extends HttpServlet {
 			// 사용자 입력값 처리 (Frm작성 순서대로)
 			
 			// 1. 작품정보
+			String annTitle = multiReq.getParameter("annTitle"); //ann
 			String title = multiReq.getParameter("title"); //work
 			String workField = multiReq.getParameter("workField"); //work
 			String director = multiReq.getParameter("director"); //work
@@ -67,13 +69,15 @@ public class AnnEnrollServlet extends HttpServlet {
 			String hasTo = multiReq.getParameter("hasTO"); //ann
 			String annGender = multiReq.getParameter("annGender"); //ann
 			String annAge = multiReq.getParameter("annAge"); //ann
-			String annNop = multiReq.getParameter("annNop"); //ann
+			int annNop = Integer.parseInt(multiReq.getParameter("annNop")); //ann
+			String annHeight = multiReq.getParameter("annHeight"); //ann
 			String annBody = multiReq.getParameter("annBody"); //ann
 			String castContents = multiReq.getParameter("castContents"); //ann
 			String annArea = multiReq.getParameter("annArea"); //ann
 			String annPay = multiReq.getParameter("annPay"); //ann
 			
 			// 3. 담당자정보
+			String loginMemberId = multiReq.getParameter("loginMemberId"); 
 			String isPhoneOpen = multiReq.getParameter("isPhoneOpen"); //production
 			String isEmailOpen = multiReq.getParameter("isEmailOpen");
 			
@@ -82,12 +86,14 @@ public class AnnEnrollServlet extends HttpServlet {
 			Work work = new Work();
 			Production p = new Production();
 			
-			System.out.println("----annEnroll----");
-			System.out.println("ann = " + ann);
-			System.out.println("cast = " + cast);
-			System.out.println("work = " + work);
-			System.out.println("Production = " + production);
-			
+			ann.setMemberId(loginMemberId);
+			ann.setAnnTitle(annTitle);
+			work.setTitle(title);
+			work.setWorkField(workField);
+			work.setDirector(director);
+			work.setProduction(production);
+			work.setDescription(description);
+			ann.setAnnEndDate(annEndDate);
 			
 			if(attach1 != null || attach2 != null || attach3 != null || attach4 != null || attach5 != null) {
 				List<WorkAttachment> attachments = new ArrayList<>();
@@ -104,11 +110,32 @@ public class AnnEnrollServlet extends HttpServlet {
 				work.setAttachments(attachments);
 			}
 			
+			cast.setCastName(castName);
+			cast.setCastRole(castRole);
+			ann.setHasTO(hasTo);
+			ann.setAnnGender(annGender);
+			ann.setAnnAge(annAge);
+			ann.setAnnNop(annNop);
+			ann.setAnnHeight(annHeight);
+			ann.setAnnBody(annBody);
+			cast.setCastContents(castContents);
+			ann.setAnnArea(annArea);
+			ann.setAnnPay(annPay);
+			p.setMemberId(loginMemberId);
+			p.setIsPhoneOpen(isPhoneOpen);
+			p.setIsEmailOpen(isEmailOpen);
+			
+			System.out.println("----annEnroll----");
+			System.out.println("ann = " + ann);
+			System.out.println("cast = " + cast);
+			System.out.println("work = " + work);
+			System.out.println("Production = " + p);
 			
 			// 업무로직
-			//int result = annService.annEnroll(ann);
+			int result = annService.insertAnn(ann, work, cast, p);
+			
 			// 리다이렉트
-			//response.sendRedirect(request.getContextPath() + "/ann/annList");			
+			response.sendRedirect(request.getContextPath() + "/ann/annList");			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
