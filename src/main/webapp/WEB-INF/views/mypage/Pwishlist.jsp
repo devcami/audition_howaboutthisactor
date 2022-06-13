@@ -1,3 +1,5 @@
+<%@page import="ann.model.dto.Ann"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -8,6 +10,10 @@
    
    // char memberRole = 'P';
    // char memberRole = loginMember.getMemberRole();
+   
+	List<Ann> list = (List<Ann>) request.getAttribute("list");
+	String pagebar = (String) request.getAttribute("pagebar");
+	String sortType = request.getParameter("sortType");
 %>
 
 <div class="top-logo">
@@ -31,8 +37,8 @@
         <h2>찜 목록</h2>
         <div id="sortType-wrap">
           <select id="sortType">
-            <option value="reg_date" id="reg_date">최신순</option>
-            <option value="end_date" id="end_date">마감순</option>
+            <option value="reg_date" id="reg_date" <%="reg_date".equals(sortType) ? "selected" : ""%>>최신순</option>
+            <option value="end_date" id="end_date" <%="end_date".equals(sortType) ? "selected" : ""%>>마감순</option>
           </select>
         </div>
       </div>
