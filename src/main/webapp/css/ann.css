@@ -1,9 +1,9 @@
 @charset "UTF-8";
-#ann-list-container{
+section{
   font-family: 'Hahmlet', serif;
 }
-/* boardList */
 
+/* annList */
 .mrgbtm{
   margin: 50px 0;
 }
@@ -20,7 +20,7 @@
 .container{
   padding: 60px;
 }
-.form-select{
+#ann-list-container .form-select{
   width: 100px !important;
   margin-bottom: 20px;
 }
@@ -91,8 +91,7 @@
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* boardView */
-
+/* annView */
 #btn-apply{
   position: relative;
   bottom: 150px;
@@ -171,11 +170,20 @@
 #tbl-cast-info .underline{
   border-bottom: solid gainsboro 1px;
 }
-.accordion-button{
-}
-
 .accordion-button:not(.collapsed) {
   color: #3a7f6f;
   background-color: #d9eae6;
   box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+#btn-report{
+  background-color: rgb(196, 196, 196);
+  border: none;
+}
+.btn-primary{
+  background-color: rgb(204, 4, 4);
+  border: rgb(204, 4, 4);
+}
+.btn-primary:hover{
+  background-color: rgb(179, 4, 4);
+  border: rgb(179, 4, 4);
 }

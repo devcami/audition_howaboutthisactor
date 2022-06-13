@@ -22,6 +22,7 @@
 			<p><%= ann.getAnnEndDate() %> 마감 | <%= ann.getAnnRegDate() %> 게시</p>
 			<button id="btn-apply" class="rounded">간편지원</button>
 			<div id="btn-wish"><img src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" /></div>
+			
 		</div>
 		<div class="work-info mrgbtm">
 			<h2>작품 정보</h2>
@@ -150,15 +151,53 @@
 			}
 			%>
 		</div>
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+			data-bs-target="#exampleModal" id="btn-report">신고하기</button>
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">신고</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<div class="mb-3">
+							<label for="message-text" class="col-form-label">신고자:</label>
+							<input type="text" name="report-writer" id="report-writer" value="loginMember.getMemberId()" readonly>
+						</div>
+						<div class="mb-3">
+							<label for="message-text" class="col-form-label">신고내용:</label>
+							<textarea class="form-control" id="content"></textarea>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary" id="btn-report-submit">제출</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 </section>
 <script>
+/**
+ * 지원하기 버튼 클릭 시 지원 폼 요청
+ */
 const btnApply = document.querySelector("#btn-apply"); 
 btnApply.addEventListener('click', (e) => {
 	//console.log(e.target);
-	// 공고 지원하기
 });
+
+/**
+ * 마감된 공고일 시 지원하기 버튼 비활성화 
+ */
 <%
 if(ann.getIsClose().equals("Y")){
 %>
@@ -169,6 +208,24 @@ if(ann.getIsClose().equals("Y")){
 <%	
 }
 %>
+
+/**
+ *  신고하기
+ */
+document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
+	//내용을 작성하지 않은 경우 폼제출할 수 없음.
+	const contentVal = content.value.trim(); 
+	console.log(contentVal);
+	if(!/^(.|\n)+$/.test(contentVal)){ //아무글자(.)가 아닌 개행문자가 있어서 인식못함. -> (.|\n)으로 바꿔줘야 함.
+		alert('내용을 작성해주세요.');				
+		content.select();
+		return false;
+	}
+	
+	if(confirm('신고내역을 제출하시겠습니까?')){
+		console.log('신고진행');
+	}
+});
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
