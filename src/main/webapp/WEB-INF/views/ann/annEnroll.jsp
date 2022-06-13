@@ -227,18 +227,18 @@
 				<label class="form-check-label" for="flexRadioDefault4">공개</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" id="flexRadioDefault5" checked> 
+				<input class="form-check-input" type="radio" name="isPhoneOpen" id="flexRadioDefault5" checked> 
 				<label class="form-check-label" for="flexRadioDefault5">비공개</label>
 			</div>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput16" class="form-label">담당자 이메일</label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isPhoneOpen" id="flexRadioDefault6"> 
+				<input class="form-check-input" type="radio" name="isEmailOpen" id="flexRadioDefault6"> 
 				<label class="form-check-label" for="flexRadioDefault6">공개</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" id="flexRadioDefault7" checked> 
+				<input class="form-check-input" type="radio" name="isEmailOpen" id="flexRadioDefault7" checked> 
 				<label class="form-check-label" for="flexRadioDefault7">비공개</label>
 			</div>
 		</div>
