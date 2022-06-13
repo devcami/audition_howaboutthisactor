@@ -104,8 +104,53 @@ li{
 .lastInput{
   margin-bottom: 50px !important;
 }
-
-/* second */
-#ann-enroll-second{
-  display: none;
+.btn-primary {
+  color: #fff;
+  background-color: #ffb6b9;
+  border-color: #ffb6b9;
+  margin-bottom: 20px;
+}
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus{
+  background-color: #cb7073;
+  border-color: #cb7073;
+}
+.form-control{
+  margin-bottom: 10px;
+}
+.btn-next{
+  margin: 0 auto;
+  font-size: 20px;
+  letter-spacing:10px;
+  width: 300px;
+  height: 50px;
+  color: #ffffff;
+  background-color: #bbded6;
+  transition: .2s;
+  border: none;
+}
+.btn-submit{
+  margin: 0 auto;
+  font-size: 20px;
+  letter-spacing:10px;
+  width: 300px;
+  height: 50px;
+  color: #ffffff;
+  background-color: #bbded6;
+  transition: .2s;
+  border: none;
+}
+.btn-submit:hover{
+  background-color: #fae3d9;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+.btn-next:hover{
+  background-color: #fae3d9;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+.form-select{
+  width: 500px;
+}
+#exampleFormControlInput9{
+  display: inline;
+  width: 50px;
 }
