@@ -153,6 +153,8 @@ CREATE TABLE cast (
     constraint fk_cast_work_no foreign key(work_no) references work(work_no) on delete cascade
 );
 create sequence seq_cast_no;
+alter table cast modify cast_contents varchar2(1000);
+
 
 
 -------------------------------------------
@@ -183,6 +185,8 @@ CREATE TABLE production (
     constraint fk_production_member_id foreign key(member_id) references member(member_id) on delete cascade
 );
 
+alter table production add is_phone_open char(1) default 'N' not null;
+alter table production add is_email_open char(1) default 'N' not null;
 
 -------------------------------------------
 -- announcement
@@ -208,6 +212,8 @@ CREATE TABLE announcement (
 create sequence seq_ann_no;
 
 alter table announcement add ann_nop number not null;
+alter table announcement add is_close char(1) default 'N' not null;
+alter table announcement add has_TO char(1) default 'N' not null;
 
 -------------------------------------------
 -- actor_apply  지원내역
