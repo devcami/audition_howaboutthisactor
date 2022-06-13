@@ -100,7 +100,8 @@
 
 }
 .fourth { /* 고정되어있음*/ 
-  float: right;
+
+ float: right;
   width: 90px;
   height: 90px;
   border-radius: 5rem;
