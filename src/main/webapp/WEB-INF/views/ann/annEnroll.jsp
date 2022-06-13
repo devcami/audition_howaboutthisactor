@@ -78,7 +78,7 @@
 		<hr />
 		<h2>공고 마감일</h2>
 		<p class="description">마감 날짜를 설정해주세요.</p>
-		<input type="date" name="annAndDate" class="lastInput"/><span class="need">*</span>
+		<input type="date" name="annEndDate" id="annEndDate" class="lastInput"/><span class="need">*</span>
 		<hr />
 		<h2>추가 정보</h2>
 		<p class="description">캐스팅 공고에 사진이나 영상을 추가할 수 있어요. (최대 5개)</p>
@@ -256,31 +256,99 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 });
 <%-- 유효성검사 : * 항목 입력하지 않을 시 제출 방지 & description 300자 이상 작성 시 제출 방지 --%>
 // 필수항목 입력
-document.annEnrollFrm.onsubmit = () => {
+document.annEnrollFrm.onsubmit = (e) => {
+	const f = e.target;
 	// 작품 제목
-	
+	const titleVal = f.title.value.trim();
+	if(!/^.+$/.test(titleVal)){
+		console.log(titleVal)
+		alert('제목을 작성해주세요.');
+		f.title.select();
+		return false;
+	}
 	// 작품 분야
-	
+	const workFieldVal = f.workField.value.trim();
+	if(!/^.+$/.test(workFieldVal)){
+		alert('작품 분야를 선택해주세요.');
+		f.workField.select();
+		return false;
+	}
 	// 감독 이름
-	
+	const directorVal = f.director.value.trim();
+	if(!/^.+$/.test(directorVal)){
+		alert('감독 이름을 작성해주세요.');
+		f.director.select();
+		return false;
+	}
 	// 제작사
-	
+	const productionVal = f.production.value.trim();
+	if(!/^.+$/.test(productionVal)){
+		alert('제작사를 작성해주세요.');
+		f.production.select();
+		return false;
+	}
 	// 공고 마감일
-	
+	const annEndDateVal = f.annEndDate.value.trim();
+	if(!/^.+$/.test(annEndDateVal)){
+		alert('마감 날짜를 선택해주세요.');
+		f.annEndDate.select();
+		return false;
+	}
 	// 배역 이름
-	
+	const castNameVal = f.castName.value.trim();
+	if(!/^.+$/.test(castNameVal)){
+		alert('배역 이름을 작성해주세요.');
+		f.castName.select();
+		return false;
+	}
 	// 배역 구분
-	
+	const castRoleVal = f.castRole.value.trim();
+	if(!/^.+$/.test(castRoleVal)){
+		alert('배역 구분을 선택해주세요.');
+		f.castRole.select();
+		return false;
+	}
 	// 성별
-	
+	const annGenderVal = f.annGender.value.trim();
+	if(!/^.+$/.test(annGenderVal)){
+		alert('성별을 선택해주세요.');
+		f.annGender.select();
+		return false;
+	}
 	// 나이
-	
+	const annAgeVal = f.annAge.value.trim();
+	if(!/^.+$/.test(annAgeVal)){
+		alert('나이를 선택해주세요.');
+		f.annAge.select();
+		return false;
+	}
 	// 모집 인원
-	
+	const annNopVal = f.annNop.value.trim();
+	if(!/^.+$/.test(annNopVal)){
+		alert('모집인원을 작성해주세요.');
+		f.annNop.select();
+		return false;
+	}
 	// 출연료
-	return false;
-	
+	const annPayVal = f.annPay.value.trim();
+	if(!/^.+$/.test(annPayVal)){
+		alert('나이를 선택해주세요.');
+		f.annPay.select();
+		return false;
+	}
+	return true;
 };
+// 마감날짜가 오늘날짜보다 작을 시 선택 불가
+$(annEndDate).change(function(e){
+	
+	/* let choiceDate = new Date($(this).val()).getTime();
+	let today = new Date().getTime();
+	console.log(choiceDate > today);
+	if(choiceDate < today){
+		alert("오늘 이후의 날짜만 선택가능합니다.");
+		return;
+	} */
+});
 // 작품 설명, 배역 설명 300자이내
 $(exampleFormControlTextarea1).keyup(function(e) {
 	let content = $(this).val();
@@ -320,7 +388,6 @@ $(addAttachBtn).click(function(){
 <%-- 다음버튼 클릭 시 다음장 + 스크롤 다운 --%>
 const nextStep = (e) => {
 	let thisSec = e.parentElement.parentElement.id.substr(11,);
-	console.log(thisSec);
 	let nextSec;
 	let nextTop;
 	switch(thisSec){
