@@ -46,6 +46,7 @@ public class AnnListServlet extends HttpServlet {
 			param.put("end", end);
 			
 			String sortType = request.getParameter("sortType");
+			
 			List<Ann> list = null;
 			if("end_date".equals(sortType)) {
 				list = annService.annEndDateSort(param);

@@ -1,4 +1,4 @@
-package mypage.controller;
+package wishlist.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,8 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ann.model.dto.Ann;
-import common.HelloMvcUtils;
-import mypage.model.service.MypageService;
+import wishlist.model.service.WishListService;
 
 /**
  * Servlet implementation class MyWishServlet
@@ -21,14 +20,17 @@ import mypage.model.service.MypageService;
 @WebServlet("/mypage/Pmywish")
 public class PwishListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MypageService mypageService = new MypageService();
+	private WishListService wishListService = new WishListService();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		try {
-			int numPerPage = mypageService.WISH_NUM_PER_PAGE; //12
-//			int totalContent = mypageService.getTotalContent();
+		String memberId = request.getParameter("memberId");
 		
+		try {
+			int numPerPage = wishListService.WISH_NUM_PER_PAGE; // 12
+			int totalContent = wishListService.getTotalContent(memberId);
+
+			System.out.println("PwishListServlet@totalContent = " + totalContent);
 			int cPage = 1; 
 			
 			try {
@@ -46,22 +48,28 @@ public class PwishListServlet extends HttpServlet {
 			String sortType = request.getParameter("sortType");
 			List<Ann> list = null;
 			if("end_date".equals(sortType)) {
-//				list = mypageService.annEndDateSort(param);
+				list = wishListService.annEndDateSort(memberId, param);
 			} else {
-//				list = mypageService.findAll(param);
+				list = wishListService.findAll(memberId, param);
 			}
 			
+			System.out.println("PwishListServlet@list 길이 = " + list.size());
+			System.out.println("PwishListServlet@list.get(0) = " + list.get(0));
+			System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
+			System.out.println("PwishListServlet@list.get(2)" + list.get(2));
 			
-			String url = request.getRequestURI(); // /mvc/admin/memberList
-//			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-//			System.out.println(pagebar);
-			
-			request.setAttribute("sortType", sortType);
-			request.setAttribute("list", list);
-//			request.setAttribute("pagebar", pagebar);
-			
-			request.getRequestDispatcher("/WEB-INF/views/mypage/Pwishlist.jsp")
-				.forward(request, response);
+			// 여기
+//			
+//			String url = request.getRequestURI(); // /mvc/admin/memberList
+////			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
+////			System.out.println(pagebar);
+//			
+//			request.setAttribute("sortType", sortType);
+//			request.setAttribute("list", list);
+////			request.setAttribute("pagebar", pagebar);
+//			
+//			request.getRequestDispatcher("/WEB-INF/views/mypage/Pwishlist.jsp")
+//				.forward(request, response);
 				
 		} catch (Exception e) {
 			e.printStackTrace();
