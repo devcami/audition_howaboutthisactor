@@ -2,6 +2,8 @@ package ann.model.dto;
 
 import java.sql.Date;
 
+import com.oreilly.servlet.MultipartRequest;
+
 import common.model.dto.Work;
 
 public class Ann {
@@ -19,6 +21,7 @@ public class Ann {
 	private String annBody;   // 마름 보통 통통 체형무관
 	private int annNop;
 	private String isClose;
+	private String hasTO;
 	private Work work;
 	
 	
@@ -29,7 +32,7 @@ public class Ann {
 
 	public Ann(int annNo, String memberId, int workNo, String annTitle, String annArea, Date annEndDate,
 			Date annRegDate, String annPay, String annGender, String annAge, String annHeight, String annBody,
-			int annNop, String isClose, Work work) {
+			int annNop, String isClose, String hasTO, Work work) {
 		super();
 		this.annNo = annNo;
 		this.memberId = memberId;
@@ -45,8 +48,10 @@ public class Ann {
 		this.annBody = annBody;
 		this.annNop = annNop;
 		this.isClose = isClose;
+		this.hasTO = hasTO;
 		this.work = work;
 	}
+
 
 	public int getAnnNo() {
 		return annNo;
@@ -198,15 +203,27 @@ public class Ann {
 		this.isClose = isClose;
 	}
 
+	
+	public String getHasTO() {
+		return hasTO;
+	}
+
+
+	public void setHasTO(String hasTO) {
+		this.hasTO = hasTO;
+	}
+
 
 	@Override
 	public String toString() {
 		return "Ann [annNo=" + annNo + ", memberId=" + memberId + ", workNo=" + workNo + ", annTitle=" + annTitle
 				+ ", annArea=" + annArea + ", annEndDate=" + annEndDate + ", annRegDate=" + annRegDate + ", annPay="
 				+ annPay + ", annGender=" + annGender + ", annAge=" + annAge + ", annHeight=" + annHeight + ", annBody="
-				+ annBody + ", annNop=" + annNop + ", isClose=" + isClose + ", work=" + work + "]";
+				+ annBody + ", annNop=" + annNop + ", isClose=" + isClose + ", hasTO=" + hasTO + ", work=" + work + "]";
 	}
 
+
+	
 
 	
 	
