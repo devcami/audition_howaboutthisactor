@@ -17,6 +17,7 @@ import ann.model.exception.AnnException;
 import common.model.dto.Cast;
 import common.model.dto.Work;
 import common.model.dto.WorkAttachment;
+import member.model.dto.Production;
 
 public class AnnDao {
 	private Properties prop = new Properties();
@@ -242,4 +243,162 @@ public class AnnDao {
 		
 		return cast;
 	}
+
+	public int insertWork(Connection conn, Work work) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertWork");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, work.getWorkField());
+			pstmt.setString(2, work.getTitle());
+			pstmt.setString(3, work.getProduction());
+			pstmt.setString(4, work.getDirector());
+			pstmt.setString(5, work.getDescription());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고 등록 - 작품 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int findCurrentWorkNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int workNo = 0;
+		String sql = prop.getProperty("findCurrentWorkNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				workNo = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고 등록 - 방금 등록 작품번호 가져오기 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return workNo;
+	}
+
+	public int insertWorkAttachment(Connection conn, WorkAttachment attach) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertWorkAttachment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, attach.getWorkNo());
+			pstmt.setString(2, attach.getOriginalFilename());
+			pstmt.setString(3, attach.getRenamedFilename());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고 등록 - 작품 첨부파일 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateProduction(Connection conn, Production p) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateProduction");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, p.getIsPhoneOpen());
+			pstmt.setString(2, p.getIsEmailOpen());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고 등록 - 이메일, 휴대폰 비공개 수정 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertCast(Connection conn, Cast cast) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertCast");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, cast.getWorkNo());
+			pstmt.setString(2, cast.getCastRole());
+			pstmt.setString(3, cast.getCastName());
+			pstmt.setString(4, cast.getCastContents());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고 등록 - 배역 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertAnn(Connection conn, Ann ann) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAnn");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ann.getMemberId());
+			pstmt.setInt(2, ann.getWorkNo());
+			pstmt.setString(3, ann.getAnnTitle());
+			pstmt.setString(4, ann.getAnnArea());
+			pstmt.setDate(5, ann.getAnnEndDate());
+			pstmt.setString(6, ann.getAnnPay());
+			pstmt.setString(7, ann.getAnnGender());
+			pstmt.setString(8, ann.getAnnAge());
+			pstmt.setString(9, ann.getAnnHeight());
+			pstmt.setString(10, ann.getAnnBody());
+			pstmt.setInt(11, ann.getAnnNop());
+			pstmt.setString(12, ann.getHasTO());
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고 등록 - 최종 공고 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public Production findProductionByMemberId(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Production p = null;
+		String sql = prop.getProperty("findProductionByMemberId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				p = handleProductionResultSet(rset);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고 상세보기 한건 (배역)조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return p;
+	}
+
+	private Production handleProductionResultSet(ResultSet rset) throws SQLException {
+		Production p = new Production();
+		p.setMemberId(rset.getString("member_id"));
+		p.setProductionName(rset.getString("production_name"));
+		p.setCasterName(rset.getString("caster_name"));
+		p.setCasterPhone(rset.getString("caster_phone"));
+		p.setCasterEmail(rset.getString("caster_email"));
+		p.setIsPhoneOpen(rset.getString("is_phone_open"));
+		p.setIsEmailOpen(rset.getString("is_email_open"));
+		return p;
+	}
+	
 }

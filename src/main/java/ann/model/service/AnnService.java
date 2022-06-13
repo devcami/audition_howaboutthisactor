@@ -1,7 +1,9 @@
 package ann.model.service;
 
 import static common.JdbcTemplate.close;
+import static common.JdbcTemplate.commit;
 import static common.JdbcTemplate.getConnection;
+import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
@@ -12,6 +14,7 @@ import ann.model.dto.Ann;
 import common.model.dto.Cast;
 import common.model.dto.Work;
 import common.model.dto.WorkAttachment;
+import member.model.dto.Production;
 
 public class AnnService {
 	public static final int NUM_PER_PAGE = 12;
@@ -60,4 +63,58 @@ public class AnnService {
 		close(conn);
 		return ann;
 	}
+
+	public int insertAnn(Ann ann, Work work, Cast cast, Production p) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			// 1. work에 등록
+			result = annDao.insertWork(conn, work);
+			
+			// 2. work No 가져오기
+			int workNo = annDao.findCurrentWorkNo(conn);
+			work.setWorkNo(workNo);
+			
+			// 3. work attachment에 등록
+			List<WorkAttachment> attachments = work.getAttachments();
+			if(attachments != null && !attachments.isEmpty()) {
+				for(WorkAttachment attach : attachments) {
+					attach.setWorkNo(workNo);
+					result = annDao.insertWorkAttachment(conn, attach);
+				}
+			}
+			
+			// 4. production(p.memberId) 휴대폰, 이메일 비공개 여부 업데이트
+			result = annDao.updateProduction(conn, p);
+			
+			// 5. cast#setWorkNo 등록
+			cast.setWorkNo(workNo);
+			
+			// 6. cast에 등록
+			result = annDao.insertCast(conn, cast);
+			
+			// 7. ann#setWork, #setWorkNo 등록
+			ann.setWorkNo(workNo);
+			ann.setWork(work);
+			
+			// 8. ann 등록
+			result = annDao.insertAnn(conn, ann);
+			
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public Production findProductionByMemberId(String memberId) {
+		Connection conn = getConnection();
+		Production p = annDao.findProductionByMemberId(conn, memberId);
+		close(conn);
+		return p;
+	}
+
 }

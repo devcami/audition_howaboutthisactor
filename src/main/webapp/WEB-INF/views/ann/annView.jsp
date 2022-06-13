@@ -1,3 +1,7 @@
+<%@page import="member.model.dto.MemberRole"%>
+<%@page import="member.model.dto.Member"%>
+<%@page import="java.sql.Date"%>
+<%@page import="member.model.dto.Production"%>
 <%@page import="ann.model.dto.Ann"%>
 <%@page import="common.model.dto.Cast"%>
 <%@page import="common.model.dto.WorkAttachment"%>
@@ -12,6 +16,15 @@
 	Work work = ann.getWork();
 	List<WorkAttachment> workAttachments = work.getAttachments();
 	Cast cast = work.getCast();
+	Production p = (Production) request.getAttribute("production");
+	
+	Date birthday = Date.valueOf("1990-09-09");
+	Date enrollDate = Date.valueOf("2022-06-10");
+	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate);
+	
+	boolean canEdit = loginMember != null 
+			&& (loginMember.getMemberId().equals(ann.getMemberId()) 
+					|| loginMember.getMemberRole() == MemberRole.A);
 %>
 <section id="ann-view-container">
 	<div class="container">
@@ -46,15 +59,27 @@
 				</tr>
 				<tr>
 					<th>담당자</th>
-					<td>공고등록 시 작성자의 회사정보에 caster_name</td>
+					<td><%= cast.getCastName() %></td>
 				</tr>
 				<tr>
 					<th>연락처</th>
-					<td>공고등록 시 작성자의 회사정보에 caster_phone</td>
+					<td>
+					<% if(p.getIsPhoneOpen().equals("Y")){ %>
+							<%= p.getCasterPhone() %>			
+					<% 	} else { %>
+							비공개
+					<% } %>
+					</td>
 				</tr>
 				<tr>
 					<th>이메일</th>
-					<td>공고등록 시 작성자의 회사정보에 caster_email</td>
+					<td>
+					<% if(p.getIsEmailOpen().equals("Y")){ %>
+							<%= p.getCasterEmail() %>			
+					<% 	} else { %>
+							비공개
+					<% } %>
+					</td>
 				</tr>
 			</tbody>
 			</table>
@@ -64,8 +89,6 @@
 			<h2>작품 설명</h2>
 			<p>
 				<%= work.getDescription() %>
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima quae consequatur est iste unde rem fuga impedit perspiciatis voluptas et quibusdam quisquam delectus obcaecati quos atque aliquam pariatur amet nostrum.
-				Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tenetur doloribus facere dolore qui placeat commodi ab sed saepe vero dolor dignissimos cupiditate expedita nemo praesentium maiores natus sint tempora iusto?
 			</p>
 		</div>
 		<hr />
@@ -91,7 +114,7 @@
 							<tbody>
 								<tr>
 									<th>배역 이름</th>
-									<td><%= cast.getCastName() %>역 (<%= cast.getCastRole() %>)</td>
+									<td><%= cast.getCastName() %> 역 (<%= cast.getCastRole() %>)</td>
 								</tr>
 								<tr class="underline">
 									<th>모집 인원</th>
@@ -132,19 +155,7 @@
 				for(WorkAttachment wa : workAttachments){ %>
 					<figure class="figure">
 						<!-- 첨부파일 있는 경우 img에 파일명 -->
-						<!-- src="request.getContextPath()/upload/board/wa.getName?" -->
-						<img src="<%= request.getContextPath() %>/images/annViewPageTestPic.jpg" class="figure-img img-fluid rounded" alt="첨부파일">
-						<figcaption class="figure-caption">이미지에 대한 설명</figcaption>
-					</figure>
-					<figure class="figure">
-						<!-- 첨부파일 있는 경우 img에 파일명 -->
-						<img src="<%= request.getContextPath() %>/images/annViewPageTestPic.jpg" class="figure-img img-fluid rounded" alt="첨부파일">
-						<figcaption class="figure-caption">이미지에 대한 설명2</figcaption>
-					</figure>
-					<figure class="figure">
-						<!-- 첨부파일 있는 경우 img에 파일명 -->
-						<img src="<%= request.getContextPath() %>/images/annViewPageTestPic.jpg" class="figure-img img-fluid rounded" alt="첨부파일">
-						<figcaption class="figure-caption">이미지에 대한 설명3</figcaption>
+						<img src="<%= request.getContextPath() %>/upload/ann/<%= wa.getRenamedFilename() %>" class="figure-img img-fluid rounded" alt="첨부파일" style="width:280px">
 					</figure>
 			<%				
 				}
@@ -168,7 +179,7 @@
 					<div class="modal-body">
 						<div class="mb-3">
 							<label for="message-text" class="col-form-label">신고자:</label>
-							<input type="text" name="report-writer" id="report-writer" value="loginMember.getMemberId()" readonly>
+							<input type="text" name="report-writer" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
 						</div>
 						<div class="mb-3">
 							<label for="message-text" class="col-form-label">신고내용:</label>
@@ -183,6 +194,10 @@
 				</div>
 			</div>
 		</div>
+		<% if(canEdit){ %>
+				<input type="button" value="수정하기" class="btn-update" onclick="updateBoard()">
+				<input type="button" value="삭제하기" class="btn-delete" onclick="deleteBoard()">
+		<%} %>
 	</div>
 
 </section>
@@ -226,6 +241,13 @@ document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
 		console.log('신고진행');
 	}
 });
+
+/**
+ * 수정하기 삭제하기
+ */
+<% if(canEdit) {%>
+ 
+<% } %>
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
