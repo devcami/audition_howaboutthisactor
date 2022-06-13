@@ -5,7 +5,7 @@
 
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />
-<form id = "enrollFrm" name = "enrollFrm" method = "post" action = "<%= request.getContextPath() %>/ann/annEnroll">
+<form id = "annEnrollFrm" name = "annEnrollFrm" method = "post" action = "<%= request.getContextPath() %>/ann/annEnroll">
 <%-- 작품정보섹션 --%>
 <section id="ann-enroll-first">
 	<div class="container">
@@ -256,7 +256,31 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 });
 <%-- 유효성검사 : * 항목 입력하지 않을 시 제출 방지 & description 300자 이상 작성 시 제출 방지 --%>
 // 필수항목 입력
-
+document.annEnrollFrm.onsubmit = () => {
+	// 작품 제목
+	
+	// 작품 분야
+	
+	// 감독 이름
+	
+	// 제작사
+	
+	// 공고 마감일
+	
+	// 배역 이름
+	
+	// 배역 구분
+	
+	// 성별
+	
+	// 나이
+	
+	// 모집 인원
+	
+	// 출연료
+	return false;
+	
+};
 // 작품 설명, 배역 설명 300자이내
 $(exampleFormControlTextarea1).keyup(function(e) {
 	let content = $(this).val();
