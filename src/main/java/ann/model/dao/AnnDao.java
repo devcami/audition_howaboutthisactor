@@ -13,7 +13,6 @@ import java.util.Properties;
 import static common.JdbcTemplate.*;
 
 import ann.model.dto.Ann;
-import ann.model.dto.AnnExt;
 import ann.model.exception.AnnException;
 import common.model.dto.Cast;
 import common.model.dto.Work;
@@ -52,20 +51,22 @@ public class AnnDao {
 		return totalContent;
 	}
 
-	private AnnExt handleAnnResultSet(ResultSet rset) throws SQLException {
-		AnnExt ann = new AnnExt();
+	private Ann handleAnnResultSet(ResultSet rset) throws SQLException {
+		Ann ann = new Ann();
 		ann.setAnnNo(rset.getInt("ann_no"));
 		ann.setMemberId(rset.getString("member_id"));
 		ann.setWorkNo(rset.getInt("work_no"));
+		ann.setAnnTitle(rset.getString("ann_title"));
 		ann.setAnnArea(rset.getString("ann_area"));
 		ann.setAnnEndDate(rset.getDate("ann_end_date"));
 		ann.setAnnRegDate(rset.getDate("ann_reg_date"));
-		ann.setAnnPay(rset.getInt("ann_pay"));
+		ann.setAnnPay(rset.getString("ann_pay"));
 		ann.setAnnGender(rset.getString("ann_gender"));
-		ann.setAnnAge(rset.getInt("ann_age"));
-		ann.setAnnHeight(rset.getDouble("ann_height"));
+		ann.setAnnAge(rset.getString("ann_age"));
+		ann.setAnnHeight(rset.getString("ann_height"));
 		ann.setAnnBody(rset.getString("ann_body"));
-		ann.setAnnTitle(rset.getString("ann_title"));
+		ann.setAnnNop(rset.getInt("ann_nop"));
+		ann.setIsClose(rset.getString("is_close"));
 		
 		return ann;
 	}
@@ -118,10 +119,10 @@ public class AnnDao {
 		return list;
 	}
 
-	public AnnExt findByAnnNo(Connection conn, int annNo) {
+	public Ann findByAnnNo(Connection conn, int annNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		AnnExt ann = null;
+		Ann ann = null;
 		String sql = prop.getProperty("findByAnnNo");
 		try {
 			pstmt = conn.prepareStatement(sql);

@@ -9,7 +9,6 @@ import java.util.Map;
 
 import ann.model.dao.AnnDao;
 import ann.model.dto.Ann;
-import ann.model.dto.AnnExt;
 import common.model.dto.Cast;
 import common.model.dto.Work;
 import common.model.dto.WorkAttachment;
@@ -39,9 +38,9 @@ public class AnnService {
 		return list;
 	}
 
-	public AnnExt findByAnnNo(int annNo) {
+	public Ann findByAnnNo(int annNo) {
 		Connection conn = getConnection();
-		AnnExt ann = annDao.findByAnnNo(conn, annNo);
+		Ann ann = annDao.findByAnnNo(conn, annNo);
 		Work work = annDao.findWorkByWorkNo(conn, ann.getWorkNo());
 		ann.setWork(work);
 		
