@@ -18,8 +18,10 @@ public class MyBoardServlet extends HttpServlet {
 		try {
 			String memberId = request.getParameter("memberId");
 			String memberRole = request.getParameter("memberRole");
+			
 			System.out.println("MyBoardServlet@memberId = " + memberId);
 			System.out.println("MyBoardServlet@memberRole = " + memberRole);
+			
 			
 			
 			

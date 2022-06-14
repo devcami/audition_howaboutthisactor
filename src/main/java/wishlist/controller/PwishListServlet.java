@@ -66,6 +66,8 @@ public class PwishListServlet extends HttpServlet {
 			
 			String url = request.getRequestURI(); // /app/mypage/Pmywish
 			System.out.println(url);
+		
+			
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			System.out.println("pagebaor =" + pagebar);
 			

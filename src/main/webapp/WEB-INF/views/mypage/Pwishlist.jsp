@@ -69,7 +69,6 @@
 	<div id="pagebar">
 		<%= pagebar %>
 	</div>
-
   </div>
 
   <script>
