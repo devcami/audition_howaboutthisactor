@@ -13,11 +13,11 @@ section{
 .top-logo img{
   width: 100%;
   position:relative;
-  bottom: 300px;
+  bottom: 200px;
   opacity: 0.7;
 }
 .container{
-  padding: 60px;
+  padding: 100px;
 }
 #ann-list-container .form-select{
   width: 100px !important;
@@ -26,12 +26,35 @@ section{
 .inner .form-select{
   display: inline;
 }
+#searchTitle{
+  position: relative;
+  width: 350px;
+  height: 35px;
+}
+.btn-search-title{
+  margin-left: 5px;
+  border: none;
+  border: #bbded6 2px solid;
+  background-color: #bbded6;
+  height: 35px;
+  color: white;
+  border-radius: 15px;
+  box-shadow : 3px 3px 3px #657672;
+}
+.btn-search-title:active{
+  position: relative;
+  left: 3px;
+  top: 3px;
+  box-shadow: none;
+}
 .inner .btn{
+  border: none;
   float: right;
   margin-right: 20px;
+  position: relative;
+  bottom: 50px;
   background-color: #bbded6;
   transition: .2s;
-  border: none;
 }
 .inner .btn:hover{
   background-color: #fae3d9;
@@ -89,11 +112,24 @@ section{
   background-color: #fae3d963;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
+.expirated{
+  background-color: gainsboro;
+}
+.expirated:hover{
+  background-color: gainsboro;
+}
+#expFoot{
+  background-color: rgb(139, 139, 139);
+}
+#endAnn{
+  font-size: 20px;
+  color: #000000;
+}
+
 /* annView */
 #btn-apply{
   position: relative;
-  bottom: 150px;
-  right: 80px;
+  bottom: 40px;
   float: right;
   width: 280px;
   height: 80px;
@@ -113,8 +149,8 @@ section{
   float: right;
   width: 60px;
   height: 60px;
-  bottom: 50px;
-  left: 200px;
+  bottom: 30px;
+  right: 20px;
 }
 #btn-wish img{
   width: 100%;
@@ -173,10 +209,52 @@ section{
   background-color: #d9eae6;
   box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
 }
+.view{
+  float: right;
+  margin: 10px;
+}
 #btn-report{
   background-color: rgb(196, 196, 196);
   border: none;
 }
+#btn-report:hover{
+  background-color: rgb(159, 158, 158);
+}
+#btn-update{
+  background-color: #bbded6;
+  color: #ffffff;
+  padding: 6px 12px;
+  border: none;
+  transition: .15s;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+#btn-update:hover{
+  background-color: #fae3d9;
+}
+#btn-delete{
+  background-color: rgb(196, 196, 196);
+  color: #ffffff;
+  padding: 6px 12px;
+  border: none;
+  transition: .15s;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+#btn-delete:hover{
+  background-color: rgb(159, 158, 158);
+}
+
 .btn-primary{
   background-color: rgb(204, 4, 4);
   border: rgb(204, 4, 4);

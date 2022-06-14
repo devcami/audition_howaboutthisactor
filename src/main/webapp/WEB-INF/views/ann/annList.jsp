@@ -1,3 +1,6 @@
+<%@page import="member.model.dto.MemberRole"%>
+<%@page import="member.model.dto.Member"%>
+<%@page import="java.sql.Date"%>
 <%@page import="ann.model.dto.Ann"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,6 +10,12 @@
 	List<Ann> list = (List<Ann>) request.getAttribute("list");
 	String pagebar = (String) request.getAttribute("pagebar");
 	String sortType = request.getParameter("sortType");
+	
+	String searchKeyword = request.getParameter("searchKeyword");
+	
+	Date birthday = Date.valueOf("1990-09-09");
+	Date enrollDate = Date.valueOf("2022-06-10");
+	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <section id="ann-list-container">
@@ -16,25 +25,42 @@
 	<div class="container">
 		<div class="inner">
 			<select class="form-select" id="sortType" aria-label="Default select example">
-			  <option class="sort-type" value="reg_date" id="reg_date" <%="reg_date".equals(sortType) ? "selected" : ""%>>최신순</option>
-			  <option class="sort-type" value="end_date" id="end_date" <%="end_date".equals(sortType) ? "selected" : ""%>>마감순</option>
+			  <option class="sort-type"  value="reg_date" id="reg_date" <%="reg_date".equals(sortType) ? "selected" : ""%>>최신순</option>
+			  <option class="sort-type"  value="end_date" id="end_date" <%="end_date".equals(sortType) ? "selected" : ""%>>마감순</option>
 			</select>
+			<form action="<%= request.getContextPath() %>/ann/annFinder" id="annFinderFrm">
+				<input type="text" name="searchKeyword" id="searchTitle" placeholder="제목을 검색해보세요!"
+						value="<%= (searchKeyword != null) ? searchKeyword : "" %>" />
+				<button class="btn-search-title">검색</button>
+			</form>
 			<input type="button" value="공고등록" class="btn btn-secondary btn-lg" onclick="location.href='<%= request.getContextPath() %>/ann/annEnroll';" />
 		</div>
 		<div class="row row-cols-1 row-cols-md-3 g-4" id="ann-container">
+		<script> let a; </script>
 		<% if(list != null && !list.isEmpty()){
-		for(int i = 0; i < list.size(); i++){ 
+			long miliseconds = System.currentTimeMillis();
+			Date today = new Date(miliseconds); 
+			for(int i = 0; i < list.size(); i++){ 
 		%>
 			 <div class="col">
 			    <div class="card h-100 ann-card" onclick="annView(this);">
+					<% if(list.get(i).getAnnEndDate().before(today)){ %>
+						<script>
+						    a = Array.from(this.$(".ann-card"));
+						    a.at(-1).classList.add('expirated')
+						</script>
+					<% } %>
 					<div class="card-body">
 						<h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
 						<p class="card-text"><%= list.get(i).getMemberId() %></p>
 						<input type="hidden" name="annNo" class="annNo" value="<%= list.get(i).getAnnNo() %>" />
 					</div>
-					<div class="card-footer">
+					<div class="card-footer" id="<%= list.get(i).getAnnEndDate().before(today) ? "expFoot" : "" %>">
 						<small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
 						<small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
+						<% if(list.get(i).getAnnEndDate().before(today)){ %>
+						<small id="endAnn">&nbsp;! 모집마감 !</small>
+						<% } %>
 					</div>
 				</div>
 			  </div>
@@ -54,13 +80,13 @@ sortType.addEventListener('change', (e) => {
 	document.querySelector("#ann-container").innerHTML = "";
 	const {value} = e.target;
 	// 공고 마감순 선택 시 페이지 요청
-	location.href=`<%= request.getContextPath() %>/ann/annList?sortType=\${value}`;
+	location.href=`<%= request.getContextPath() %>/ann/annEndDateList?sortType=\${value}`;
 });
-
 const annView = (ann) => {
 	const annNo = ann.firstElementChild.lastElementChild.value;
-	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
+	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}&memberId=<%= loginMember.getMemberId() %>`;
 };
+
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

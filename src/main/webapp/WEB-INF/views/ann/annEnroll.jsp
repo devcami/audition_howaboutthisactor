@@ -1,3 +1,8 @@
+<%@page import="common.model.dto.WorkAttachment"%>
+<%@page import="common.model.dto.Cast"%>
+<%@page import="java.util.List"%>
+<%@page import="common.model.dto.Work"%>
+<%@page import="ann.model.dto.Ann"%>
 <%@page import="member.model.dto.Production"%>
 <%@page import="java.sql.Date"%>
 <%@page import="member.model.dto.MemberRole"%>
@@ -8,8 +13,8 @@
 <%
 	Date birthday = Date.valueOf("1990-09-09");
 	Date enrollDate = Date.valueOf("2022-06-10");
-	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate);
-	Production p = new Production("director", "testProduction", "디렉터", "01015971597", "director@naver.com", "N", "N");
+	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
+	Production p = new Production("director", "testProduction", "디렉터", "01015971597", "director@naver.com", "N", "Y");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -24,71 +29,80 @@
 <%-- 작품정보섹션 --%>
 <section id="ann-enroll-first">
 	<div class="container">
+		<div class="root">
+			<div class="head-progressbar">
+	          <ul class="progressbar">
+	            <li class="active">작품 정보</li>
+	            <li>작품 분야</li>
+	            <li>담당자 정보</li>
+	            <li>공고 리뷰</li>
+	          </ul>
+		    </div>
+		</div>
 		<h1>작품 정보</h1>
 		<p class="description">작품에 대해 자세히 알려주세요.</p>
 		<div class="mb-3">
 			<label for="exampleFormControlInput0" class="form-label">공고 제목<span class="need">*</span></label> 
-			<input type="text" name="annTitle" class="form-control" id="exampleFormControlInput0" placeholder="ex. 함께할 주연 배우님을 모집합니다.">
+			<input type="text" name="annTitle" class="form-control" id="exampleFormControlInput0" placeholder="ex. 함께할 주연 배우님을 모집합니다." required>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">작품 제목<span class="need">*</span></label> 
-			<input type="text" name="title" value="기생충" class="form-control" id="exampleFormControlInput1" placeholder="ex. 기생충 (가제)">
+			<input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="ex. 기생충 (가제)">
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput2" class="form-label">작품 분야<span class="need">*</span></label> 
 			<select class="form-select" name="workField" id="exampleFormControlInput2" aria-label="Default select example">
 			  <option selected>선택해주세요</option>
 			  <optgroup label="영화">
-				  <option value="장편 상업 영화" selected>장편 상업 영화</option>
-				  <option value="장편 독립 영화">장편 독립 영화</option>
-				  <option value="단편 영화">단편 영화</option>
+				  <option value="lcf">장편 상업 영화</option>
+				  <option value="lif">장편 독립 영화</option>
+				  <option value="sf">단편 영화</option>
 			  </optgroup>
 			  <optgroup label="TV">
-				  <option value="드라마">드라마</option>
-				  <option value="예능">예능</option>
-				  <option value="다큐멘터리">다큐멘터리</option>
+				  <option value="dr">드라마</option>
+				  <option value="et">예능</option>
+				  <option value="dc">다큐멘터리</option>
 			  </optgroup>
 			  <optgroup label="무대">
-				  <option value="뮤지컬">뮤지컬</option>
-				  <option value="연극">연극</option>
-				  <option value="무용">무용</option>
+				  <option value="mu">뮤지컬</option>
+				  <option value="pl">연극</option>
+				  <option value="da">무용</option>
 			  </optgroup>
 			  <optgroup label="영상">
-				  <option value="웹드라마">웹드라마</option>
-				  <option value="인터넷 방송">인터넷 방송</option>
-				  <option value="뮤직 비디오">뮤직 비디오</option>
+				  <option value="wd">웹드라마</option>
+				  <option value="stm">인터넷 방송</option>
+				  <option value="mv">뮤직 비디오</option>
 			  </optgroup>
 			  <optgroup label="광고">
-				  <option value="화보">화보</option>
-				  <option value="영상 광고">영상 광고</option>
-				  <option value="사진 광고">사진 광고</option>
-				  <option value="바이럴 광고">바이럴 광고</option>
-				  <option value="기타 광고">기타 광고</option>
-				  <option value="라이브 커머스">라이브 커머스</option>
+				  <option value="ps">화보</option>
+				  <option value="vAdv">영상 광고</option>
+				  <option value="pAdv">사진 광고</option>
+				  <option value="bAdv">바이럴 광고</option>
+				  <option value="etcAdv">기타 광고</option>
+				  <option value="lic">라이브 커머스</option>
 			  </optgroup>
 			  <optgroup label="기타">
-				  <option value="기타 사진 및 영상">기타 사진 및 영상</option>
+				  <option value="etc">기타 사진 및 영상</option>
 			  </optgroup>
 			</select>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput3" class="form-label">감독 이름<span class="need">*</span></label> 
-			<input type="text" name="director" value="봉준호" class="form-control" id="exampleFormControlInput3" placeholder="ex. 봉준호">
+			<input type="text" name="director" class="form-control" id="exampleFormControlInput3" placeholder="ex. 봉준호">
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput4" class="form-label">제작사<span class="need">*</span></label> 
-			<input type="text" name="production" value="패스튜디오" class="form-control" id="exampleFormControlInput4" placeholder="ex. 패러사이트 스튜디오">
+			<input type="text" name="production" class="form-control" id="exampleFormControlInput4" placeholder="ex. 패러사이트 스튜디오">
 		</div>
 		<div class="mb-3 lastInput">
 			<label for="exampleFormControlTextarea1" class="form-label">작품 설명</label>
 			<a tabindex="0" id="btn-dscr" class="btn btn-sm btn-info" role="button" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="배역과 관련된 정보는 다음페이지에서 적을 수 있어요. 시나리오나 작품에 대한 전반적인 정보를 알려주세요!">?</a>
-			<textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3" placeholder="ex. (300자 이내)상류층과 하류층, 두 가족의 만남을 다룬 대한민국의 블랙 코미디 가족 드라마 영화입니다.">어쩌구</textarea>
+			<textarea class="form-control" name="description" id="exampleFormControlTextarea1" rows="3" placeholder="ex. (300자 이내)상류층과 하류층, 두 가족의 만남을 다룬 대한민국의 블랙 코미디 가족 드라마 영화입니다."></textarea>
 		</div>
 		<hr />
 		<h2>공고 마감일</h2>
 		<p class="description">마감 날짜를 설정해주세요.</p>
-		<p class="description">오늘 이후의 날짜만 설정 가능합니다.</p>
-		<input type="text" name="annEndDate" value="2022-06-22" id="annEndDate" class="lastInput"/><span class="need">*</span>
+		<input type="date" name="annEndDate" id="annEndDate" class="lastInput"/><span class="need">*</span>
 		<hr />
 		<h2>추가 정보</h2>
 		<p class="description">캐스팅 공고에 사진이나 영상을 추가할 수 있어요. (최대 5개)</p>
@@ -110,32 +124,35 @@
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput5" class="form-label">배역 이름<span class="need">*</span></label> 
-			<input type="text" name="castName" value="김기택" class="form-control" id="exampleFormControlInput5" placeholder="ex. 김기택, 편의점 알바생 등">
+			<input type="text" name="castName" class="form-control" id="exampleFormControlInput5" placeholder="ex. 김기택, 편의점 알바생 등">
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput6" class="form-label">배역 구분<span class="need">*</span></label> 
 			<select class="form-select" name="castRole" id="exampleFormControlInput6" aria-label="Default select example">
 			  <option selected>선택해주세요</option>
-			  <option value="주연" selected>주연</option>
-			  <option value="조연">조연</option>
-			  <option value="단역">단역</option>
-			  <option value="엑스트라">엑스트라</option>
+			  <option value="lead">주연</option>
+			  <option value="sup">조연</option>
+			  <option value="minor">단역</option>
+			  <option value="extra">엑스트라</option>
 			</select>
-		   <input class="form-check-input" type="checkbox" name="hasTO" value="" id="flexCheckDefault">
-		   <label class="form-check-label" for="flexCheckDefault">노출장면 포함</label>
+  		   <label for="exampleFormControlInput7" class="form-label">노출장면 포함<span class="need">*</span></label> 
+		   <input class="form-check-input" type="checkbox" name="hasTO" value="Y" id="flexCheckDefault1">
+		   <label class="form-check-label" for="flexCheckDefault1">예</label>
+		   <input class="form-check-input" type="checkbox" name="hasTO" checked value="N" id="flexCheckDefault2">
+		   <label class="form-check-label" for="flexCheckDefault3">아니오</label>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput7" class="form-label">성별<span class="need">*</span></label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" value="성별무관" id="flexRadioDefault1" checked> 
+				<input class="form-check-input" type="radio" name="annGender" id="flexRadioDefault1" checked> 
 				<label class="form-check-label" for="flexRadioDefault1">성별무관</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" value="남" id="flexRadioDefault2"> 
+				<input class="form-check-input" type="radio" name="annGender" id="flexRadioDefault2"> 
 				<label class="form-check-label" for="flexRadioDefault2">남</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" value="여" id="flexRadioDefault3"> 
+				<input class="form-check-input" type="radio" name="annGender" id="flexRadioDefault3"> 
 				<label class="form-check-label" for="flexRadioDefault3">여</label>
 			</div>
 		</div>
@@ -143,13 +160,13 @@
 			<label for="exampleFormControlInput8" class="form-label">나이<span class="need">*</span></label> 
 			<select class="form-select" name="annAge" id="exampleFormControlInput8" aria-label="Default select example">
 			  <option selected>선택해주세요</option>
-			  <option value="나이무관" selected>나이무관</option>
-			  <option value="~10세">~10세</option>
-			  <option value="11~17세">11~17세</option>
-			  <option value="18~25세">18~25세</option>
-			  <option value="26~35세">26~35세</option>
-			  <option value="36~45세">36~45세</option>
-			  <option value="45세~">45세~</option>
+			  <option value="age">나이무관</option>
+			  <option value="1">~10세</option>
+			  <option value="10">11~17세</option>
+			  <option value="20">18~25세</option>
+			  <option value="30">26~35세</option>
+			  <option value="40">36~45세</option>
+			  <option value="50">45세~</option>
 			</select>
 		</div>
 		<div class="mb-3">
@@ -161,13 +178,13 @@
 			<label for="exampleFormControlInput10" class="form-label">키</label> 
 			<select class="form-select" name="annHeight" id="exampleFormControlInput10" aria-label="Default select example">
 			  <option selected>선택해주세요</option>
-			  <option value="신장무관" selected>신장무관</option>
-			  <option value="~110cm">~110cm</option>
-			  <option value="111~150cm">111~150cm</option>
-			  <option value="151~160cm">151~160cm</option>
-			  <option value="161~170cm">161~170cm</option>
-			  <option value="171~180cm">171~180cm</option>
-			  <option value="180cm~">180cm~</option>
+			  <option value="age">신장무관</option>
+			  <option value="110">~110cm</option>
+			  <option value="150">111~150cm</option>
+			  <option value="160">151~160cm</option>
+			  <option value="170">161~170cm</option>
+			  <option value="180">171~180cm</option>
+			  <option value="190">180cm~</option>
 			</select>
 		</div>
 		<div class="mb-3">
@@ -175,7 +192,7 @@
 			<select class="form-select" name="annBody" id="exampleFormControlInput11" aria-label="Default select example">
 			  <option selected>선택해주세요</option>
 			  <option value="평균">평균</option>
-			  <option value="마름" selected>마름</option>
+			  <option value="마름">마름</option>
 			  <option value="탄탄함">탄탄함</option>
 			  <option value="근육질의">근육질의</option>
 			  <option value="글래머러스함">글래머러스함</option>
@@ -186,7 +203,7 @@
 		</div>
 		<div class="mb-3 lastInput">
 			<label for="exampleFormControlTextarea2" class="form-label">배역 설명</label>
-			<textarea class="form-control" name="castContents" id="exampleFormControlTextarea2" rows="5" placeholder="ex. (300자 이내) 운전 기사 역할로 어떤 상황에서도 느긋하고 늘어지는 성격을 가지고 있으며 자기합리화를 잘 하는 인물입니다. 승용차 운전과 흡연이 가능하신 분만 지원해주세요.">55</textarea>
+			<textarea class="form-control" name="castContents" id="exampleFormControlTextarea2" rows="5" placeholder="ex. (300자 이내) 운전 기사 역할로 어떤 상황에서도 느긋하고 늘어지는 성격을 가지고 있으며 자기합리화를 잘 하는 인물입니다. 승용차 운전과 흡연이 가능하신 분만 지원해주세요."></textarea>
 		</div>
 		<hr />
 		<h2>촬영 정보 및 출연료</h2>
@@ -228,39 +245,42 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput14" class="form-label">담당자 이름</label> 
 			<p class="description">공고에서 담당자 이름은 기본적으로 공개됩니다.</p>
-			<input type="text" class="form-control" name="casterName" id="exampleFormControlInput14" value="<%= p.getCasterName() %>" readonly> 
-			<input type="hidden" class="form-control" name="loginMemberId" id="exampleFormControlInput17" value="<%= loginMember.getMemberId() %>"> 
+			<input type="text" class="form-control" id="exampleFormControlInput14" value="loginMember.memberName" readonly> 
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput15" class="form-label">담당자 휴대폰 번호</label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isPhoneOpen" value="Y" id="flexRadioDefault4"> 
+				<input class="form-check-input" type="radio" name="isPhoneOpen" id="flexRadioDefault4"> 
 				<label class="form-check-label" for="flexRadioDefault4">공개</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isPhoneOpen" value="N" id="flexRadioDefault5" checked> 
+				<input class="form-check-input" type="radio" name="isPhoneOpen" id="flexRadioDefault5" checked> 
 				<label class="form-check-label" for="flexRadioDefault5">비공개</label>
 			</div>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput16" class="form-label">담당자 이메일</label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isEmailOpen" value="Y" id="flexRadioDefault6"> 
+				<input class="form-check-input" type="radio" name="isEmailOpen" id="flexRadioDefault6"> 
 				<label class="form-check-label" for="flexRadioDefault6">공개</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isEmailOpen" value="N" id="flexRadioDefault7" checked> 
+				<input class="form-check-input" type="radio" name="isEmailOpen" id="flexRadioDefault7" checked> 
 				<label class="form-check-label" for="flexRadioDefault7">비공개</label>
 			</div>
 		</div>
 		<hr />
 		<%-- 개별문의 수신 여부 / 신규 지원자 이메일 알림 -> 보류 --%>
-		<button id="btn-submit-enroll" class="btn-submit" type="submit" onclick="enrollSubmit(this);">제출</button>
+		<button id="btn-submit-enroll" class="btn-submit" type="button" onclick="enrollSubmit(this);">제출</button>
 	</div>
 </section>
 </form>
 <script>
 <%-- 상단 프로그레스바 --%>
+var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+  return new bootstrap.Popover(popoverTriggerEl)
+});
 <%-- 유효성검사 : * 항목 입력하지 않을 시 제출 방지 & description 300자 이상 작성 시 제출 방지 --%>
 // 필수항목 입력
 document.annEnrollFrm.onsubmit = (e) => {
@@ -352,7 +372,7 @@ document.annEnrollFrm.onsubmit = (e) => {
 	return true;
 };
 
-// 마감날짜가 오늘날짜보다 작을 시 선택 불가
+//마감날짜가 오늘날짜보다 작을 시 선택 불가
 $(document).ready(function () {
     $.datepicker.setDefaults($.datepicker.regional['ko']); 
     $(annEndDate).datepicker({
@@ -395,10 +415,14 @@ $(exampleFormControlTextarea2).keyup(function(e) {
 const addAttachBtn = document.querySelector("#btn-attach-add");
 $(addAttachBtn).click(function(){
     var lastAttachNo = $("#addAttachmentDiv input:last").attr("id").replace("attach", "");
-    var newAttach = $("#addAttachmentDiv input:eq(0)").clone();
-    newAttach.attr("id","attach"+(parseInt(lastAttachNo)+1));
-    newAttach.attr("name","attach"+(parseInt(lastAttachNo)+1));
-    console.log(newAttach);
+    //var newAttach = $("#addAttachmentDiv input:eq(0)").clone();
+    const newAttach = document.createElement('input');
+    newAttach.type = "file"
+    newAttach.classList.add("form-control");
+    newAttach.id = "attach" + (parseInt(lastAttachNo)+1);
+    newAttach.name = "attach"+(parseInt(lastAttachNo)+1);
+    console.dir($("#addAttachmentDiv input:last"));
+	console.dir(newAttach);
     
     if(lastAttachNo == 5){
     	//첨부파일은 5개 이상 생성할수 없도록 제한
@@ -411,6 +435,7 @@ $(addAttachBtn).click(function(){
 <%-- 다음버튼 클릭 시 다음장 + 스크롤 다운 --%>
 const nextStep = (e) => {
 	let thisSec = e.parentElement.parentElement.id.substr(11,);
+	console.log(thisSec);
 	let nextSec;
 	let nextTop;
 	switch(thisSec){
@@ -429,22 +454,11 @@ const nextStep = (e) => {
 	}
 };
 
-flexCheckDefault.onchange = () =>{
-	let check = $(flexCheckDefault).is(':checked');
-	if(check){
-		flexCheckDefault.value = "Y";
-	}
-	else{
-		flexCheckDefault.value = "N";
-	}
-}
-
 <%-- 폼제출 --%>
 const enrollSubmit = (e) => {
 	if(confirm('공고를 등록하시겠습니까?')){
-		return true;
+		document.annEnrollFrm.submit();
 	}
-	return false;
 };
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
