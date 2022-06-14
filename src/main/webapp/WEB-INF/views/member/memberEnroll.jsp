@@ -49,24 +49,6 @@
 				</td>
 			</tr> 
 			<tr>
-				<th>이메일</th>
-				<td>	
-					<input type="email" placeholder="abc123" name="email" id="email">
-					<b>@</b>
-					<select name="email_back">
-						<option value="">-- 선택 --</option>
-						<option value="naver">naver.com</option>
-						<option value="daum">daum.net</option>
-						<option value="gmail">gmail.com</option>
-						<option value="hanmail">hanmail.net</option>
-						<option value="nate">nate.com</option>
-						<option value="ms">microsoft.com</option>
-						<option value="outlook">outlook.com</option>
-					</select>
-					<input type="button" value="인증메일 받기" onclick="checkEmail();" />
-				</td>
-			</tr>
-			<tr>
 				<th>휴대폰<sup>*</sup></th>
 				<td>	
 					<input type="tel" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11"><br>
@@ -104,6 +86,24 @@
 					<input type="checkbox" name="genre" id="genre2" value="뮤지컬"><label for="genre2">뮤지컬</label>
 					<input type="checkbox" name="genre" id="genre3" value="연극"><label for="genre3">연극</label>
 					<input type="checkbox" name="genre" id="genre4" value="재연"><label for="genre4">재연</label><br/>
+				</td>
+			</tr>
+						<tr>
+				<th>이메일</th>
+				<td>	
+					<input type="email" placeholder="abc123" name="email" id="email">
+					<b>@</b>
+					<select name="email_back">
+						<option value="">-- 선택 --</option>
+						<option value="naver">naver.com</option>
+						<option value="daum">daum.net</option>
+						<option value="gmail">gmail.com</option>
+						<option value="hanmail">hanmail.net</option>
+						<option value="nate">nate.com</option>
+						<option value="ms">microsoft.com</option>
+						<option value="outlook">outlook.com</option>
+					</select>
+					<input type="button" value="인증메일 받기" onclick="checkEmail();" />
 				</td>
 			</tr>
 		</table>
