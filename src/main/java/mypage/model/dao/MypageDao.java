@@ -506,7 +506,7 @@ public class MypageDao {
 	public int getTotalMyBoard(Connection conn, String memberId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("getTotalMyAnn");
+		String sql = prop.getProperty("getTotalMyBoard");
 		int totalContent = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -587,6 +587,24 @@ public class MypageDao {
 		}
 		return list;
 		
+	}
+
+	public int deleteBoards(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteBoards");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new MypageException("MypageDao@ 내 게시글 삭제 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 	
 	

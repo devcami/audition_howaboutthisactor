@@ -252,6 +252,27 @@ public class MypageService {
 		close(conn);
 		return list;
 	}
+
+	public int deleteBoards(String[] deleteBoard) {
+		int result = 0;
+		Connection conn = getConnection();
+		
+		try {
+			for(String no : deleteBoard) {   
+	            result = mypageDao.deleteBoards(conn, Integer.parseInt(no));
+	            System.out.println(no + "번 게시글 지우기 성공!");
+			}
+			commit(conn);
+			
+		} catch(Exception e) {
+			rollback(conn);
+		 	throw e;
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+	}
 	
 
 }

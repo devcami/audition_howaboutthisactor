@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	//String memberId = "hosi";
-	//String memberRole = "P";
+	String memberId = "hosi";
+	String memberRole = "P";
 	
-	String memberId = "director";
-	String memberRole = "D";
+	// String memberId = "director";
+	// String memberRole = "D";
 	
 	String url = "";
 	switch(memberRole){

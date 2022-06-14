@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ann.model.dto.Ann;
 import board.model.dto.Board;
 import common.HelloMvcUtils;
 import mypage.model.service.MypageService;
