@@ -312,6 +312,7 @@ public class AnnDao {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, p.getIsPhoneOpen());
 			pstmt.setString(2, p.getIsEmailOpen());
+			pstmt.setString(3, p.getMemberId());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new AnnException("> 공고 등록 - 이메일, 휴대폰 비공개 수정 오류", e);
@@ -412,6 +413,111 @@ public class AnnDao {
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new AnnException("> 공고 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public WorkAttachment findOneAttachByWorkNo(Connection conn, int waNo) {
+		WorkAttachment attach = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findOneAttachByWorkNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, waNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				attach = handleAttachmentResultSet(rset);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고수정 - 작품 첨부파일 한건 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return attach;
+	}
+
+	public int deleteWorkAttachment(Connection conn, int waNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteWorkAttachment");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, waNo);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고수정 - 작품 첨부파일 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateWork(Connection conn, Work work) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateWork");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, work.getWorkField());
+			pstmt.setString(2, work.getTitle());
+			pstmt.setString(3, work.getProduction());
+			pstmt.setString(4, work.getDirector());
+			pstmt.setString(5, work.getDescription());
+			pstmt.setInt(6, work.getWorkNo());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고 등록 - 작품 수정 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateCast(Connection conn, Cast cast) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateCast");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cast.getCastRole());
+			pstmt.setString(2, cast.getCastName());
+			pstmt.setString(3, cast.getCastContents());
+			pstmt.setInt(4, cast.getCastNo());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고 등록 - 배역 수정 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateAnn(Connection conn, Ann ann) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateAnn");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, ann.getAnnTitle());
+			pstmt.setString(2, ann.getAnnArea());
+			pstmt.setDate(3, ann.getAnnEndDate());
+			pstmt.setString(4, ann.getAnnPay());
+			pstmt.setString(5, ann.getAnnGender());
+			pstmt.setString(6, ann.getAnnAge());
+			pstmt.setString(7, ann.getAnnHeight());
+			pstmt.setString(8, ann.getAnnBody());
+			pstmt.setInt(9, ann.getAnnNop());
+			pstmt.setString(10, ann.getHasTO());
+			pstmt.setInt(11, ann.getAnnNo());
+			
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고 등록 - 최종 공고 수정 오류", e);
 		} finally {
 			close(pstmt);
 		}

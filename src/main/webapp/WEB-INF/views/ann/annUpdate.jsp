@@ -19,7 +19,7 @@
 	Date birthday = Date.valueOf("1990-09-09");
 	Date enrollDate = Date.valueOf("2022-06-10");
 	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
-	Production p = new Production("director", "testProduction", "디렉터", "01015971597", "director@naver.com", "N", "N");
+	Production p = new Production("director", "testProduction", "디렉터", "01015971597", "director@naver.com", "N", "Y");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -43,6 +43,9 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">작품 제목<span class="need">*</span></label> 
 			<input type="text" name="title" value="<%= work.getTitle() %>" class="form-control" id="exampleFormControlInput1" placeholder="ex. 기생충 (가제)" required>
+			<input type="hidden" name="workNo" value="<%= work.getWorkNo() %>" class="form-control">
+			<input type="hidden" name="annNo" value="<%= ann.getAnnNo() %>" class="form-control">
+			<input type="hidden" name="castNo" value="<%= cast.getCastNo() %>" class="form-control">
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput2" class="form-label">작품 분야<span class="need">*</span></label> 
@@ -104,25 +107,25 @@
 		<p class="description">캐스팅 공고에 사진이나 영상을 추가할 수 있어요. (최대 5개)</p>
 		<button type="button" id="btn-attach-add" class="btn btn-primary">파일 추가하기</button>
 		<%
+			int i = 0;
 			if(attachments != null && !attachments.isEmpty()){
-				for(int i = 0; i < attachments.size(); i++){
+				for(i = 0; i < attachments.size(); i++){
 					WorkAttachment wa = attachments.get(i);			
 		%>
-			<br />
-			<div id="attachImg<%= i + 1 %>" name="attachImg">
+			<div id="attachImg<%= i + 1 %>">
 				<img src="<%= request.getContextPath() %>/upload/ann/<%= wa.getRenamedFilename() %>" width="200px" alt="첨부파일 미리보기" />
 				<br />
-				<button type="button" name="delFile" id="delFile<%= i + 1 %>" value="<%= wa.getWorkAttachmentNo() %>" onclick="fileDelete(this);">삭제</button>
+				<input type="button" name="btn-delFile" id="delFile<%= i + 1 %>" value="삭제" onclick="fileDelete(this);"/>
+				<input type="hidden" name="delFile" value=<%= wa.getWorkNo() %> />
 			</div>
 			<br />
-			<div class="mb-3" id="addAttachmentDiv">
-				<input class="form-control" type="file" name="attach<%= i + 2 %>" id="attach<%= i + 2 %>" multiple>
-			</div>
 		<%
 				}
 			}
 		%>
-		
+		<div class="mb-3" id="addAttachmentDiv">
+		  <input class="form-control" type="file" name="attach<%= i + 1 %>" id="attach<%= i + 1 %>" multiple>
+		</div>
 		<button type="button" id="btn-first-enroll" class="btn-next" onclick="nextStep(this);" >다음</button>
 	</div>
 </section>
@@ -141,78 +144,78 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput6" class="form-label">배역 구분<span class="need">*</span></label> 
 			<select class="form-select" name="castRole" id="exampleFormControlInput6" aria-label="Default select example" required>
-			  <option selected>선택해주세요</option>
-			  <option value="주연">주연</option>
-			  <option value="조연">조연</option>
-			  <option value="단역">단역</option>
-			  <option value="엑스트라">엑스트라</option>
+			  <option>선택해주세요</option>
+			  <option <%= cast.getCastRole().equals("주연") ? "selected" : "" %> value="주연">주연</option>
+			  <option <%= cast.getCastRole().equals("조연") ? "selected" : "" %> value="조연">조연</option>
+			  <option <%= cast.getCastRole().equals("단역") ? "selected" : "" %> value="단역">단역</option>
+			  <option <%= cast.getCastRole().equals("엑스트라") ? "selected" : "" %> value="엑스트라">엑스트라</option>
 			</select>
-		   <input class="form-check-input" type="checkbox" name="hasTO" value="" id="flexCheckDefault">
+		   <input class="form-check-input" type="checkbox" name="hasTO" <%= ann.getHasTO().equals("Y") ? "checked" : "" %> id="flexCheckDefault">
 		   <label class="form-check-label" for="flexCheckDefault">노출장면 포함</label>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput7" class="form-label">성별<span class="need">*</span></label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" value="성별무관" id="flexRadioDefault1" checked> 
+				<input class="form-check-input" type="radio" name="annGender" <%= ann.getAnnGender().equals("성별무관") ? "checked" : "" %> value="성별무관" id="flexRadioDefault1" checked> 
 				<label class="form-check-label" for="flexRadioDefault1">성별무관</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" value="남" id="flexRadioDefault2"> 
+				<input class="form-check-input" type="radio" name="annGender" <%= ann.getAnnGender().equals("남") ? "checked" : "" %> value="남" id="flexRadioDefault2"> 
 				<label class="form-check-label" for="flexRadioDefault2">남</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" value="여" id="flexRadioDefault3"> 
+				<input class="form-check-input" type="radio" name="annGender" <%= ann.getAnnGender().equals("여") ? "checked" : "" %> value="여" id="flexRadioDefault3"> 
 				<label class="form-check-label" for="flexRadioDefault3">여</label>
 			</div>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput8" class="form-label">나이<span class="need">*</span></label> 
 			<select class="form-select" name="annAge" id="exampleFormControlInput8" aria-label="Default select example">
-			  <option selected>선택해주세요</option>
-			  <option value="나이무관">나이무관</option>
-			  <option value="~10세">~10세</option>
-			  <option value="11~17세">11~17세</option>
-			  <option value="18~25세">18~25세</option>
-			  <option value="26~35세">26~35세</option>
-			  <option value="36~45세">36~45세</option>
-			  <option value="45세~">45세~</option>
+			  <option >선택해주세요</option>
+			  <option <%= ann.getAnnAge().equals("나이무관") ? "selected" : "" %> value="나이무관">나이무관</option>
+			  <option <%= ann.getAnnAge().equals("~10세") ? "selected" : "" %> value="~10세">~10세</option>
+			  <option <%= ann.getAnnAge().equals("11~17세") ? "selected" : "" %> value="11~17세">11~17세</option>
+			  <option <%= ann.getAnnAge().equals("18~25세") ? "selected" : "" %> value="18~25세">18~25세</option>
+			  <option <%= ann.getAnnAge().equals("26~35세") ? "selected" : "" %> value="26~35세">26~35세</option>
+			  <option <%= ann.getAnnAge().equals("36~45세") ? "selected" : "" %> value="36~45세">36~45세</option>
+			  <option <%= ann.getAnnAge().equals("45세~") ? "selected" : "" %> value="45세~">45세~</option>
 			</select>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput9" class="form-label">모집 인원<span class="need">*</span></label> <br>
-			<input type="text" name="annNop" class="form-control" id="exampleFormControlInput9" required> 명
+			<input type="text" name="annNop" value="<%= ann.getAnnNop() %>" class="form-control" id="exampleFormControlInput9" required> 명
 		</div>
 		<h2>배역 추가 정보</h2>
 		<div class="mb-3">
 			<label for="exampleFormControlInput10" class="form-label">키</label> 
 			<select class="form-select" name="annHeight" id="exampleFormControlInput10" aria-label="Default select example">
-			  <option selected>선택해주세요</option>
-			  <option value="신장무관">신장무관</option>
-			  <option value="~110cm">~110cm</option>
-			  <option value="111~150cm">111~150cm</option>
-			  <option value="151~160cm">151~160cm</option>
-			  <option value="161~170cm">161~170cm</option>
-			  <option value="171~180cm">171~180cm</option>
-			  <option value="180cm~">180cm~</option>
+			  <option >선택해주세요</option>
+			  <option <%= ann.getAnnHeight().equals("신장무관") ? "selected" : "" %> value="신장무관">신장무관</option>
+			  <option <%= ann.getAnnHeight().equals("~110cm") ? "selected" : "" %> value="~110cm">~110cm</option>
+			  <option <%= ann.getAnnHeight().equals("111~150cm") ? "selected" : "" %> value="111~150cm">111~150cm</option>
+			  <option <%= ann.getAnnHeight().equals("151~160cm") ? "selected" : "" %> value="151~160cm">151~160cm</option>
+			  <option <%= ann.getAnnHeight().equals("161~170cm") ? "selected" : "" %> value="161~170cm">161~170cm</option>
+			  <option <%= ann.getAnnHeight().equals("171~180cm") ? "selected" : "" %> value="171~180cm">171~180cm</option>
+			  <option <%= ann.getAnnHeight().equals("180cm~") ? "selected" : "" %> value="180cm~">180cm~</option>
 			</select>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput11" class="form-label">체형</label> 
 			<select class="form-select" name="annBody" id="exampleFormControlInput11" aria-label="Default select example">
-			  <option selected>선택해주세요</option>
-			  <option value="평균">평균</option>
-			  <option value="마름">마름</option>
-			  <option value="탄탄함">탄탄함</option>
-			  <option value="근육질의">근육질의</option>
-			  <option value="글래머러스함">글래머러스함</option>
-			  <option value="다부짐">다부짐</option>
-			  <option value="통통함">통통함</option>
-			  <option value="뚱뚱함">뚱뚱함</option>
+			  <option >선택해주세요</option>
+			  <option <%= ann.getAnnBody().equals("평균") ? "selected" : "" %> value="평균">평균</option>
+			  <option <%= ann.getAnnBody().equals("마름") ? "selected" : "" %> value="마름">마름</option>
+			  <option <%= ann.getAnnBody().equals("탄탄함") ? "selected" : "" %> value="탄탄함">탄탄함</option>
+			  <option <%= ann.getAnnBody().equals("근육질의") ? "selected" : "" %> value="근육질의">근육질의</option>
+			  <option <%= ann.getAnnBody().equals("글래머러스함") ? "selected" : "" %> value="글래머러스함">글래머러스함</option>
+			  <option <%= ann.getAnnBody().equals("다부짐") ? "selected" : "" %> value="다부짐">다부짐</option>
+			  <option <%= ann.getAnnBody().equals("통통함") ? "selected" : "" %> value="통통함">통통함</option>
+			  <option <%= ann.getAnnBody().equals("뚱뚱함") ? "selected" : "" %> value="뚱뚱함">뚱뚱함</option>
 			</select>
 		</div>
 		<div class="mb-3 lastInput">
 			<label for="exampleFormControlTextarea2" class="form-label">배역 설명</label>
-			<textarea class="form-control" name="castContents" id="exampleFormControlTextarea2" rows="5" placeholder="ex. (300자 이내) 운전 기사 역할로 어떤 상황에서도 느긋하고 늘어지는 성격을 가지고 있으며 자기합리화를 잘 하는 인물입니다. 승용차 운전과 흡연이 가능하신 분만 지원해주세요.">55</textarea>
+			<textarea class="form-control" name="castContents" id="exampleFormControlTextarea2" rows="5" placeholder="ex. (300자 이내) 운전 기사 역할로 어떤 상황에서도 느긋하고 늘어지는 성격을 가지고 있으며 자기합리화를 잘 하는 인물입니다. 승용차 운전과 흡연이 가능하신 분만 지원해주세요."><%= cast.getCastContents() %></textarea>
 		</div>
 		<hr />
 		<h2>촬영 정보 및 출연료</h2>
@@ -220,29 +223,29 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput12" class="form-label">촬영 지역</label> 
 			<select class="form-select" name="annArea" id="exampleFormControlInput12" aria-label="Default select example">
-			  <option selected>선택해주세요</option>
-			  <option value="서울">서울</option>
-			  <option value="경기">경기</option>
-			  <option value="인천">인천</option>
-			  <option value="강원">강원</option>
-			  <option value="충북">충북</option>
-			  <option value="충남">충남</option>
-			  <option value="전북">전북</option>
-			  <option value="전남">전남</option>
-			  <option value="경북">경북</option>
-			  <option value="경남">경남</option>
-			  <option value="울산">울산</option>
-			  <option value="부산">부산</option>
-			  <option value="광주">광주</option>
-			  <option value="대전">대전</option>
-			  <option value="대구">대구</option>
-			  <option value="세종">세종</option>
-			  <option value="제주">제주</option>
+			  <option>선택해주세요</option>
+			  <option <%= ann.getAnnArea().equals("서울") ? "selected" : "" %> value="서울">서울</option>
+			  <option <%= ann.getAnnArea().equals("경기") ? "selected" : "" %> value="경기">경기</option>
+			  <option <%= ann.getAnnArea().equals("인천") ? "selected" : "" %> value="인천">인천</option>
+			  <option <%= ann.getAnnArea().equals("강원") ? "selected" : "" %> value="강원">강원</option>
+			  <option <%= ann.getAnnArea().equals("충북") ? "selected" : "" %> value="충북">충북</option>
+			  <option <%= ann.getAnnArea().equals("충남") ? "selected" : "" %> value="충남">충남</option>
+			  <option <%= ann.getAnnArea().equals("전북") ? "selected" : "" %> value="전북">전북</option>
+			  <option <%= ann.getAnnArea().equals("전남") ? "selected" : "" %> value="전남">전남</option>
+			  <option <%= ann.getAnnArea().equals("경북") ? "selected" : "" %> value="경북">경북</option>
+			  <option <%= ann.getAnnArea().equals("경남") ? "selected" : "" %> value="경남">경남</option>
+			  <option <%= ann.getAnnArea().equals("울산") ? "selected" : "" %> value="울산">울산</option>
+			  <option <%= ann.getAnnArea().equals("부산") ? "selected" : "" %> value="부산">부산</option>
+			  <option <%= ann.getAnnArea().equals("광주") ? "selected" : "" %> value="광주">광주</option>
+			  <option <%= ann.getAnnArea().equals("대전") ? "selected" : "" %> value="대전">대전</option>
+			  <option <%= ann.getAnnArea().equals("대구") ? "selected" : "" %> value="대구">대구</option>
+			  <option <%= ann.getAnnArea().equals("세종") ? "selected" : "" %> value="세종">세종</option>
+			  <option <%= ann.getAnnArea().equals("제주") ? "selected" : "" %> value="제주">제주</option>
 			</select>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput13" class="form-label">출연료<span class="need">*</span></label> <br>
-			<input type="text" name="annPay" class="form-control" id="exampleFormControlInput13" placeholder="ex. 회당 10만원 총 10회">
+			<input type="text" name="annPay" value="<%= ann.getAnnPay() %>" class="form-control" id="exampleFormControlInput13" placeholder="ex. 회당 10만원 총 10회">
 		</div>
 		<button type="button" id="btn-second-enroll" class="btn-next" onclick="nextStep(this);">다음</button>
 	</div>
@@ -260,28 +263,28 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput15" class="form-label">담당자 휴대폰 번호</label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isPhoneOpen" value="Y" id="flexRadioDefault4" checked> 
+				<input class="form-check-input" type="radio" name="isPhoneOpen" value="Y" id="flexRadioDefault4" <%= p.getIsPhoneOpen().equals("Y") ? "checked" : "" %>> 
 				<label class="form-check-label" for="flexRadioDefault4">공개</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isPhoneOpen" value="N" id="flexRadioDefault5"> 
+				<input class="form-check-input" type="radio" name="isPhoneOpen" value="N" id="flexRadioDefault5" <%= p.getIsPhoneOpen().equals("N") ? "checked" : "" %>> 
 				<label class="form-check-label" for="flexRadioDefault5">비공개</label>
 			</div>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput16" class="form-label">담당자 이메일</label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isEmailOpen" value="Y" id="flexRadioDefault6" checked> 
+				<input class="form-check-input"  <%= p.getIsEmailOpen().equals("Y") ? "checked" : "" %> type="radio" name="isEmailOpen" value="Y" id="flexRadioDefault6" > 
 				<label class="form-check-label" for="flexRadioDefault6">공개</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isEmailOpen" value="N" id="flexRadioDefault7"> 
+				<input class="form-check-input"  <%= p.getIsEmailOpen().equals("N") ? "checked" : "" %> type="radio" name="isEmailOpen" value="N" id="flexRadioDefault7"> 
 				<label class="form-check-label" for="flexRadioDefault7">비공개</label>
 			</div>
 		</div>
 		<hr />
 		<%-- 개별문의 수신 여부 / 신규 지원자 이메일 알림 -> 보류 --%>
-		<button id="btn-submit-enroll" class="btn-submit" type="submit" onclick="enrollSubmit(this);">제출</button>
+		<button id="btn-submit-enroll" class="btn-submit" type="button" onclick="enrollSubmit(this);">제출</button>
 	</div>
 </section>
 </form>
@@ -424,11 +427,10 @@ $(addAttachBtn).click(function(){
     var newAttach = $("#addAttachmentDiv input:eq(0)").clone();
     newAttach.attr("id","attach"+(parseInt(lastAttachNo)+1));
     newAttach.attr("name","attach"+(parseInt(lastAttachNo)+1));
-    console.log(newAttach);
     
     const nowAttachCnt = document.querySelectorAll("input[type=file]").length;
     const nowImgCnt = document.querySelectorAll("[name=attachImg]").length;
-    if(nowAttachCnt + nowImgCnt == 5){
+    if(lastAttachNo == 5){
     	//첨부파일은 5개 이상 생성할수 없도록 제한
         alert("5개 이상 파일 추가 하실 수 없습니다.");
     } else {
@@ -440,10 +442,18 @@ $(addAttachBtn).click(function(){
  *  업로드 가능한 첨부파일 수 제한하기
  */
 const fileDelete = (e) => {
-	const fileNo = e.id.replace("delFile", "");
+	let fileNo = e.id.replace("delFile", "");
 	if(confirm('첨부파일을 삭제하시겠습니까?')){
-		const fileId = "attachImg" + fileNo;
-		document.getElementById(fileId).remove();
+		let fileId = "attachImg" + fileNo;
+		const delFile = document.getElementById(fileId);
+		delFile.style.display = "none";
+		
+		document.querySelectorAll("input[type=file]").forEach((attach)=>{
+			console.log(attach);
+			attach.id = "attach" + fileNo;
+			attach.name = "attach" + fileNo;
+			fileNo = Number(fileNo) + 1;
+		});
 	}
 };
 
@@ -480,10 +490,9 @@ flexCheckDefault.onchange = () =>{
 
 <%-- 폼제출 --%>
 const enrollSubmit = (e) => {
-	if(confirm('공고를 등록하시겠습니까?')){
-		return true;
+	if(confirm('공고를 수정하시겠습니까?')){
+		document.annUpdateFrm.submit();
 	}
-	return false;
 };
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
