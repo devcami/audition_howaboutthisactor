@@ -85,12 +85,21 @@
 				</td>
 			</tr>
 			<tr>
+				<th>회원 유형 </th>
+				<td>
+					<input type="radio" name="type" id="type0" value="P">
+					<label for="type0">배우 및 아티스트</label>
+					<input type="radio" name="type" id="type1" value="D">
+					<label for="type1">제작자 및 캐스팅 담당자</label>
+				</td>
+			</tr>
+			<tr>
 				<th>관심지원분야</th>
 				<td>
 					<input type="checkbox" name="genre" id="genre0" value="영화"><label for="genre0">영화</label>
-					<input type="checkbox" name="genre" id="genre1" value="드라마" checked><label for="genre1">드라마</label>
-					<input type="checkbox" name="genre" id="genre2" value="뮤지컬" checked><label for="genre2">뮤지컬</label>
-					<input type="checkbox" name="genre" id="genre3" value="연극" checked><label for="genre3">연극</label>
+					<input type="checkbox" name="genre" id="genre1" value="드라마"><label for="genre1">드라마</label>
+					<input type="checkbox" name="genre" id="genre2" value="뮤지컬"><label for="genre2">뮤지컬</label>
+					<input type="checkbox" name="genre" id="genre3" value="연극"><label for="genre3">연극</label>
 					<input type="checkbox" name="genre" id="genre4" value="재연"><label for="genre4">재연</label><br/>
 				</td>
 			</tr>
