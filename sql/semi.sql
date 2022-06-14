@@ -215,6 +215,8 @@ create sequence seq_ann_no;
 alter table announcement add ann_nop number not null;
 alter table announcement add is_close char(1) default 'N' not null;
 alter table announcement add has_TO char(1) default 'N' not null;
+alter table announcement modify has_TO char(1) default 'N' null;
+commit;
 
 -------------------------------------------
 -- actor_apply  지원내역
@@ -371,6 +373,7 @@ insert into portfolio values (SEQ_PORTFOLIO_NO.nextval, 'actor', 1, '2019년 10�
 --테이블 정보보기
 -------------------------------------
 select * from member;
+
 select * from board;
 select * from board_attachment;
 select * from board_comment;
@@ -386,15 +389,9 @@ select * from wishlist_actor;
 select * from wishlist_ann;
 select * from report;
 
-update production set is_phone_open = 'N', is_email_open = 'N';
+commit;
 
-
-
-
-
-
-
-
+update announcement set has_to = 'N' where ann_no = 27;
 
 
 

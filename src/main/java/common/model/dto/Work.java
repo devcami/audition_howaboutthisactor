@@ -9,17 +9,15 @@ public class Work {
 	private String production;
 	private String director;
 	private String description;
-	private int attachCount;
 	private List<WorkAttachment> attachments;
 	private Cast cast;
 
 	public Work() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Work(int workNo, String workField, String title, String production, String director, String description,
-			int attachCount, List<WorkAttachment> attachments, Cast cast) {
+			List<WorkAttachment> attachments, Cast cast) {
 		super();
 		this.workNo = workNo;
 		this.workField = workField;
@@ -27,7 +25,6 @@ public class Work {
 		this.production = production;
 		this.director = director;
 		this.description = description;
-		this.attachCount = attachCount;
 		this.attachments = attachments;
 		this.cast = cast;
 	}
@@ -80,14 +77,6 @@ public class Work {
 		this.description = description;
 	}
 
-	public int getAttachCount() {
-		return attachCount;
-	}
-
-	public void setAttachCount(int attachCount) {
-		this.attachCount = attachCount;
-	}
-
 	public List<WorkAttachment> getAttachments() {
 		return attachments;
 	}
@@ -107,8 +96,10 @@ public class Work {
 	@Override
 	public String toString() {
 		return "Work [workNo=" + workNo + ", workField=" + workField + ", title=" + title + ", production=" + production
-				+ ", director=" + director + ", description=" + description + ", attachCount=" + attachCount
-				+ ", attachments=" + attachments + ", cast=" + cast + "]";
+				+ ", director=" + director + ", description=" + description + ", attachments=" + attachments + ", cast="
+				+ cast + "]";
 	}
 
+	
+	
 }

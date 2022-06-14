@@ -20,7 +20,7 @@
 	
 	Date birthday = Date.valueOf("1990-09-09");
 	Date enrollDate = Date.valueOf("2022-06-10");
-	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate);
+	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
 	
 	boolean canEdit = loginMember != null 
 			&& (loginMember.getMemberId().equals(ann.getMemberId()) 
@@ -59,7 +59,7 @@
 				</tr>
 				<tr>
 					<th>담당자</th>
-					<td><%= cast.getCastName() %></td>
+					<td><%= p.getCasterName() %></td>
 				</tr>
 				<tr>
 					<th>연락처</th>
@@ -122,7 +122,8 @@
 								</tr>
 								<tr>
 									<th>기본 조건</th>
-									<td><%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> </td>
+									<td><%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> <%= ann.getHasTO().equals("Y") ? "| 노출장면 있음" : "" %></td>
+									
 								</tr>
 								<tr class="underline">
 									<th>신체 조건</th>
@@ -163,7 +164,7 @@
 			%>
 		</div>
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+		<button type="button" class="btn btn-primary view" data-bs-toggle="modal"
 			data-bs-target="#exampleModal" id="btn-report">신고하기</button>
 
 		<!-- Modal -->
@@ -195,8 +196,8 @@
 			</div>
 		</div>
 		<% if(canEdit){ %>
-				<input type="button" value="수정하기" class="btn-update" onclick="updateBoard()">
-				<input type="button" value="삭제하기" class="btn-delete" onclick="deleteBoard()">
+				<input type="button" value="삭제하기" class="btn-delete view" id="btn-delete" onclick="deleteAnn()">
+				<input type="button" value="수정하기" class="btn-update view" id="btn-update" onclick="updateAnn()">
 		<%} %>
 	</div>
 
@@ -241,12 +242,24 @@ document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
 		console.log('신고진행');
 	}
 });
+</script>
 
-/**
- * 수정하기 삭제하기
- */
+<%-- 수정하기 삭제하기 --%>
 <% if(canEdit) {%>
- 
+<form 
+	name="annDelFrm" 
+	action="<%= request.getContextPath() %>/ann/annDelete"
+	method="POST">
+	<input type="hidden" name="annNo" value="<%= ann.getAnnNo() %>" />
+</form> 
+<script>
+const deleteAnn = () => {
+	if(confirm('확인을 누르시면 되돌이킬 수 없습니다. 공고를 삭제하시겠습니까?'))
+		document.annDelFrm.submit();
+}
+const updateAnn = () => {
+	location.href = "<%= request.getContextPath() %>/ann/annUpdate?annNo=<%= ann.getAnnNo() %>";
+}
 <% } %>
 </script>
 
