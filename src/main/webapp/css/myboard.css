@@ -22,7 +22,7 @@
 #Pmypage-submenu {
   margin-top: 100px;
   text-align: right;
-  width: 18%;
+  width: 15%;
 }
 #Pmypage-submenu ul {
   padding: 0;
@@ -81,6 +81,7 @@
 #list-head th{
   padding-bottom: 7px;
   text-align: center;
+  font-size: larger;
 }
 #list-head th:nth-child(2){
   width: 50%;

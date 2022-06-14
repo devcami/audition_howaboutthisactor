@@ -29,11 +29,11 @@ public class CheckIdDuplicateServlet extends HttpServlet {
 		String memberId = request.getParameter("memberId");
 		System.out.println("memberId@CheckIdDuplicateServlet = " + memberId);
 		// 업무로직
-		Member member = memberService.findByMemberId(memberId);
-		boolean available = (member == null);
+//		Member member = memberService.findByMemberId(memberId);
+//		boolean available = (member == null);
 		
 		// view단 처리
-		request.setAttribute("available", available);
+//		request.setAttribute("available", available);
 		request
 			.getRequestDispatcher("/WEB-INF/views/member/checkIdDuplicate.jsp")
 			.forward(request, response);

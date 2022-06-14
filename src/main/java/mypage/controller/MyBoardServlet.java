@@ -16,6 +16,15 @@ public class MyBoardServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			String memberId = request.getParameter("memberId");
+			String memberRole = request.getParameter("memberRole");
+			System.out.println("MyBoardServlet@memberId = " + memberId);
+			System.out.println("MyBoardServlet@memberRole = " + memberRole);
+			
+			
+			
+			request.setAttribute("memberId", memberId);
+			request.setAttribute("memberRole", memberRole);
 			request.getRequestDispatcher("/WEB-INF/views/mypage/myboard.jsp")
 				.forward(request, response);
 				
@@ -23,14 +32,6 @@ public class MyBoardServlet extends HttpServlet {
 			e.printStackTrace();
 			throw e;
 		}
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
 	}
 
 }

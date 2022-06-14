@@ -37,7 +37,7 @@ public class DwishListServlet extends HttpServlet {
 			int numPerPage = wishListService.WISH_NUM_PER_PAGE; // 12
 			int totalContent = wishListService.getTotalActorWishContent(memberId);
 
-			System.out.println("DwishListServlet@totalContent = " + totalContent);
+//			System.out.println("DwishListServlet@totalContent = " + totalContent);
 			int cPage = 1; 
 			
 			try {
@@ -73,7 +73,7 @@ public class DwishListServlet extends HttpServlet {
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 //			System.out.println("pagebar =" + pagebar);
 			
-//			request.setAttribute("sortType", sortType);
+			request.setAttribute("sortType", sortType);
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
 			
