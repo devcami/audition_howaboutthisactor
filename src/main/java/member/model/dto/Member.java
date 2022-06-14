@@ -13,7 +13,9 @@ public class Member {
 	private String gender;
 	private Date birthday;
 	private Date enrollDate;
-//  private String address;
+    private String address;
+    private String type; // 회원 유형(배우 및 아티스트 / 제작사 및 캐스팅 담당자)
+    private String genre;
 	
 	
 	public Member() {
@@ -22,7 +24,7 @@ public class Member {
 
 
 	public Member(String memberId, String password, String memberName, String email, MemberRole memberRole,
-			String phone, String gender, Date birthday, Date enrollDate) {
+			String phone, String gender, Date birthday, Date enrollDate, String address, String type, String genre) {
 		super();
 		this.memberId = memberId;
 		this.password = password;
@@ -33,6 +35,9 @@ public class Member {
 		this.gender = gender;
 		this.birthday = birthday;
 		this.enrollDate = enrollDate;
+		this.address = address;
+		this.type = type;
+		this.genre = genre;
 	}
 
 
@@ -126,13 +131,43 @@ public class Member {
 	}
 
 
+	public String getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	
+	public String getType() {
+		return type;
+	}
+
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
+
+	public String getGenre() {
+		return genre;
+	}
+
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Member [memberId=" + memberId + ", password=" + password + ", memberName=" + memberName + ", email="
 				+ email + ", memberRole=" + memberRole + ", phone=" + phone + ", gender=" + gender + ", birthday="
-				+ birthday + ", enrollDate=" + enrollDate + "]";
+				+ birthday + ", enrollDate=" + enrollDate + ", address=" + address + ", type=" + type + ", genre="
+				+ genre + "]";
 	}
-	
 
 }
 
