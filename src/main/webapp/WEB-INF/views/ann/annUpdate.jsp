@@ -15,7 +15,6 @@
 	Work work = ann.getWork();
 	List<WorkAttachment> attachments = work.getAttachments();
 	Cast cast = work.getCast();
-
 	Date birthday = Date.valueOf("1990-09-09");
 	Date enrollDate = Date.valueOf("2022-06-10");
 	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
@@ -150,8 +149,20 @@
 			  <option <%= cast.getCastRole().equals("단역") ? "selected" : "" %> value="단역">단역</option>
 			  <option <%= cast.getCastRole().equals("엑스트라") ? "selected" : "" %> value="엑스트라">엑스트라</option>
 			</select>
-		   <input class="form-check-input" type="checkbox" name="hasTO" value="<%= ann.getHasTO() %>" <%= ann.getHasTO().equals("Y") ? "checked" : "" %> id="flexCheckDefault">
-		   <label class="form-check-label" for="flexCheckDefault">노출장면 포함</label>
+			
+			
+			<br />		   
+		   <label for="exampleFormControlInput7" class="form-label">노출장면 포함<span class="need">*</span></label>
+		   <br /> 
+		   <input class="form-check-input" type="checkbox" name="hasTO" <%= ann.getHasTO().equals("Y") ? "checked" : "" %>
+		   	value="Y" 
+		   	id="flexCheckDefault1">
+		   <label class="form-check-label" for="flexCheckDefault1">예</label>
+		   <input class="form-check-input" type="checkbox" name="hasTO" <%= ann.getHasTO().equals("N") ? "checked" : "" %>
+		   	value="N" 
+		   	id="flexCheckDefault2">
+		   <label class="form-check-label" for="flexCheckDefault3">아니오</label>
+		   	
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput7" class="form-label">성별<span class="need">*</span></label> 
@@ -478,14 +489,6 @@ const nextStep = (e) => {
 	}
 };
 
-flexCheckDefault.onchange = () =>{
-	if(check){
-		flexCheckDefault.value = "Y";
-	}
-	else{
-		flexCheckDefault.value = "N";
-	}
-}
 
 <%-- 폼제출 --%>
 const enrollSubmit = (e) => {

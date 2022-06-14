@@ -80,7 +80,8 @@ public class AnnUpdateServlet extends HttpServlet {
 			// 2. 배역정보
 			String castName = multiReq.getParameter("castName"); //cast
 			String castRole = multiReq.getParameter("castRole"); //cast
-			String hasTo = multiReq.getParameter("hasTO"); //ann
+			String hasTO = multiReq.getParameter("hasTO"); //ann
+			System.out.println("hasTO : " + hasTO);
 			String annGender = multiReq.getParameter("annGender"); //ann
 			String annAge = multiReq.getParameter("annAge"); //ann
 			int annNop = Integer.parseInt(multiReq.getParameter("annNop")); //ann
@@ -129,7 +130,7 @@ public class AnnUpdateServlet extends HttpServlet {
 			
 			cast.setCastName(castName);
 			cast.setCastRole(castRole);
-			ann.setHasTO(hasTo);
+			ann.setHasTO(hasTO);
 			ann.setAnnGender(annGender);
 			ann.setAnnAge(annAge);
 			ann.setAnnNop(annNop);

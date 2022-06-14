@@ -184,4 +184,11 @@ public class AnnService {
 		return result;
 	}
 
+	public List<Ann> findByAnnTitle(String searchKeyword) {
+		Connection conn = getConnection();
+		List<Ann> list = annDao.findByAnnTitle(conn, searchKeyword);
+		close(conn);
+		return list;
+	}
+
 }

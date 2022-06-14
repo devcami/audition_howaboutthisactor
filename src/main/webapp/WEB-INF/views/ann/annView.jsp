@@ -122,7 +122,8 @@
 								</tr>
 								<tr>
 									<th>기본 조건</th>
-									<td><%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> </td>
+									<td><%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> <%= ann.getHasTO().equals("Y") ? "| 노출장면 있음" : "" %></td>
+									
 								</tr>
 								<tr class="underline">
 									<th>신체 조건</th>

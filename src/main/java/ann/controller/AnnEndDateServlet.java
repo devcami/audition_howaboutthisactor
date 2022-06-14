@@ -48,11 +48,15 @@ public class AnnEndDateServlet extends HttpServlet {
 			
 			String sortType = request.getParameter("sortType");
 			List<Ann> list = null;
+			String url = request.getRequestURI(); // /app/ann/annList
 			if(sortType.equals("end_date")) {
 				list = annService.annEndDateSort(param);
+				url += "?sortType=end_date";
+			} else {
+				list = annService.findAll(param);
+				url += "?sortType=reg_date";
 			}
 			
-			String url = request.getRequestURI(); // /mvc/admin/memberList
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			
 			request.setAttribute("sortType", sortType);

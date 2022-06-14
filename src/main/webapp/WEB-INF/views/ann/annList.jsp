@@ -8,6 +8,8 @@
 	List<Ann> list = (List<Ann>) request.getAttribute("list");
 	String pagebar = (String) request.getAttribute("pagebar");
 	String sortType = request.getParameter("sortType");
+	
+	String searchKeyword = request.getParameter("searchKeyword");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <section id="ann-list-container">
@@ -17,9 +19,14 @@
 	<div class="container">
 		<div class="inner">
 			<select class="form-select" id="sortType" aria-label="Default select example">
-			  <option class="sort-type" value="reg_date" id="reg_date" <%="reg_date".equals(sortType) ? "selected" : ""%>>최신순</option>
-			  <option class="sort-type" value="end_date" id="end_date" <%="end_date".equals(sortType) ? "selected" : ""%>>마감순</option>
+			  <option class="sort-type"  value="reg_date" id="reg_date" <%="reg_date".equals(sortType) ? "selected" : ""%>>최신순</option>
+			  <option class="sort-type"  value="end_date" id="end_date" <%="end_date".equals(sortType) ? "selected" : ""%>>마감순</option>
 			</select>
+			<form action="<%= request.getContextPath() %>/ann/annFinder" id="annFinderFrm">
+				<input type="text" name="searchKeyword" id="searchTitle" placeholder="제목을 검색해보세요!"
+						value="<%= (searchKeyword != null) ? searchKeyword : "" %>" />
+				<button class="btn-search-title">검색</button>
+			</form>
 			<input type="button" value="공고등록" class="btn btn-secondary btn-lg" onclick="location.href='<%= request.getContextPath() %>/ann/annEnroll';" />
 		</div>
 		<div class="row row-cols-1 row-cols-md-3 g-4" id="ann-container">
@@ -67,7 +74,7 @@ sortType.addEventListener('change', (e) => {
 	document.querySelector("#ann-container").innerHTML = "";
 	const {value} = e.target;
 	// 공고 마감순 선택 시 페이지 요청
-	location.href=`<%= request.getContextPath() %>/ann/annList?sortType=\${value}`;
+	location.href=`<%= request.getContextPath() %>/ann/annEndDateList?sortType=\${value}`;
 });
 
 const annView = (ann) => {
@@ -75,11 +82,6 @@ const annView = (ann) => {
 	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
 };
 
-/*
- * annEndDate가 오늘날짜가 지났으면 회색으로 노출 + 모집기한 마감
- */
-window.addEventListener('load', () => {
-});
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

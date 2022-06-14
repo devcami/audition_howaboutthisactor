@@ -14,7 +14,7 @@ section{
 .top-logo img{
   width: 100%;
   position:relative;
-  bottom: 300px;
+  bottom: 200px;
   opacity: 0.7;
 }
 .container{
@@ -27,12 +27,35 @@ section{
 .inner .form-select{
   display: inline;
 }
+#searchTitle{
+  position: relative;
+  width: 350px;
+  height: 35px;
+}
+.btn-search-title{
+  margin-left: 5px;
+  border: none;
+  border: #bbded6 2px solid;
+  background-color: #bbded6;
+  height: 35px;
+  color: white;
+  border-radius: 15px;
+  box-shadow : 3px 3px 3px #657672;
+}
+.btn-search-title:active{
+  position: relative;
+  left: 3px;
+  top: 3px;
+  box-shadow: none;
+}
 .inner .btn{
+  border: none;
   float: right;
   margin-right: 20px;
+  position: relative;
+  bottom: 50px;
   background-color: #bbded6;
   transition: .2s;
-  border: none;
 }
 .inner .btn:hover{
   background-color: #fae3d9;

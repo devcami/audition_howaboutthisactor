@@ -115,8 +115,11 @@
 			  <option value="minor">단역</option>
 			  <option value="extra">엑스트라</option>
 			</select>
-		   <input class="form-check-input" type="checkbox" name="hasTO" value="N" id="flexCheckDefault">
-		   <label class="form-check-label" for="flexCheckDefault">노출장면 포함</label>
+  		   <label for="exampleFormControlInput7" class="form-label">노출장면 포함<span class="need">*</span></label> 
+		   <input class="form-check-input" type="checkbox" name="hasTO" value="Y" id="flexCheckDefault1">
+		   <label class="form-check-label" for="flexCheckDefault1">예</label>
+		   <input class="form-check-input" type="checkbox" name="hasTO" checked value="N" id="flexCheckDefault2">
+		   <label class="form-check-label" for="flexCheckDefault3">아니오</label>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput7" class="form-label">성별<span class="need">*</span></label> 
