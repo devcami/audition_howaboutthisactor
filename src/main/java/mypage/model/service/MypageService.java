@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import ann.model.dto.Ann;
+import board.model.dto.Board;
 import mypage.model.dao.MypageDao;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
@@ -17,6 +18,7 @@ public class MypageService {
 	private MypageDao mypageDao = new MypageDao();
 	public static final int APPLY_NUM_PER_PAGE = 8;
 	public static final int ANN_NUM_PER_PAGE = 8;
+	public static final int BOARD_NUM_PER_PAGE = 15;
 
 	public List<Integer> insertPortWork(PortfolioWork work) {
 		List<Integer> resultNo = new ArrayList<>();
@@ -227,6 +229,28 @@ public class MypageService {
 		
 		return result;
 		
+	}
+
+	public int getTotalMyBoard(String memberId) {
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalMyBoard(conn, memberId);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<Board> myBoardEndDateSort(String memberId, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Board> list = mypageDao.myBoardEndDateSort(conn, memberId, param);
+		close(conn);
+		return list;
+		
+	}
+
+	public List<Board> findMyAllBoard(String memberId, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Board> list = mypageDao.findMyAllBoard(conn, memberId, param);
+		close(conn);
+		return list;
 	}
 	
 

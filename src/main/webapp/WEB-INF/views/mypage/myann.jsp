@@ -87,7 +87,7 @@
       document.querySelector("#updown-container").innerHTML = "";
       const {value} = e.target;
       // 공고 마감순 선택 시 페이지 요청
-      location.href=`/app/mypage/myAnn?sortType=\${value}`;
+      location.href=`/app/mypage/myAnnEndDate?sortType=\${value}`;
    });
 
    const annView = (ann) => {

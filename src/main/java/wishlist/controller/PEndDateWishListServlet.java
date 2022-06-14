@@ -1,4 +1,4 @@
-package mypage.controller;
+package wishlist.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,29 +13,29 @@ import javax.servlet.http.HttpServletResponse;
 
 import ann.model.dto.Ann;
 import common.HelloMvcUtils;
-import mypage.model.service.MypageService;
+import wishlist.model.service.WishListService;
 
 /**
- * Servlet implementation class MyAnnServlet
+ * Servlet implementation class PEndDateWishListServlet
  */
-@WebServlet("/mypage/myAnn")
-public class MyAnnServlet extends HttpServlet {
+@WebServlet("/mypage/PendDateWishList")
+public class PEndDateWishListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MypageService mypageService = new MypageService();
-	
+	private WishListService wishListService = new WishListService();
+
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+//		String memberId = request.getParameter("memberId");
+//		System.out.println("PwishListServlet@memberId = " + memberId);
+		
+		String memberId = "hosi";
+		
 		try {
-			// 로그인한 회원이 캐스팅디렉터 회원인 경우
-			
-//			String memberId = request.getParameter("memberId");
-//			String memberRole = request.getParameter("memberRole");
+			int numPerPage = wishListService.WISH_NUM_PER_PAGE; // 12
+			int totalContent = wishListService.getTotalContent(memberId);
 
-			String memberId = "director";
-			
-			int numPerPage = mypageService.ANN_NUM_PER_PAGE; // 12
-			int totalContent = mypageService.getTotalMyAnn(memberId);
-
-			System.out.println("PortfolioServlet@totalContent = " + totalContent);
+			System.out.println("PendDateWishList@totalContent = " + totalContent);
 			int cPage = 1; 
 			
 			try {
@@ -52,32 +52,40 @@ public class MyAnnServlet extends HttpServlet {
 			
 			String sortType = request.getParameter("sortType");
 			List<Ann> list = null;
-			if("end_date".equals(sortType)) {
-				list = mypageService.myAnnEndDateSort(memberId, param);
-			} else {
-				list = mypageService.findMyAllAnn(memberId, param);
-			}
-			
-//				System.out.println("PwishListServlet@list 길이 = " + list.size());
-//				System.out.println("PwishListServlet@list.get(0) = " + list.get(0));
-//				System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
-//				System.out.println("PwishListServlet@list.get(2)" + list.get(2));
-
-			
 			String url = request.getRequestURI(); // /app/mypage/Pmywish
 			System.out.println(url);
+			if(sortType.equals("end_date")) {
+				list = wishListService.annEndDateSort(memberId, param);
+				url += "?sortType=end_date";
+			} else {
+				list = wishListService.findAll(memberId, param);
+				url += "?sortType=reg_date";
+			}
+			
+//			System.out.println("PwishListServlet@list 길이 = " + list.size());
+//			System.out.println("PwishListServlet@list.get(0) = " + list.get(0));
+//			System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
+//			System.out.println("PwishListServlet@list.get(2)" + list.get(2));
+
+			
+
+		
+			
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			System.out.println("pagebaor =" + pagebar);
-		
+			
 			request.setAttribute("sortType", sortType);
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
 			
-			request.getRequestDispatcher("/WEB-INF/views/mypage/myann.jsp")
+			request.getRequestDispatcher("/WEB-INF/views/mypage/Pwishlist.jsp")
 				.forward(request, response);
-		} catch(Exception e) {
+				
+		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
+		
 	}
 
 }

@@ -16,10 +16,10 @@ import common.HelloMvcUtils;
 import mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class MyAnnServlet
+ * Servlet implementation class MyAnnEndDateServlet
  */
-@WebServlet("/mypage/myAnn")
-public class MyAnnServlet extends HttpServlet {
+@WebServlet("/mypage/myAnnEndDate")
+public class MyAnnEndDateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
 	
@@ -52,10 +52,16 @@ public class MyAnnServlet extends HttpServlet {
 			
 			String sortType = request.getParameter("sortType");
 			List<Ann> list = null;
-			if("end_date".equals(sortType)) {
+			
+			String url = request.getRequestURI(); // /app/mypage/Pmywish
+			System.out.println(url);
+			
+			if(sortType.equals("end_date")) {
 				list = mypageService.myAnnEndDateSort(memberId, param);
+				url += "?sortType=end_date";
 			} else {
 				list = mypageService.findMyAllAnn(memberId, param);
+				url += "?sortType=reg_date";
 			}
 			
 //				System.out.println("PwishListServlet@list 길이 = " + list.size());
@@ -64,8 +70,7 @@ public class MyAnnServlet extends HttpServlet {
 //				System.out.println("PwishListServlet@list.get(2)" + list.get(2));
 
 			
-			String url = request.getRequestURI(); // /app/mypage/Pmywish
-			System.out.println(url);
+
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			System.out.println("pagebaor =" + pagebar);
 		
