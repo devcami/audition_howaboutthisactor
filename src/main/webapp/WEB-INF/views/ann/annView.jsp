@@ -177,21 +177,25 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
-					<div class="modal-body">
-						<div class="mb-3">
-							<label for="message-text" class="col-form-label">신고자:</label>
-							<input type="text" name="report-writer" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
+					<form name="annReportFrm" 
+						action="<%= request.getContextPath() %>/ann/annReport"
+						method="POST">
+						<input type="hidden" name="annNoReport" value="<%= ann.getAnnNo() %>">
+						<div class="modal-body">
+							<div class="mb-3">
+								<label for="message-text" class="col-form-label">신고자:</label>
+								<input type="text" name="reportWriter" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
+							</div>
+							<div class="mb-3">
+								<label for="message-text" class="col-form-label">신고내용:</label>
+								<textarea class="form-control" name="reportContent" id="content"></textarea>
+							</div>
 						</div>
-						<div class="mb-3">
-							<label for="message-text" class="col-form-label">신고내용:</label>
-							<textarea class="form-control" id="content"></textarea>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary" id="btn-report-submit" >제출</button>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary" id="btn-report-submit">제출</button>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -226,8 +230,16 @@ if(ann.getIsClose().equals("Y")){
 %>
 
 /**
- *  신고하기
+ *  신고하기 300자 이내
  */
+$(content).keyup(function(e) {
+	let content = $(this).val();
+	if(content.length > 300){
+		alert("신고 내용은 최대 300자까지 입력 가능합니다.");
+		$(this).val(content.substring(0, 300));
+		$(this).focus();
+	}
+});
 document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
 	//내용을 작성하지 않은 경우 폼제출할 수 없음.
 	const contentVal = content.value.trim(); 
