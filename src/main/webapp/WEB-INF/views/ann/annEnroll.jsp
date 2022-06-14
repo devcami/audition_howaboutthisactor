@@ -91,7 +91,7 @@
 		<hr />
 		<h2>추가 정보</h2>
 		<p class="description">캐스팅 공고에 사진이나 영상을 추가할 수 있어요. (최대 5개)</p>
-		<button id="btn-attach-add" class="btn btn-primary">파일 추가하기</button>
+		<button type="button" id="btn-attach-add" class="btn btn-primary">파일 추가하기</button>
 		<div class="mb-3" id="addAttachmentDiv">
 		  <input class="form-control" type="file" name="attach1" id="attach1" multiple>
 		</div>
@@ -356,6 +356,28 @@ document.annEnrollFrm.onsubmit = (e) => {
 	}
 	return true;
 };
+
+//마감날짜가 오늘날짜보다 작을 시 선택 불가
+$(document).ready(function () {
+    $.datepicker.setDefaults($.datepicker.regional['ko']); 
+    $(annEndDate).datepicker({
+         changeMonth: true, 
+         changeYear: true,
+         nextText: '다음 달',
+         prevText: '이전 달', 
+         dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+         dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+         monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+         monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+         dateFormat: "yy-mm-dd",
+         minDate: 1,
+         onClose: function( selectedDate ) {    
+              //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+             $("#endDate").datepicker( "option", "minDate", selectedDate );
+         }    
+    });
+});
+
 // 작품 설명, 배역 설명 300자이내
 $(exampleFormControlTextarea1).keyup(function(e) {
 	let content = $(this).val();
@@ -373,7 +395,6 @@ $(exampleFormControlTextarea2).keyup(function(e) {
 		$(this).focus();
 	}
 });
-// 작품 마감일 오늘날짜보다 이전일 경우 제출안됨
 
 <%-- first enroll 첨부파일 추가하기 --%>
 const addAttachBtn = document.querySelector("#btn-attach-add");
