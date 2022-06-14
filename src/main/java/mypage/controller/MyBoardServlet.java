@@ -60,10 +60,10 @@ public class MyBoardServlet extends HttpServlet {
 					list = mypageService.findMyAllBoard(memberId, param);
 				}
 				
-//				System.out.println("MyBoardServlet@list 길이 = " + list.size());
-//				System.out.println("MyBoardServlet@list.get(0) = " + list.get(0));
-//				System.out.println("MyBoardServlet@list.get(1) = " + list.get(1));
-//				System.out.println("MyBoardServlet@list.get(2)" + list.get(2));
+				System.out.println("MyBoardServlet@list 길이 = " + list.size());
+				System.out.println("MyBoardServlet@list.get(0) = " + list.get(0));
+				System.out.println("MyBoardServlet@list.get(1) = " + list.get(1));
+				System.out.println("MyBoardServlet@list.get(2)" + list.get(2));
 
 				
 				String url = request.getRequestURI(); // /app/mypage/Pmywish

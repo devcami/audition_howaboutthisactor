@@ -265,9 +265,10 @@ CREATE TABLE report (
     constraint ck_report_status check(report_status in ('U', 'I', 'E'))
 );
 create sequence seq_report_no;
-
 COMMENT ON COLUMN report.report_status IS '처리상태 U undo I ing E end';
 
+alter table report modify report_content varchar2(1000);
+commit;
 
 
 
@@ -388,12 +389,14 @@ select * from actor_apply;
 select * from wishlist_actor;
 select * from wishlist_ann;
 select * from report;
+select * from portfolio_work;
 
 commit;
 
-update announcement set has_to = 'N' where ann_no = 27;
+insert into wishlist_ann values ('director', 27);
+insert into wishlist_ann values ('director', 28);
 
-
-
+select * from wishlist_ann where member_id = 'director';
+select * from wishlist_ann where member_id = 'director';
 
 

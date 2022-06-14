@@ -11,6 +11,7 @@ import ann.model.dto.Ann;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
 import wishlist.model.dao.WishListDao;
+import wishlist.model.dto.WishListAnn;
 
 public class WishListService {
 	private WishListDao wishListDao = new WishListDao();
@@ -74,6 +75,16 @@ public class WishListService {
 		close(conn);
 		return list;
 		
+	}
+
+	/**
+	 * 은민 부분
+	 */
+	public List<WishListAnn> annWishlistbyMemberId(String memberId) {
+		Connection conn = getConnection();
+		List<WishListAnn> list = wishListDao.annWishlistbyMemberId(conn, memberId);
+		close(conn);
+		return list;
 	}
 	
 	

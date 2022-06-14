@@ -546,5 +546,23 @@ public class AnnDao {
 		}
 		return list;
 	}
+
+	public int insertAnnReport(Connection conn, Map<String, Object> param) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAnnReport");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String) param.get("memberId"));
+			pstmt.setInt(2, (int) param.get("annNo"));
+			pstmt.setString(3, (String) param.get("reportContent"));
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 신고하기 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 	
 }

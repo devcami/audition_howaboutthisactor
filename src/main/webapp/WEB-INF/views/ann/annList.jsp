@@ -1,3 +1,5 @@
+<%@page import="member.model.dto.MemberRole"%>
+<%@page import="member.model.dto.Member"%>
 <%@page import="java.sql.Date"%>
 <%@page import="ann.model.dto.Ann"%>
 <%@page import="java.util.List"%>
@@ -10,6 +12,10 @@
 	String sortType = request.getParameter("sortType");
 	
 	String searchKeyword = request.getParameter("searchKeyword");
+	
+	Date birthday = Date.valueOf("1990-09-09");
+	Date enrollDate = Date.valueOf("2022-06-10");
+	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <section id="ann-list-container">
@@ -76,10 +82,9 @@ sortType.addEventListener('change', (e) => {
 	// 공고 마감순 선택 시 페이지 요청
 	location.href=`<%= request.getContextPath() %>/ann/annEndDateList?sortType=\${value}`;
 });
-
 const annView = (ann) => {
 	const annNo = ann.firstElementChild.lastElementChild.value;
-	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
+	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}&memberId=<%= loginMember.getMemberId() %>`;
 };
 
 </script>

@@ -1,3 +1,4 @@
+<%@page import="wishlist.model.dto.WishListAnn"%>
 <%@page import="member.model.dto.MemberRole"%>
 <%@page import="member.model.dto.Member"%>
 <%@page import="java.sql.Date"%>
@@ -22,6 +23,8 @@
 	Date enrollDate = Date.valueOf("2022-06-10");
 	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
 
+	List<WishListAnn> wishlistAnn = (List<WishListAnn>) request.getAttribute("wishlistAnn");
+
 	boolean canEdit = loginMember != null 
 			&& (loginMember.getMemberId().equals(ann.getMemberId()) 
 					|| loginMember.getMemberRole() == MemberRole.A);
@@ -34,7 +37,20 @@
 			<h5 id="work-title"> <%= work.getProduction() %>&nbsp;|&nbsp;<%= work.getDirector() %>&nbsp;|&nbsp;<<%= work.getTitle() %>> </h5>
 			<p><%= ann.getAnnEndDate() %> 마감 | <%= ann.getAnnRegDate() %> 게시</p>
 			<button id="btn-apply" class="rounded">간편지원</button>
-			<div id="btn-wish"><img src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" /></div>
+			<div id="btn-wish" onclick="addWishlist(this);">
+			<%
+				for(WishListAnn wla : wishlistAnn){
+					System.out.println(wla);
+					if(wla.getAnnNo() == ann.getAnnNo()){
+			%>
+						<img src="<%= request.getContextPath() %>/images/fullHeartWish.png" alt="" />
+			<% 		} else { %>
+						<img src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" />
+			<% 			break;					
+					}
+				}
+			%>
+			</div>
 			
 		</div>
 		<div class="work-info mrgbtm">
@@ -177,21 +193,25 @@
 						<button type="button" class="btn-close" data-bs-dismiss="modal"
 							aria-label="Close"></button>
 					</div>
-					<div class="modal-body">
-						<div class="mb-3">
-							<label for="message-text" class="col-form-label">신고자:</label>
-							<input type="text" name="report-writer" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
+					<form name="annReportFrm" 
+						action="<%= request.getContextPath() %>/ann/annReport"
+						method="POST">
+						<input type="hidden" name="annNoReport" value="<%= ann.getAnnNo() %>">
+						<div class="modal-body">
+							<div class="mb-3">
+								<label for="message-text" class="col-form-label">신고자:</label>
+								<input type="text" name="reportWriter" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
+							</div>
+							<div class="mb-3">
+								<label for="message-text" class="col-form-label">신고내용:</label>
+								<textarea class="form-control" name="reportContent" id="content"></textarea>
+							</div>
 						</div>
-						<div class="mb-3">
-							<label for="message-text" class="col-form-label">신고내용:</label>
-							<textarea class="form-control" id="content"></textarea>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+							<button type="submit" class="btn btn-primary" id="btn-report-submit" >제출</button>
 						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">취소</button>
-						<button type="button" class="btn btn-primary" id="btn-report-submit">제출</button>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -210,6 +230,34 @@ const btnApply = document.querySelector("#btn-apply");
 btnApply.addEventListener('click', (e) => {
 	//console.log(e.target);
 });
+</script>
+<form 
+	name="addWishlistFrm" 
+	action="<%= request.getContextPath() %>/ann/addWishAnn"
+	method="POST">
+	<input type="hidden" name="annNo" value="<%= ann.getAnnNo() %>" />
+	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
+</form> 
+<form 
+	name="delWishlistFrm" 
+	action="<%= request.getContextPath() %>/ann/delWishAnn"
+	method="POST">
+	<input type="hidden" name="annNo" value="<%= ann.getAnnNo() %>" />
+	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
+</form> 
+
+<script>
+/**
+ * 하트 클릭 시 wishlist_ann에 추가 | 삭제
+ */
+const addWishlist = (e) => {
+	let nowImgSrc = e.lastElementChild.src;
+	if(nowImgSrc.equals("<%= request.getContextPath() %>/upload/ann/images/emptyHeartWish.png")){
+		document.addWishlistFrm.submit();
+	}else{
+		document.delWishlistFrm.submit();
+	}
+};
 
 /**
  * 마감된 공고일 시 지원하기 버튼 비활성화 
@@ -226,8 +274,16 @@ if(ann.getIsClose().equals("Y")){
 %>
 
 /**
- *  신고하기
+ *  신고하기 300자 이내
  */
+$(content).keyup(function(e) {
+	let content = $(this).val();
+	if(content.length > 300){
+		alert("신고 내용은 최대 300자까지 입력 가능합니다.");
+		$(this).val(content.substring(0, 300));
+		$(this).focus();
+	}
+});
 document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
 	//내용을 작성하지 않은 경우 폼제출할 수 없음.
 	const contentVal = content.value.trim(); 

@@ -67,10 +67,10 @@ public class MyBoardEndDateServlet extends HttpServlet {
 				url += "?sortType=reg_date";
 			}
 			
-//			System.out.println("MyBoardEndDateServlet@list 길이 = " + list.size());
-//			System.out.println("MyBoardEndDateServlet@list.get(0) = " + list.get(0));
-//			System.out.println("MyBoardEndDateServlet@list.get(1) = " + list.get(1));
-//			System.out.println("MyBoardEndDateServlet@list.get(2)" + list.get(2));
+			System.out.println("MyBoardEndDateServlet@list 길이 = " + list.size());
+			System.out.println("MyBoardEndDateServlet@list.get(0) = " + list.get(0));
+			System.out.println("MyBoardEndDateServlet@list.get(1) = " + list.get(1));
+			System.out.println("MyBoardEndDateServlet@list.get(2)" + list.get(2));
 
 			
 
