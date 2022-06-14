@@ -11,7 +11,6 @@ public class WorkAttachment {
 	
 	public WorkAttachment() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public WorkAttachment(int workAttachmentNo, int workNo, String originalFilename, String renamedFilename,
@@ -69,8 +68,7 @@ public class WorkAttachment {
 		return "WorkAttachment [workAttachmentNo=" + workAttachmentNo + ", workNo=" + workNo + ", originalFilename="
 				+ originalFilename + ", renamedFilename=" + renamedFilename + ", regDate=" + regDate + "]";
 	}
-	
-	
+
 	
 	
 }

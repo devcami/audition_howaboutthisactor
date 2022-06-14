@@ -391,8 +391,6 @@ select * from report;
 
 commit;
 
-update production set is_phone_open = 'Y' where member_id = 'director';
-
 
 
 

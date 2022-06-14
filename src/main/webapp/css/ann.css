@@ -94,8 +94,7 @@ section{
 /* annView */
 #btn-apply{
   position: relative;
-  bottom: 150px;
-  right: 80px;
+  bottom: 40px;
   float: right;
   width: 280px;
   height: 80px;
@@ -115,8 +114,8 @@ section{
   float: right;
   width: 60px;
   height: 60px;
-  bottom: 50px;
-  left: 200px;
+  bottom: 30px;
+  right: 20px;
 }
 #btn-wish img{
   width: 100%;
@@ -175,10 +174,52 @@ section{
   background-color: #d9eae6;
   box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
 }
+.view{
+  float: right;
+  margin: 10px;
+}
 #btn-report{
   background-color: rgb(196, 196, 196);
   border: none;
 }
+#btn-report:hover{
+  background-color: rgb(159, 158, 158);
+}
+#btn-update{
+  background-color: #bbded6;
+  color: #ffffff;
+  padding: 6px 12px;
+  border: none;
+  transition: .15s;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+#btn-update:hover{
+  background-color: #fae3d9;
+}
+#btn-delete{
+  background-color: rgb(196, 196, 196);
+  color: #ffffff;
+  padding: 6px 12px;
+  border: none;
+  transition: .15s;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+}
+#btn-delete:hover{
+  background-color: rgb(159, 158, 158);
+}
+
 .btn-primary{
   background-color: rgb(204, 4, 4);
   border: rgb(204, 4, 4);
@@ -187,7 +228,3 @@ section{
   background-color: rgb(179, 4, 4);
   border: rgb(179, 4, 4);
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master

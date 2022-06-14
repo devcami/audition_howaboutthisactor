@@ -163,7 +163,7 @@
 			%>
 		</div>
 		<!-- Button trigger modal -->
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+		<button type="button" class="btn btn-primary view" data-bs-toggle="modal"
 			data-bs-target="#exampleModal" id="btn-report">신고하기</button>
 
 		<!-- Modal -->
@@ -195,8 +195,8 @@
 			</div>
 		</div>
 		<% if(canEdit){ %>
-				<input type="button" value="수정하기" class="btn-update" onclick="updateAnn()">
-				<input type="button" value="삭제하기" class="btn-delete" onclick="deleteAnn()">
+				<input type="button" value="삭제하기" class="btn-delete view" id="btn-delete" onclick="deleteAnn()">
+				<input type="button" value="수정하기" class="btn-update view" id="btn-update" onclick="updateAnn()">
 		<%} %>
 	</div>
 

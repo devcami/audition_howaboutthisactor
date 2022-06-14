@@ -50,14 +50,10 @@ public class AnnService {
 		List<WorkAttachment> workAttachments = annDao.findAttachmentByWorkNo(conn, ann.getWorkNo());
 		if(workAttachments != null && !workAttachments.isEmpty()) {
 			work.setAttachments(workAttachments);
-			for(WorkAttachment wa : workAttachments) {
-				System.out.println("WorkAttachment : " + wa);
-			}
 		}
 		Cast cast = annDao.findCastByWorkNo(conn, ann.getWorkNo());
 		if(cast != null) {
 			work.setCast(cast);
-			System.out.println("Cast : " + cast);
 		}
 		
 		close(conn);

@@ -150,7 +150,7 @@
 			  <option <%= cast.getCastRole().equals("단역") ? "selected" : "" %> value="단역">단역</option>
 			  <option <%= cast.getCastRole().equals("엑스트라") ? "selected" : "" %> value="엑스트라">엑스트라</option>
 			</select>
-		   <input class="form-check-input" type="checkbox" name="hasTO" <%= ann.getHasTO().equals("Y") ? "checked" : "" %> id="flexCheckDefault">
+		   <input class="form-check-input" type="checkbox" name="hasTO" value="<%= ann.getHasTO() %>" <%= ann.getHasTO().equals("Y") ? "checked" : "" %> id="flexCheckDefault">
 		   <label class="form-check-label" for="flexCheckDefault">노출장면 포함</label>
 		</div>
 		<div class="mb-3">
@@ -479,7 +479,6 @@ const nextStep = (e) => {
 };
 
 flexCheckDefault.onchange = () =>{
-	let check = $(flexCheckDefault).is(':checked');
 	if(check){
 		flexCheckDefault.value = "Y";
 	}

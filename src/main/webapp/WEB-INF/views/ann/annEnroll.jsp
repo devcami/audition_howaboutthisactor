@@ -262,11 +262,17 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
 // 필수항목 입력
 document.annEnrollFrm.onsubmit = (e) => {
 	const f = e.target;
-	
+	// 공고 제목
+	const annTitleVal = f.annTitle.value.trim();
+	if(!/^.+$/.test(annTitleVal)){
+		alert('공고 제목을 작성해주세요.');
+		f.annTitle.select();
+		return false;
+	}
 	// 작품 제목
 	const titleVal = f.title.value.trim();
 	if(!/^.+$/.test(titleVal)){
-		alert('제목을 작성해주세요.');
+		alert('작품 제목을 작성해주세요.');
 		f.title.select();
 		return false;
 	}
@@ -291,27 +297,56 @@ document.annEnrollFrm.onsubmit = (e) => {
 		f.production.select();
 		return false;
 	}
-	
 	// 공고 마감일
-	const annEndDateVal = f.production.value.trim();
-	if(!/^.+$/.test(productionVal)){
-		alert('제작사를 작성해주세요.');
-		f.production.select();
+	const annEndDateVal = f.annEndDate.value.trim();
+	if(!/^.+$/.test(annEndDateVal)){
+		alert('마감 날짜를 선택해주세요.');
+		f.annEndDate.select();
 		return false;
 	}
-	
 	// 배역 이름
-	
+	const castNameVal = f.castName.value.trim();
+	if(!/^.+$/.test(castNameVal)){
+		alert('배역 이름을 작성해주세요.');
+		f.castName.select();
+		return false;
+	}
 	// 배역 구분
-	
+	const castRoleVal = f.castRole.value.trim();
+	if(!/^.+$/.test(castRoleVal)){
+		alert('배역 구분을 선택해주세요.');
+		f.castRole.select();
+		return false;
+	}
 	// 성별
-	
+	const annGenderVal = f.annGender.value.trim();
+	if(!/^.+$/.test(annGenderVal)){
+		alert('성별을 선택해주세요.');
+		f.annGender.select();
+		return false;
+	}
 	// 나이
-	
-	// 모집 인원
-	
+	const annAgeVal = f.annAge.value.trim();
+	if(!/^.+$/.test(annAgeVal)){
+		alert('나이를 선택해주세요.');
+		f.annAge.select();
+		return false;
+	}
+	// 모집 인원 숫자만 가능
+	const annNopVal = f.annNop.value.trim();
+	if(!/^[0-9]+$/.test(annNopVal)){
+		alert('모집인원을 숫자로 작성해주세요.');
+		f.annNop.select();
+		return false;
+	}
 	// 출연료
-	
+	const annPayVal = f.annPay.value.trim();
+	if(!/^.+$/.test(annPayVal)){
+		alert('나이를 선택해주세요.');
+		f.annPay.select();
+		return false;
+	}
+	return true;
 };
 // 작품 설명, 배역 설명 300자이내
 $(exampleFormControlTextarea1).keyup(function(e) {
