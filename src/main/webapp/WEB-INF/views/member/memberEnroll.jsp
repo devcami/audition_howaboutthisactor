@@ -1,7 +1,8 @@
-<%-- '회원가입에 성공하였습니다.' 팝업창..될까 ... 혹은 유효성 검사 확인 --%>
+<%-- '회원가입에 성공하였습니다.' 혹은 유효성 검사 확인 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mEnroll.css" />
 <section id=enroll-container>
@@ -126,48 +127,16 @@ const checkIdDuplicate = () => {
 	frm.memberId.value = _memberId.value;
 	frm.submit();
 };
+=======
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+>>>>>>> branch 'master' of https://github.com/devcami/semi_Project.git
 
-passwordCheck.onblur = () => {
-	if(_password.value !== passwordCheck.value){
-		alert("비밀번호가 일치하지 않습니다.");
-		return false;
-	}	
-	return true;
-};
-
-
-// 유효성 검사
-document.memberEnrollFrm.onsubmit = () => {
-	// memberId 영문자/숫자 10글자 이상
-	if(!/^[A-Za-z0-9]{10,}$/.test(_memberId.value)){
-		alert("아이디는 영문자/숫자로 10글자 이상이어야 합니다.");
-		return false;
-	}  
-	// 중복검사여부 체크
-	if(idValid.value !== "1") {
-		alert("아이디 중복검사 해주세요.");
-		return false;
-	}
-	// password 영문자/숫자/특수문자!@#$%^&*()
-	if(!/^[A-Za-z0-9!@#$%^&*()]{4,}$/.test(_password.value)){
-		alert("비밀번호는 영문자/숫자/특수문자!@#$%^&*()로 6글자 이상이어야 합니다.");
-		return false;
-	}
-	if(!passwordCheck.onblur()){
-		return false;		
-	}
-	
-	// memberName
-	if(!/^[가-힣]{2,}$/.test(memberName.value)){
-		alert("이름은 한글 2글자이상 입력해주세요.");
-		return false;
-	}
-	
-	// phone
-	if(!/^010\d{8}$/.test(phone.value)){
-		alert("유효한 전화번호를 입력하세요.");
-		return false;
-	}
-};
-</script>
-<%@ include file="/WEB-INF/views/common/footer.jsp" %>
+</body>
+</html>

@@ -74,7 +74,7 @@ public class MemberEnrollServlet extends HttpServlet {
 		System.out.println("member@memberEnroll = " + member);
 		
 		// 3. 업무로직 (db insert) 
-		int result = memberService.insertMember(member);
+//		int result = memberService.insertMember(member);
 	
 
 		String msg = "성공적으로 회원가입했습니다.";
