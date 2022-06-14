@@ -1,3 +1,4 @@
+<%@page import="java.sql.Date"%>
 <%@page import="ann.model.dto.Ann"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -22,19 +23,31 @@
 			<input type="button" value="공고등록" class="btn btn-secondary btn-lg" onclick="location.href='<%= request.getContextPath() %>/ann/annEnroll';" />
 		</div>
 		<div class="row row-cols-1 row-cols-md-3 g-4" id="ann-container">
+		<script> let a; </script>
 		<% if(list != null && !list.isEmpty()){
-		for(int i = 0; i < list.size(); i++){ 
+			long miliseconds = System.currentTimeMillis();
+			Date today = new Date(miliseconds); 
+			for(int i = 0; i < list.size(); i++){ 
 		%>
 			 <div class="col">
 			    <div class="card h-100 ann-card" onclick="annView(this);">
+					<% if(list.get(i).getAnnEndDate().before(today)){ %>
+						<script>
+						    a = Array.from(this.$(".ann-card"));
+						    a.at(-1).classList.add('expirated')
+						</script>
+					<% } %>
 					<div class="card-body">
 						<h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
 						<p class="card-text"><%= list.get(i).getMemberId() %></p>
 						<input type="hidden" name="annNo" class="annNo" value="<%= list.get(i).getAnnNo() %>" />
 					</div>
-					<div class="card-footer">
+					<div class="card-footer" id="<%= list.get(i).getAnnEndDate().before(today) ? "expFoot" : "" %>">
 						<small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
 						<small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
+						<% if(list.get(i).getAnnEndDate().before(today)){ %>
+						<small id="endAnn">&nbsp;! 모집마감 !</small>
+						<% } %>
 					</div>
 				</div>
 			  </div>
@@ -61,6 +74,12 @@ const annView = (ann) => {
 	const annNo = ann.firstElementChild.lastElementChild.value;
 	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
 };
+
+/*
+ * annEndDate가 오늘날짜가 지났으면 회색으로 노출 + 모집기한 마감
+ */
+window.addEventListener('load', () => {
+});
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

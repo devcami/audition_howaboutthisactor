@@ -391,6 +391,7 @@ select * from report;
 
 commit;
 
+update announcement set has_to = 'N' where ann_no = 27;
 
 
 

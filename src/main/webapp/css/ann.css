@@ -90,6 +90,19 @@ section{
   background-color: #fae3d963;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
 }
+.expirated{
+  background-color: gainsboro;
+}
+.expirated:hover{
+  background-color: gainsboro;
+}
+#expFoot{
+  background-color: rgb(139, 139, 139);
+}
+#endAnn{
+  font-size: 20px;
+  color: #000000;
+}
 
 /* annView */
 #btn-apply{
