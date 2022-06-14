@@ -68,7 +68,7 @@ public class MemberEnrollServlet extends HttpServlet {
 	
  		Member member = new Member(
 				memberId, password, memberName, email, MemberRole.P, 
-				phone, gender, birthday, null, address, type, genre
+				phone, gender, birthday, null, address, genre
 			);
  		
 		System.out.println("member@memberEnroll = " + member);

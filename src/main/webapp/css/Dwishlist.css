@@ -23,7 +23,7 @@
 #Dmypage-submenu {
   margin-top: 100px;
   text-align: right;
-  width: 18%;
+  width: 15%;
 }
 #Dmypage-submenu ul {
   padding: 0;
@@ -133,9 +133,41 @@
   font-size: 25px;
   font-weight: 500;
 }
+.actorName span {
+	/* background: linear-gradient(0deg, #ffb6b9 50%, transparent 50%) */
+}
+
+
+.card{cursor: pointer;}
+.card:hover .highlight:after{
+  width:100%;
+}
+.highlight{
+  display: inline-block; 
+  position: relative;
+}
+.highlight:after{
+  content:"";
+  width: 0;
+  height: 10px;
+  display: inline-block;
+  background: #ffb6b9 ;
+  position: absolute;
+  bottom:0;
+  left:0;
+  z-index:-1;
+  transition: 0.2s all;
+}
+
+
 .actorBirth{
-  margin: 10px 0 0 0;
+/*  margin: 10px 0 0 0;  */
   font-size: 15px;
+  display: inline-block;
+}
+.actorAge {
+	display: inline-block;
+	font-weight: 500;
 }
 
 #pagebar {

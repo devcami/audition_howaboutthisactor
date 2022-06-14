@@ -57,6 +57,24 @@
 	          } else {
 	             img_src = request.getContextPath() + "/upload/portfolio/" + fileName;         
 	          }
+	         
+	         String name = list.get(i).getActorName() == null ? "" : list.get(i).getActorName();
+	         String birth = list.get(i).getBirth() == null ? "" : list.get(i).getBirth();
+	         int _age = list.get(i).getAge();
+	    	 
+	         String actor_age = _age != 0 ? Integer.toString(_age) : "";	
+	    	 String age = "";
+	    	 if(actor_age != null){
+	    		if(birth.isEmpty()){ 
+	    			age = _age + "세";
+	    		} else {
+	    			age = _age + "세";
+	    			// age = "(" + _age + ")세";
+	    		}
+	    		
+	    	 }
+	    	 
+	    	 String company = list.get(i).getCompany() == null ? "" : list.get(i).getCompany();
 			
 		%>
           <div class="card" onclick="actorView(this);">
@@ -64,8 +82,9 @@
               <div class="img-container">
                 <img src="<%= img_src %>" alt="">
               </div>
-              <p class="actorName"><%= list.get(i).getActorName() %></p>
-              <p class="actorBirth"><%= list.get(i).getBirth() %></p>
+              <p class="actorName"><span class="highlight"><%= name %></span></p>
+              <p class="actorBirth"><%= birth %></p>&nbsp;<p class="actorAge"><i><%= age %></i></p>
+              <!-- <p class="company">컴패니 들어갈 자리</p> -->
               <input type="hidden" name="actorNo" id="actorNo" value="<%= list.get(i).getActorNo() %>">
             </div>
           </div>
@@ -86,7 +105,7 @@
       document.querySelector("#updown-container").innerHTML = "";
       const {value} = e.target;
       // 공고 마감순 선택 시 페이지 요청
-      location.href=`/app/mypage/Dmywish?sortType=\${value}`;
+      location.href=`/app/mypage/DendDateWishList?sortType=\${value}`;
    });
 
    const actorView = (actor) => {

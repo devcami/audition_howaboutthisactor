@@ -13,31 +13,29 @@ import javax.servlet.http.HttpServletResponse;
 
 import ann.model.dto.Ann;
 import common.HelloMvcUtils;
-import mypage.model.dto.ActorInfo;
 import wishlist.model.service.WishListService;
 
 /**
- * Servlet implementation class DwishListServlet
+ * Servlet implementation class PEndDateWishListServlet
  */
-@WebServlet("/mypage/Dmywish")
-public class DwishListServlet extends HttpServlet {
+@WebServlet("/mypage/PendDateWishList")
+public class PEndDateWishListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private WishListService wishListService = new WishListService();
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 //		String memberId = request.getParameter("memberId");
 //		System.out.println("PwishListServlet@memberId = " + memberId);
 		
-		
-		
-		String memberId = "director";
+		String memberId = "hosi";
 		
 		try {
 			int numPerPage = wishListService.WISH_NUM_PER_PAGE; // 12
-			int totalContent = wishListService.getTotalActorWishContent(memberId);
+			int totalContent = wishListService.getTotalContent(memberId);
 
-//			System.out.println("DwishListServlet@totalContent = " + totalContent);
+			System.out.println("PendDateWishList@totalContent = " + totalContent);
 			int cPage = 1; 
 			
 			try {
@@ -53,31 +51,34 @@ public class DwishListServlet extends HttpServlet {
 			param.put("end", end);
 			
 			String sortType = request.getParameter("sortType");
-			List<ActorInfo> list = null;
-			if("end_date".equals(sortType)) {
-				list = wishListService.actorEndDateSort(memberId, param);
+			List<Ann> list = null;
+			String url = request.getRequestURI(); // /app/mypage/Pmywish
+			System.out.println(url);
+			if(sortType.equals("end_date")) {
+				list = wishListService.annEndDateSort(memberId, param);
+				url += "?sortType=end_date";
 			} else {
-				list = wishListService.findAllWishActor(memberId, param);
+				list = wishListService.findAll(memberId, param);
+				url += "?sortType=reg_date";
 			}
 			
-//			System.out.println("DwishListServlet@list 길이 = " + list.size());
-			
-			// 출력할때 조심. 만약 2페이지에 3개 미만으로 있으면 출력할때 가져올 거 없어서 에러남 
-//			System.out.println("DwishListServlet@list.get(0) = " + list.get(0));
-//			System.out.println("DwishListServlet@list.get(1) = " + list.get(1));
-//			System.out.println("DwishListServlet@list.get(2)" + list.get(2));
+//			System.out.println("PwishListServlet@list 길이 = " + list.size());
+//			System.out.println("PwishListServlet@list.get(0) = " + list.get(0));
+//			System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
+//			System.out.println("PwishListServlet@list.get(2)" + list.get(2));
 
 			
-			String url = request.getRequestURI(); // /app/mypage/Dmywish
-//			System.out.println(url);
+
+		
+			
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-//			System.out.println("pagebar =" + pagebar);
+			System.out.println("pagebaor =" + pagebar);
 			
 			request.setAttribute("sortType", sortType);
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
 			
-			request.getRequestDispatcher("/WEB-INF/views/mypage/Dwishlist.jsp")
+			request.getRequestDispatcher("/WEB-INF/views/mypage/Pwishlist.jsp")
 				.forward(request, response);
 				
 		} catch (Exception e) {
