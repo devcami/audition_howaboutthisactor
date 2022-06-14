@@ -36,7 +36,6 @@ public class AnnViewServlet extends HttpServlet {
 			// loginMember의 wishList가져오기
 			String memberId = request.getParameter("memberId");
 			List <WishListAnn> wishlistAnn = wishListService.annWishlistbyMemberId(memberId);
-			System.out.println("wishlist : " + wishlistAnn.toString());
 			// XSS공격(Cross-site Scripting공격) 대비 변환 : 개행처리 <br> 이전에 나와야됨!
 			ann.setAnnTitle(ann.getAnnTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
 			

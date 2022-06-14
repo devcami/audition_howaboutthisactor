@@ -1,7 +1,9 @@
 package wishlist.model.service;
 
 import static common.JdbcTemplate.close;
+import static common.JdbcTemplate.commit;
 import static common.JdbcTemplate.getConnection;
+import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.List;
@@ -85,6 +87,36 @@ public class WishListService {
 		List<WishListAnn> list = wishListDao.annWishlistbyMemberId(conn, memberId);
 		close(conn);
 		return list;
+	}
+
+	public int addWishlistAnn(WishListAnn wishListAnn) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = wishListDao.addWishlistAnn(conn, wishListAnn);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public int delWishlistAnn(int annNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = wishListDao.delWishlistAnn(conn, annNo);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
 	}
 	
 	
