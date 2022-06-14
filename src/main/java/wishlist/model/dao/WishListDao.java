@@ -16,6 +16,7 @@ import java.util.Properties;
 import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
 import mypage.model.dto.ActorInfo;
+import mypage.model.dto.PortAttachment;
 import wishlist.model.exception.WishListException;
 
 public class WishListDao {
@@ -68,7 +69,7 @@ public class WishListDao {
 				list.add(ann);
 			}
 		} catch (Exception e) {
-			throw new AnnException("> 공고찾기 - 공고 마감순정렬 오류", e);
+			throw new WishListException("> 공고찾기 - 공고 마감순정렬 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -93,7 +94,7 @@ public class WishListDao {
 				list.add(ann);
 			}
 		} catch (Exception e) {
-			throw new AnnException("> 공고찾기 - 공고 전체목록 조회 오류", e);
+			throw new WishListException("> 공고찾기 - 공고 전체목록 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -159,7 +160,7 @@ public class WishListDao {
 				list.add(actor);
 			}
 		} catch (Exception e) {
-			throw new AnnException("> 공고찾기 - 공고 마감순정렬 오류", e);
+			throw new WishListException("> 공고찾기 - 공고 마감순정렬 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -185,7 +186,7 @@ public class WishListDao {
 				list.add(actor);
 			}
 		} catch (Exception e) {
-			throw new AnnException("> 공고찾기 - 공고 전체목록 조회 오류", e);
+			throw new WishListException("> 공고찾기 - 공고 전체목록 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -205,5 +206,35 @@ public class WishListDao {
 		actor.setCompany(rset.getString("actor_company"));
 		
 		return actor;
+	}
+
+	public PortAttachment getProfilePic(Connection conn, String actor, String type) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		PortAttachment attachment = new PortAttachment();
+		String sql = prop.getProperty("getProfilePic");
+		attachment.setAttachType(type);
+		attachment.setMemberId(actor);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, actor);
+			pstmt.setString(2, type);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				
+				attachment.setNo(rset.getInt("no"));
+				attachment.setOriginalFilename(rset.getString("original_filename"));
+				attachment.setRenamedFilename(rset.getString("renamed_filename"));
+				attachment.setRegDate(rset.getDate("reg_date"));
+				
+			}
+		} catch (Exception e) {
+			throw new WishListException("> getProfilePic@내가 찜한 배우 프로필사진 조회오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return attachment;
 	}
 }

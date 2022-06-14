@@ -60,23 +60,25 @@ public class DwishListServlet extends HttpServlet {
 				list = wishListService.findAllWishActor(memberId, param);
 			}
 			
-			System.out.println("PwishListServlet@list 길이 = " + list.size());
-			System.out.println("PwishListServlet@list.get(0) = " + list.get(0));
-			System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
-			System.out.println("PwishListServlet@list.get(2)" + list.get(2));
+//			System.out.println("DwishListServlet@list 길이 = " + list.size());
+			
+			// 출력할때 조심. 만약 2페이지에 3개 미만으로 있으면 출력할때 가져올 거 없어서 에러남 
+//			System.out.println("DwishListServlet@list.get(0) = " + list.get(0));
+//			System.out.println("DwishListServlet@list.get(1) = " + list.get(1));
+//			System.out.println("DwishListServlet@list.get(2)" + list.get(2));
 
 			
-//			String url = request.getRequestURI(); // /app/mypage/Dmywish
+			String url = request.getRequestURI(); // /app/mypage/Dmywish
 //			System.out.println(url);
-//			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-//			System.out.println("pagebaor =" + pagebar);
-//			
+			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
+//			System.out.println("pagebar =" + pagebar);
+			
 //			request.setAttribute("sortType", sortType);
-//			request.setAttribute("list", list);
-//			request.setAttribute("pagebar", pagebar);
-//			
-//			request.getRequestDispatcher("/WEB-INF/views/mypage/Pwishlist.jsp")
-//				.forward(request, response);
+			request.setAttribute("list", list);
+			request.setAttribute("pagebar", pagebar);
+			
+			request.getRequestDispatcher("/WEB-INF/views/mypage/Dwishlist.jsp")
+				.forward(request, response);
 				
 		} catch (Exception e) {
 			e.printStackTrace();

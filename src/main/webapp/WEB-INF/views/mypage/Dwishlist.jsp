@@ -1,4 +1,4 @@
-<%@page import="ann.model.dto.Ann"%>
+<%@page import="mypage.model.dto.ActorInfo"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -11,7 +11,7 @@
    // char memberRole = 'P';
    // char memberRole = loginMember.getMemberRole();
    
-	List<Ann> list = (List<Ann>) request.getAttribute("list");
+	List<ActorInfo> list = (List<ActorInfo>) request.getAttribute("list");
 	String pagebar = (String) request.getAttribute("pagebar");
 	String sortType = request.getParameter("sortType");
 	
@@ -35,103 +35,68 @@
       <div id="wishlist-head">
         <h2>찜 목록</h2>
         <div id="sortType-wrap">
-          <select id="sortType">
+        	<select id="sortType">
+            	<option value="reg_date" id="reg_date" <%="reg_date".equals(sortType) ? "selected" : ""%>>최신순</option>
+            	<option value="end_date" id="end_date" <%="end_date".equals(sortType) ? "selected" : ""%>>오래된순</option>
+          	</select>
+ <!--          <select id="sortType">
           	<option value="allGender" id="allGender" <%="allGender".equals(sortType) ? "selected" : ""%>>전체</option>
             <option value="female" id="female" <%="female".equals(sortType) ? "selected" : ""%>>여성</option>
             <option value="male" id="male" <%="male".equals(sortType) ? "selected" : ""%>>남성</option>
-          </select>
+          </select>  -->
         </div>
       </div>
-      <div id="updown-container">
-          <div class="card">
+            <div id="updown-container">
+      <% if(list != null && !list.isEmpty()){
+		for(int i = 0; i < list.size(); i++){ 
+			String fileName = list.get(i).getAttachment().getRenamedFilename();
+			String img_src = "";
+			
+	         if(fileName == null){
+	             img_src = request.getContextPath() + "/images/default.png";
+	          } else {
+	             img_src = request.getContextPath() + "/upload/portfolio/" + fileName;         
+	          }
+			
+		%>
+          <div class="card" onclick="actorView(this);">
             <div class="polaroid">
               <div class="img-container">
-                <img src="./img/hosi2.jpg" alt="">
+                <img src="<%= img_src %>" alt="">
               </div>
-              <div class="text-container">
-                <p class="actorName">이준영</p>
-                <span class="actorBirth">1997-01-22 (26세)</span>
-              </div>
+              <p class="actorName"><%= list.get(i).getActorName() %></p>
+              <p class="actorBirth"><%= list.get(i).getBirth() %></p>
+              <input type="hidden" name="actorNo" id="actorNo" value="<%= list.get(i).getActorNo() %>">
             </div>
           </div>
-          <div class="card">
-            <div class="polaroid">
-              <div class="img-container">
-                <img src="./img/hosi7.jpg" alt="">
-              </div>
-              <p class="actorName">호시</p>
-              <p class="actorBirth">1996-06-15</p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="polaroid">
-              <div class="img-container">
-                <img src="./img/lee2.jpg" alt="">
-              </div>
-              <p class="actorName">이준영</p>
-              <p class="actorBirth">1997-01-22</p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="polaroid">
-              <div class="img-container">
-                <img src="./img/hosi8.jpg" alt="">
-              </div>
-              <p class="actorName">호시</p>
-              <p class="actorBirth">1996-06-15</p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="polaroid">
-              <div class="img-container">
-                <img src="./img/hosi6.jpg" alt="">
-              </div>
-              <p class="actorName">이준영</p>
-              <p class="actorBirth">1997-01-22</p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="polaroid">
-              <div class="img-container">
-                <img src="./img/hosi5.jpg" alt="">
-              </div>
-              <p class="actorName">호시</p>
-              <p class="actorBirth">1996-06-15</p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="polaroid">
-              <div class="img-container">
-                <img src="./img/hosi2.jpg" alt="">
-              </div>
-              <p class="actorName">이준영</p>
-              <p class="actorBirth">1997-01-22</p>
-            </div>
-          </div>
-          <div class="card">
-            <div class="polaroid">
-              <div class="img-container">
-                <img src="./img/hosi4.jpg" alt="">
-              </div>
-              <p class="actorName">호시</p>
-              <p class="actorBirth">1996-06-15</p>
-            </div>
-          </div>
-        </div>
-      <div id="pagebar">
-        <a href='/mvc/admin/memberList?cPage=1' class="page">1</a>
-        <a href='/mvc/admin/memberList?cPage=1' class="page">2</a>
-        <a href='/mvc/admin/memberList?cPage=1' class="page">3</a>
-        <a href='/mvc/admin/memberList?cPage=1' class="page">4</a>
-        <a href='/mvc/admin/memberList?cPage=1' class="page">5</a>
-        <a href='/mvc/admin/memberList?cPage=6' class="page">next</a>
+        		<% 	} %>
+		<% } else { %>
+			<div><p>조회된 공고가 없습니다.</p></div>
+		<% } %>
       </div>
+	  <div id="pagebar">
+	  	<%= pagebar %>
+	  </div>
     </div>
-
-
   </div>
 
   <script>
+  
+  sortType.addEventListener('change', (e) => {
+      document.querySelector("#updown-container").innerHTML = "";
+      const {value} = e.target;
+      // 공고 마감순 선택 시 페이지 요청
+      location.href=`/app/mypage/Dmywish?sortType=\${value}`;
+   });
+
+   const actorView = (actor) => {
+      	
+	   const actorNo = actor.firstElementChild.lastElementChild.value;
+     
+      // 배우 상세 페이지로 넘겨
+      // location.href=`/app/ann/annView?actorNo=\${actorNO}`;
+   };
+  
     const mousein = (menu) => {
       now_menu.classList.remove('current');
       menu.classList.add('current');

@@ -47,7 +47,6 @@
       <% if(list != null && !list.isEmpty()){
 		for(int i = 0; i < list.size(); i++){ 
 		%>
-
         <div class="col">
           <div class="card" onclick="annView(this);">
             <div class="card-body">
