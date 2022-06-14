@@ -6,10 +6,10 @@
 	String memberId = request.getParameter("memberId");
 	boolean available = (boolean) request.getAttribute("available");
 %>
-
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/cIdDup.css" />
 <meta charset="UTF-8">
 <title>ID 중복확인</title>
 </head>
@@ -34,5 +34,6 @@
 			<input type="submit" value="ID 중복검사" />
 		</form>
 	<% } %>
+	</div>
 </body>
 </html>

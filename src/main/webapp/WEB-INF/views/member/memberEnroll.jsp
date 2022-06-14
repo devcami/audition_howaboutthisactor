@@ -1,11 +1,15 @@
-<%-- '회원가입에 성공하였습니다.' 팝업창..될까 ... 혹은 유효성 검사 확인 --%>
+<%-- '회원가입에 성공하였습니다.' 혹은 유효성 검사 확인 --%>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/mEnroll.css" />
 <section id=enroll-container>
-	<h2>회원가입</h2>
 	<form name="memberEnrollFrm" method="POST">
+	<div id="Enroll_head">
+      <h2>회원가입</h2>
+    </div><br><br>
 		<table>
 			<tr>
 				<th>ID<sup>*</sup></th>
@@ -46,24 +50,6 @@
 				</td>
 			</tr> 
 			<tr>
-				<th>이메일</th>
-				<td>	
-					<input type="email" placeholder="abc" name="email" id="email">
-					<b>@</b>
-					<select name="email_back">
-						<option value="">-- 선택 --</option>
-						<option value="naver">naver.com</option>
-						<option value="daum">daum.net</option>
-						<option value="gmail">gmail.com</option>
-						<option value="hanmail">hanmail.net</option>
-						<option value="nate">nate.com</option>
-						<option value="ms">microsoft.com</option>
-						<option value="outlook">outlook.com</option>
-					</select>
-					<input type="button" value="인증메일 받기" onclick="checkEmail();" />
-				</td>
-			</tr>
-			<tr>
 				<th>휴대폰<sup>*</sup></th>
 				<td>	
 					<input type="tel" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11"><br>
@@ -80,23 +66,51 @@
 				<td>
 					<input type="radio" name="gender" id="gender0" value="M">
 					<label for="gender0">남</label>
-					<input type="radio" name="gender" id="gender1" value="F" checked>
+					<input type="radio" name="gender" id="gender1" value="F">
 					<label for="gender1">여</label>
+				</td>
+			</tr>
+			<tr>
+				<th>회원 유형 </th>
+				<td>
+					<input type="radio" name="type" id="type0" value="P">
+					<label for="type0">배우 및 아티스트</label>
+					<input type="radio" name="type" id="type1" value="D">
+					<label for="type1">제작자 및 캐스팅 담당자</label>
 				</td>
 			</tr>
 			<tr>
 				<th>관심지원분야</th>
 				<td>
 					<input type="checkbox" name="genre" id="genre0" value="영화"><label for="genre0">영화</label>
-					<input type="checkbox" name="genre" id="genre1" value="드라마" checked><label for="genre1">드라마</label>
-					<input type="checkbox" name="genre" id="genre2" value="뮤지컬" checked><label for="genre2">뮤지컬</label>
-					<input type="checkbox" name="genre" id="genre3" value="연극" checked><label for="genre3">연극</label>
+					<input type="checkbox" name="genre" id="genre1" value="드라마"><label for="genre1">드라마</label>
+					<input type="checkbox" name="genre" id="genre2" value="뮤지컬"><label for="genre2">뮤지컬</label>
+					<input type="checkbox" name="genre" id="genre3" value="연극"><label for="genre3">연극</label>
 					<input type="checkbox" name="genre" id="genre4" value="재연"><label for="genre4">재연</label><br/>
 				</td>
 			</tr>
+						<tr>
+				<th>이메일</th>
+				<td>	
+					<input type="email" placeholder="abc123" name="email" id="email">
+					<b>@</b>
+					<select name="email_back">
+						<option value="">-- 선택 --</option>
+						<option value="naver">naver.com</option>
+						<option value="daum">daum.net</option>
+						<option value="gmail">gmail.com</option>
+						<option value="hanmail">hanmail.net</option>
+						<option value="nate">nate.com</option>
+						<option value="ms">microsoft.com</option>
+						<option value="outlook">outlook.com</option>
+					</select>
+					<input type="button" value="인증메일 받기" onclick="checkEmail();" />
+				</td>
+			</tr>
 		</table>
-		<input type="submit" value="가입" >
-		<input type="reset" value="취소">
+		<br>
+		<input type="submit" id="button1" value="가입" >
+		<input type="reset" id="button2" value="취소">
 	</form>
 </section>
 <form name="checkIdDuplicateFrm" action="<%= request.getContextPath() %>/member/checkIdDuplicate">
@@ -113,15 +127,6 @@ const checkIdDuplicate = () => {
 	frm.memberId.value = _memberId.value;
 	frm.submit();
 };
-
-passwordCheck.onblur = () => {
-	if(_password.value !== passwordCheck.value){
-		alert("비밀번호가 일치하지 않습니다.");
-		return false;
-	}	
-	return true;
-};
-
 
 // 유효성 검사
 document.memberEnrollFrm.onsubmit = () => {

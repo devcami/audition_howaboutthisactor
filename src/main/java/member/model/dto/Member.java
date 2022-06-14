@@ -8,7 +8,7 @@ public class Member {
 	private String password;
 	private String memberName;
 	private String email;
-	private MemberRole memberRole;
+	private MemberRole memberRole; // 배우 및 아티스트 P 제작사 및 캐스팅 담당자 D 
 	private String phone;
 	private String gender;
 	private Date birthday;
@@ -139,7 +139,6 @@ public class Member {
 	}
 
 
-	
 	public String getGenre() {
 		return genre;
 	}
@@ -156,6 +155,8 @@ public class Member {
 				+ email + ", memberRole=" + memberRole + ", phone=" + phone + ", gender=" + gender + ", birthday="
 				+ birthday + ", enrollDate=" + enrollDate + ", address=" + address + ", genre=" + genre + "]";
 	}
+
+
 
 }
 
