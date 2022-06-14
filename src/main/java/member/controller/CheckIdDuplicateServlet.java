@@ -28,6 +28,7 @@ public class CheckIdDuplicateServlet extends HttpServlet {
 		// 사용자 입력값 처리
 		String memberId = request.getParameter("memberId");
 		System.out.println("memberId@CheckIdDuplicateServlet = " + memberId);
+		
 		// 업무로직
 //		Member member = memberService.findByMemberId(memberId);
 //		boolean available = (member == null);
@@ -40,3 +41,4 @@ public class CheckIdDuplicateServlet extends HttpServlet {
 	}
 
 }
+
