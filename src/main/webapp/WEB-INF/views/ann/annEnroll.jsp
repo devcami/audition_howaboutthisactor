@@ -1,10 +1,25 @@
+<%@page import="common.model.dto.WorkAttachment"%>
+<%@page import="common.model.dto.Cast"%>
+<%@page import="java.util.List"%>
+<%@page import="common.model.dto.Work"%>
+<%@page import="ann.model.dto.Ann"%>
+<%@page import="member.model.dto.Production"%>
+<%@page import="java.sql.Date"%>
+<%@page import="member.model.dto.MemberRole"%>
+<%@page import="member.model.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-
+	Date birthday = Date.valueOf("1990-09-09");
+	Date enrollDate = Date.valueOf("2022-06-10");
+	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
+	Production p = new Production("director", "testProduction", "디렉터", "01015971597", "director@naver.com", "N", "Y");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
 <form 
 	id = "annEnrollFrm" 
 	name = "annEnrollFrm" 
@@ -400,10 +415,14 @@ $(exampleFormControlTextarea2).keyup(function(e) {
 const addAttachBtn = document.querySelector("#btn-attach-add");
 $(addAttachBtn).click(function(){
     var lastAttachNo = $("#addAttachmentDiv input:last").attr("id").replace("attach", "");
-    var newAttach = $("#addAttachmentDiv input:eq(0)").clone();
-    newAttach.attr("id","attach"+(parseInt(lastAttachNo)+1));
-    newAttach.attr("name","attach"+(parseInt(lastAttachNo)+1));
-    console.log(newAttach);
+    //var newAttach = $("#addAttachmentDiv input:eq(0)").clone();
+    const newAttach = document.createElement('input');
+    newAttach.type = "file"
+    newAttach.classList.add("form-control");
+    newAttach.id = "attach" + (parseInt(lastAttachNo)+1);
+    newAttach.name = "attach"+(parseInt(lastAttachNo)+1);
+    console.dir($("#addAttachmentDiv input:last"));
+	console.dir(newAttach);
     
     if(lastAttachNo == 5){
     	//첨부파일은 5개 이상 생성할수 없도록 제한

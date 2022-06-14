@@ -394,9 +394,4 @@ select * from portfolio_work;
 commit;
 
 insert into wishlist_ann values ('director', 27);
-insert into wishlist_ann values ('director', 28);
-
-select * from wishlist_ann where member_id = 'director';
-select * from wishlist_ann where member_id = 'director';
-
 

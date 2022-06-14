@@ -254,7 +254,6 @@ public class WishListDao {
 				wishlistAnn.setMemberId(rset.getString("member_id"));
 				wishlistAnn.setAnnNo(rset.getInt("ann_no"));
 				list.add(wishlistAnn);
-				System.out.println(wishlistAnn.toString());
 			}
 			
 		} catch (Exception e) {
@@ -264,5 +263,40 @@ public class WishListDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+	public int addWishlistAnn(Connection conn, WishListAnn wishListAnn) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("addWishlistAnn");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, wishListAnn.getMemberId());
+			pstmt.setInt(2, wishListAnn.getAnnNo());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 위시리스트 - 공고 찜목록 추가 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int delWishlistAnn(Connection conn, int annNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("delWishlistAnn");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, annNo);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 위시리스트 - 공고 찜목록 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
 	}
 }
