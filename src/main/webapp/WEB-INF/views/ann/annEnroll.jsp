@@ -9,7 +9,8 @@
 	id = "annEnrollFrm" 
 	name = "annEnrollFrm" 
 	method = "post" 
-	action = "<%= request.getContextPath() %>/ann/annEnroll">
+	action = "<%= request.getContextPath() %>/ann/annEnroll"
+	enctype="multipart/form-data">
 <%-- 작품정보섹션 --%>
 <section id="ann-enroll-first">
 	<div class="container">
@@ -25,6 +26,10 @@
 		</div>
 		<h1>작품 정보</h1>
 		<p class="description">작품에 대해 자세히 알려주세요.</p>
+		<div class="mb-3">
+			<label for="exampleFormControlInput0" class="form-label">공고 제목<span class="need">*</span></label> 
+			<input type="text" name="annTitle" class="form-control" id="exampleFormControlInput0" placeholder="ex. 함께할 주연 배우님을 모집합니다." required>
+		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">작품 제목<span class="need">*</span></label> 
 			<input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="ex. 기생충 (가제)">

@@ -191,4 +191,19 @@ public class AnnService {
 		return list;
 	}
 
+	public int insertAnnReport(Map<String, Object> param) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = annDao.insertAnnReport(conn, param);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
 }
