@@ -1,4 +1,4 @@
-package wishlist.controller;
+package mypage.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -11,33 +11,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ann.model.dto.Ann;
+import board.model.dto.Board;
 import common.HelloMvcUtils;
-import mypage.model.dto.ActorInfo;
-import wishlist.model.service.WishListService;
+import mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class DwishListServlet
+ * Servlet implementation class MyBoardEndDateServlet
  */
-@WebServlet("/mypage/Dmywish")
-public class DwishListServlet extends HttpServlet {
+@WebServlet("/mypage/myboardEndDate")
+public class MyBoardEndDateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private WishListService wishListService = new WishListService();
-
+	private MypageService mypageService = new MypageService();
+	
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 //		String memberId = request.getParameter("memberId");
 //		System.out.println("PwishListServlet@memberId = " + memberId);
 		
-		
-		
-		String memberId = "director";
+		String memberId = "hosi";
 		
 		try {
-			int numPerPage = wishListService.WISH_NUM_PER_PAGE; // 12
-			int totalContent = wishListService.getTotalActorWishContent(memberId);
+			
+			
+			int numPerPage = mypageService.BOARD_NUM_PER_PAGE; // 12
+			int totalContent = mypageService.getTotalMyBoard(memberId);
 
-//			System.out.println("DwishListServlet@totalContent = " + totalContent);
+			System.out.println("MyBoardEndDateServlet@totalContent = " + totalContent);
 			int cPage = 1; 
 			
 			try {
@@ -53,38 +55,36 @@ public class DwishListServlet extends HttpServlet {
 			param.put("end", end);
 			
 			String sortType = request.getParameter("sortType");
-			List<ActorInfo> list = null;
-			if("end_date".equals(sortType)) {
-				list = wishListService.actorEndDateSort(memberId, param);
+			List<Board> list = null;
+			String url = request.getRequestURI(); // /app/mypage/Pmywish
+			System.out.println(url);
+			if(sortType.equals("end_date")) {
+				list = mypageService.myBoardEndDateSort(memberId, param);
+				url += "?sortType=end_date";
 			} else {
-				list = wishListService.findAllWishActor(memberId, param);
+				list = mypageService.findMyAllBoard(memberId, param);
+				url += "?sortType=reg_date";
 			}
 			
-//			System.out.println("DwishListServlet@list 길이 = " + list.size());
-			
-			// 출력할때 조심. 만약 2페이지에 3개 미만으로 있으면 출력할때 가져올 거 없어서 에러남 
-//			System.out.println("DwishListServlet@list.get(0) = " + list.get(0));
-//			System.out.println("DwishListServlet@list.get(1) = " + list.get(1));
-//			System.out.println("DwishListServlet@list.get(2)" + list.get(2));
+			System.out.println("MyBoardEndDateServlet@list 길이 = " + list.size());
+			System.out.println("MyBoardEndDateServlet@list.get(0) = " + list.get(0));
+			System.out.println("MyBoardEndDateServlet@list.get(1) = " + list.get(1));
+			System.out.println("MyBoardEndDateServlet@list.get(2)" + list.get(2));
 
-			
-			String url = request.getRequestURI(); // /app/mypage/Dmywish
-//			System.out.println(url);
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-//			System.out.println("pagebar =" + pagebar);
+			System.out.println("pagebaor =" + pagebar);
 			
 			request.setAttribute("sortType", sortType);
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
 			
-			request.getRequestDispatcher("/WEB-INF/views/mypage/Dwishlist.jsp")
-				.forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/mypage/myboard.jsp")
+			.forward(request, response);
 				
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 
 }

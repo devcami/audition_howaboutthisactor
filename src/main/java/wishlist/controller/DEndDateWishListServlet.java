@@ -11,21 +11,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ann.model.dto.Ann;
 import common.HelloMvcUtils;
 import mypage.model.dto.ActorInfo;
 import wishlist.model.service.WishListService;
 
 /**
- * Servlet implementation class DwishListServlet
+ * Servlet implementation class DEndDateWishListServlet
  */
-@WebServlet("/mypage/Dmywish")
-public class DwishListServlet extends HttpServlet {
+@WebServlet("/mypage/DendDateWishList")
+public class DEndDateWishListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private WishListService wishListService = new WishListService();
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 //		String memberId = request.getParameter("memberId");
 //		System.out.println("PwishListServlet@memberId = " + memberId);
 		
@@ -54,11 +52,21 @@ public class DwishListServlet extends HttpServlet {
 			
 			String sortType = request.getParameter("sortType");
 			List<ActorInfo> list = null;
-			if("end_date".equals(sortType)) {
+			
+			String url = request.getRequestURI(); // /app/mypage/Dmywish
+//			System.out.println(url);
+
+			
+			if(sortType.equals("end_date")) {
 				list = wishListService.actorEndDateSort(memberId, param);
+				url += "?sortType=end_date";
 			} else {
 				list = wishListService.findAllWishActor(memberId, param);
+				url += "?sortType=reg_date";
 			}
+			
+			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
+//			System.out.println("pagebar =" + pagebar);
 			
 //			System.out.println("DwishListServlet@list 길이 = " + list.size());
 			
@@ -68,10 +76,7 @@ public class DwishListServlet extends HttpServlet {
 //			System.out.println("DwishListServlet@list.get(2)" + list.get(2));
 
 			
-			String url = request.getRequestURI(); // /app/mypage/Dmywish
-//			System.out.println(url);
-			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-//			System.out.println("pagebar =" + pagebar);
+
 			
 			request.setAttribute("sortType", sortType);
 			request.setAttribute("list", list);
@@ -84,7 +89,6 @@ public class DwishListServlet extends HttpServlet {
 			e.printStackTrace();
 			throw e;
 		}
-		
 	}
 
 }

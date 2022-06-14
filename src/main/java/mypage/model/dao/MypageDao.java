@@ -14,6 +14,7 @@ import java.util.Properties;
 
 import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
+import board.model.dto.Board;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
@@ -495,7 +496,111 @@ public class MypageDao {
 			result = pstmt.executeUpdate();
 			
 		} catch (Exception e) {
-			throw new MypageException("포트폴리오 경력 삭제오류!", e);
+			throw new MypageException("MypageDao@ 내 공고 삭제오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int getTotalMyBoard(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalMyBoard");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> getTotalMyBoard@마이페이지 내 전체 게시글수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
+	}
+	private Board handleBoardResultSet(ResultSet rset) throws SQLException {
+		Board board = new Board();
+		
+		board.setNo(rset.getInt("no"));
+		board.setMemberId(rset.getString("member_Id"));
+		board.setTitle(rset.getString("title"));
+		board.setContent(rset.getString("content"));
+		board.setReadCount(rset.getInt("read_count"));
+		board.setRegDate(rset.getDate("reg_date"));
+		
+		return board;
+	}
+
+	public List<Board> myBoardEndDateSort(Connection conn, String memberId, Map<String, Object> param) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("myBoardEndDateSort");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Board board = handleBoardResultSet(rset);
+				list.add(board);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 게시물찾기 - 게시물 오래된 순 정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
+
+	public List<Board> findMyAllBoard(Connection conn, String memberId, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("findMyAllBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Board board = handleBoardResultSet(rset);
+				list.add(board);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 게시물찾기 - 게시물 전체조회(최신순) 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
+
+	public int deleteBoards(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteBoards");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new MypageException("MypageDao@ 내 게시글 삭제 오류!", e);
 		} finally {
 			close(pstmt);
 		}

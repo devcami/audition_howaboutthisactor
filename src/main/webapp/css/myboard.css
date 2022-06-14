@@ -22,7 +22,7 @@
 #Pmypage-submenu {
   margin-top: 100px;
   text-align: right;
-  width: 18%;
+  width: 15%;
 }
 #Pmypage-submenu ul {
   padding: 0;
@@ -46,7 +46,6 @@
   /* 여기까지 submenu */
 
 #myboard{
-  height: 70vh;
   width: 80%;
   margin-left: 4%;
   display: flex;
@@ -63,10 +62,12 @@
   width: 100%;
   border-collapse: collapse
 }
-#pagebar {
+/* #pagebar {
   display: flex;
   justify-content: center;
-}
+  margin: 30px 0 20px;
+} */
+
 .page {
   margin: 3px;
   text-decoration: none;
@@ -81,10 +82,144 @@
 #list-head th{
   padding-bottom: 7px;
   text-align: center;
+  font-size: larger;
 }
-#list-head th:nth-child(2){
+#list-head th:nth-child(3){
   width: 50%;
 }
 #list-content{
   text-align: center;
+}
+
+
+    table tr{
+      line-height: 1.9rem;
+    }
+
+    #list-content td:first-child{
+      width: 1%;
+      padding: 0 15px 0 30px;
+    }
+    #ck {
+      transform : scale(1.4);
+    }
+    .ckbox:checked {
+      transform: scale(1.5);
+      accent-color: #2aa286;
+      
+      /* background-color: #2aa286; */
+    }
+    #list-content td:nth-child(2) {
+      width: 18%;
+    }
+    
+    
+
+  .btn {
+      margin-left: 5px;
+      border: none;
+      border: #bbded6 2px solid;
+      background-color: #bbded6;
+      height: 35px;
+      color: white;
+      border-radius: 15px;
+      box-shadow: 3px 3px 3px #657672;
+      padding: 0.1rem 0.5rem 1.3rem 0.55rem;
+      transform: translateY(-5px);
+    } 
+    
+    
+        #myboard-head {
+      display: flex;
+      border-bottom: 2px solid gray;
+      justify-content: space-between;
+    }
+    #btn-sort-wrap {
+      display: flex;
+      align-items: flex-end;
+    }
+    #btn-sort-wrap button {
+      font-size: 1rem;
+      font-family: 'Hahmlet', serif;
+      margin: 0 -2px 10px 0;
+      letter-spacing: 3px;
+      border: none;
+      background-color: #bbded6;
+      cursor: pointer;
+      border-radius: 0.3rem;
+      transition: all 0.3s ease 0s;
+      padding: 5px 7px 5px 7px;
+    }
+    #btn-sort-wrap button:hover {
+      background-color: #fae3d9;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      border: none;
+      box-shadow: 1px 3px 5px rgb(0 0 0 / 20%);
+    }
+    #sortType-wrap {
+      display: flex;
+      align-items: flex-end;
+    }
+    #sortType{
+      /* width: 100px !important; */
+      appearance: none;
+      font-family: "Hahmlet", sans-serif;
+      margin: 0 10px 10px;
+      padding: 0.27rem 2rem 0.27rem 0.75rem;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.5;
+      color: #212529;
+      background-color: #fff;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 16px 12px;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+      transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    #search-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 60px;
+    } 
+    #search {
+      width: 500px;
+      height: 30px;
+    }
+ /*   .btn {
+      margin-left: 5px;
+      border: none;
+      border: #bbded6 2px solid;
+      background-color: #bbded6;
+      height: 35px;
+      color: white;
+      border-radius: 15px;
+      padding: 0.1rem 0.75rem 1rem 0.75rem;
+      box-shadow: 3px 3px 3px #657672;
+    } */ 
+    
+#pagebar {
+	text-align: center;
+    font-size: 20px;
+    margin: 100px 0 20px;
+    color: #639488;
+}
+#pagebar span {
+	padding: 6px;
+    color: #639488;
+}
+#pagebar a {
+	padding: 10px;
+    text-decoration: none;
+    color: #bbded6;
+    transition: all 0.2s ease-in-out;
+}
+
+#list-content a {
+	text-decoration: none;
+    color: black;
+    cursor: pointer;
 }

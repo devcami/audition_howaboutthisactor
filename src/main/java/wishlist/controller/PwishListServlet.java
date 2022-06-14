@@ -52,6 +52,7 @@ public class PwishListServlet extends HttpServlet {
 			
 			String sortType = request.getParameter("sortType");
 			List<Ann> list = null;
+			
 			if("end_date".equals(sortType)) {
 				list = wishListService.annEndDateSort(memberId, param);
 			} else {
@@ -66,6 +67,8 @@ public class PwishListServlet extends HttpServlet {
 			
 			String url = request.getRequestURI(); // /app/mypage/Pmywish
 			System.out.println(url);
+		
+			
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			System.out.println("pagebaor =" + pagebar);
 			
@@ -82,8 +85,5 @@ public class PwishListServlet extends HttpServlet {
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-	}
 
 }
