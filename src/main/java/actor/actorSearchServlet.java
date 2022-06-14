@@ -14,13 +14,11 @@ import member.model.dto.Member;
 import member.model.service.MemberService;
 
 
-
-
-
-
 /**
  * Servlet implementation class actorSearchServlet
  */
+
+
 @WebServlet("/actor/actorSearch")
 public class actorSearchServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
