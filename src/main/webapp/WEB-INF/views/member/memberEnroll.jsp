@@ -20,9 +20,8 @@
 				</td>
 			</tr>
 			<tr>
-				<th>
+				<th></th>
 					<td id="msg1">숫자, 영문자 포함</td>
-				</th>
 			</tr>
 			<tr>
 				<th>비밀번호<sup>*</sup></th>	
@@ -31,9 +30,8 @@
 				</td>
 			</tr>
 			<tr>
-				<th>
+				<th></th>
 					<td id="msg2">숫자, 영문자, 특수기호 포함</td>
-				</th>
 			</tr>
 			<tr>
 				<th>비밀번호 확인<sup>*</sup></th>
