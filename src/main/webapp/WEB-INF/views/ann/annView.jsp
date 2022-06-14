@@ -37,17 +37,20 @@
 			<button id="btn-apply" class="rounded">간편지원</button>
 			<div id="btn-wish" onclick="addWishlist(this);">
 			<%
-				for(WishListAnn wla : wishlistAnn){
-					System.out.println(wla);
-					if(wla.getAnnNo() == ann.getAnnNo()){
+			if(wishlistAnn != null && !wishlistAnn.isEmpty()){
+				for(int i = 0; i < wishlistAnn.size(); i++){
+					if(wishlistAnn.get(i).getAnnNo() == ann.getAnnNo()){
 			%>
-						<img src="<%= request.getContextPath() %>/images/fullHeartWish.png" alt="" />
-			<% 		} else { %>
-						<img src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" />
-			<% 			break;					
-					}
+						<img id="fullHeart" src="<%= request.getContextPath() %>/images/fullHeartWish.png" alt="" />
+			<%			break;
+			 		} else if(i == wishlistAnn.size() - 1) {%>
+					<img id="emptyHeart" src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" />
+			<% 	
+			 		}
 				}
-			%>
+			} else { %>
+					<img id="emptyHeartN"src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" />
+			<% } %>
 			</div>
 			
 		</div>
@@ -249,12 +252,11 @@ btnApply.addEventListener('click', (e) => {
  * 하트 클릭 시 wishlist_ann에 추가 | 삭제
  */
 const addWishlist = (e) => {
-	let nowImgSrc = e.lastElementChild.src;
-	if(nowImgSrc.equals("<%= request.getContextPath() %>/upload/ann/images/emptyHeartWish.png")){
-		document.addWishlistFrm.submit();
-	}else{
-		document.delWishlistFrm.submit();
-	}
+	e.document.querySeletor("").id
+	if()
+	$.ajax({
+		url : "<%=  %>"
+	}); 
 };
 
 /**
