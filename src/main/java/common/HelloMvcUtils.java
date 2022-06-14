@@ -77,7 +77,11 @@ public class HelloMvcUtils {
 		int pageNo = pagebarStart;
 		
 
-		url += "?cPage="; 
+		if(url.contains("sortType")) {
+			url += "&cPage=";
+		}else {
+			url += "?cPage="; 
+		}
 	
 		// 이전 prev 영역
 		if(pageNo == 1) {

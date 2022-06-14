@@ -66,7 +66,7 @@ public class Cast {
 		return "Cast [castNo=" + castNo + ", workNo=" + workNo + ", castRole=" + castRole + ", castName=" + castName
 				+ ", castContents=" + castContents + "]";
 	}
-	
+
 	
 	
 }
