@@ -17,6 +17,7 @@ import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
+import wishlist.model.dto.WishListAnn;
 import wishlist.model.exception.WishListException;
 
 public class WishListDao {
@@ -236,5 +237,32 @@ public class WishListDao {
 			close(pstmt);
 		}
 		return attachment;
+	}
+
+	public List<WishListAnn> annWishlistbyMemberId(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<WishListAnn> list = new ArrayList<>();
+		String sql = prop.getProperty("annWishlistbyMemberId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				WishListAnn wishlistAnn = new WishListAnn();
+				wishlistAnn.setMemberId(rset.getString("member_id"));
+				wishlistAnn.setAnnNo(rset.getInt("ann_no"));
+				list.add(wishlistAnn);
+				System.out.println(wishlistAnn.toString());
+			}
+			
+		} catch (Exception e) {
+			throw new WishListException("> 위시리스트 로그인아이디로 조회오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 }

@@ -29,7 +29,7 @@
 	name = "annUpdateFrm" 
 	method = "post" 
 	action = "<%= request.getContextPath() %>/ann/annUpdate"
-	enctype="multipart/form-data">
+	>
 <%-- 작품정보섹션 --%>
 <section id="ann-enroll-first">
 	<div class="container">

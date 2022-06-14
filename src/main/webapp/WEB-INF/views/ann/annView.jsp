@@ -1,3 +1,4 @@
+<%@page import="wishlist.model.dto.WishListAnn"%>
 <%@page import="member.model.dto.MemberRole"%>
 <%@page import="member.model.dto.Member"%>
 <%@page import="java.sql.Date"%>
@@ -21,7 +22,7 @@
 	Date birthday = Date.valueOf("1990-09-09");
 	Date enrollDate = Date.valueOf("2022-06-10");
 	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
-	
+	List<WishListAnn> wishlistAnn = (List<WishListAnn>) request.getAttribute("wishlistAnn");
 	boolean canEdit = loginMember != null 
 			&& (loginMember.getMemberId().equals(ann.getMemberId()) 
 					|| loginMember.getMemberRole() == MemberRole.A);
@@ -34,7 +35,20 @@
 			<h5 id="work-title"> <%= work.getProduction() %>&nbsp;|&nbsp;<%= work.getDirector() %>&nbsp;|&nbsp;<<%= work.getTitle() %>> </h5>
 			<p><%= ann.getAnnEndDate() %> 마감 | <%= ann.getAnnRegDate() %> 게시</p>
 			<button id="btn-apply" class="rounded">간편지원</button>
-			<div id="btn-wish"><img src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" /></div>
+			<div id="btn-wish" onclick="addWishlist(this);">
+			<%
+				for(WishListAnn wla : wishlistAnn){
+					System.out.println(wla);
+					if(wla.getAnnNo() == ann.getAnnNo()){
+			%>
+						<img src="<%= request.getContextPath() %>/images/fullHeartWish.png" alt="" />
+			<% 		} else { %>
+						<img src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" />
+			<% 			break;					
+					}
+				}
+			%>
+			</div>
 			
 		</div>
 		<div class="work-info mrgbtm">
@@ -214,6 +228,34 @@ const btnApply = document.querySelector("#btn-apply");
 btnApply.addEventListener('click', (e) => {
 	//console.log(e.target);
 });
+</script>
+<form 
+	name="addWishlistFrm" 
+	action="<%= request.getContextPath() %>/ann/addWishAnn"
+	method="POST">
+	<input type="hidden" name="annNo" value="<%= ann.getAnnNo() %>" />
+	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
+</form> 
+<form 
+	name="delWishlistFrm" 
+	action="<%= request.getContextPath() %>/ann/delWishAnn"
+	method="POST">
+	<input type="hidden" name="annNo" value="<%= ann.getAnnNo() %>" />
+	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
+</form> 
+
+<script>
+/**
+ * 하트 클릭 시 wishlist_ann에 추가 | 삭제
+ */
+const addWishlist = (e) => {
+	let nowImgSrc = e.lastElementChild.src;
+	if(nowImgSrc.equals("<%= request.getContextPath() %>/upload/ann/images/emptyHeartWish.png")){
+		document.addWishlistFrm.submit();
+	}else{
+		document.delWishlistFrm.submit();
+	}
+};
 
 /**
  * 마감된 공고일 시 지원하기 버튼 비활성화 
