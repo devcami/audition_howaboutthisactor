@@ -71,7 +71,7 @@ public class MyBoardServlet extends HttpServlet {
 			
 				
 				String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-				System.out.println("pagebaor =" + pagebar);
+				System.out.println("pagebar =" + pagebar);
 				
 				request.setAttribute("sortType", sortType);
 				request.setAttribute("list", list);

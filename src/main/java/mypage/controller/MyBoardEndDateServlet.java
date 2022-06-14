@@ -72,10 +72,6 @@ public class MyBoardEndDateServlet extends HttpServlet {
 			System.out.println("MyBoardEndDateServlet@list.get(1) = " + list.get(1));
 			System.out.println("MyBoardEndDateServlet@list.get(2)" + list.get(2));
 
-			
-
-		
-			
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			System.out.println("pagebaor =" + pagebar);
 			

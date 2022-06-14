@@ -97,8 +97,6 @@
 	  	  location.href=`/app/ann/annView?annNo=\${annNo}`;
 	  };
   
-  
-  
     const mousein = (menu) => {
       now_menu.classList.remove('current');
       menu.classList.add('current');
