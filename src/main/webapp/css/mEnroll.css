@@ -1,11 +1,26 @@
 @charset "UTF-8";
-section{
+form{
   font-family: 'Hahmlet', serif;
+  padding:40px 550px 0 550px;
+  
 }
 
-#container{	
-  display: flex;
-  font-family: 'Hahmlet', serif;
-  justify-content: center;
-  margin: 0 130px 0 30px;
+#Enroll_head {
+    color: black;
+    font-size: 3em;
+	border-bottom: 2px solid gray;
+	text-align: center;
+	padding: 0 0 30px 0;
+}
+
+#button1 {
+	width: 200px;
+	background-color: #bbded6;
+	color: white;
+}
+
+#button2 {
+	width: 200px;
+	background-color: #bbded6;
+	color: white;
 }

@@ -3,9 +3,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/mEnroll.css" />
 <section id=enroll-container>
-	<h2>회원가입</h2>
 	<form name="memberEnrollFrm" method="POST">
+	<div id="Enroll_head">
+      <h2>회원가입</h2>
+    </div><br><br>
 		<table>
 			<tr>
 				<th>ID<sup>*</sup></th>
@@ -48,7 +51,7 @@
 			<tr>
 				<th>이메일</th>
 				<td>	
-					<input type="email" placeholder="abc" name="email" id="email">
+					<input type="email" placeholder="abc123" name="email" id="email">
 					<b>@</b>
 					<select name="email_back">
 						<option value="">-- 선택 --</option>
@@ -80,7 +83,7 @@
 				<td>
 					<input type="radio" name="gender" id="gender0" value="M">
 					<label for="gender0">남</label>
-					<input type="radio" name="gender" id="gender1" value="F" checked>
+					<input type="radio" name="gender" id="gender1" value="F">
 					<label for="gender1">여</label>
 				</td>
 			</tr>
@@ -104,8 +107,9 @@
 				</td>
 			</tr>
 		</table>
-		<input type="submit" value="가입" >
-		<input type="reset" value="취소">
+		<br>
+		<input type="submit" id="button1" value="가입" >
+		<input type="reset" id="button2" value="취소">
 	</form>
 </section>
 <form name="checkIdDuplicateFrm" action="<%= request.getContextPath() %>/member/checkIdDuplicate">
