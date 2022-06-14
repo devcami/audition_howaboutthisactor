@@ -6,6 +6,19 @@
 	
 	String memberId = "director";
 	String memberRole = "D";
+	
+	String url = "";
+	switch(memberRole){
+	case("A"):		
+		break;
+	case("D"):
+		url = "/mypage/myAnn?memberId=" + memberId + "&memberRole=" + memberRole;
+		break;
+	case("P"):
+		url = "/mypage/portfolio?memberId=" + memberId + "&memberRole=" + memberRole;
+		break;
+	}
+	
 
 %>
 <!DOCTYPE html>
@@ -33,7 +46,7 @@
             <div class="nav-item"><a href="<%= request.getContextPath() %>/actor/actorSearch">배우찾기</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/ann/annList">공고찾기</a></div>
             <div class="nav-item"><a href="actorboard.html">게시판</a></div>
-            <div class="nav-item"><a href="<%= request.getContextPath() %>/mypage/portfolio?memberId=<%= memberId %>&memberRole=<%= memberRole %>">마이페이지</a></div>
+            <div class="nav-item"><a href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>
             <div class="nav-item"><a href="actorjoin.html">로그인 회원가입</a></div>
         </div>
     </div>

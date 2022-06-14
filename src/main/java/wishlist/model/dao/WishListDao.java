@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
+import mypage.model.dto.ActorInfo;
 import wishlist.model.exception.WishListException;
 
 public class WishListDao {
@@ -42,7 +43,7 @@ public class WishListDao {
 				totalContent = rset.getInt(1);
 			}
 		} catch (Exception e) {
-			throw new WishListException("> getTotalContent@마이페이지 찜목록 전체 게시물 수 조회 오류");
+			throw new WishListException("> getTotalContent@배우 마이페이지 찜목록 전체 게시물 수 조회 오류");
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -118,5 +119,91 @@ public class WishListDao {
 		ann.setIsClose(rset.getString("is_close"));
 		
 		return ann;
+	}
+
+	public int getTotalActorWishContent(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalActorWishContent");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new WishListException("> getTotalActorWishContent@제작사 마이페이지 찜목록 전체 게시물 수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
+	}
+
+	public List<ActorInfo> actorEndDateSort(Connection conn, String memberId, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ActorInfo> list = new ArrayList<>();
+		String sql = prop.getProperty("actorEndDateSort");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				ActorInfo actor = handleActorResultSet(rset);
+				list.add(actor);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 마감순정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
+
+	public List<ActorInfo> findAllWishActor(Connection conn, String memberId, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ActorInfo> list = new ArrayList<>();
+		String sql = prop.getProperty("findAllWishActor");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				ActorInfo actor = handleActorResultSet(rset);
+				list.add(actor);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 전체목록 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	private ActorInfo handleActorResultSet(ResultSet rset) throws SQLException {
+		
+		ActorInfo actor = new ActorInfo();
+		
+		actor.setActorName(rset.getString("actor_name"));
+		actor.setMemberId(rset.getString("member_id"));
+		actor.setActorNo(rset.getInt("actor_no"));
+		actor.setBirth(rset.getString("actor_birth"));
+		actor.setAge(rset.getInt("actor_age"));
+		actor.setCompany(rset.getString("actor_company"));
+		
+		return actor;
 	}
 }
