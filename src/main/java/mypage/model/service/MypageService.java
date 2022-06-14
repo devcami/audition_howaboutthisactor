@@ -1,12 +1,12 @@
 package mypage.model.service;
 import static common.JdbcTemplate.*;
-import static common.JdbcTemplate.getConnection;
-import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import ann.model.dto.Ann;
 import mypage.model.dao.MypageDao;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
@@ -15,7 +15,8 @@ import mypage.model.dto.PortfolioWork;
 public class MypageService {
 	
 	private MypageDao mypageDao = new MypageDao();
-	public static final int WISH_NUM_PER_PAGE = 8;
+	public static final int APPLY_NUM_PER_PAGE = 8;
+	public static final int ANN_NUM_PER_PAGE = 8;
 
 	public List<Integer> insertPortWork(PortfolioWork work) {
 		List<Integer> resultNo = new ArrayList<>();
@@ -66,7 +67,7 @@ public class MypageService {
 		try {
 			for(String no : deleteArr) {   
 	            result = mypageDao.deleteWorks(conn, Integer.parseInt(no));
-	            System.out.println(no + "번 지우기 성공!");
+	            System.out.println(no + "번 경력 지우기 성공!");
 			}
 			commit(conn);
 			
@@ -183,7 +184,50 @@ public class MypageService {
 		return result;
 	}
 
-	
+	public int getTotalMyAnn(String memberId) {
+		
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalMyAnn(conn, memberId);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<Ann> myAnnEndDateSort(String memberId, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Ann> list = mypageDao.myAnnEndDateSort(conn, memberId, param);
+		close(conn);
+		return list;
+	}
+
+
+	public List<Ann> findMyAllAnn(String memberId, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Ann> list = mypageDao.findMyAllAnn(conn, memberId, param);
+		close(conn);
+		return list;
+	}
+
+	public int deleteAnns(String[] deleteArr) {
+		int result = 0;
+		Connection conn = getConnection();
+		
+		try {
+			for(String no : deleteArr) {   
+	            result = mypageDao.deleteAnns(conn, Integer.parseInt(no));
+	            System.out.println(no + "번 공고 지우기 성공!");
+			}
+			commit(conn);
+			
+		} catch(Exception e) {
+			rollback(conn);
+		 	throw e;
+		} finally {
+			close(conn);
+		}
+		
+		return result;
+		
+	}
 	
 
 }

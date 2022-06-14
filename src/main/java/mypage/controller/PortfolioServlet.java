@@ -1,6 +1,9 @@
 package mypage.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ann.model.dto.Ann;
+import common.HelloMvcUtils;
 import mypage.model.dto.ActorInfo;
 import mypage.model.service.MypageService;
 
@@ -26,8 +31,10 @@ public class PortfolioServlet extends HttpServlet {
 		try {
 			
 			String memberId = request.getParameter("memberId");
-			System.out.println("memberId = " + memberId);
+			String memberRole = request.getParameter("memberRole");
 			
+			
+			// 로그인한 회원이 배우회원인 경우 
 			ActorInfo actorInfo = mypageService.findActorInfo(memberId);
 			System.out.println(actorInfo.toString());
 			
