@@ -18,17 +18,16 @@
 <section id="container">
   <div id="Pmypage-submenu" class="submenu">
     <ul>
-      <li><a href="#" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 관리</a></li>
+      <li><a href="#" onmouseout="mouseout(this)">내 공고 관리</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/myboard?memberId=<%= memberId %>&memberRole=<%= memberRole %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/Dmywish?memberId=<%= memberId %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원자 관리</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
+      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=del&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
     </ul>
   </div>
-  
-  
+
      <div id="company-info">
       <div id="company_head">
         <h2>회사 정보</h2>

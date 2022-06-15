@@ -273,6 +273,34 @@ public class MypageService {
 		
 		return result;
 	}
+
+	public String getPw(String memberId) {
+		
+		Connection conn = getConnection();
+		String password = mypageDao.getPw(conn, memberId);
+		close(conn);
+		
+		return password;
+	}
+
+	public int deleteMember(String memberId) {
+		int result = 0;
+		// 1. Connection객체 생성
+		Connection conn = getConnection();
+		try {
+			// 2. dao 요청
+			result = mypageDao.deleteMember(conn, memberId);
+			// 3. 트랜잭션 처리
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e; // controller 통보용
+		} finally {
+			// 4. Connection객체 반환
+			close(conn);
+		}
+		return result;
+	}
 	
 
 }

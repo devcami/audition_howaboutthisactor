@@ -62,10 +62,22 @@
 
 /* 수정 내용 content */
 #update-info form {
-  margin: 40px 0;
+  margin: 40px 10px;
 }
+/* 여기까지 submenu */
 
-  #savebtn {
+  #nameDiv {
+    width: 33.5%;
+  }
+  .col-sm-10{
+    width: 40%;
+  }
+  .form-select {
+    width: 15%;
+    margin-left: calc(var(--bs-gutter-x) * .5);
+
+  }
+  .btn-next {
     margin: 0 auto;
     font-size: 20px;
     letter-spacing: 10px;
@@ -76,63 +88,17 @@
     transition: .2s;
     border: none;
 }
-.btn-div {
-  margin-top: 60px;
+.btn-div{
+  /* width: 55.67%; */
+  width: 60%;
+  display: inline-grid;
+  justify-content: end;
 }
-
-#company-info{
-  width: 80%;
-  margin-left: 4%;
-  margin-bottom: 100px;
+.genre-div{
+  width: 8%;
+  margin-right: 0;
+  padding-right: 0;
 }
-#company-info h2 {
-  font-size: 40px;
-  padding: 10px;
-  margin: 20px 0 10px;
-  
-}
-
-/* 제목 & 수정하기 버튼 */
-#company_head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  border-bottom: 2px solid gray;
-}
-
-#update-btn {
-  margin-bottom: 13px;
-  padding: 6px 11px;
-  font-size: medium;
-  font-family: 'Hahmlet', serif;
-  border: none;
-  background-color: #bbded6;
-  cursor: pointer;
-  border-radius: 0.3rem;
-  transition: all 0.3s ease 0s;
-}
-form {
-  margin: 30px 0 0 30px;
-}
-.inputs {
-  font-size: large;
-  width: 50%;
-  padding: 0.375rem 0.75rem;
-}
-.edit {
-  width: 50%;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  border-bottom: 1px solid black;
-  border-radius: 0;
-}
-
-.inputInfo{
-  width: 50%;
-  border: none;
-  font-size: large;
-}
-.form-control:disabled, .form-control[readonly] {
-  background-color: #ffffff;
+.movie-div {
+  margin-left: calc(var(--bs-gutter-x) * .5);
 }

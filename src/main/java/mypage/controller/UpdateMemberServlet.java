@@ -8,20 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class CkpwServlet
+ * Servlet implementation class UpdateMemberServlet
  */
-@WebServlet("/mypage/ckpwDelete")
-public class CkpwDeleteServlet extends HttpServlet {
+@WebServlet("/mypage/updateMember")
+public class UpdateMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.getRequestDispatcher("/WEB-INF/views/mypage/ckpw_delete.jsp")
-				.forward(request, response);
+				String memberId = (String) request.getAttribute("memberId");
+				
+				request.setAttribute("memberId", memberId);
+				request.getRequestDispatcher("/WEB-INF/views/mypage/memberUpdate.jsp")
+					.forward(request, response);
 				
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -29,12 +28,9 @@ public class CkpwDeleteServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+
 	}
 
 }

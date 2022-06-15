@@ -15,6 +15,7 @@ import java.util.Properties;
 import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
 import board.model.dto.Board;
+import member.model.exception.MemberException;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
@@ -601,6 +602,44 @@ public class MypageDao {
 			
 		} catch (Exception e) {
 			throw new MypageException("MypageDao@ 내 게시글 삭제 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public String getPw(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getPw");
+		String password = "";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				password = rset.getString(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> getPw@마이페이지 비밀번호 확인 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return password;
+	}
+
+	public int deleteMember(Connection conn, String memberId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteMember"); 
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MypageException("deleteMember@회원탈퇴 오류", e);
 		} finally {
 			close(pstmt);
 		}

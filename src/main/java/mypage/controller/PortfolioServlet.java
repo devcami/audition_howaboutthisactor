@@ -53,7 +53,7 @@ public class PortfolioServlet extends HttpServlet {
 				request.setAttribute("actorInfo", actorInfo);
 				request.setAttribute("portType", "exist");
 				request.getRequestDispatcher("/WEB-INF/views/mypage/viewPortfolio.jsp")
-				.forward(request, response);
+					.forward(request, response);
 			}
 			
 		} catch (Exception e) {
