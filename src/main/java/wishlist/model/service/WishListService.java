@@ -104,11 +104,11 @@ public class WishListService {
 		return result;
 	}
 
-	public int delWishlistAnn(int annNo) {
+	public int delWishlistAnn(WishListAnn wishListAnn) {
 		Connection conn = getConnection();
 		int result = 0;
 		try {
-			result = wishListDao.delWishlistAnn(conn, annNo);
+			result = wishListDao.delWishlistAnn(conn, wishListAnn);
 			commit(conn);
 		} catch (Exception e) {
 			rollback(conn);

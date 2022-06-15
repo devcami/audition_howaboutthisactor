@@ -13,9 +13,6 @@
 	
 	String searchKeyword = request.getParameter("searchKeyword");
 	
-	Date birthday = Date.valueOf("1990-09-09");
-	Date enrollDate = Date.valueOf("2022-06-10");
-	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "영화,드라마");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <section id="ann-list-container">
@@ -33,7 +30,9 @@
 						value="<%= (searchKeyword != null) ? searchKeyword : "" %>" />
 				<button class="btn-search-title">검색</button>
 			</form>
+		<% if((loginMember.getMemberRole() == MemberRole.D)) { %>
 			<input type="button" value="공고등록" class="btn btn-secondary btn-lg" onclick="location.href='<%= request.getContextPath() %>/ann/annEnroll';" />
+		<% } %>
 		</div>
 		<div class="row row-cols-1 row-cols-md-3 g-4" id="ann-container">
 		<script> let a; </script>
@@ -84,7 +83,7 @@ sortType.addEventListener('change', (e) => {
 });
 const annView = (ann) => {
 	const annNo = ann.firstElementChild.lastElementChild.value;
-	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}&memberId=<%= loginMember.getMemberId() %>`;
+	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
 };
 
 </script>
