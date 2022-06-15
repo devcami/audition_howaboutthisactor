@@ -3,9 +3,13 @@ form{
   font-family: 'Hahmlet', serif;
   padding:40px 250px 0 250px;
   margin: auto; 
-  text-align: center;
-  display: inline;
+  display: inline-block;
 }
+
+#enroll-container {
+	text-align: center;
+}
+
 #Enroll_head {
     color: black;
     font-size: 3em;
@@ -16,10 +20,12 @@ form{
 
 td {
 	padding: 0 0 10px 100px;
+	text-align: left;
 }
 
 th {
 	padding: 0 0 10px 100px;
+	text-align: left;
 }
 
 td#msg1 {

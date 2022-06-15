@@ -96,7 +96,7 @@ function.btnClick() => {
 	
 	<div id="btn-group" class="btn-group" role="group" aria-label="Basic example">
 	  <button type="button" class="btn f-btn b-line" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">회원가입</button>
-	  <button type="button" class="btn f-btn b-line" id="id_find" onclick="location.href='<%= request.getContextPath() %>/member/findId';">아이디 찾기</button>
+	  <button type="button" class="btn f-btn b-line" id="id_find" onclick="findId();">아이디 찾기</button>
 	  <button type="button" class="btn f-btn" id="pwd_find" >비밀번호 찾기</button>
 	</div>
 				
@@ -118,5 +118,22 @@ function.btnClick() => {
 	
 	</form>
 </section>
+
+<form name="findIdFrm" action="<%= request.getContextPath() %>/member/findId">
+	<input type="hidden" name="memberId" />
+</form>
+<script>
+const checkIdDuplicate = () => {
+	const title = "findIdPopup";
+	const spec = "width=300px, height=200px";
+	const popup = open("", title, spec);
+	
+	const frm = document.checkIdDuplicateFrm;
+	frm.target = title; // 해당팝업에서 폼을 제출!
+	frm.memberId.value = _memberId.value;
+	frm.submit();
+};
+</script>
+
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
