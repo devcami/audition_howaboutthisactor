@@ -47,20 +47,6 @@ public class MemberService {
 		return list;
 	}
 
-	public int updateMemberRole(Member member) {
-		int result = 0;
-		Connection conn = getConnection();
-		try {
-			result = memberDao.updateMemberRole(conn, member);
-			commit(conn);
-		} catch (Exception e) {
-			rollback(conn);
-			throw e;
-		} finally {
-			close(conn);
-		}
-		return result;
-	}
 
 	public List<Member> findBy(Map<String, String> param) {
 		Connection conn = getConnection();

@@ -92,6 +92,8 @@
 						<tr>
 				<th>이메일</th>
 				<td>	
+					<input type="email" placeholder="abc123@xyz.com" name="email" id="email"><br>
+					<%-- 가능하다면 아래처럼 구현하고픔... 
 					<input type="email" placeholder="abc123" name="email" id="email">
 					<b>@</b>
 					<select name="email_back">
@@ -104,6 +106,7 @@
 						<option value="ms">microsoft.com</option>
 						<option value="outlook">outlook.com</option>
 					</select>
+					--%>
 				</td>
 			</tr>
 		</table>
