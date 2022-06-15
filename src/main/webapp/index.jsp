@@ -78,7 +78,8 @@
 			<div class="list-item-title">게시판</div>
 			<div class="list-item-detail">Lorem ipsum dolor sit amet
 				consectetur adipisicing elit.</div>
-			<button class="list-item-button">click</button>
+			<button class="list-item-button"
+			onclick="location.href='<%= request.getContextPath() %>/board/boardList">click</button>
 		</div>
 	</div>
 	<div class="fourth position-fixed"></div>

@@ -75,7 +75,7 @@ window.addEventListener('load', () => {
 
             <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>
-
+			<div class="nav-item"><a href="<%= request.getContextPath() %>/board/boardList">게시판</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>
             <div class="nav-item login"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
             <div class="nav-item login"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>
