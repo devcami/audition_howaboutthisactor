@@ -11,7 +11,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-	Production p = new Production("director", "testProduction", "디렉터", "01015971597", "director@naver.com", "N", "Y");
+	Production p = (Production) request.getAttribute("p");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -45,41 +45,42 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput1" class="form-label">작품 제목<span class="need">*</span></label> 
 			<input type="text" name="title" class="form-control" id="exampleFormControlInput1" placeholder="ex. 기생충 (가제)">
+			<input type="hidden" name="loginMemberId" value="<%= loginMember.getMemberId() %>" />
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput2" class="form-label">작품 분야<span class="need">*</span></label> 
 			<select class="form-select" name="workField" id="exampleFormControlInput2" aria-label="Default select example">
-			  <option selected>선택해주세요</option>
+			  <option selected disabled>선택해주세요</option>
 			  <optgroup label="영화">
-				  <option value="lcf">장편 상업 영화</option>
-				  <option value="lif">장편 독립 영화</option>
-				  <option value="sf">단편 영화</option>
+				  <option value="장편 상업 영화">장편 상업 영화</option>
+				  <option value="장편 독립 영화">장편 독립 영화</option>
+				  <option value="단편 영화">단편 영화</option>
 			  </optgroup>
 			  <optgroup label="TV">
-				  <option value="dr">드라마</option>
-				  <option value="et">예능</option>
-				  <option value="dc">다큐멘터리</option>
+				  <option value="드라마">드라마</option>
+				  <option value="예능">예능</option>
+				  <option value="다큐멘터리">다큐멘터리</option>
 			  </optgroup>
 			  <optgroup label="무대">
-				  <option value="mu">뮤지컬</option>
-				  <option value="pl">연극</option>
-				  <option value="da">무용</option>
+				  <option value="뮤지컬">뮤지컬</option>
+				  <option value="연극">연극</option>
+				  <option value="무용">무용</option>
 			  </optgroup>
 			  <optgroup label="영상">
-				  <option value="wd">웹드라마</option>
-				  <option value="stm">인터넷 방송</option>
-				  <option value="mv">뮤직 비디오</option>
+				  <option value="웹드라마">웹드라마</option>
+				  <option value="인터넷방송">인터넷 방송</option>
+				  <option value="뮤직 비디오">뮤직 비디오</option>
 			  </optgroup>
 			  <optgroup label="광고">
-				  <option value="ps">화보</option>
-				  <option value="vAdv">영상 광고</option>
-				  <option value="pAdv">사진 광고</option>
-				  <option value="bAdv">바이럴 광고</option>
-				  <option value="etcAdv">기타 광고</option>
-				  <option value="lic">라이브 커머스</option>
+				  <option value="화보">화보</option>
+				  <option value="영상 광고">영상 광고</option>
+				  <option value="사진 광고">사진 광고</option>
+				  <option value="바이럴 광고">바이럴 광고</option>
+				  <option value="기타 광고">기타 광고</option>
+				  <option value="라이브 커머스">라이브 커머스</option>
 			  </optgroup>
 			  <optgroup label="기타">
-				  <option value="etc">기타 사진 및 영상</option>
+				  <option value="기타 사진 및 영상">기타 사진 및 영상</option>
 			  </optgroup>
 			</select>
 		</div>
@@ -126,11 +127,11 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput6" class="form-label">배역 구분<span class="need">*</span></label> 
 			<select class="form-select" name="castRole" id="exampleFormControlInput6" aria-label="Default select example">
-			  <option selected>선택해주세요</option>
-			  <option value="lead">주연</option>
-			  <option value="sup">조연</option>
-			  <option value="minor">단역</option>
-			  <option value="extra">엑스트라</option>
+			  <option selected disabled>선택해주세요</option>
+			  <option value="주연">주연</option>
+			  <option value="조연">조연</option>
+			  <option value="단역">단역</option>
+			  <option value="엑스트라">엑스트라</option>
 			</select>
   		   <label for="exampleFormControlInput7" class="form-label">노출장면 포함<span class="need">*</span></label> 
 		   <input class="form-check-input" type="checkbox" name="hasTO" value="Y" id="flexCheckDefault1">
@@ -141,29 +142,29 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput7" class="form-label">성별<span class="need">*</span></label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" id="flexRadioDefault1" checked> 
+				<input class="form-check-input" type="radio" value="성별무관" name="annGender" id="flexRadioDefault1" checked> 
 				<label class="form-check-label" for="flexRadioDefault1">성별무관</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" id="flexRadioDefault2"> 
+				<input class="form-check-input" type="radio" value="남" name="annGender" id="flexRadioDefault2"> 
 				<label class="form-check-label" for="flexRadioDefault2">남</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="annGender" id="flexRadioDefault3"> 
+				<input class="form-check-input" type="radio" value="여" name="annGender" id="flexRadioDefault3"> 
 				<label class="form-check-label" for="flexRadioDefault3">여</label>
 			</div>
 		</div>
 		<div class="mb-3">
 			<label for="exampleFormControlInput8" class="form-label">나이<span class="need">*</span></label> 
 			<select class="form-select" name="annAge" id="exampleFormControlInput8" aria-label="Default select example">
-			  <option selected>선택해주세요</option>
-			  <option value="age">나이무관</option>
-			  <option value="1">~10세</option>
-			  <option value="10">11~17세</option>
-			  <option value="20">18~25세</option>
-			  <option value="30">26~35세</option>
-			  <option value="40">36~45세</option>
-			  <option value="50">45세~</option>
+			  <option selected disabled>선택해주세요</option>
+			  <option value="나이무관">나이무관</option>
+			  <option value="10세">~10세</option>
+			  <option value="11~17세">11~17세</option>
+			  <option value="18~25세">18~25세</option>
+			  <option value="26~35세">26~35세</option>
+			  <option value="36~45세">36~45세</option>
+			  <option value="45세~">45세~</option>
 			</select>
 		</div>
 		<div class="mb-3">
@@ -174,14 +175,14 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput10" class="form-label">키</label> 
 			<select class="form-select" name="annHeight" id="exampleFormControlInput10" aria-label="Default select example">
-			  <option selected>선택해주세요</option>
-			  <option value="age">신장무관</option>
-			  <option value="110">~110cm</option>
-			  <option value="150">111~150cm</option>
-			  <option value="160">151~160cm</option>
-			  <option value="170">161~170cm</option>
-			  <option value="180">171~180cm</option>
-			  <option value="190">180cm~</option>
+			  <option selected disabled>선택해주세요</option>
+			  <option value="신장무관">신장무관</option>
+			  <option value="~110cm">~110cm</option>
+			  <option value="111~150cm">111~150cm</option>
+			  <option value="151~160cm">151~160cm</option>
+			  <option value="161~170cm">161~170cm</option>
+			  <option value="171~180cm">171~180cm</option>
+			  <option value="180cm~">180cm~</option>
 			</select>
 		</div>
 		<div class="mb-3">
@@ -208,7 +209,7 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput12" class="form-label">촬영 지역</label> 
 			<select class="form-select" name="annArea" id="exampleFormControlInput12" aria-label="Default select example">
-			  <option selected>선택해주세요</option>
+			  <option selected disabled>선택해주세요</option>
 			  <option value="서울">서울</option>
 			  <option value="경기">경기</option>
 			  <option value="인천">인천</option>
@@ -242,27 +243,27 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput14" class="form-label">담당자 이름</label> 
 			<p class="description">공고에서 담당자 이름은 기본적으로 공개됩니다.</p>
-			<input type="text" class="form-control" id="exampleFormControlInput14" value="loginMember.memberName" readonly> 
+			<input type="text" class="form-control" id="exampleFormControlInput14" value="<%= loginMember.getMemberName() %>" readonly> 
 		</div>
 		<div class="mb-3">
-			<label for="exampleFormControlInput15" class="form-label">담당자 휴대폰 번호</label> 
+			<label for="exampleFormControlInput15" class="form-label">담당자 휴대폰 번호 : <%= loginMember.getPhone() %></label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isPhoneOpen" id="flexRadioDefault4"> 
+				<input class="form-check-input" type="radio" value="Y" name="isPhoneOpen" id="flexRadioDefault4"> 
 				<label class="form-check-label" for="flexRadioDefault4">공개</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isPhoneOpen" id="flexRadioDefault5" checked> 
+				<input class="form-check-input" type="radio" value="N" name="isPhoneOpen" id="flexRadioDefault5" checked> 
 				<label class="form-check-label" for="flexRadioDefault5">비공개</label>
 			</div>
 		</div>
 		<div class="mb-3">
-			<label for="exampleFormControlInput16" class="form-label">담당자 이메일</label> 
+			<label for="exampleFormControlInput16" class="form-label">담당자 이메일 : <%= loginMember.getEmail() %></label> 
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isEmailOpen" id="flexRadioDefault6"> 
+				<input class="form-check-input" type="radio" value="Y" name="isEmailOpen" id="flexRadioDefault6"> 
 				<label class="form-check-label" for="flexRadioDefault6">공개</label>
 			</div>
 			<div class="form-check">
-				<input class="form-check-input" type="radio" name="isEmailOpen" id="flexRadioDefault7" checked> 
+				<input class="form-check-input" type="radio" value="N" name="isEmailOpen" id="flexRadioDefault7" checked> 
 				<label class="form-check-label" for="flexRadioDefault7">비공개</label>
 			</div>
 		</div>

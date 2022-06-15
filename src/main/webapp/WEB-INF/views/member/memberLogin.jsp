@@ -58,50 +58,61 @@ function.btnClick() => {
 
 <section id=login-container>
 	<% if(loginMember == null){ %>
-	<form name="memberLoginFrm" method="POST">
-	<div id="Login_head">
-      <h2>로그인</h2>
-    </div><br><br>
-		<table>
+	<div id="login-header">
+   		<span>로그인</span>
+    </div>
+	<form name="memberLoginFrm" method="POST" id="member-login-form">
+		<table class="table table-borderless">
 			<tr>
 				<th>
-					<input type="text" placeholder="ID" name="memberId" id="_memberId">
+					아이디
 				</th>
+				<td>
+					<input type="text" placeholder="아이디를 입력해주세요." name="memberId" id="_memberId">
+				</td>
 			</tr>
 			<tr>
+				<th>
+					비밀번호
+				</th>
 				<td>
-					<input type="password" placeholder="비밀번호" name="password" id="_password"><br>
+					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password"><br>
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="checkbox" name="saveId" id="saveId" <%= saveId != null ? "checked" : "" %>/>
-					<label for="saveId">아이디저장</label>
+					<input type="checkbox" name="saveId" class="saveId" id="saveId" <%= saveId != null ? "checked" : "" %>/>
+					<label for="saveId" class="saveId">아이디저장</label>
+					<input type="submit" id="btn-login" class="btn btn-primary" value="Login" onClick='btnClick()'>
 				</td>
 			</tr>
 		</table>
-		<br>
-				<input type="submit" id="button" value="Login" onClick='btnClcik()'>
-		<br><br>
-	<div id="naver_id_login">
-<%--<a href="${url}"></a> 네이버 로그인 페이지 이동 --%>
-	<img id="naver" src="${pageContext.request.contextPath}/images/naverLogin.png">
-	</div><br>
-	<div id="kakao_id_login">
-<%--<a href="${url}"></a> 카카오 로그인 페이지 이동 --%>
-	<img id="kakao" src="${pageContext.request.contextPath}/images/kakaoLogin.png">
-	</div><br>
+	<div id="SNSLogin">
+		<%--<a href="${url}"></a> 네이버 로그인 페이지 이동 --%>
+		<img id="naver" src="${pageContext.request.contextPath}/images/naverLogin.png">
+		<%--<a href="${url}"></a> 카카오 로그인 페이지 이동 --%>
+		<img id="kakao" src="${pageContext.request.contextPath}/images/kakaoLogin.png">
+	</div>
 	
-	<%-- span태그 css이용해서 nbsp대신 띄워주자 ㅠㅠ --%>
-	<span id="enroll" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">회원가입</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<span id="id_find">ID 찾기</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<span id="ps_find">비밀번호 찾기</span>
+	<div id="btn-group" class="btn-group" role="group" aria-label="Basic example">
+	  <button type="button" class="btn f-btn b-line" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">회원가입</button>
+	  <button type="button" class="btn f-btn b-line" id="id_find" >아이디 찾기</button>
+	  <button type="button" class="btn f-btn" id="pwd_find" >비밀번호 찾기</button>
+	</div>
 				
 	<% } else { %>
-	<%-- 로그인 성공시 --%>
-		<table id="login">
+		<%-- 로그인 성공시 --%>
+		<script type="text/javascript">
+		// 뒤로 갈 히스토리가 있는 경우 및 우리 시스템에서 링크를 통해 유입된 경우
+		if (document.referrer && document.referrer.indexOf("<%= request.getContextPath() %>") !== -1) {
+		    history.back();    // 뒤로가기
+		}
+		// 히스토리가 없는 경우 (URL을 직접 입력하여 유입된 경우)
+		else {
+		    location.href = "<%= request.getContextPath() %>/";    // 메인페이지로 
+		}
+		</script>
+<%-- 		<table id="loginSuccess">
 			<tbody>
 				<tr>
 					<td><%= loginMember.getMemberName() %>님, 안녕하세요.</td><br>
@@ -112,11 +123,11 @@ function.btnClick() => {
 				</td>
 				</tr>
 			</tbody>
-		</table>
-		
+		</table> --%>
 	<% } %>
 	
 	</form>
 </section>
+
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
