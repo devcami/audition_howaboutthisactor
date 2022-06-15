@@ -302,7 +302,7 @@ public class BoardDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, bc.getCommentLevel());
+//			pstmt.setInt(1, bc.getCommentLevel());
 			pstmt.setString(2, bc.getMemberId());
 			pstmt.setString(3, bc.getContent());
 			pstmt.setInt(4, bc.getBoardNo());
@@ -331,7 +331,6 @@ public class BoardDao {
 			while(rset.next()) {
 				BoardComment bc = new BoardComment();
 				bc.setNo(rset.getInt("no"));
-				bc.setCommentLevel(rset.getInt("comment_level"));
 				bc.setMemberId(rset.getString("member_id"));
 				bc.setContent(rset.getString("content"));
 				bc.setBoardNo(rset.getInt("board_no"));

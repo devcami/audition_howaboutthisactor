@@ -5,6 +5,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <% 
 	List<BoardExt> list = (List<BoardExt>) request.getAttribute("list");
+	String pagebar = (String) request.getAttribute("pagebar");
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <div class="top-logo">
@@ -65,6 +66,8 @@
 	type="button" value="글쓰기" id="btn-add" class="btn"
 	onclick="location.href='<%= request.getContextPath() %>/board/boardEnroll';"/>
 
-	<div id='pageBar'><%= request.getAttribute("pagebar") %></div>
+	<div id="pagebar">
+		<%= pagebar %>
+	</div>
 </section>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

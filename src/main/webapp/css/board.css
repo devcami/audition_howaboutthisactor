@@ -12,6 +12,7 @@
 
 /*게시판*/
 div#board-t{margin-top: 15px;}
+div#board-E{margin-top: 15px;}
 section#board-container{width:98%; margin:0 auto; text-align:center;  font-family: 'Hahmlet', serif;}
 table#tbl-board{width:100%; margin:0 auto; border-collapse:collapse; clear:both; }
 table#tbl-board th, table#tbl-board td {border-bottom:1px solid; padding: 5px 0; text-align:center;} 
@@ -35,6 +36,13 @@ table#tbl-board img {width: 16px;}
  padding: 6px 11px;
 }
 
+div input#btn-submit {
+ border:none;
+ float: right;
+ margin: 20px;
+ padding: 6px 11px;
+}
+
 .btn:hover {
   background-color: #fae3d9;
   border: 1px solid transparent;
@@ -50,21 +58,34 @@ div#pageBar a{margin-right: 5px;}
 
 /*게시글 작성/상세보기 테이블*/
 table#tbl-board-view {
-	width:500px; 
-	margin:0 auto; 
+	width:90%; 
+	margin:15px; 
 	border:1px solid black; 
 	border-collapse:collapse;  
 }
 table#tbl-board-view th {
-	width: 150px; 
+	width: 100px; 
 	border:1px solid; 
 	padding: 10px 0; 
 	text-align:center; 
 } 
 table#tbl-board-view td {
+	width: 85%; 
 	border:1px solid; 
 	padding: 5px 0 5px 15px; 
 	text-align:left;
+}
+
+table#tbl-board-view textarea{
+	border:1px solid gray;
+	width:99%; 
+}
+
+ input#enroll-title{
+	width:99%; 
+}
+ input#enroll-memberid{
+	width:99%; 
 }
 
 
