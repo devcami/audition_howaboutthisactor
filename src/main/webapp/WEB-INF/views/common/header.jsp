@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="member.model.dto.MemberRole"%>
+<%@page import="member.model.dto.Member"%>
 <%
 	String memberId = "hosi";
 	String memberRole = "P";
 	
 	// String memberId = "director";
 	// String memberRole = "D";
+	
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	String msg = (String) session.getAttribute("msg");	
 	
 	String url = "";
 	switch(memberRole){

@@ -19,6 +19,8 @@ import common.model.dto.Cast;
 import common.model.dto.Work;
 import common.model.dto.WorkAttachment;
 import member.model.dto.Production;
+import mypage.model.dto.ActorInfo;
+import mypage.model.dto.ActorInfoExt;
 
 public class AnnDao {
 	private Properties prop = new Properties();
@@ -563,6 +565,47 @@ public class AnnDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int insertAnnApply(Connection conn, Map<String, Object> param) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertAnnApply");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String) param.get("memberId"));
+			pstmt.setInt(2, (int) param.get("annNo"));
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 지원하기 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<ActorInfoExt> getApplyList(Connection conn, ActorInfo actorInfo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<ActorInfoExt> annApplyList = new ArrayList<>();
+		String sql = prop.getProperty("getApplyList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, actorInfo.getMemberId());
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				ActorInfoExt a = new ActorInfoExt(actorInfo, 0);
+				a.setApplyAnnNo(rset.getInt("ann_no"));
+				annApplyList.add(a);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고지원 - 로그인멤버의 지원내역 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return annApplyList;
 	}
 	
 }

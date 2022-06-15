@@ -26,6 +26,9 @@ section{
 .inner .form-select{
   display: inline;
 }
+#annFinderFrm{
+  margin: 20px 0;
+}
 #searchTitle{
   position: relative;
   width: 350px;
@@ -151,10 +154,12 @@ section{
   height: 60px;
   bottom: 30px;
   right: 20px;
+  cursor: pointer;
 }
 #btn-wish img{
   width: 100%;
   height: 100%;
+  transition: 0.1s ease-in-out;
 }
 #btn-apply:hover{
   background-color: #fae3d9;
@@ -262,4 +267,10 @@ section{
 .btn-primary:hover{
   background-color: rgb(179, 4, 4);
   border: rgb(179, 4, 4);
+}
+
+/* 간편지원 */
+#applyModal .modal-dialog {
+  max-width: 1200px;
+  margin: 1.75rem auto;
 }

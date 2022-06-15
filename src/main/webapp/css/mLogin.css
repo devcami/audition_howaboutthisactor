@@ -47,3 +47,7 @@ img#kakao {
 	 height: 50px;
 	 padding: 0 48px 0 35px;
 }
+
+span#enroll {
+	cursor: pointer;
+}
