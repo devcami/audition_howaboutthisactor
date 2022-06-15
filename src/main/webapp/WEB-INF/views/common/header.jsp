@@ -47,7 +47,6 @@ window.addEventListener('load', () => {
         <div class="nav-right-items">
             <div class="nav-item"><a href="<%= request.getContextPath() %>/actor/actorSearch">배우찾기</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/ann/annList">공고찾기</a></div>
-            <div class="nav-item"><a href="actorboard.html">게시판</a></div>
 
              <% 
              	String url = "";

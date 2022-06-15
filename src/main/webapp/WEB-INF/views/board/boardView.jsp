@@ -59,8 +59,8 @@
 		<tr>
 			<%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
 			<th colspan="2">
-				<input type="button" value="수정하기" onclick="updateBoard()">
-				<input type="button" value="삭제하기" onclick="deleteBoard()">
+				<input type="button" value="수정하기" id="btn" onclick="updateBoard()">
+				<input type="button" value="삭제하기" id="btn" onclick="deleteBoard()">
 			</th>
 		</tr>
 		<% } %>
