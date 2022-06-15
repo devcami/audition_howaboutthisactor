@@ -3,8 +3,8 @@
 <%@page import="member.model.dto.MemberRole"%>
 <%@page import="member.model.dto.Member"%>
 <%
-	String memberId = "hosi";
-	String memberRole = "P";
+	//String memberId = "admin";
+	//String memberRole = "A";
 	
 	// String memberId = "director";
 	// String memberRole = "D";
@@ -15,19 +15,6 @@
 		session.removeAttribute("msg");
 	
 	
-	String url = "";
-	switch(memberRole){
-	case("A"):		
-		break;
-	case("D"):
-		url = "/mypage/myAnn?memberId=" + memberId + "&memberRole=" + memberRole;
-		break;
-	case("P"):
-		url = "/mypage/portfolio?memberId=" + memberId + "&memberRole=" + memberRole;
-		break;
-	}
-	
-
 %>
 <!DOCTYPE html>
 <html>
@@ -61,6 +48,36 @@ window.addEventListener('load', () => {
             <div class="nav-item"><a href="<%= request.getContextPath() %>/actor/actorSearch">배우찾기</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/ann/annList">공고찾기</a></div>
             <div class="nav-item"><a href="actorboard.html">게시판</a></div>
+
+             <% 
+             	if(loginMember != null) {
+             		
+             	   MemberRole memberRole = loginMember.getMemberRole();
+             	   
+             	   String url = "";
+             	   switch(memberRole.toString()){
+             	   case("A"):   
+             	      url = "/mypage/memberList";
+             	      break;
+             	   case("D"):
+             	      url = "/mypage/myAnn";
+             	      break;
+             	   case("P"):
+             	      url = "/mypage/portfolio";
+             	      break;
+             	   }
+
+             %>
+             <div class="nav-item"><a href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>  
+             <% 		
+             	}
+             %>        
+                     
+                     
+                     
+            <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
+            <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>
+
             <div class="nav-item"><a href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>
             <div class="nav-item login"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
             <div class="nav-item login"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>

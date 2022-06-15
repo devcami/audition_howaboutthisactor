@@ -1,4 +1,4 @@
-package wishlist.controller;
+package mypage.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -10,35 +10,33 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import ann.model.dto.Ann;
+import board.model.dto.Board;
 import common.HelloMvcUtils;
-import member.model.dto.Member;
-import wishlist.model.service.WishListService;
+import mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class MyWishServlet
+ * Servlet implementation class MyboardServlet
  */
-@WebServlet("/mypage/Pmywish")
-public class PwishListServlet extends HttpServlet {
+@WebServlet("/mypage/myboardd")
+public class MyboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private WishListService wishListService = new WishListService();
-	
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-//		String memberId = request.getParameter("memberId");
-//		System.out.println("PwishListServlet@memberId = " + memberId);
-		HttpSession session = request.getSession();
-		Member member = (Member) session.getAttribute("loginMember");
-		String memberId = member.getMemberId();
-		
-		try {
-			int numPerPage = wishListService.WISH_NUM_PER_PAGE; // 12
-			int totalContent = wishListService.getTotalContent(memberId);
+	private MypageService mypageService = new MypageService();
 
-			System.out.println("PwishListServlet@totalContent = " + totalContent);
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			
+			String memberId = request.getParameter("memberId");
+			System.out.println("MyboardServlet@memberId + " + memberId);
+			
+
+			int numPerPage = mypageService.BOARD_NUM_PER_PAGE; // 12
+			int totalContent = mypageService.getTotalMyBoard(memberId);
+
+			System.out.println("MyBoardServlet@totalContent = " + totalContent);
 			int cPage = 1; 
 			
 			try {
@@ -54,18 +52,18 @@ public class PwishListServlet extends HttpServlet {
 			param.put("end", end);
 			
 			String sortType = request.getParameter("sortType");
-			List<Ann> list = null;
+			List<Board> list = null;
 			
 			if("end_date".equals(sortType)) {
-				list = wishListService.annEndDateSort(memberId, param);
+				list = mypageService.myBoardEndDateSort(memberId, param);
 			} else {
-				list = wishListService.findAll(memberId, param);
+				list = mypageService.findMyAllBoard(memberId, param);
 			}
 			
-//			System.out.println("PwishListServlet@list 길이 = " + list.size());
-//			System.out.println("PwishListServlet@list.get(0) = " + list.get(0));
-//			System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
-//			System.out.println("PwishListServlet@list.get(2)" + list.get(2));
+//				System.out.println("MyBoardServlet@list 길이 = " + list.size());
+//				System.out.println("MyBoardServlet@list.get(0) = " + list.get(0));
+//				System.out.println("MyBoardServlet@list.get(1) = " + list.get(1));
+//				System.out.println("MyBoardServlet@list.get(2)" + list.get(2));
 
 			
 			String url = request.getRequestURI(); // /app/mypage/Pmywish
@@ -73,20 +71,20 @@ public class PwishListServlet extends HttpServlet {
 		
 			
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-			System.out.println("pagebaor =" + pagebar);
+			System.out.println("pagebar =" + pagebar);
 			
 			request.setAttribute("sortType", sortType);
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
 			
-			request.getRequestDispatcher("/WEB-INF/views/mypage/Pwishlist.jsp")
-				.forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/mypage/myboard.jsp")
+			.forward(request, response);
+
 				
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 	}
-
 
 }

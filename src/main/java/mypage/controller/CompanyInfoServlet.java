@@ -8,25 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class CkpwServlet
+ * Servlet implementation class CompanyInfoServlet
  */
-@WebServlet("/mypage/ckpwUpdate")
-public class CkpwUpdateServlet extends HttpServlet {
+@WebServlet("/mypage/companyInfo")
+public class CompanyInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			request.getRequestDispatcher("/WEB-INF/views/mypage/ckpw_update.jsp")
-				.forward(request, response);
-				
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+	
+		String memberId = request.getParameter("memberId");
+		
+		
+		
+//		request.setAttribute("member", member);
+		request.getRequestDispatcher("/WEB-INF/views/mypage/companyInfo.jsp")
+		.forward(request, response);
 	}
 
 	/**

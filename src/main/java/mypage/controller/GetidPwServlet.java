@@ -1,6 +1,7 @@
 package mypage.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,38 +10,39 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import common.HelloMvcUtils;
 import mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class DeleteAnnServlet
+ * Servlet implementation class GetidPwServlet
  */
-@WebServlet("/mypage/deleteAnn")
-public class DeleteAnnServlet extends HttpServlet {
+@WebServlet("/mypage/getIdPw")
+public class GetidPwServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String[] deleteArr = request.getParameterValues("deleteAnn[]");
 			String memberId = request.getParameter("memberId");
+			String input_pw = HelloMvcUtils.encrypt(request.getParameter("password"), memberId);
 			
-			// 출력
-//			System.out.println(memberId);
-//			for(String no : deleteArr) {
-//				System.out.println("삭제할 no = " + no);
-//			}
+			String pw = mypageService.getPw(memberId);
+			String result = "";
 			
-			int result = mypageService.deleteAnns(deleteArr);
+
+			if(input_pw.equals(pw)) {
+				result = "success";
+			}
+			else {
+				result = "fail";
+			}
 			
 			response.setContentType("application/json; charset=utf-8");
-			new Gson().toJson(deleteArr, response.getWriter());
+			new Gson().toJson(result, response.getWriter());
 			
-			
-			
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 	}
 
 }
