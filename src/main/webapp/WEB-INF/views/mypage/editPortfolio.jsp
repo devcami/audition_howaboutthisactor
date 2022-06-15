@@ -23,7 +23,7 @@
 	
 	String img_src = (String) request.getAttribute("img_src");
 	
-	System.out.println("editPortfolio.jsp@memberId = " + memberId);
+	System.out.println("editPortfolio.jsp@memberId = " + loginMember.getMemberId());
 	System.out.println("editPortfolio.jsp@portType = " + portType);
 	System.out.println("editPortfolio.jsp@attachNo = " + attachNo);
 
@@ -36,11 +36,11 @@
   <div id="Pmypage-submenu" class="submenu">
     <ul id="sub">
       <li><a href="#" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/myboard" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/myboard?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/Pmywish" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/applylist" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원한 공고</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/ckpwUpdate" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/ckpwDelete" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=del&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
     </ul>
   </div>
   <div id="portfolio-container">
@@ -54,7 +54,7 @@
     	method="post"
     	action="<%=request.getContextPath()%>/mypage/viewPortfolio"
     	enctype="multipart/form-data">
-    	<input type="hidden" name="memberId" value="<%= memberId %>" />
+    	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
     	<input type="hidden" name="portType" value="<%= portType %>" />
     	<input type="hidden" name="attachNo" value="<%= attachNo %>" />
       <table id="portTable">
@@ -156,7 +156,7 @@
     </form>
   </div>
   <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/showpopup">
-  	<input type="hidden" name="memberId" value="<%= memberId %>"/>
+  	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>"/>
   </form>
   
   <script>
@@ -167,7 +167,7 @@
   			url: "<%= request.getContextPath() %>/mypage/viewWork",
   			dataType: "json",
   			data : {
-  				"memberId": "<%= memberId %>"
+  				"memberId": "<%= loginMember.getMemberId() %>"
   			},
   			success(works){
   				
@@ -236,11 +236,6 @@
   		}
   	}	
   
-
-  	
-  	console.log("<%= memberId %>");  // actor2 
-  	console.log("<%= portType %>");  // auto
-  
 	const enrollWork = () => {
   		const title = "enrollWorkPopup";
   		const spec = "width=700px, height=600px";
@@ -274,7 +269,7 @@
   	  			method : "POST",
   	  			dataType: "json",
   	  			data : {
-  	  				"memberId": "<%= memberId %>",
+  	  				"memberId": "<%= loginMember.getMemberId() %>",
   	  				"deleteWork" : noArr 
   	  			},
   	  			success(deleteArr){

@@ -10,7 +10,7 @@
 	String sortType = request.getParameter("sortType");
 	
 %>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/myann.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/companyInfo.css" />
 
 <div class="top-logo">
   <span>MYPAGE</span>
@@ -18,69 +18,58 @@
 <section id="container">
   <div id="Pmypage-submenu" class="submenu">
     <ul>
-      <li><a href="#" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 관리</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/myAnn" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 조회</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/myboardd?memberId=<%= loginMember.getMemberId() %>&memberRole=<%= loginMember.getMemberRole() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/Dmywish?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/portfolio?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원자 관리</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/companyInfo?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원자 관리</a></li>
+      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=del&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
     </ul>
   </div>
-    <div id="mywish">
-    <div>
-      <div id="wishlist-head">
-        <div id="left-head">
-        	<h2>내 공고 조회</h2>
-        </div>
-        <div id="right-head">
-        	<button type="button" class="btn" id="enroll-btn" onclick="location.href='<%= request.getContextPath() %>/ann/annEnroll';">공고등록</button>
-   			<% if(list != null && !list.isEmpty()){ %>
-            	<button type="button" class="btn" id="choice-btn" onclick="selectMode();">선택</button>
-            	<button type="button" class="btn" id="cancel-btn" style="display:none;" onclick="viewMode();">취소</button>
-            <% } %>
-            <div id="sortType-wrap">
-          		<select id="sortType" onchange="sortTypeChange(this);">
-            		<option value="reg_date" id="reg_date" <%="reg_date".equals(sortType) ? "selected" : ""%>>최신순</option>
-            		<option value="end_date" id="end_date" <%="end_date".equals(sortType) ? "selected" : ""%>>마감순</option>
-          		</select>
-        	</div>
-        </div>
-      </div>
-      <span>공고를 선택해주세요.</span>
-      <div id="updown-container">
-      <% if(list != null && !list.isEmpty()){
-    	  
-		for(int i = 0; i < list.size(); i++){ 
-		%>
-        <div class="col" id="col<%= list.get(i).getAnnNo() %>">
-          <div class="card"> <!--  onclick="annView(this);" -->
-            <div class="card-body">
-              <h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
-              <p class="card-text"><%= list.get(i).getMemberId() %></p>
-              <input type="hidden" name="annNo" id="annNo" value="<%= list.get(i).getAnnNo() %>">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
-              <small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
-            </div>
-          </div>
-        </div>
-        		<% 	} %>
-		<% } else { %>
-		<% } %>
-      </div>
-      <div id="options" style="display: none;">
-        <button type="button" class="btn small-btn" onclick="delAnn();">삭제</button>
-       	<button type="button" class="btn small-btn" onclick="editAnn();">수정</button>
-       	<button type="button" class="btn small-btn">마감처리</button>
-      </div>
-    </div>
-	<div id="pagebar">
-		<%= pagebar %>
-	</div>
 
-  </div>
+     <div id="company-info">
+      <div id="company_head">
+        <h2>회사 정보</h2>
+        <input type="button" id="update-btn" value="수정하기" 
+                onclick="location.href='/app/ann/annEnroll';">
+      </div>
+      <form name="updateInfoFrm" method="post">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">회원 아이디</label>
+          <input type="text" readonly class="form-control-plaintext inputs" name="memberId" id="memberId" value="hosi" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">회사명</label>
+          <input type="text" readonly class="form-control-plaintext inputs" name="companyName" id="companyName" value="숲 엔터테인먼트" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">담당자 번호</label>
+          <input type="text" readonly class="form-control-plaintext inputs" name="phone" id="phone" value="010-1234-1234" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">담당자 이메일</label>
+          <input type="text" readonly class="form-control-plaintext inputs" name="email" id="email" value="director@naver.com" >
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="phone_open" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            전화번호 공개
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="email_open" id="flexCheckChecked">
+          <label class="form-check-label" for="flexCheckChecked">
+            이메일 공개
+          </label>
+        </div>
+        <div class="btn-div">
+          <button id="savebtn">저장</button>
+        </div>
+      </form>
+    </div> 
+  
+
 
   <script>
   
