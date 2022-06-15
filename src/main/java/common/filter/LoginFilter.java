@@ -19,10 +19,10 @@ import member.model.dto.Member;
  * Servlet Filter implementation class LoginFilter
  */
 @WebFilter({ 
-//	"/ann/annEnroll",
-//	"/ann/annList",
-//	"/ann/annUpdate",
-//	"/ann/annView",
+	"/ann/annEnroll",
+	"/ann/annList",
+	"/ann/annUpdate",
+	"/ann/annView",
 	"/member/memberView", 
 	"/mypage/addWork",
 	"/mypage/ckpw_update", 
@@ -38,10 +38,10 @@ import member.model.dto.Member;
 	"/mypage/enrollPortfolio",
 	"/mypage/editPortfolio",
 	"/mypage/infoupdate",
-//	"/board/boardEnroll",
-//	"/board/boardUpdate",
-//	"/board/boardDelete",
-//	"/board/boardList"
+	"/board/boardEnroll",
+	"/board/boardUpdate",
+	"/board/boardDelete",
+	"/board/boardList"
 	
 })
 public class LoginFilter implements Filter {

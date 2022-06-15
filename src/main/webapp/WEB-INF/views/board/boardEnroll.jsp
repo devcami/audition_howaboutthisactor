@@ -1,5 +1,3 @@
-<%@page import="member.model.dto.MemberRole"%>
-<%@page import="member.model.dto.Member"%> 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>   
@@ -9,7 +7,7 @@
 /**
 * boardEnrollFrm 유효성 검사
 */
-/*
+
 window.onload = () => {	
 	document.boardEnrollFrm.onsubmit = (e) => {
 		const frm = e.target;
@@ -30,7 +28,7 @@ window.onload = () => {
 		}
 	}
 }
-*/
+
 
 </script>
 <div class="top-logo">
@@ -52,8 +50,7 @@ window.onload = () => {
 	<tr>
 		<th>작성자</th>
 		<td>
-			<input type="text" name="memberId" id="enroll-memberid" value="" readonly/>
-			<!-- 퍼센트붙이기 loginMember.getMemberId() 퍼센트 뾰족괄호 -->
+			<input type="text" name="memberId" value="<%= loginMember.getMemberId() %>" readonly/>
 		</td>
 	</tr>
 	<tr>

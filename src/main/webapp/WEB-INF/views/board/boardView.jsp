@@ -7,12 +7,14 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	BoardExt board = (BoardExt) request.getAttribute("board");
+	
 	List<BoardComment> comments = board.getBoardComments();
 	
-%>
-<!-- boolean canEdit = loginMember != null 
+	boolean canEdit = loginMember != null 
 			&& (loginMember.getMemberId().equals(board.getMemberId()) 
-					|| loginMember.getMemberRole() == MemberRole.A);  로긴멤버되면 위에 삽입 할것-->
+					|| loginMember.getMemberRole() == MemberRole.A);
+	
+%>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <section id="board-container">
 	<h2>게시판</h2>
@@ -54,7 +56,7 @@
 			<th>내 용</th>
 			<td><%= board.getContent() %></td>
 		</tr>
-		<!-- if(canEdit){} -->
+		<% if(canEdit){ %>
 		<tr>
 			<%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
 			<th colspan="2">
@@ -62,7 +64,7 @@
 				<input type="button" value="삭제하기" onclick="deleteBoard()">
 			</th>
 		</tr>
-		
+		<% } %>
 	</table>
 	
 	<hr style="margin-top:30px;" />	
@@ -72,8 +74,7 @@
             <form
 				action="<%=request.getContextPath()%>/board/boardCommentEnroll" method="post" name="boardCommentFrm">
                 <input type="hidden" name="boardNo" value="<%= board.getNo() %>" />
-                <input type="hidden" name="memberId" value="" />
-                <!-- loginMember != null ? loginMember.getMemberId() : ""  로긴멤버되면 삽입 -->
+                <input type="hidden" name="memberId" value="<%= loginMember != null ? loginMember.getMemberId() : "" %>" />
                 <input type="hidden" name="commentLevel" value="1" />
                 <input type="hidden" name="commentRef" value="0" />    
 				<textarea name="content" cols="60" rows="3"></textarea>
@@ -85,12 +86,14 @@
 		<table id="tbl-comment">
 			<tbody>
 			<% 
-				for (BoardComment bc : comments){ 							
+				for (BoardComment bc : comments){ 
+					
+					boolean canDelete = loginMember != null 
+							&& (loginMember.getMemberId().equals(bc.getMemberId()) 
+									|| loginMember.getMemberRole() == MemberRole.A);
+							
 					if(bc.getCommentLevel() == 1){
 			%>
-			<!-- boolean canDelete = loginMember != null 
-							&& (loginMember.getMemberId().equals(bc.getMemberId()) 
-									|| loginMember.getMemberRole() == MemberRole.A); for 밑에 삽입하기 -->
 				<tr class="level1">
 					<td>
 						<sub class="comment-writer"><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %></sub>
@@ -100,12 +103,12 @@
 					</td>
 					<td>
 						<button class="btn-reply" value="<%= bc.getNo() %>">답글</button>
-						<!--   if(canDelete){} -->
+						<% if(canDelete){ %>
 							<button class="btn-delete" value="<%= bc.getNo() %>">삭제</button>
-					
+						<% } %>
 					</td>
 				</tr>
-			<!--  } else {-->
+			<% 		} else { %>
 				<tr class="level2">
 					<td>
 						<sub class="comment-writer"><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %></sub>
@@ -114,8 +117,9 @@
 						<%= bc.getContent() %>
 					</td>
 					<td>
-					<!-- if(canDelete){} -->
+						<% if(canDelete){ %>
 							<button class="btn-delete" value="<%= bc.getNo() %>">삭제</button>
+						<% } %>
 					</td>
 				</tr>
 			<% 
@@ -150,7 +154,10 @@ document.querySelectorAll(".btn-delete").forEach((button) => {
 // tbody > tr > td > .btn-reply
 document.querySelectorAll(".btn-reply").forEach((button) => {
 	button.onclick = (e) => {
-		//if(%= loginMember == null %){		loginAlert();		return;	}
+		if(<%= loginMember == null %>){
+			loginAlert();
+			return;
+		}
 					
 		const {value : commentRef} = e.target;
 		console.log(commentRef);
@@ -174,7 +181,7 @@ document.querySelectorAll(".btn-reply").forEach((button) => {
 		const inputMemberId = document.createElement("input");
 		inputMemberId.type = "hidden";
 		inputMemberId.name = "memberId";
-		//inputMemberId.value = "%= loginMember != null ? loginMember.getMemberId() : "" %";
+		inputMemberId.value = "<%= loginMember != null ? loginMember.getMemberId() : "" %>";
 		const inputCommentLevel = document.createElement("input");
 		inputCommentLevel.type = "hidden";
 		inputCommentLevel.name = "commentLevel";
@@ -234,10 +241,15 @@ document.querySelectorAll(".btn-reply").forEach((button) => {
 
 
 document.querySelector("textarea[name=content]").onfocus = (e) => {
-	//if(%= loginMember == null %> 		loginAlert(); };
+	if(<%= loginMember == null %>)
+		loginAlert();
+};
 
 const commentSubmitHandler = (e) => {
-	//if(%= loginMember == null %){ 		loginAlert(); 		return false; 		 	}
+	if(<%= loginMember == null %>){
+		loginAlert();
+		return false; 		
+	}
 	
 	const contentVal = e.target.content.value.trim();
 	if(!/^(.|\n)+$/.test(contentVal)){
@@ -257,7 +269,7 @@ const loginAlert = () => {
 
 </script>
 
-<!--   if(canEdit){ }-->
+<% if(canEdit){ %>
 <form action="<%= request.getContextPath() %>/board/boardDelete" name="boardDeleteFrm" method="POST">
 	<input type="hidden" name="no" value="<%= board.getNo() %>" />
 </form>
@@ -276,5 +288,5 @@ const updateBoard = () => {
 	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>";
 }
 </script>
-
+<% } %>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
