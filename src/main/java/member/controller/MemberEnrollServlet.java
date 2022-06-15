@@ -46,7 +46,6 @@ public class MemberEnrollServlet extends HttpServlet {
 		String gender = request.getParameter("gender");
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
-		String address = request.getParameter("address");
 		
 		String _birthday = request.getParameter("birthday");
 		System.out.println(_birthday);
@@ -59,16 +58,16 @@ public class MemberEnrollServlet extends HttpServlet {
 		if(_genre != null)
 			genre = String.join(",", _genre);
 		
-		// 추후 확인 요망(회원유형)
+/*		// 추후 확인 요망(회원유형)
 		String[] _type = request.getParameterValues("type");
 		String type = null;
 		if(_type !=null)
 			type = String.join(",", _type);
-		
+*/		
 	
  		Member member = new Member(
 				memberId, password, memberName, email, MemberRole.P, 
-				phone, gender, birthday, null, address, genre
+				phone, gender, birthday, null, genre
 			);
  		
 		System.out.println("member@memberEnroll = " + member);
