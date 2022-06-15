@@ -10,6 +10,7 @@ import ann.model.dto.Ann;
 import board.model.dto.Board;
 import board.model.dto.Report;
 import member.model.dto.Member;
+import member.model.dto.Production;
 import mypage.model.dao.MypageDao;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
@@ -371,6 +372,13 @@ public class MypageService {
 		List<PortAttachment> list = mypageDao.findAllAttachmentByMemberId(conn, memberId);
 		close(conn);
 		return list;
+	}
+
+	public Production getProductionInfo(String memberId) {
+		Connection conn = getConnection();
+		Production production = mypageDao.getProductionInfo(conn, memberId);
+		close(conn);
+		return production;
 	}
 	
 }

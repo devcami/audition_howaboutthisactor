@@ -1,13 +1,15 @@
+<%@page import="member.model.dto.Production"%>
 <%@page import="ann.model.dto.Ann"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-   
-	List<Ann> list = (List<Ann>) request.getAttribute("list");
-	String pagebar = (String) request.getAttribute("pagebar");
-	String sortType = request.getParameter("sortType");
+
+	Production production = (Production) request.getAttribute("production");
+
+	System.out.println(production.getIsPhoneOpen());
+	System.out.println(production.getIsEmailOpen());
 	
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/companyInfo.css" />
@@ -32,109 +34,68 @@
       <div id="company_head">
         <h2>회사 정보</h2>
         <input type="button" id="update-btn" value="수정하기" 
-                onclick="location.href='/app/ann/annEnroll';">
+                onclick="edit();">
       </div>
       <form name="updateInfoFrm" method="post">
         <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">회원 아이디</label>
-          <input type="text" readonly class="form-control-plaintext inputs" name="memberId" id="memberId" value="hosi" >
+          <label for="exampleFormControlInput1" class="form-label">아이디</label>
+          <input 
+          	type="text" readonly class="form-control-plaintext inputs" 
+          	name="memberId" id="memberId" value="<%= production.getMemberId() %>" >
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">회사명</label>
-          <input type="text" readonly class="form-control-plaintext inputs" name="companyName" id="companyName" value="숲 엔터테인먼트" >
+          <input 
+          	type="text" readonly class="form-control-plaintext inputs" 
+          	name="companyName" id="companyName" value="<%= production.getProductionName() %>" >
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">담당자명</label>
+          <input 
+          	type="text" readonly class="form-control-plaintext inputs" 
+          	name="memberId" id="memberId" value="<%= production.getCasterName() %>" >
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">담당자 번호</label>
-          <input type="text" readonly class="form-control-plaintext inputs" name="phone" id="phone" value="010-1234-1234" >
+          <input 
+          	type="text" readonly class="form-control-plaintext inputs" 
+          	name="phone" id="phone" value="<%= production.getCasterPhone() %>" >
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">담당자 이메일</label>
-          <input type="text" readonly class="form-control-plaintext inputs" name="email" id="email" value="director@naver.com" >
+          <input 
+          	type="text" readonly class="form-control-plaintext inputs"s 
+          	name="email" id="email" value="<%= production.getCasterEmail() %>" >
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="phone_open" id="flexCheckDefault">
+          <input 
+          	class="form-check-input" type="checkbox" value="phone_open" id="flexCheckDefault"
+          	<%="Y".equals(production.getIsPhoneOpen()) ? "checked" : ""%> disabled>
           <label class="form-check-label" for="flexCheckDefault">
             전화번호 공개
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="email_open" id="flexCheckChecked">
+          <input 
+          	class="form-check-input" type="checkbox" value="email_open" id="flexCheckChecked"
+          	<%="Y".equals(production.getIsEmailOpen()) ? "checked" : ""%> disabled>
           <label class="form-check-label" for="flexCheckChecked">
             이메일 공개
           </label>
         </div>
         <div class="btn-div">
-          <button id="savebtn">저장</button>
+          <button id="cancelbtn" class="btn" style="display: none;">취소</button>
+          <button id="savebtn" class="btn" style="display: none;">저장</button>
         </div>
       </form>
     </div> 
-  
-
-
+<!-- 깃 풀리퀘용 -->
   <script>
-  
-  sortType.addEventListener('change', (e) => {
-      document.querySelector("#updown-container").innerHTML = "";
-      const {value} = e.target;
-      // 공고 마감순 선택 시 페이지 요청
-      location.href=`/app/mypage/myAnnEndDate?sortType=\${value}`;
-   });
-
-   const annView = (ann) => {
-      //const annNo = ann.firstElementChild.lastElementChild.value;
-      const annNo = ann.currentTarget.firstElementChild.children.annNo.value;
-      console.log(annNo);
-   	  location.href=`/app/ann/annView?annNo=\${annNo}`;
-   };
-   
-   $(".card").click(annView);
-   
-   let selectedAnn = [];
-   const annSelect = (ann) => {
-	   
-	   if($(ann.currentTarget).hasClass("selected")){
-		   $(ann.currentTarget).removeClass("selected");
-	   } else {
-		   $(ann.currentTarget).addClass("selected");
-	   }
-   } 
-   
-   const selectMode = () => {
-	   console.log("selectMode 실행");
-	   //$(".card").removeEventListener('click', annView);
-	   //sortType.removeEventListener('change', sortTypeChange);
-	   $(".card").off("click");
-	   $('#choice-btn').css('display', 'none');
-	   $('#cancel-btn').css('display', '');
-	   $('#options').css('display', '');
-	   
-	   $(".card").click(annSelect);
-	   
-   };
-   
-   const viewMode = () => {
-	   $(".card").off("click");
-	   $(".card").click(annView);
-	   $('#choice-btn').css('display', '');
-	   $('#cancel-btn').css('display', 'none');
-	   $('#options').css('display', 'none');
-	   
-	   const annArr = Array.from(document.querySelectorAll('.card'));
-	   ckremove(annArr);
-	   
-   }
-   
-   // ann 삭제하기
-   const delAnn = () => {
-	   const annArr = Array.from(document.querySelectorAll('.card'));
-	   
-	   const selectedArr = ckselected(annArr);
-	   
-	   console.log(selectedArr);
-	   const msg = "총 " + selectedArr.length + "개의 파일이 선택되었습니다. 삭제하시겠습니까?"
-	   const check = confirm(msg);
-	   
-	   if(check){
+  	const edit = () => {
+  		$('.btn').css('display', '');
+  		$('input').prop.('readonly', false);
+  		
+  		
 		   $.ajax({
 			   url : "<%= request.getContextPath() %>/mypage/deleteAnn",
 			   method : "POST",
@@ -157,51 +118,9 @@
 			   },
 			   error : console.log
 		   });
-	   } else {
-		   ckremove(annArr);
-	   }
-   }
-   
-   // ann 수정하기
-   const editAnn = () => {
-	   const annArr = Array.from(document.querySelectorAll('.card'));
-	   // console.log(annArr);
-	   const selectedArr = ckselected(annArr);
+  		
+  	}
 
-	   
-	   if(selectedArr.length != 1){
-		   alert('수정하시려면 하나의 공고만 선택해주세요.');
-	   } else {
-		   console.log(selectedArr[0]);
-		   location.href=`/app/ann/annUpdate?annNo=\${selectedArr[0]}`;
-	   }
-	   
-   }
-   
-   const ckselected = (annArr) => {
-	   let annNo = 0;
-	   let selectedArr = [];
-	   let i = 0;
-	   annArr.forEach((ann) => {
-		   annNo = ann.firstElementChild.lastElementChild.value;
-		   
-		   if(ann.classList.contains("selected")){
-			   selectedArr[i++] = annNo;
-		   }
-		   // element.classList.contains(class);
-		   //if($(ann.currentTarget).hasClass("selected"))
-	   });
-	   
-	   return selectedArr;
-   }
-   
-   const ckremove = (annArr) => {
-	   annArr.forEach((ann) => {
-		   if(ann.classList.contains("selected")){
-			   ann.classList.remove("selected");
-		   }
-	   });
-   }
    
     const mousein = (menu) => {
       now_menu.classList.remove('current');
