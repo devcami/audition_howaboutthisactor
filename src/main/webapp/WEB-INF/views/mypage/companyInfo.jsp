@@ -89,8 +89,6 @@
         </div>
       </form>
     </div> 
-  
-
 
   <script>
   	const edit = () => {
