@@ -283,14 +283,14 @@ public class WishListDao {
 		return result;
 	}
 
-	public int delWishlistAnn(Connection conn, int annNo) {
+	public int delWishlistAnn(Connection conn, WishListAnn wishListAnn) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("delWishlistAnn");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, annNo);
+			pstmt.setInt(1, wishListAnn.getAnnNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new AnnException("> 위시리스트 - 공고 찜목록 삭제 오류", e);

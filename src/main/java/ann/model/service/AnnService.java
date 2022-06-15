@@ -6,6 +6,7 @@ import static common.JdbcTemplate.getConnection;
 import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,10 +16,14 @@ import common.model.dto.Cast;
 import common.model.dto.Work;
 import common.model.dto.WorkAttachment;
 import member.model.dto.Production;
+import mypage.model.dao.MypageDao;
+import mypage.model.dto.ActorInfo;
+import mypage.model.dto.ActorInfoExt;
 
 public class AnnService {
 	public static final int NUM_PER_PAGE = 12;
 	private AnnDao annDao = new AnnDao();
+	private MypageDao mypageDao = new MypageDao();
 	
 	public int getTotalContent() {
 		Connection conn = getConnection();
@@ -204,6 +209,29 @@ public class AnnService {
 			close(conn);
 		}
 		return result;
+	}
+
+	public int insertAnnApply(Map<String, Object> param) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = annDao.insertAnnApply(conn, param);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public List<ActorInfoExt> getApplyList(String memberId) {
+		Connection conn = getConnection();
+		ActorInfo actorInfo = mypageDao.findActorInfo(conn, memberId);
+		List<ActorInfoExt> annApplyList = annDao.getApplyList(conn, actorInfo);
+		close(conn);
+		return annApplyList;
 	}
 
 }
