@@ -168,3 +168,11 @@ div#search-memberType {
     color: #bbded6;
     transition: all 0.2s ease-in-out;
 }
+#list-content a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    font-weight: 600;
+    border-bottom: 2px solid black;
+    
+}

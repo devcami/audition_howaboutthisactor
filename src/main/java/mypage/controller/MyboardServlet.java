@@ -11,19 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ann.model.dto.Ann;
 import board.model.dto.Board;
 import common.HelloMvcUtils;
 import mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class MyBoardServlet
+ * Servlet implementation class MyboardServlet
  */
-@WebServlet("/mypage/myboard")
-public class MyBoardServlet extends HttpServlet {
+@WebServlet("/mypage/myboardd")
+public class MyboardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
-	
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			

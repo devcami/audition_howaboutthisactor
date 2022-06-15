@@ -43,7 +43,7 @@
   <div id="Pmypage-submenu" class="submenu">
     <ul id="sub">
       <li><a href="#" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/myboard" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/myboardd" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/Pmywish?memberId=<%= memberId %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/applylist" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원한 공고</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>

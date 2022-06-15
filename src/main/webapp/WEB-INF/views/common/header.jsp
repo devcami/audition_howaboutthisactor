@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String memberId = "director";
-	String memberRole = "D";
+	String memberId = "admin";
+	String memberRole = "A";
 	
 	// String memberId = "director";
 	// String memberRole = "D";
