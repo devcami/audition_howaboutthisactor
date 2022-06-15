@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/findId.css" />
-
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/findId.css" />
 <meta charset="UTF-8">
 <title></title>
 </head>

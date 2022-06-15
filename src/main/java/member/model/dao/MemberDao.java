@@ -82,6 +82,27 @@ public class MemberDao {
 		return Id;
 	}
 
+	public String findPw(String memberId, String memberName) {
+		String password = null;
+		
+		try {
+			String sql = "findPw";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberName);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				password = rs.getString("member.password");
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return password;
+	}
+	
 	private Member handleMemberResultSet(ResultSet rset) throws SQLException {
 		Member member = new Member();
 		member.setMemberId(rset.getString("member_id"));
