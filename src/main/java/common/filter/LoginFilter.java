@@ -22,7 +22,7 @@ import member.model.dto.Member;
 	"/ann/annEnroll",
 	"/ann/annList",
 	"/ann/annUpdate",
-	"ann/annView",
+	"/ann/annView",
 	"/member/memberView", 
 	"/mypage/addWork",
 	"/mypage/ckpw_update", 

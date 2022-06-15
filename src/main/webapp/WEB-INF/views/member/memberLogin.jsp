@@ -95,11 +95,13 @@ window.onload = () => {
 	<img id="kakao" src="${pageContext.request.contextPath}/images/kakaoLogin.png">
 	</div><br>
 	
-	<div id="enroll" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">회원가입</div>
-	<div id="id_find">ID 찾기</div>
-	<div id="ps_find">비밀번호 찾기</div>
-	
-			
+	<%-- span태그 css이용해서 nbsp대신 띄워주자 ㅠㅠ --%>
+	<span id="enroll" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">회원가입</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span id="id_find">ID 찾기</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span id="ps_find">비밀번호 찾기</span>
+				
 	<% } else { %>
 	<%-- 로그인 성공시 --%>
 		<table id="login">
@@ -109,8 +111,9 @@ window.onload = () => {
 				</tr>
 				<tr>
 				<td>
-					<input type="button" value="내정보보기" onclick="location.href='<%= request.getContextPath() %>/member/memberView';"/>
-					<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>							
+				<%--로그아웃 으로 바뀌어야함... 
+					<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>	
+				--%>						
 				</td>
 				</tr>
 			</tbody>

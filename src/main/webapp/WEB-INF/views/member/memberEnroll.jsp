@@ -62,12 +62,6 @@
 				</td>
 			</tr>
 			<tr>
-				<th>주소</th>
-				<td>	
-					<input type="text" placeholder="" name="address" id="address"><br>
-				</td>
-			</tr>
-			<tr>
 				<th>성별 </th>
 				<td>
 					<input type="radio" name="gender" id="gender0" value="M">
@@ -79,9 +73,9 @@
 			<tr>
 				<th>회원 유형 </th>
 				<td>
-					<input type="radio" name="type" id="type0" value="P">
+					<input type="radio" name="memberRole" id="memberRole0" value="P">
 					<label for="type0">배우 및 아티스트</label>
-					<input type="radio" name="type" id="type1" value="D">
+					<input type="radio" name="memberRole" id="memberRole1" value="D">
 					<label for="type1">제작자 및 캐스팅 담당자</label>
 				</td>
 			</tr>
@@ -135,7 +129,7 @@
           </div>
           <br>
 		<input type="submit" id="button1" value="이메일 인증하여 가입" >
-		<input type="reset" id="button2" value="취소">
+		<input type="reset" id="button2" value="다시입력">
 	</form>
 </section>
 <form name="checkIdDuplicateFrm" action="<%= request.getContextPath() %>/member/checkIdDuplicate">
