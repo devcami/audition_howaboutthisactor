@@ -606,6 +606,35 @@ public class MypageDao {
 		}
 		return result;
 	}
+
+	public List<PortAttachment> findAllAttachmentByMemberId(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<PortAttachment> list = new ArrayList<>();
+		String sql = prop.getProperty("findAllAttachmentByMemberId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				PortAttachment pa = new PortAttachment();
+				pa.setNo(rset.getInt("no"));
+				pa.setMemberId(memberId);
+				pa.setOriginalFilename(rset.getString("original_filename"));
+				pa.setRenamedFilename(rset.getString("renamed_filename"));
+				pa.setAttachType(rset.getString("attach_type"));
+				pa.setRegDate(rset.getDate("reg_date"));
+				list.add(pa);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 게시물찾기 - 게시물 전체조회(최신순) 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 	
 	
 	

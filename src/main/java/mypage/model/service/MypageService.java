@@ -273,6 +273,16 @@ public class MypageService {
 		
 		return result;
 	}
-	
 
+	
+	/**
+	 * 은민 부분
+	 */
+	public List<PortAttachment> findAllAttachmentByMemberId(String memberId) {
+		Connection conn = getConnection();
+		List<PortAttachment> list = mypageDao.findAllAttachmentByMemberId(conn, memberId);
+		close(conn);
+		return list;
+	}
+	
 }
