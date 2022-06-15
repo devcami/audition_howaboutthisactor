@@ -8,8 +8,9 @@
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <div class="top-logo">
-  <span>Community</span>
+ <img src="<%= request.getContextPath() %>/images/community.jpg" alt=게시판로고" />
 </div>
+<div id="board-t">
 <section id="board-container">
 
 
@@ -59,6 +60,10 @@
 %>
 		</tbody>
 	</table>
+	</div>
+	<input 
+	type="button" value="글쓰기" id="btn-add" class="btn"
+	onclick="location.href='<%= request.getContextPath() %>/board/boardEnroll';"/>
 
 	<div id='pageBar'><%= request.getAttribute("pagebar") %></div>
 </section>
