@@ -17,6 +17,7 @@ import ann.model.exception.AnnException;
 import board.model.dto.Board;
 import board.model.dto.Report;
 import member.model.dto.Member;
+import member.model.dto.Production;
 import member.model.exception.MemberException;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
@@ -848,6 +849,38 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return list;
+	}
+
+	public Production getProductionInfo(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Production production = new Production();
+		String sql = prop.getProperty("getProductionInfo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				production.setMemberId(rset.getString("member_id"));
+				production.setProductionName(rset.getString("production_name"));
+				production.setCasterName(rset.getString("caster_name"));
+				production.setCasterPhone(rset.getString("caster_phone"));
+				production.setCasterEmail(rset.getString("caster_email"));
+				production.setIsPhoneOpen(rset.getString("is_phone_open"));
+				production.setIsEmailOpen(rset.getString("is_email_open"));
+				
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 회사정보 불러오기 옲 ", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return production;
 	}
 	
 	

@@ -65,7 +65,7 @@
   margin: 40px 0;
 }
 
-  #savebtn {
+  .btn {
     margin: 0 auto;
     font-size: 20px;
     letter-spacing: 10px;
@@ -118,6 +118,7 @@ form {
   font-size: large;
   width: 50%;
   padding: 0.375rem 0.75rem;
+  outline: none;
 }
 .edit {
   width: 50%;
