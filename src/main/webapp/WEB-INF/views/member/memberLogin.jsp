@@ -134,16 +134,15 @@ function.btnClick() => {
 	<input type="hidden" name="memberId" />
 </form>
 <script>
-const checkIdDuplicate = () => {
+const findId = () => {
 	const title = "findIdPopup";
 	const spec = "width=300px, height=200px";
 	const popup = open("", title, spec);
 	
-	const frm = document.checkIdDuplicateFrm;
+	const frm = document.findIdFrm;
 	frm.target = title; // 해당팝업에서 폼을 제출!
-	frm.memberId.value = _memberId.value;
 	frm.submit();
 };
-</script>
+</script>	
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
