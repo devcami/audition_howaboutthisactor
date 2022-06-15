@@ -50,7 +50,7 @@ public class BoardDao {
 			}
 			
 		} catch (Exception e) {
-//			throw new BoardException("회원목록 조회 오류", e);
+			throw new BoardException("회원목록 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
