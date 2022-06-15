@@ -1,11 +1,66 @@
 <%-- 로그인 성공여부 팝업창 '로그인 되었습니다.' '로그인에 실패하였습니다.' --%>
 <%@page import="member.model.dto.Member"%>	
 <%@page import="member.model.dto.Production" %>
+<%@page import="member.model.dto.MemberRole"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mLogin.css" />
+<%
+	Member loginMember = (Member) session.getAttribute("loginMember");
+	// System.out.println("loginMember@header.jsp = " + loginMember); 테스트용
+	
+	String msg = (String) session.getAttribute("msg");
+	if(msg != null)
+		session.removeAttribute("msg");
+	
+	String saveId = null; // 아이디저장을 체크한 경우, memberId값이 담길 변수
+	Cookie[] cookies = request.getCookies();
+	if(cookies != null){
+		for(Cookie cookie : cookies){
+			// System.out.println("Cookie{" + cookie.getName() + "=" + cookie.getValue() + "}"); 테스트용
+			if("saveId".equals(cookie.getName())){
+				saveId = cookie.getValue();
+			}
+		}
+	}
+	else {
+		// System.out.println("> 이번 요청에 전달된 cookie가 없습니다."); 테스트용
+	}
+%>
+
+<%-- 유효성 검사 --%>
+<script> 
+window.onload = () => {
+<% if(msg != null){ %>
+	alert("<%= msg %>");
+<% } %>
+	
+	
+<% if(loginMember == null) { %>
+	document.loginFrm.onsubmit = (e) => {
+		const memberIdVal = memberId.value;
+		const passwordVal = password.value;
+		
+		if(!/^.{4,}$/.test(memberIdVal)){
+			alert("유효한 아이디를 입력해주세요.");
+			memberId.select();
+			return false;
+		}
+		if(!/^.{4,}$/.test(passwordVal)){
+			alert("유효한 비밀번호를 입력해주세요.");
+			password.select();
+			return false;
+		}
+	};	
+<% } %>
+};
+
+
+</script>
+
 <section id=login-container>
+	<% if(loginMember == null){ %>
 	<form name="memberLoginFrm" method="POST">
 	<div id="Login_head">
       <h2>로그인</h2>
@@ -21,11 +76,16 @@
 					<input type="password" placeholder="비밀번호" name="password" id="_password"><br>
 				</td>
 			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="checkbox" name="saveId" id="saveId" <%= saveId != null ? "checked" : "" %>/>
+					<label for="saveId">아이디저장</label>
+				</td>
+			</tr>
 		</table>
 		<br>
 				<input type="submit" id="button" value="Login" >
 		<br><br>
-	
 	<div id="naver_id_login">
 <%--<a href="${url}"></a> 네이버 로그인 페이지 이동 --%>
 	<img id="naver" src="${pageContext.request.contextPath}/images/naverLogin.png">
@@ -35,17 +95,29 @@
 	<img id="kakao" src="${pageContext.request.contextPath}/images/kakaoLogin.png">
 	</div><br>
 	
-	<div id="enroll">회원가입</div>
+	<div id="enroll" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">회원가입</div>
 	<div id="id_find">ID 찾기</div>
 	<div id="ps_find">비밀번호 찾기</div>
 	
+			
+	<% } else { %>
+	<%-- 로그인 성공시 --%>
+		<table id="login">
+			<tbody>
+				<tr>
+					<td><%= loginMember.getMemberName() %>님, 안녕하세요.</td>
+				</tr>
+				<tr>
+				<td>
+					<input type="button" value="내정보보기" onclick="location.href='<%= request.getContextPath() %>/member/memberView';"/>
+					<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>							
+				</td>
+				</tr>
+			</tbody>
+		</table>
+	<% } %>
+	
 	</form>
 </section>
-<script>
 
-// 유효성 검사
-document.memberLoginFrm.onsubmit = () => {
-	
-};
-</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
