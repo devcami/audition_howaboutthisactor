@@ -113,3 +113,9 @@ footer{
 	height: 200px;
 	background-color:  #ffb6b9;
 }
+.none{
+	display:none;
+}
+.inline{
+	display:inline;
+}

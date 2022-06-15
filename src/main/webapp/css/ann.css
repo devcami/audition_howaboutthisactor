@@ -268,6 +268,9 @@ section{
   background-color: rgb(179, 4, 4);
   border: rgb(179, 4, 4);
 }
+.workD{
+  font-size: 20px;
+}
 
 /* 간편지원 */
 #applyModal .modal-dialog {

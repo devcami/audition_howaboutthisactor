@@ -216,6 +216,7 @@ alter table announcement add ann_nop number not null;
 alter table announcement add is_close char(1) default 'N' not null;
 alter table announcement add has_TO char(1) default 'N' not null;
 alter table announcement modify has_TO char(1) default 'N' null;
+alter table announcement drop constraint ck_ann_gender;
 commit;
 
 -------------------------------------------
@@ -392,6 +393,5 @@ select * from wishlist_actor;
 select * from wishlist_ann;
 select * from report;
 
-insert into actor_apply values('hosi', 33);
-delete from actor_apply where member_id = 'hosi';
-commit;
+
+

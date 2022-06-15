@@ -15,7 +15,7 @@
 	Work work = ann.getWork();
 	List<WorkAttachment> attachments = work.getAttachments();
 	Cast cast = work.getCast();
-	Production p = new Production("director", "testProduction", "디렉터", "01015971597", "director@naver.com", "N", "Y");
+	Production p = (Production) request.getAttribute("production");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -26,7 +26,7 @@
 	name = "annUpdateFrm" 
 	method = "post" 
 	action = "<%= request.getContextPath() %>/ann/annUpdate"
-	>
+	enctype="multipart/form-data">
 <%-- 작품정보섹션 --%>
 <section id="ann-enroll-first">
 	<div class="container">
@@ -46,7 +46,7 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput2" class="form-label">작품 분야<span class="need">*</span></label> 
 			<select class="form-select" name="workField" id="exampleFormControlInput2" aria-label="Default select example" required>
-			  <option>선택해주세요</option>
+			  <option disabled>선택해주세요</option>
 			  <optgroup label="영화">
 				  <option <%= work.getWorkField().equals("장편 상업 영화") ? "selected" : "" %> value="장편 상업 영화">장편 상업 영화</option>
 				  <option <%= work.getWorkField().equals("장편 독립 영화") ? "selected" : "" %> value="장편 독립 영화">장편 독립 영화</option>
@@ -140,7 +140,7 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput6" class="form-label">배역 구분<span class="need">*</span></label> 
 			<select class="form-select" name="castRole" id="exampleFormControlInput6" aria-label="Default select example" required>
-			  <option>선택해주세요</option>
+			  <option disabled>선택해주세요</option>
 			  <option <%= cast.getCastRole().equals("주연") ? "selected" : "" %> value="주연">주연</option>
 			  <option <%= cast.getCastRole().equals("조연") ? "selected" : "" %> value="조연">조연</option>
 			  <option <%= cast.getCastRole().equals("단역") ? "selected" : "" %> value="단역">단역</option>
@@ -179,7 +179,7 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput8" class="form-label">나이<span class="need">*</span></label> 
 			<select class="form-select" name="annAge" id="exampleFormControlInput8" aria-label="Default select example">
-			  <option >선택해주세요</option>
+			  <option disabled>선택해주세요</option>
 			  <option <%= ann.getAnnAge().equals("나이무관") ? "selected" : "" %> value="나이무관">나이무관</option>
 			  <option <%= ann.getAnnAge().equals("~10세") ? "selected" : "" %> value="~10세">~10세</option>
 			  <option <%= ann.getAnnAge().equals("11~17세") ? "selected" : "" %> value="11~17세">11~17세</option>
@@ -197,7 +197,7 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput10" class="form-label">키</label> 
 			<select class="form-select" name="annHeight" id="exampleFormControlInput10" aria-label="Default select example">
-			  <option >선택해주세요</option>
+			  <option disabled>선택해주세요</option>
 			  <option <%= ann.getAnnHeight().equals("신장무관") ? "selected" : "" %> value="신장무관">신장무관</option>
 			  <option <%= ann.getAnnHeight().equals("~110cm") ? "selected" : "" %> value="~110cm">~110cm</option>
 			  <option <%= ann.getAnnHeight().equals("111~150cm") ? "selected" : "" %> value="111~150cm">111~150cm</option>
@@ -210,7 +210,7 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput11" class="form-label">체형</label> 
 			<select class="form-select" name="annBody" id="exampleFormControlInput11" aria-label="Default select example">
-			  <option >선택해주세요</option>
+			  <option disabled>선택해주세요</option>
 			  <option <%= ann.getAnnBody().equals("평균") ? "selected" : "" %> value="평균">평균</option>
 			  <option <%= ann.getAnnBody().equals("마름") ? "selected" : "" %> value="마름">마름</option>
 			  <option <%= ann.getAnnBody().equals("탄탄함") ? "selected" : "" %> value="탄탄함">탄탄함</option>
@@ -231,7 +231,7 @@
 		<div class="mb-3">
 			<label for="exampleFormControlInput12" class="form-label">촬영 지역</label> 
 			<select class="form-select" name="annArea" id="exampleFormControlInput12" aria-label="Default select example">
-			  <option>선택해주세요</option>
+			  <option disabled>선택해주세요</option>
 			  <option <%= ann.getAnnArea().equals("서울") ? "selected" : "" %> value="서울">서울</option>
 			  <option <%= ann.getAnnArea().equals("경기") ? "selected" : "" %> value="경기">경기</option>
 			  <option <%= ann.getAnnArea().equals("인천") ? "selected" : "" %> value="인천">인천</option>
