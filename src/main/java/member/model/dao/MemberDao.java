@@ -70,7 +70,6 @@ public class MemberDao {
 		member.setBirthday(rset.getDate("birthday"));
 		member.setEmail(rset.getString("email"));
 		member.setPhone(rset.getString("phone"));
-		member.setAddress(rset.getString("address"));
 		member.setGenre(rset.getString("genre"));
 		member.setEnrollDate(rset.getDate("enroll_date"));
 		return member;
@@ -86,88 +85,18 @@ public class MemberDao {
 			pstmt.setString(1, member.getMemberId());
 			pstmt.setString(2, member.getPassword());
 			pstmt.setString(3, member.getMemberName());
-			pstmt.setString(4, member.getMemberRole().toString());
-			pstmt.setString(5, member.getGender());
-			pstmt.setDate(6, member.getBirthday());
-			pstmt.setString(7, member.getEmail());
-			pstmt.setString(8, member.getPhone());
-			pstmt.setString(9, member.getAddress());
-			pstmt.setString(10, member.getGenre());
+			pstmt.setString(4, member.getEmail());
+			pstmt.setString(5, member.getMemberRole().toString());
+			pstmt.setString(6, member.getPhone());
+			pstmt.setString(7, member.getGender());
+			pstmt.setDate(8, member.getBirthday());
+			pstmt.setString(9, member.getGenre());
 			
 			result = pstmt.executeUpdate();	
 			
 			
 		} catch (SQLException e) {
 			throw new MemberException("회원가입오류", e);
-		} finally {
-			close(pstmt);
-		}
-		return result;
-	}
-
-	/**
-	 * update member 
-	 * set memeber_name = ?, gender = ?, email = ?, birthday = ?, phone = ?, address = ?, genre = ? 
-	 * where member_id = ?
-	 * 
-	 * @param conn
-	 * @param member
-	 * @return
-	 */
-	public int updateMember(Connection conn, Member member) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		String sql = prop.getProperty("updateMember");
-		try {
-			// 1. pstmt객체 생성 & 미완성쿼리 값대입
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, member.getMemberName());
-			pstmt.setString(2, member.getGender());
-			pstmt.setString(3, member.getEmail());
-			pstmt.setDate(4, member.getBirthday());
-			pstmt.setString(5, member.getPhone());
-			pstmt.setString(6, member.getAddress());
-			pstmt.setString(7, member.getGenre());
-			pstmt.setString(8, member.getMemberId());
-			// 2. 실행
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			throw new MemberException("회원정보수정 오류", e);
-		} finally {
-			// 3. 자원반납 - pstmt
-			close(pstmt);
-		}
-		return result;
-	}
-
-	public int deleteMember(Connection conn, String memberId) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String query = prop.getProperty("deleteMember"); 
-
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, memberId);
-			result = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new MemberException("회원탈퇴 오류", e);
-		} finally {
-			close(pstmt);
-		}
-		return result;
-	}
-
-	public int updatePassword(Connection conn, Member member) {
-		int result = 0;
-		PreparedStatement pstmt = null;
-		String sql = prop.getProperty("updatePassword");
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, member.getPassword());
-			pstmt.setString(2, member.getMemberId());
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			throw new MemberException("비밀번호 수정 오류!", e);
 		} finally {
 			close(pstmt);
 		}
@@ -206,23 +135,6 @@ public class MemberDao {
 		return list;
 	}
 
-	public int updateMemberRole(Connection conn, Member member) {
-		PreparedStatement pstmt = null;
-		int result = 0;
-		String sql = prop.getProperty("updateMemberRole");
-		
-		try {
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, member.getMemberRole().toString());
-			pstmt.setString(2, member.getMemberId());
-			result = pstmt.executeUpdate();
-		} catch (Exception e) {
-			throw new MemberException("관리자 - 회원권한 수정 오류", e);
-		} finally {
-			close(pstmt);
-		}
-		return result;
-	}
 
 	public List<Member> findBy(Connection conn, Map<String, String> param) {
 		PreparedStatement pstmt = null;
@@ -246,55 +158,6 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return list;
-	}
-	
-//	public static void main(String[] args) {
-//		new MemberDao().updatePasswordAll();
-//	}
-	
-	public void updatePasswordAll() {
-		// 1. 회원아이디 조회 및 신규 비번 설정
-		Connection conn = JdbcTemplate.getConnection();
-		String sql = prop.getProperty("findAll");
-		List<Member> list = new ArrayList<>();
-		try(
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			ResultSet rset = pstmt.executeQuery();
-		){
-			while(rset.next()) {
-				String memberId = rset.getString("member_id");
-				
-				Member member = new Member();
-				member.setMemberId(memberId);
-				member.setPassword(HelloMvcUtils.encrypt("1234", memberId));
-				list.add(member);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println(list); 
-		
-		
-		// 2. 비밀번호 업데이트
-		sql = prop.getProperty("updatePassword"); // update member set password = ? where member_id = ?
-		try(
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-		){
-			for(Member member : list) {
-				pstmt.setString(1, member.getPassword());
-				pstmt.setString(2, member.getMemberId());
-				pstmt.executeUpdate();
-				System.out.println("변경완료 : " + member.getMemberId() + " / " + member.getPassword());
-			}
-			conn.commit();
-		} catch (SQLException e) {
-			try {
-				conn.rollback();
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			}
-			e.printStackTrace();
-		}
 	}
 
 	public int getTotalContents(Connection conn) {

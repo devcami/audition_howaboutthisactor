@@ -3,7 +3,7 @@ package member.controller;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-// import javax.servlet.http.Cookie;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -41,10 +41,10 @@ public class MemberLoginServlet extends HttpServlet {
 		// 사용자입력값 처리
 		String memberId = request.getParameter("memberId");
 		String password = HelloMvcUtils.encrypt(request.getParameter("password"), memberId);
-//		String saveId = request.getParameter("saveId"); // "on" | null // saveId 구현해야해애애.....
+		String saveId = request.getParameter("saveId"); // "on" | null
 		System.out.println("memberId@memberLogin = " + memberId);
 		System.out.println("password@memberLogin = " + password);
-//		System.out.println("saveId@memberLogin = " + saveId);
+		System.out.println("saveId@memberLogin = " + saveId);
 		
 		// 업무로직
 		Member member = memberService.findByMemberId(memberId);
@@ -57,7 +57,7 @@ public class MemberLoginServlet extends HttpServlet {
 			// 로그인 성공!
 			session.setAttribute("loginMember", member);
 			
-/*			// saveId 쿠키 처리 해야해애애애....
+			// saveId 쿠키 처리
             Cookie cookie = new Cookie("saveId", memberId);
 			cookie.setPath(request.getContextPath()); // /app으로 시작하는 경로에 이 쿠키를 사용함.
 			if(saveId != null) {
@@ -69,7 +69,7 @@ public class MemberLoginServlet extends HttpServlet {
 				cookie.setMaxAge(0); // 0 즉시삭제
 			}
 			response.addCookie(cookie); // 응답객체 쿠키추가. Set-Cookie 헤더에 작성	
-*/			
+			
 		}
 		else {
 			// 로그인 실패!
