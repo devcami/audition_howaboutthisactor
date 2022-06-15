@@ -122,50 +122,20 @@ footer{
 
 
 
- /*  이부분 actor*/
- 
-#featured-content {
-	overflow: hidden;
-	width: 1000px;
-	margin: 0px auto;
-	padding: 30px 0px;
-	border-bottom: 5px solid #E9EAEE;	
+.logo{
+  height: 180px;
+  background-color:  #fae3d9;
+  position: relative;
 }
 
-#featured-content h2 {
-	padding: 0px 0px 20px 0px;
-	font-size: 30px;
+.logo span {
+  position: absolute;
+  left: 8%;
+  bottom: auto;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  font-weight: 800;
+  font-size: 380%;
+  
 }
-
-#featured-content #column1 {
-	float: left;
-	width: 300px;
-	margin-right: 50px;
-}
-
-#featured-content #column2 {
-	float: left;
-	width: 300px;
-}
-
-#featured-content #column3 {
-	float: right;
-	width: 300px;
-}
-
-
-.button a {
-	display: block;
-	float: left;
-	width: 88px;
-	padding: 5px 5px;
-	margin-right: 10px;
-	background: #8ac6d1;
-	border-radius: 5px;
-	color: #FFFFFF;
-	text-align: center;
-	text-decoration: none;
-}
-
-
 
