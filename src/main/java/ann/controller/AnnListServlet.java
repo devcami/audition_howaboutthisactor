@@ -54,7 +54,7 @@ public class AnnListServlet extends HttpServlet {
 			}
 			
 			
-			String url = request.getRequestURI(); // /mvc/admin/memberList
+			String url = request.getRequestURI();
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			
 			request.setAttribute("sortType", sortType);

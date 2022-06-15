@@ -30,7 +30,7 @@
 						value="<%= (searchKeyword != null) ? searchKeyword : "" %>" />
 				<button class="btn-search-title">검색</button>
 			</form>
-		<% if((loginMember.getMemberRole() == MemberRole.D)) { %>
+		<% if((loginMember != null) && (loginMember.getMemberRole() == MemberRole.D)) { %>
 			<input type="button" value="공고등록" class="btn btn-secondary btn-lg" onclick="location.href='<%= request.getContextPath() %>/ann/annEnroll';" />
 		<% } %>
 		</div>

@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
@@ -31,6 +32,10 @@ public class AnnEnrollServlet extends HttpServlet {
 	private AnnService annService = new AnnService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		Production p = annService.findProductionByMemberId(loginMember.getMemberId());
+		request.setAttribute("production", p);
 		request.getRequestDispatcher("/WEB-INF/views/ann/annEnroll.jsp").forward(request, response);
 	}
 

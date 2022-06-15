@@ -37,300 +37,300 @@
                || loginMember.getMemberRole() == MemberRole.A);
 %>
 <section id="ann-view-container">
-   <div class="container">
-      <div class="ann-info mrgbtm">
-         <h1 id="ann-title"><%= ann.getAnnTitle() %></h1>
-         <span id="cast-role"><%= cast.getCastRole() %></span>&nbsp;|&nbsp;<span id="cast-name"><%= cast.getCastName() %>역</span>
-         <h5 id="work-title"> <%= work.getProduction() %>&nbsp;|&nbsp;<%= work.getDirector() %>&nbsp;|&nbsp;<<%= work.getTitle() %>> </h5>
-         <p><%= ann.getAnnEndDate() %> 마감 | <%= ann.getAnnRegDate() %> 게시</p>
-         <% if(loginMember.getMemberRole().toString().equals("P")) { %>         
-            <button type="button" id="btn-apply" class="rounded view" data-bs-toggle="modal" data-bs-target="#applyModal" >간편지원</button>
-         <% } %>
-   
-         <!-- Modal -->
-         <div class="modal fade" id="applyModal" tabindex="-1"
-            aria-labelledby="applyModalLabel" aria-hidden="true">
-            <div class="modal-dialog" id="applyModalContent">
-               <div class="modal-content" >
-                  <div class="modal-header">
-                     <h5 class="modal-title" id="applyModalLabel">간편 지원 : 나의 포트폴리오</h5>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                  </div>
-                  <form name="annApplyFrm" 
-                     action="<%= request.getContextPath() %>/ann/annApply"
-                     method="POST">
-                     <input type="hidden" name="annNoApply" value="<%= ann.getAnnNo() %>">
-                     <input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>">
-                     <div class="modal-body">
-                          <table id="portTable">
-                             <tbody>
-                               <tr>
-                                 <th rowspan="9" id="img-th">대표사진</th>
-                                 <td rowspan="9">
-                                   <div id="profile-img-container">
-                                     <img src="<%= request.getContextPath() %>/upload/portfolio/<%= profile.getRenamedFilename() %>" id="profile-img">
-                                   </div>
-                                 </td>
-                                 <th>이름</th>
-                                 <td colspan="3">
-                                   <span><%= actorInfo.getActorName() %></span>
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <th>생년</th>
-                                 <td style="width: 150px;">
-                                    <span><%= actorInfo.getBirth() %></span>
-                                 </td>
-                                 <th style="text-align: right;">나이</th>
-                                 <td>
-                                    <span><%= actorInfo.getAge() %>세</span>
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <th>소속사</th>
-                                 <td colspan="3">
-                                    <span><%= actorInfo.getCompany() %></span>
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <th>학력</th>
-                                 <td colspan="3">
-                                    <span><%= actorInfo.getEducation() %></span>
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <th>키</th>
-                                 <td style="width: 150px;">
-                                   <span><%= actorInfo.getHeight() %>cm</span>
-                                 </td>
-                                 <th style="text-align: right;">체중</th>
-                                 <td>
-                                    <span><%= actorInfo.getWeight() %>kg</span>
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <th>휴대폰</th>
-                                 <td colspan="3">
-                                    <span><%= actorInfo.getPhone() %></span>
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <th>이메일</th>
-                                 <td colspan="3">
-                                   <span><%= actorInfo.getEmail() %></span>
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <th>SNS</th>
-                                 <td colspan="3">
-                                    <span><%= actorInfo.getSns() %></span>
-                                 </td>
-                               </tr>
-                               <tr>
-                                 <th>특기</th>
-                                 <td colspan="3">
-                                    <span><%= actorInfo.getSpeciality() %></span>
-                                 </td>
-                               </tr>
-                               
-                               
-                               <tr>
-                                 <td><br></td>
-                               </tr>
-                             </tbody>
-                             
-                             <tbody id="addWork-tbody">
-                              <tr>
-                                   <th colspan="2" id="work-wrap-th">경력</th>
-                                   <td colspan="4" style="text-align:right;">
-                                   </td>
-                               </tr>
-                               <tr>
-                                 <td colspan="6" style="border-top: 1px solid grey;"></td>
-                               </tr>
-                               <tr>
-                                  <td><br /></td>
-                               </tr>
-                           </tbody>
-                           <% for(int i = 0; i < pList.size(); i++){ %>
-                           <tbody id="work<%= pList.get(i).getNo() %>"></tbody>
-                              <tr>
-                                 <th rowspan="5" class="work-no"><span><%= i + 1 %></span></th>
-                                 <td rowspan="5">
-                                    <div id="work-img-container">
-                                       <img class="work-img" src="<%= request.getContextPath() %>/upload/portfolio/<%= pList.get(i).getAttachment().getRenamedFilename() %>" alt="작품사진<%= i + 1 %>" />
-                                    </div>
-                                 </td>
-                              </tr>
-                              <tr class="work-tr">
-                                 <th>작품명</th>
-                                 <td colspan="3"><%= pList.get(i).getTitle() %></td>
-                              </tr>
-                              <tr class="work-tr">
-                                 <th>배역</th>
-                                 <td colspan="3"><%= pList.get(i).getMyrole() %></td>
-                              </tr>
-                              <tr class="work-tr">
-                                 <th>기간</th>
-                                 <td colspan="3"><%= pList.get(i).getPeriod() %></td>
-                              </tr>
-                              <tr>
-                                    <td colspan="6" style="border-top: 1px solid grey;"></td>
-                                 </tr>
-                           </tbody>
-                           <% }%>
-                           </table>   
-                     </div>
-                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-                        <a href="<%= request.getContextPath() %>/mypage/portfolio?memberId=<%= loginMember.getMemberId() %>&memberRole=<%= loginMember.getMemberRole() %>" role="button" class="btn btn-secondary" >포트폴리오 작성하러 가기</a>
-                        <button type="button" onclick="ApplySubmit();" class="btn" id="btn-apply-submit">제출</button>
-                     </div>
-                  </form>
-               </div>
-            </div>
-         </div>
-         
-         <div id="btn-wish" onclick="addWishlist(this);">
-         <% if(wishlistAnn != null && !wishlistAnn.isEmpty()){
-               for(int i = 0; i < wishlistAnn.size(); i++){
-                  if(wishlistAnn.get(i).getAnnNo() == ann.getAnnNo()){ %>
-                     <img id="fullHeart" src="<%= request.getContextPath() %>/images/fullHeartWish.png" alt="" />
-                  <% break;
-                   } else if(i == wishlistAnn.size() - 1) { %>
-                  <img id="emptyHeart" src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" />
-                 <% } %>
-            <%    } %> 
-         <% } else { %>
-               <img id="emptyHeartN"src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" />
-         <% } %>
-         </div>
-         
-      </div>
-      <div class="work-info mrgbtm">
-         <h2>작품 정보</h2>
-         <table class="table table-borderless" id="tbl-work-info">
-         <tbody>
-            <tr>
-               <th>작품 제목</th>
-               <td><%= work.getTitle() %></td>
-            </tr>
-            <tr>
-               <th>작품 분야</th>
-               <td><%= work.getWorkField() %></td>
-            </tr>
-            <tr>
-               <th>감독</th>
-               <td><%= work.getDirector() %></td>
-            </tr>
-            <tr>
-               <th>제작사</th>
-               <td><%= work.getProduction() %></td>
-            </tr>
-            <tr>
-               <th>담당자</th>
-               <td><%= p.getCasterName() %></td>
-            </tr>
-            <tr>
-               <th>연락처</th>
-               <td>
-               <% if(p.getIsPhoneOpen().equals("Y")){ %>
-                     <%= p.getCasterPhone() %>         
-               <% } else { %> 비공개 <% } %>
-               </td>
-            </tr>
-            <tr>
-               <th>이메일</th>
-               <td>
-               <% if(p.getIsEmailOpen().equals("Y")){ %>
-                  <%= p.getCasterEmail() %>         
-               <% } else { %> 비공개 <% } %>
-               </td>
-            </tr>
-         </tbody>
-         </table>
-      </div>   
-      <hr />
-      <div class="work-content mrgbtm">
-         <h2>작품 설명</h2>
-         <p>
-            <%= work.getDescription() %>
-         </p>
-      </div>
-      <hr />
-      <div class="cast-info mrgbtm">
-         <h2>배역 정보</h2>
-         <div class="accordion" id="accordionPanelsStayOpenExample">
-            <div class="accordion-item">
-               <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                  <button class="accordion-button" type="button"
-                     data-bs-toggle="collapse"
-                     data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-                     aria-controls="panelsStayOpen-collapseOne">
-                  <%= cast.getCastRole() %> • <%= cast.getCastName() %> 역 
-                  <br />
-                  <%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> | <%= ann.getAnnNop() %>명   
-                  </button>
-               </h2>
-               <div id="panelsStayOpen-collapseOne"
-                  class="accordion-collapse collapse show"
-                  aria-labelledby="panelsStayOpen-headingOne">
-                  <div class="accordion-body">
-                     <table class="table table-borderless" id="tbl-cast-info">
-                     <tbody>
-                        <tr>
-                           <th>배역 이름</th>
-                           <td><%= cast.getCastName() %> 역 (<%= cast.getCastRole() %>)</td>
-                        </tr>
-                        <tr class="underline">
-                           <th>모집 인원</th>
-                           <td><%= ann.getAnnNop() %>명</td>
-                        </tr>
-                        <tr>
-                           <th>기본 조건</th>
-                           <td><%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> <%= ann.getHasTO().equals("Y") ? "| 노출장면 있음" : "" %></td>
-                           
-                        </tr>
-                        <tr class="underline">
-                           <th>신체 조건</th>
-                           <td><%= ann.getAnnHeight() %> | <%= ann.getAnnBody() %> </td>
-                        </tr>
-                        <tr>
-                           <th>출연료</th>
-                           <td><%= ann.getAnnPay() %></td>
-                        </tr>
-                        <tr class="underline">
-                           <th>촬영 지역</th>
-                           <td><%= ann.getAnnArea() %></td>
-                        </tr>
-                        <tr>
-                           <th>배역 설명</th>
-                           <td><%= cast.getCastContents() %></td>
-                        </tr>
-                     </tbody>
-                     </table>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-      <hr />
-      <div class="attachments mrgbtm">
-         <h2>사진 및 동영상</h2>
-         <%
-         if(workAttachments != null && !workAttachments.isEmpty()){
-            for(WorkAttachment wa : workAttachments){ %>
-               <figure class="figure">
-                  <!-- 첨부파일 있는 경우 img에 파일명 -->
-                  <img src="<%= request.getContextPath() %>/upload/ann/<%= wa.getRenamedFilename() %>" class="figure-img img-fluid rounded" alt="첨부파일" style="width:280px">
-               </figure>
-         <% } %>
-      <% } %>
-      </div>
-      <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary view" data-bs-toggle="modal"
-         data-bs-target="#reportModal" id="btn-report">신고하기</button>
+	<div class="container">
+		<div class="ann-info mrgbtm">
+			<h1 id="ann-title"><%= ann.getAnnTitle() %></h1>
+			<span id="cast-role"><%= cast.getCastRole() %></span>&nbsp;|&nbsp;<span id="cast-name"><%= cast.getCastName() %>역</span>
+			<h5 id="work-title"> <%= work.getProduction() %>&nbsp;|&nbsp;<%= work.getDirector() %>&nbsp;|&nbsp;<<%= work.getTitle() %>> </h5>
+			<p><%= ann.getAnnEndDate() %> 마감 | <%= ann.getAnnRegDate() %> 게시</p>
+			<% if(loginMember != null && loginMember.getMemberRole().toString().equals("P")) { %>			
+				<button type="button" id="btn-apply" class="rounded view" data-bs-toggle="modal" data-bs-target="#applyModal" >간편지원</button>
+	
+			<!-- Modal -->
+			<div class="modal fade" id="applyModal" tabindex="-1"
+				aria-labelledby="applyModalLabel" aria-hidden="true">
+				<div class="modal-dialog" id="applyModalContent">
+					<div class="modal-content" >
+						<div class="modal-header">
+							<h5 class="modal-title" id="applyModalLabel">간편 지원 : 나의 포트폴리오</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<form name="annApplyFrm" 
+							action="<%= request.getContextPath() %>/ann/annApply"
+							method="POST">
+							<input type="hidden" name="annNoApply" value="<%= ann.getAnnNo() %>">
+							<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>">
+							<div class="modal-body">
+							     <table id="portTable">
+							        <tbody>
+							          <tr>
+							            <th rowspan="9" id="img-th">대표사진</th>
+							            <td rowspan="9">
+							              <div id="profile-img-container">
+							                <img src="<%= request.getContextPath() %>/upload/portfolio/<%= profile.getRenamedFilename() %>" id="profile-img">
+							              </div>
+							            </td>
+							            <th>이름</th>
+							            <td colspan="3">
+							              <span><%= actorInfo.getActorName() %></span>
+							            </td>
+							          </tr>
+							          <tr>
+							            <th>생년</th>
+							            <td style="width: 150px;">
+							            	<span><%= actorInfo.getBirth() %></span>
+							            </td>
+							            <th style="text-align: right;">나이</th>
+							            <td>
+							            	<span><%= actorInfo.getAge() %>세</span>
+							            </td>
+							          </tr>
+							          <tr>
+							            <th>소속사</th>
+							            <td colspan="3">
+							            	<span><%= actorInfo.getCompany() %></span>
+							            </td>
+							          </tr>
+							          <tr>
+							            <th>학력</th>
+							            <td colspan="3">
+							            	<span><%= actorInfo.getEducation() %></span>
+							            </td>
+							          </tr>
+							          <tr>
+							            <th>키</th>
+							            <td style="width: 150px;">
+							              <span><%= actorInfo.getHeight() %>cm</span>
+							            </td>
+							            <th style="text-align: right;">체중</th>
+							            <td>
+							            	<span><%= actorInfo.getWeight() %>kg</span>
+							            </td>
+							          </tr>
+							          <tr>
+							            <th>휴대폰</th>
+							            <td colspan="3">
+							            	<span><%= actorInfo.getPhone() %></span>
+							            </td>
+							          </tr>
+							          <tr>
+							            <th>이메일</th>
+							            <td colspan="3">
+							              <span><%= actorInfo.getEmail() %></span>
+							            </td>
+							          </tr>
+							          <tr>
+							            <th>SNS</th>
+							            <td colspan="3">
+							            	<span><%= actorInfo.getSns() %></span>
+							            </td>
+							          </tr>
+							          <tr>
+							            <th>특기</th>
+							            <td colspan="3">
+							            	<span><%= actorInfo.getSpeciality() %></span>
+							            </td>
+							          </tr>
+							          
+							          
+							          <tr>
+							            <td><br></td>
+							          </tr>
+							        </tbody>
+							        
+							        <tbody id="addWork-tbody">
+							    	  <tr>
+							              <th colspan="2" id="work-wrap-th">경력</th>
+							              <td colspan="4" style="text-align:right;">
+							              </td>
+							          </tr>
+							          <tr>
+							            <td colspan="6" style="border-top: 1px solid grey;"></td>
+							          </tr>
+							          <tr>
+							          	<td><br /></td>
+							          </tr>
+									</tbody>
+									<% for(int i = 0; i < pList.size(); i++){ %>
+									<tbody id="work<%= pList.get(i).getNo() %>"></tbody>
+										<tr>
+											<th rowspan="5" class="work-no"><span><%= i + 1 %></span></th>
+											<td rowspan="5">
+												<div id="work-img-container">
+													<img class="work-img" src="<%= request.getContextPath() %>/upload/portfolio/<%= pList.get(i).getAttachment().getRenamedFilename() %>" alt="작품사진<%= i + 1 %>" />
+												</div>
+											</td>
+										</tr>
+										<tr class="work-tr">
+											<th>작품명</th>
+											<td colspan="3"><%= pList.get(i).getTitle() %></td>
+										</tr>
+										<tr class="work-tr">
+											<th>배역</th>
+											<td colspan="3"><%= pList.get(i).getMyrole() %></td>
+										</tr>
+										<tr class="work-tr">
+											<th>기간</th>
+											<td colspan="3"><%= pList.get(i).getPeriod() %></td>
+										</tr>
+										<tr>
+							            	<td colspan="6" style="border-top: 1px solid grey;"></td>
+							         	</tr>
+									</tbody>
+									<% }%>
+							      </table>	
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+								<a href="<%= request.getContextPath() %>/mypage/portfolio?memberId=<%= loginMember.getMemberId() %>&memberRole=<%= loginMember.getMemberRole() %>" role="button" class="btn btn-secondary" >포트폴리오 작성하러 가기</a>
+								<button type="button" onclick="ApplySubmit();" class="btn" id="btn-apply-submit">제출</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		<% } %>
+			<div id="btn-wish" onclick="addWishlist(this);">
+			<% if(wishlistAnn != null && !wishlistAnn.isEmpty()){
+					for(int i = 0; i < wishlistAnn.size(); i++){
+						if(wishlistAnn.get(i).getAnnNo() == ann.getAnnNo()){ %>
+						   <img id="fullHeart" src="<%= request.getContextPath() %>/images/fullHeartWish.png" alt="" />
+						<% break;
+				 		} else if(i == wishlistAnn.size() - 1) { %>
+						<img id="emptyHeart" src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" />
+				 	 <% } %>
+				<% 	} %> 
+			<% } else { %>
+					<img id="emptyHeartN"src="<%= request.getContextPath() %>/images/emptyHeartWish.png" alt="" />
+			<% } %>
+			</div>
+			
+		</div>
+		<div class="work-info mrgbtm">
+			<h2>작품 정보</h2>
+			<table class="table table-borderless" id="tbl-work-info">
+			<tbody>
+				<tr>
+					<th>작품 제목</th>
+					<td><%= work.getTitle() %></td>
+				</tr>
+				<tr>
+					<th>작품 분야</th>
+					<td><%= work.getWorkField() %></td>
+				</tr>
+				<tr>
+					<th>감독</th>
+					<td><%= work.getDirector() %></td>
+				</tr>
+				<tr>
+					<th>제작사</th>
+					<td><%= work.getProduction() %></td>
+				</tr>
+				<tr>
+					<th>담당자</th>
+					<td><%= p.getCasterName() %></td>
+				</tr>
+				<tr>
+					<th>연락처</th>
+					<td>
+					<% if(p.getIsPhoneOpen().equals("Y")){ %>
+							<%= p.getCasterPhone() %>			
+					<% } else { %> 비공개 <% } %>
+					</td>
+				</tr>
+				<tr>
+					<th>이메일</th>
+					<td>
+					<% if(p.getIsEmailOpen().equals("Y")){ %>
+						<%= p.getCasterEmail() %>			
+					<% } else { %> 비공개 <% } %>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>	
+		<hr />
+		<div class="work-content mrgbtm">
+			<h2>작품 설명</h2>
+			<p class="workD">
+				<%= work.getDescription() %>
+			</p>
+		</div>
+		<hr />
+		<div class="cast-info mrgbtm">
+			<h2>배역 정보</h2>
+			<div class="accordion" id="accordionPanelsStayOpenExample">
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+						<button class="accordion-button" type="button"
+							data-bs-toggle="collapse"
+							data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+							aria-controls="panelsStayOpen-collapseOne">
+						<%= cast.getCastRole() %> • <%= cast.getCastName() %> 역 
+						<br />
+						<%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> | <%= ann.getAnnNop() %>명	
+						</button>
+					</h2>
+					<div id="panelsStayOpen-collapseOne"
+						class="accordion-collapse collapse show"
+						aria-labelledby="panelsStayOpen-headingOne">
+						<div class="accordion-body">
+							<table class="table table-borderless" id="tbl-cast-info">
+							<tbody>
+								<tr>
+									<th>배역 이름</th>
+									<td><%= cast.getCastName() %> 역 (<%= cast.getCastRole() %>)</td>
+								</tr>
+								<tr class="underline">
+									<th>모집 인원</th>
+									<td><%= ann.getAnnNop() %>명</td>
+								</tr>
+								<tr>
+									<th>기본 조건</th>
+									<td><%= ann.getAnnAge() %> | <%= ann.getAnnGender() %> <%= ann.getHasTO().equals("Y") ? "| 노출장면 있음" : "" %></td>
+									
+								</tr>
+								<tr class="underline">
+									<th>신체 조건</th>
+									<td><%= ann.getAnnHeight() %> | <%= ann.getAnnBody() %> </td>
+								</tr>
+								<tr>
+									<th>출연료</th>
+									<td><%= ann.getAnnPay() %></td>
+								</tr>
+								<tr class="underline">
+									<th>촬영 지역</th>
+									<td><%= ann.getAnnArea() %></td>
+								</tr>
+								<tr>
+									<th>배역 설명</th>
+									<td><%= cast.getCastContents() %></td>
+								</tr>
+							</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr />
+		<div class="attachments mrgbtm">
+			<h2>사진 및 동영상</h2>
+			<%
+			if(workAttachments != null && !workAttachments.isEmpty()){
+				for(WorkAttachment wa : workAttachments){ %>
+					<figure class="figure">
+						<!-- 첨부파일 있는 경우 img에 파일명 -->
+						<img src="<%= request.getContextPath() %>/upload/ann/<%= wa.getRenamedFilename() %>" class="figure-img img-fluid rounded" alt="첨부파일" style="width:280px">
+					</figure>
+			<% } %>
+		<% } %>
+		</div>
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary view" data-bs-toggle="modal"
+			data-bs-target="#reportModal" id="btn-report">신고하기</button>
+
 
       <!-- Modal -->
       <div class="modal fade" id="reportModal" tabindex="-1"
