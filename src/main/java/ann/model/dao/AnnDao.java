@@ -526,7 +526,7 @@ public class AnnDao {
 		return result;
 	}
 
-	public List<Ann> findByAnnTitle(Connection conn, String searchKeyword) {
+	public List<Ann> findByAnnTitle(Connection conn, Map<String, Object> param) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Ann> list = new ArrayList<>();
@@ -534,7 +534,9 @@ public class AnnDao {
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, "%" + searchKeyword + "%");
+			pstmt.setString(1, "%" + param.get("searchKeyword") + "%");
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				Ann ann = handleAnnResultSet(rset);
@@ -606,6 +608,28 @@ public class AnnDao {
 			close(pstmt);
 		}
 		return annApplyList;
+	}
+
+	public int getTotalByTitle(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalByTitle");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + searchKeyword + "%");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고 전체 게시물 수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContent;
 	}
 	
 }

@@ -20,9 +20,11 @@ import member.model.dto.Member;
  */
 @WebFilter({ 
 	"/ann/annEnroll",
-	"/ann/annList",
-	"/ann/annUpdate",
 	"/ann/annView",
+	"/ann/annUpdate",
+	"/ann/annApply",
+	"/ann/annReport",
+	"/ann/annDelete",
 	"/member/memberView", 
 	"/mypage/addWork",
 	"/mypage/ckpw_update", 
@@ -66,7 +68,7 @@ public class LoginFilter implements Filter {
 		
 		if(loginMember == null) {
 			session.setAttribute("msg", "로그인 후 사용가능합니다.");
-			httpRes.sendRedirect(httpReq.getContextPath() + "/");
+			httpRes.sendRedirect(httpReq.getContextPath() + "/member/memberLogin");
 			return; // 조기리턴
 		}
 		

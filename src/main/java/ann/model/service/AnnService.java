@@ -189,9 +189,9 @@ public class AnnService {
 		return result;
 	}
 
-	public List<Ann> findByAnnTitle(String searchKeyword) {
+	public List<Ann> findByAnnTitle(Map<String, Object> param) {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.findByAnnTitle(conn, searchKeyword);
+		List<Ann> list = annDao.findByAnnTitle(conn, param);
 		close(conn);
 		return list;
 	}
@@ -232,6 +232,13 @@ public class AnnService {
 		List<ActorInfoExt> annApplyList = annDao.getApplyList(conn, actorInfo);
 		close(conn);
 		return annApplyList;
+	}
+
+	public int getTotalByTitle(String searchKeyword) {
+		Connection conn = getConnection();
+		int totalContent = annDao.getTotalByTitle(conn, searchKeyword);
+		close(conn);
+		return totalContent;
 	}
 
 }
