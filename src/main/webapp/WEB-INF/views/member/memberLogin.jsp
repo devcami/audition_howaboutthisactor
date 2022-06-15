@@ -7,31 +7,29 @@
  <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mLogin.css" />
 <%
-	Member loginMember = (Member) session.getAttribute("loginMember");
-	// System.out.println("loginMember@header.jsp = " + loginMember); 테스트용
-	
-	String msg = (String) session.getAttribute("msg");
-	if(msg != null)
-		session.removeAttribute("msg");
-	
-	String saveId = null; // 아이디저장을 체크한 경우, memberId값이 담길 변수
-	Cookie[] cookies = request.getCookies();
-	if(cookies != null){
-		for(Cookie cookie : cookies){
-			// System.out.println("Cookie{" + cookie.getName() + "=" + cookie.getValue() + "}"); 테스트용
-			if("saveId".equals(cookie.getName())){
-				saveId = cookie.getValue();
-			}
+
+Member loginMember = (Member) session.getAttribute("loginMember");
+
+//	String msg = (String) session.getAttribute("msg");
+//	if(msg != null)
+//		session.removeAttribute("msg");
+
+String saveId = null; // 아이디저장을 체크한 경우, memberId값이 담길 변수
+Cookie[] cookies = request.getCookies();
+if(cookies != null){
+	for(Cookie cookie : cookies){
+		if("saveId".equals(cookie.getName())){
+			saveId = cookie.getValue();
 		}
 	}
-	else {
-		// System.out.println("> 이번 요청에 전달된 cookie가 없습니다."); 테스트용
-	}
+}
+else {
+}
 %>
 
 <%-- 유효성 검사 --%>
 <script> 
-window.onload = () => {
+function.btnClick() => {
 <% if(msg != null){ %>
 	alert("<%= msg %>");
 <% } %>
@@ -84,7 +82,7 @@ window.onload = () => {
 			</tr>
 		</table>
 		<br>
-				<input type="submit" id="button" value="Login" >
+				<input type="submit" id="button" value="Login" onClick='btnClcik()'>
 		<br><br>
 	<div id="naver_id_login">
 <%--<a href="${url}"></a> 네이버 로그인 페이지 이동 --%>
@@ -107,17 +105,16 @@ window.onload = () => {
 		<table id="login">
 			<tbody>
 				<tr>
-					<td><%= loginMember.getMemberName() %>님, 안녕하세요.</td>
+					<td><%= loginMember.getMemberName() %>님, 안녕하세요.</td><br>
 				</tr>
 				<tr>
 				<td>
-				<%--로그아웃 으로 바뀌어야함... 
-					<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>	
-				--%>						
+					<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>							
 				</td>
 				</tr>
 			</tbody>
 		</table>
+		
 	<% } %>
 	
 	</form>
