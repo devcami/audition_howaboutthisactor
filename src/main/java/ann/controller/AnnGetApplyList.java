@@ -1,6 +1,7 @@
-package wishlist.controller;
+package ann.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,28 +11,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import wishlist.model.dto.WishListAnn;
-import wishlist.model.service.WishListService;
+import ann.model.service.AnnService;
+import mypage.model.dto.ActorInfoExt;
 
-@WebServlet("/ann/addWishAnn")
-public class AddWishAnnServlet extends HttpServlet {
+@WebServlet("/ann/getApplyList")
+public class AnnGetApplyList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private WishListService wishListService = new WishListService();
+	private AnnService annService = new AnnService();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			int annNo = Integer.parseInt(request.getParameter("annNo"));
 			String memberId = request.getParameter("memberId");
-			WishListAnn wishListAnn = new WishListAnn();
-			wishListAnn.setAnnNo(annNo);
-			wishListAnn.setMemberId(memberId);
-			int result = wishListService.addWishlistAnn(wishListAnn);
+			List<ActorInfoExt> annApplyList = annService.getApplyList(memberId);
 			response.setContentType("application/json; charset=utf-8");
-			new Gson().toJson(wishListAnn, response.getWriter());
-		} catch(Exception e) {
+			new Gson().toJson(annApplyList, response.getWriter());
+		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
+		
 	}
 
 }

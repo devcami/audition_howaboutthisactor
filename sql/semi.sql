@@ -373,13 +373,15 @@ insert into portfolio values (SEQ_PORTFOLIO_NO.nextval, 'actor', 1, '2019년 10�
 -------------------------------------
 --테이블 정보보기
 -------------------------------------
-select * from member;
 
 select * from board;
 select * from board_attachment;
 select * from board_comment;
+select * from member;
 select * from actor_info;
 select * from portfolio;
+select * from portfolio_work;
+select * from port_attachment;
 select * from production;
 select * from work;
 select * from work_attachment;
@@ -389,9 +391,7 @@ select * from actor_apply;
 select * from wishlist_actor;
 select * from wishlist_ann;
 select * from report;
-select * from portfolio_work;
 
+insert into actor_apply values('hosi', 33);
+delete from actor_apply where member_id = 'hosi';
 commit;
-
-insert into wishlist_ann values ('director', 27);
-
