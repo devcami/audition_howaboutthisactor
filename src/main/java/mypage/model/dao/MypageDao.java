@@ -15,6 +15,9 @@ import java.util.Properties;
 import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
 import board.model.dto.Board;
+import board.model.dto.Report;
+import member.model.dto.Member;
+import member.model.exception.MemberException;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
@@ -607,6 +610,217 @@ public class MypageDao {
 		return result;
 	}
 
+
+	public String getPw(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getPw");
+		String password = "";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				password = rset.getString(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> getPw@마이페이지 비밀번호 확인 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return password;
+	}
+
+	public int deleteMember(Connection conn, String memberId) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("deleteMember"); 
+
+		try {
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, memberId);
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MypageException("deleteMember@회원탈퇴 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int getTotalReport(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalReport");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> getTotalReport@신고리스트 전체 게시글수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
+		
+	}
+
+	private Report handleReportResultSet(ResultSet rset) throws SQLException {
+		Report report = new Report();
+		
+		report.setNo(rset.getInt("no"));
+		report.setMemberId(rset.getString("member_Id"));
+		report.setAnnNo(rset.getInt("ann_no"));
+		report.setActor_no(rset.getInt("actor_no"));
+		report.setBoardNo(rset.getInt("board_no"));
+		report.setCommentNo(rset.getInt("comment_no"));
+		report.setReportContent(rset.getString("report_content"));
+		report.setReportDate(rset.getDate("report_date"));
+		report.setReportStatus(rset.getString("report_status"));
+		
+		return report;
+	}
+	
+	
+	public List<Report> ReportUndoList(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Report> list = new ArrayList<>();
+		String sql = prop.getProperty("ReportUndoList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Report report = handleReportResultSet(rset);
+				list.add(report);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 신고내역조회 - undo 신고 정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
+
+	public List<Report> ReportIngList(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Report> list = new ArrayList<>();
+		String sql = prop.getProperty("ReportIngList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Report report = handleReportResultSet(rset);
+				list.add(report);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 신고내역조회 - Ing 신고 정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<Report> ReportEndList(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Report> list = new ArrayList<>();
+		String sql = prop.getProperty("ReportEndList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Report report = handleReportResultSet(rset);
+				list.add(report);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 신고내역조회 - End 신고 정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<Report> ReportList(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Report> list = new ArrayList<>();
+		String sql = prop.getProperty("ReportList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Report report = handleReportResultSet(rset);
+				list.add(report);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 신고내역조회 - 전체 신고 정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
+
+	public int updateMember(Connection conn, Member member) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			// 1. pstmt 객체 생성 & 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getPassword());
+			pstmt.setString(2, member.getMemberName());
+			pstmt.setString(3, member.getEmail());
+			pstmt.setString(4, member.getPhone());
+			pstmt.setString(5, member.getGender());
+			pstmt.setDate(6, member.getBirthday());
+			pstmt.setString(7, member.getGenre());
+			pstmt.setString(8, member.getMemberId());
+
+			// 2. 실행
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new MemberException("회원정보수정 오류", e);
+		} finally {
+			// 3. 자원반납 - pstmt
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
 	public List<PortAttachment> findAllAttachmentByMemberId(Connection conn, String memberId) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -635,8 +849,6 @@ public class MypageDao {
 		}
 		return list;
 	}
-	
-	
 	
 	
 }

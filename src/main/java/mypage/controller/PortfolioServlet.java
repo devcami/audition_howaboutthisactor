@@ -1,18 +1,15 @@
 package mypage.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import ann.model.dto.Ann;
-import common.HelloMvcUtils;
+import member.model.dto.Member;
 import mypage.model.dto.ActorInfo;
 import mypage.model.service.MypageService;
 
@@ -24,19 +21,19 @@ public class PortfolioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
 	
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+						
+//			String memberId = request.getParameter("memberId");
+//			String memberRole = request.getParameter("memberRole");
 			
-			String memberId = request.getParameter("memberId");
-			String memberRole = request.getParameter("memberRole");
-			
+			HttpSession session = request.getSession();
+			Member member = (Member) session.getAttribute("loginMember");
+			String memberId = member.getMemberId();
 			
 			// 로그인한 회원이 배우회원인 경우 
 			ActorInfo actorInfo = mypageService.findActorInfo(memberId);
-			System.out.println(actorInfo.toString());
+//			System.out.println("PortfolioServlet@actorInfo = " + actorInfo.toString());
 			
 			if(actorInfo.getMemberId() == null) {
 
@@ -53,7 +50,7 @@ public class PortfolioServlet extends HttpServlet {
 				request.setAttribute("actorInfo", actorInfo);
 				request.setAttribute("portType", "exist");
 				request.getRequestDispatcher("/WEB-INF/views/mypage/viewPortfolio.jsp")
-				.forward(request, response);
+					.forward(request, response);
 			}
 			
 		} catch (Exception e) {

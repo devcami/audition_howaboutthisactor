@@ -1,0 +1,111 @@
+@charset "UTF-8";
+
+#container {
+  display: flex;
+  font-family: 'Hahmlet', serif;
+  justify-content: center;
+  margin: 0 130px 0 30px;
+  
+}
+.top-logo{
+  height: 180px;
+  background-color: #bbded6;
+  position: relative;
+}
+.top-logo span {
+  position: absolute;
+  left: 2%;
+  bottom: 7%;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  font-weight: 900;
+  font-size: 320%;
+  
+}
+#Pmypage-submenu {
+  margin-top: 100px;
+  text-align: right;
+  width: 18%;
+}
+#Pmypage-submenu ul {
+  padding: 0;
+}
+#Pmypage-submenu li {
+  list-style: none;
+  margin: 15px 0;
+  font-weight: 500;
+  font-size: x-large;
+}
+#Pmypage-submenu a:hover {
+  color: #bbded6;
+}
+#Pmypage-submenu a {
+  color: black;
+  text-decoration: none;
+}
+.current {
+  color: #bbded6 !important;
+}
+/* 여기까지 submenu */
+
+#update-info{
+  margin-left: 4%;
+  width: 80%;
+  margin-bottom: 100px;
+}
+#update-info h2 {
+  font-size: 40px;
+  border-bottom: 2px solid gray;
+  padding: 10px;
+  margin: 15px 0 10px;
+}
+
+/* 수정 내용 content */
+#update-info form {
+  margin: 40px 10px;
+}
+/* 여기까지 submenu */
+
+  #nameDiv {
+    width: 33.5%;
+  }
+  .col-sm-10{
+    width: 40%;
+  }
+  .form-select {
+    width: 15%;
+    margin-left: calc(var(--bs-gutter-x) * .5);
+
+  }
+  .btn-next {
+    margin: 0 auto;
+    font-size: 20px;
+    letter-spacing: 10px;
+    width: 180px;
+    height: 50px;
+    color: #ffffff;
+    background-color: #bbded6;
+    transition: .2s;
+    border: none;
+    transform: translateX(-40px);
+}
+.btn-div{
+  /* width: 55.67%; */
+  width: 60%;
+  display: inline-grid;
+  justify-content: end;
+}
+.genre-div{
+  width: 8%;
+  margin-right: 0;
+  padding-right: 0;
+}
+.movie-div {
+  margin-left: calc(var(--bs-gutter-x) * .5);
+}	
+.need {
+	color: red;
+}
+.hide {
+	display: none;
+}

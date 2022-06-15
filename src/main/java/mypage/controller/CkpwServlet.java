@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class CkpwServlet
  */
-@WebServlet("/mypage/ckpwDelete")
-public class CkpwDeleteServlet extends HttpServlet {
+@WebServlet("/mypage/ckpw")
+public class CkpwServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
@@ -20,7 +20,13 @@ public class CkpwDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			request.getRequestDispatcher("/WEB-INF/views/mypage/ckpw_delete.jsp")
+			
+			String type = request.getParameter("type");
+			String role = request.getParameter("role");
+			
+			request.setAttribute("type", type);
+			request.setAttribute("role", role);
+			request.getRequestDispatcher("/WEB-INF/views/mypage/ckpw.jsp")
 				.forward(request, response);
 				
 		} catch (Exception e) {
@@ -29,12 +35,5 @@ public class CkpwDeleteServlet extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
 
 }
