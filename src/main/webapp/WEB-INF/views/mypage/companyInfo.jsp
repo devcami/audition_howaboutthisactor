@@ -89,7 +89,7 @@
         </div>
       </form>
     </div> 
-
+<!-- 깃 풀리퀘용 -->
   <script>
   	const edit = () => {
   		$('.btn').css('display', '');
