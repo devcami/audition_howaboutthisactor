@@ -8,8 +8,8 @@
 <section id="container">
   <div id="Pmypage-submenu" class="submenu">
     <ul>
-      <li><a href="#" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원조회</a></li>
-      <li><a href="#" onmouseover="mousein(this);" onmouseout="mouseout(this)">신고내역</a></li>
+      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원조회</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/reportList" onmouseover="mousein(this);" onmouseout="mouseout(this)">신고내역</a></li>
     </ul>
   </div>
   <div id="myboard">
