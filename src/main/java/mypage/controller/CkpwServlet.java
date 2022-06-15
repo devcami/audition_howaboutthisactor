@@ -20,6 +20,12 @@ public class CkpwServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			
+			String type = request.getParameter("type");
+			String role = request.getParameter("role");
+			
+			request.setAttribute("type", type);
+			request.setAttribute("role", role);
 			request.getRequestDispatcher("/WEB-INF/views/mypage/ckpw.jsp")
 				.forward(request, response);
 				

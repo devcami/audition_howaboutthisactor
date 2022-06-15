@@ -16,6 +16,7 @@ import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
 import board.model.dto.Board;
 import board.model.dto.Report;
+import member.model.dto.Member;
 import member.model.exception.MemberException;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
@@ -787,6 +788,38 @@ public class MypageDao {
 		return list;
 		
 	}
+
+	public int updateMember(Connection conn, Member member) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			// 1. pstmt 객체 생성 & 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, member.getPassword());
+			pstmt.setString(2, member.getMemberName());
+			pstmt.setString(3, member.getEmail());
+			pstmt.setString(4, member.getPhone());
+			pstmt.setString(5, member.getGender());
+			pstmt.setDate(6, member.getBirthday());
+			pstmt.setString(7, member.getGenre());
+			pstmt.setString(8, member.getMemberId());
+
+			// 2. 실행
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new MemberException("회원정보수정 오류", e);
+		} finally {
+			// 3. 자원반납 - pstmt
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+
 	
 	
 	

@@ -16,21 +16,17 @@ public class UpdateMemberServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-				String memberId = (String) request.getAttribute("memberId");
+
+				String memberId = request.getParameter("memberId");
+				System.out.println("updateMember@memberId" + memberId);
 				
-				request.setAttribute("memberId", memberId);
 				request.getRequestDispatcher("/WEB-INF/views/mypage/memberUpdate.jsp")
 					.forward(request, response);
 				
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
-
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw e;
+			}
 	}
 
 }

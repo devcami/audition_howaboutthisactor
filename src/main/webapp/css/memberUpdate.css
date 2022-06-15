@@ -81,12 +81,13 @@
     margin: 0 auto;
     font-size: 20px;
     letter-spacing: 10px;
-    width: 300px;
+    width: 180px;
     height: 50px;
     color: #ffffff;
     background-color: #bbded6;
     transition: .2s;
     border: none;
+    transform: translateX(-40px);
 }
 .btn-div{
   /* width: 55.67%; */
@@ -101,4 +102,10 @@
 }
 .movie-div {
   margin-left: calc(var(--bs-gutter-x) * .5);
+}	
+.need {
+	color: red;
+}
+.hide {
+	display: none;
 }

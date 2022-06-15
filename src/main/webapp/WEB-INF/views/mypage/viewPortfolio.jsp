@@ -29,7 +29,7 @@
 	double _weight = actorInfo.getWeight();
 	String weight = _weight != 0 ? Double.toString(_weight) : "";
 	
-	System.out.println("viewPortfolio.jsp@memberId = " + memberId + " 회원 포폴 조회(기존회원)");
+	System.out.println("viewPortfolio.jsp@memberId = " + loginMember.getMemberId() + " 회원 포폴 조회(기존회원)");
 	System.out.println("viewPortfolio.jsp@actorInfo = " + actorInfo.toString());
 	System.out.println("viewPortfolio.jsp@img_src = " + img_src);
 	System.out.println("viewPortfolio.jsp@attachNo = " + attachNo);
@@ -43,9 +43,9 @@
   <div id="Pmypage-submenu" class="submenu">
     <ul id="sub">
       <li><a href="#" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/myboardd" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/Pmywish?memberId=<%= memberId %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/applylist" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원한 공고</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/myboardd?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/Pmywish?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/applylist?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원한 공고</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=del&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
     </ul>
@@ -55,7 +55,7 @@
       <h2>포트폴리오</h2>
       <form action="<%= request.getContextPath() %>/mypage/gotoEditPortfolio" style="margin: 0;">
       	  <input type="submit" id="update-btn" value="수정" class="btn" >
-          <input type="hidden" name="memberId" value="<%= memberId %>" />
+          <input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
           <input type="hidden" name="portType" value = "<%= portType %>" />        
           <input type="hidden" name="attachNo" value = "<%=  attachNo %>" />        
       </form>
@@ -179,7 +179,7 @@
   			url: "<%= request.getContextPath() %>/mypage/viewWork",
   			dataType: "json",
   			data : {
-  				"memberId": "<%= memberId %>"
+  				"memberId": "<%= loginMember.getMemberId() %>"
   			},
   			success(works){
   				

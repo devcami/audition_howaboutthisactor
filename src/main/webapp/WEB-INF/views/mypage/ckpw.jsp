@@ -3,7 +3,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	String type = (String) request.getParameter("type");
-	System.out.println(type);
+	String role = (String) request.getParameter("role");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ckpw.css" />
 <div class="top-logo">
@@ -11,13 +11,13 @@
 </div>
 <section id="container">
   <div id="Pmypage-submenu" class="submenu">
-    <% if(memberRole == "D"){ %> 
+    <% if(role.equals("D")){ %> 
 	    <ul id="sub">
-	      <li><a href="<%= request.getContextPath() %>/mypage/myAnn?memberId=<%= memberId %>?memberRole=<%= memberRole %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 조회</a></li>
-	      <li><a href="<%= request.getContextPath() %>/mypage/myboard" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
-	      <li><a href="<%= request.getContextPath() %>/mypage/Dmywish" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
-	      <li><a href="<%= request.getContextPath() %>/mypage/applylist" onmouseout="mouseout(this)">지원자 목록</a></li>
-	      <li><a href="<%= request.getContextPath() %>/mypage/companyInfo" onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/myAnn" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 조회</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/myboardd?memberId<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/Dmywish?memberId<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/applylist?memberId<%= loginMember.getMemberId() %>" onmouseout="mouseout(this)">지원자 목록</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/companyInfo?memberId<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
 	      
 	      <% if(type.equals("update")){ %>
 	      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
@@ -30,10 +30,10 @@
 	    </ul>
 	<% } else { %>
 	    <ul id="sub">
-	      <li><a href="<%= request.getContextPath() %>/mypage/portfolio?memberId=<%= memberId %>"  onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
-	      <li><a href="<%= request.getContextPath() %>/mypage/myboard" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
-	      <li><a onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
-	      <li><a href="<%= request.getContextPath() %>/mypage/applylist" onmouseout="mouseout(this)">지원한 공고</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/myboardd?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/Pmywish?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/applylist?memberId=<%= loginMember.getMemberId() %>" onmouseout="mouseout(this)">지원한 공고</a></li>
 	      
 	      <% if(type.equals("update")){ %>
 	      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
@@ -55,7 +55,7 @@
       	</div>
         <div class="box">
           <label for="id">아이디</label>
-          <input type="text" name="member_id" id="member_id" value="<%= memberId %>">
+          <input type="text" name="member_id" id="member_id" value="<%= loginMember.getMemberId() %>">
         </div>
         <div class="box">
           <label for="pw">비밀번호</label>
@@ -71,26 +71,23 @@
 	name="memberDelFrm" 
 	action="<%= request.getContextPath() %>/mypage/deleteMember" 
 	method="POST">
-	<input type="hidden" name="memberId" value="<%= memberId %>" />
+	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
   </form>
   <script>
   	window.onload = () => {
-  		
-  		if('<%= type %>'=="update"){
-			const currentMenu = document.getElementById  			
-  		}
 
   	}
   	
   	const ckidpw = () => {
   		const id = $('#member_id').val();
   		const pw = $('#pw').val();
-  		const msg = ""
+  		const msg = "";
   	
   		if(!pw){
   			alert('비밀번호를 입력하세요');
   			return;
   		}
+  		
   		$.ajax({
   			url : "<%= request.getContextPath() %>/mypage/getIdPw",
   			method: "POST",
@@ -104,7 +101,7 @@
   				
   				if(result=="success"){
   					if('<%= type %>'=="update"){
-  						location.href = `<%= request.getContextPath() %>/mypage/updateMember?memberId=<%= memberId %>`;  						
+  						location.href = `<%= request.getContextPath() %>/mypage/updateMember?memberId=<%= loginMember.getMemberId() %>`;  						
   					}
   					else {
   						// 비동기 안에 비동기 가넝한가?
@@ -128,10 +125,6 @@
   			error : console.log
   		})
   	};
-  	
-  	const deleteMember = () => {
-  		console.log('탈퇴할래영');	
-  	}
   
     const mousein = (menu) => {
       now_menu.classList.remove('current');

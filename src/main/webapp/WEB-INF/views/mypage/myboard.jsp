@@ -15,21 +15,21 @@
 </div>
 <section id="container">
   <div id="Pmypage-submenu" class="submenu">
-    <% if(memberRole == "D"){ %> 
+    <% if(loginMember.getMemberRole().toString() == "D"){ %> 
 	    <ul id="sub">
-	      <li><a href="<%= request.getContextPath() %>/mypage/myAnn?memberId=<%= memberId %>?memberRole=<%= memberRole %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 조회</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/myAnn" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 조회</a></li>
 	      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
 	      <li><a href="<%= request.getContextPath() %>/mypage/Dmywish" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
 	      <li><a href="<%= request.getContextPath() %>/mypage/applylist" onmouseout="mouseout(this)">지원자 목록</a></li>
-	      <li><a href="<%= request.getContextPath() %>/mypage/companyInfo" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/companyInfo"  onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
 	      <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
       	  <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=del&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
 	    </ul>
 	<% } else { %>
 	    <ul id="sub">
-	      <li><a href="<%= request.getContextPath() %>/mypage/portfolio?memberId=<%= memberId %>"  onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
-	      <li><a href="<%= request.getContextPath() %>/mypage/myboard" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
-	      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
+	      <li><a id="now_menu" class="current"  onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/Pmywish?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
 	      <li><a href="<%= request.getContextPath() %>/mypage/applylist" onmouseout="mouseout(this)">지원한 공고</a></li>
       	  <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
       	  <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=del&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
@@ -51,6 +51,7 @@
           </div>
         </div>
       </div>
+       <% if(list != null && !list.isEmpty()){ %> 
       <table>
         <thead id="list-head">
           <tr>
@@ -61,8 +62,8 @@
           </tr>
         </thead>
         <tbody id="list-content">
-        <% if(list != null && !list.isEmpty()){
-				for(int i = 0; i < list.size(); i++){ 
+        <%
+			for(int i = 0; i < list.size(); i++){ 
 		%>
           <tr class="trs" id="tr<%= list.get(i).getNo() %>" >
           	<td><input type="checkbox" name="ck" class="ckbox" id="ck<%= list.get(i).getNo() %>" value="<%= list.get(i).getNo() %>"></td>
@@ -70,12 +71,14 @@
             <td><a href="보드로넘어가자"><%= list.get(i).getTitle() %></a></td>
             <td><%= list.get(i).getRegDate() %></td>
           </tr>
-  	<% 	} %>
+  			<% 	} %>
+  			
+  			</tbody>
+      	</table>
 		<% } else { %>
-			<p>조회된 공고가 없습니다.</p>
+			<p>조회된 게시물이 없습니다.</p>
 		<% } %>
-        </tbody>
-      </table>
+
       <div id="search-wrap">
         <input type="text" id="search" name="search" placeholder="제목을 검색해보세요!"/>
         <button id="btn" class="btn">검색</button>
@@ -106,7 +109,7 @@
   				method : "POST",
   				dataType : "json",
   				data : {
-  					"memberId" : "<%= memberId %>",
+  					"memberId" : "<%= loginMember.getMemberId() %>",
   					"delBoard" : delBoard
   				},
   				success(arrs){

@@ -29,10 +29,8 @@ public class MyboardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			
-//			String memberId = request.getParameter("memberId");
-//			System.out.println("PwishListServlet@memberId = " + memberId);
-			
-			String memberId = "hosi";
+			String memberId = request.getParameter("memberId");
+			System.out.println("MyboardServlet@memberId + " + memberId);
 			
 
 			int numPerPage = mypageService.BOARD_NUM_PER_PAGE; // 12

@@ -18,9 +18,9 @@
 <section id="container">
   <div id="Pmypage-submenu" class="submenu">
     <ul>
-      <li><a href="#" onmouseout="mouseout(this)">내 공고 관리</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/myboard?memberId=<%= memberId %>&memberRole=<%= memberRole %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/Dmywish?memberId=<%= memberId %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/myAnn" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 조회</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/myboardd?memberId=<%= loginMember.getMemberId() %>&memberRole=<%= loginMember.getMemberRole() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/Dmywish?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원자 관리</a></li>
       <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
@@ -140,7 +140,7 @@
 			   method : "POST",
 			   dataType : "json",
 			   data : {
-				   "memberId" : "<%= memberId %>",
+				   "memberId" : "<%= loginMember.getMemberId() %>",
 				   "deleteAnn" : selectedArr
 			   },
 			   success(arrs){

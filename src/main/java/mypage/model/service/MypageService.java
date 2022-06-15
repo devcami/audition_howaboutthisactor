@@ -9,6 +9,7 @@ import java.util.Map;
 import ann.model.dto.Ann;
 import board.model.dto.Board;
 import board.model.dto.Report;
+import member.model.dto.Member;
 import mypage.model.dao.MypageDao;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
@@ -339,6 +340,27 @@ public class MypageService {
 		close(conn);
 		return list;
 		
+	}
+
+	public int updateMember(Member member) {
+		int result = 0;
+		// 1. Connection 객체 생성
+		Connection conn = getConnection();
+		try {
+			// 2. dao 요청
+			result = mypageDao.updateMember(conn, member); 
+					
+			// 3. 트랜잭션 처리 - commit
+			commit(conn);
+		} catch(Exception e) {
+			// 3. 트랜잭션 처리 - rollback 
+			rollback(conn);
+			throw e;  // controller 통보용
+		} finally {
+			// 4. Connection 객체 반환
+			close(conn); 
+		}
+		return result;
 	}
 	
 

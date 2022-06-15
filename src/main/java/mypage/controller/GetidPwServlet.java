@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import common.HelloMvcUtils;
 import mypage.model.service.MypageService;
 
 /**
@@ -23,11 +24,12 @@ public class GetidPwServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String memberId = request.getParameter("memberId");
-			String input_pw = request.getParameter("password");
+			String input_pw = HelloMvcUtils.encrypt(request.getParameter("password"), memberId);
 			
 			String pw = mypageService.getPw(memberId);
 			String result = "";
 			
+
 			if(input_pw.equals(pw)) {
 				result = "success";
 			}
