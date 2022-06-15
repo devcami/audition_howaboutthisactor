@@ -131,7 +131,7 @@
             </div>
           </div>
           <br>
-		<input type="submit" id="button1" value="이메일 인증하여 가입" >
+		<input type="submit" id="button1" value="이메일 인증하여 가입">
 		<input type="reset" id="button2" value="다시입력">
 	</form>
 </section>

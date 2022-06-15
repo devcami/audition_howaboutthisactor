@@ -2,9 +2,10 @@
 form{
   font-family: 'Hahmlet', serif;
   padding:40px 250px 0 250px;
-  
+  margin: auto; 
+  text-align: center;
+  display: inline;
 }
-
 #Enroll_head {
     color: black;
     font-size: 3em;

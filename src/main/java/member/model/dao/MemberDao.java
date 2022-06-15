@@ -22,6 +22,7 @@ import member.model.exception.MemberException;
 public class MemberDao {
 	
 	private Properties prop = new Properties();
+	private Connection conn;
 	
 	public MemberDao() {
 		// buildpath의 sql/member-query.properties파일의 내용을 불러오기
@@ -58,6 +59,27 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return member;
+	}
+	
+	public String findId(String memberName, String phone) {
+		String Id = null;
+		
+		try {
+			String sql = "findId";
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberName);
+			pstmt.setString(2, phone);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				Id = rs.getString("member.member_Id");
+			}
+				
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Id;
 	}
 
 	private Member handleMemberResultSet(ResultSet rset) throws SQLException {

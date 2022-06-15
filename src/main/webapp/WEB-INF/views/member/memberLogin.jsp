@@ -81,7 +81,7 @@ function.btnClick() => {
 			</tr>
 		</table>
 		<br>
-				<input type="submit" id="button" value="Login" onClick='btnClcik()'>
+				<input type="submit" id="button" value="Login" onClick='btnClick()'>
 		<br><br>
 	<div id="naver_id_login">
 <%--<a href="${url}"></a> 네이버 로그인 페이지 이동 --%>
@@ -95,7 +95,7 @@ function.btnClick() => {
 	<%-- span태그 css이용해서 nbsp대신 띄워주자 ㅠㅠ --%>
 	<span id="enroll" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">회원가입</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<span id="id_find">ID 찾기</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<span id="id_find" onclick="location.href='<%= request.getContextPath() %>/member/findId';">ID 찾기</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<span>|</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<span id="ps_find">비밀번호 찾기</span>
 				
