@@ -76,13 +76,14 @@ table#tbl-board-view {
 	float: center;  
 }
 table#tbl-board-view th {
-	width: 100px; 
+	width:10%; 
 	border:1px solid; 
-	padding: 10px 0; 
-	text-align:center; 
+	padding: 10px; 
+	text-align:center;
+	vertical-align:middle;
 } 
 table#tbl-board-view td {
-	width: 85%; 
+	width: 90%; 
 	border:1px solid; 
 	padding: 5px 0 5px 15px; 
 	text-align:left;
@@ -121,7 +122,7 @@ span#fname{
 
 /*댓글테이블*/
 table#tbl-comment{
-	width:80%;  
+	width:90%;  
 	padding:5px; 
 	margin:15px 15px 15px 15px;
 	} 

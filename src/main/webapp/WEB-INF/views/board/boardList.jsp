@@ -6,15 +6,15 @@
 <% 
 	List<BoardExt> list = (List<BoardExt>) request.getAttribute("list");
 	String pagebar = (String) request.getAttribute("pagebar");
+
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <div class="top-logo">
- <img src="<%= request.getContextPath() %>/images/community.jpg" alt=게시판로고" />
+ <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
-<div id="board-t">
 <section id="board-container">
-<table class="table table-hover" id="tbl-board">
-  <thead>
+	<table class="table table-hover id="tbl-board">
+		<thead>
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
@@ -25,7 +25,6 @@
 			</tr>
 		</thead>
 		<tbody>
-		
 <%
 	if(list == null || list.isEmpty()){
 %>
@@ -60,13 +59,11 @@
 %>
 		</tbody>
 	</table>
-	</div>
 	<input 
-	type="button" value="글쓰기" id="btn-add" class="btn"
+	type="button" value="글쓰기" id="btn-add"  class="btn"
 	onclick="location.href='<%= request.getContextPath() %>/board/boardEnroll';"/>
-
-	<div id="pagebar">
+</section>
+<div id="pagebar">
 		<%= pagebar %>
 	</div>
-</section>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
