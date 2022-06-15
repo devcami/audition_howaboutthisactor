@@ -254,11 +254,35 @@ btnApply.addEventListener('click', (e) => {
  * 하트 클릭 시 wishlist_ann에 추가 | 삭제
  */
 const addWishlist = (e) => {
-	e.document.querySeletor("").id
-	if()
-	$.ajax({
-		url : "<%=  %>"
-	}); 
+	const wishBtn = document.querySelector("#btn-wish");
+	let wishBtnSrc = wishBtn.lastElementChild.src;
+	if(wishBtnSrc.substr(33,) == "fullHeartWish.png"){
+		$.ajax({
+			url : "<%= request.getContextPath() %>/ann/delWishAnn",
+			data : {
+				annNo : <%= ann.getAnnNo() %>,
+				memberId : "<%= loginMember.getMemberId() %>"
+			},
+			success(resp){
+				//하트가 empty로
+				wishBtn.lastElementChild.src = "<%= request.getContextPath() %>/images/emptyHeartWish.png";
+			},
+			error : console.log
+		});
+	} else {
+		$.ajax({
+			url : "<%= request.getContextPath() %>/ann/addWishAnn",
+			data : {
+				annNo : <%= ann.getAnnNo() %>,
+				memberId : "<%= loginMember.getMemberId() %>"
+			},
+			success(resp){
+				//하트가 full로
+				wishBtn.lastElementChild.src = "<%= request.getContextPath() %>/images/fullHeartWish.png";
+			},
+			error : console.log
+		});
+	}
 };
 
 /**

@@ -84,7 +84,7 @@ sortType.addEventListener('change', (e) => {
 });
 const annView = (ann) => {
 	const annNo = ann.firstElementChild.lastElementChild.value;
-	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}&memberId=<%= loginMember.getMemberId() %>`;
+	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
 };
 
 </script>
