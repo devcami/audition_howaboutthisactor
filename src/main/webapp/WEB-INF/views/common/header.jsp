@@ -54,11 +54,11 @@ window.addEventListener('load', () => {
             <div class="nav-item"><a href="<%= request.getContextPath() %>/board/boardList">게시판</a></div>
 
              <% 
+             	String url = "";
              	if(loginMember != null) {
              		
              	   MemberRole memberRole = loginMember.getMemberRole();
              	   
-             	   String url = "";
              	   switch(memberRole.toString()){
              	   case("A"):   
              	      url = "/mypage/memberList";
@@ -76,9 +76,7 @@ window.addEventListener('load', () => {
              <% 		
              	}
              %>        
-                     
-                     
-                     
+
             <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>
