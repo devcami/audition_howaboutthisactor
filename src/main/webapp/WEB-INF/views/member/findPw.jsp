@@ -28,9 +28,8 @@
 			<br>
 	</section>
 	<div class ="btnSearch">
-		<input type="button" name="enter" value="찾기">
-		<%--  onclick="location.href='<%= request.getContextPath() %>/member/findIdResult'; 아이디 찾는 창으로 이동 --%> 
-		<input type="button" name="cancle" value="취소">
+		<input type="button" name="enter" value="찾기" onclick="location.href='<%= request.getContextPath() %>/member/findPwResult';">
+		<input type="button" name="cancle" value="취소" onclick= "window.close()">
  	</div>
  </form>
 
