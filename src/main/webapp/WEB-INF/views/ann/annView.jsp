@@ -26,16 +26,9 @@
 	Production p = (Production) request.getAttribute("production");
 	
 	
-	//header#loginMember에서 가져올 내용들
-	Date regDate = Date.valueOf("2022-06-12");
-	PortAttachment profile = new PortAttachment(136, "hosi", "hosi3.jpg", "20220612_232138889_840.jpg", "P", regDate);
-	ActorInfo actorInfo = new ActorInfo("hosi", "권순영", 45, "1996-06-15", 26, "인하대학교 연극영화과", 177, 60, "세븐틴", "010-1234-1223", "hosi615@gmail.com", "춤, 노래", "@ho5hi_kwon", 136, profile);
-
-	PortAttachment workA1 = new PortAttachment(127,"hosi","hosi2.jpg","20220612_182106054_498.jpg", "W", regDate);
-	PortAttachment workA2 = new PortAttachment(123,"hosi","hosi7.jpg","20220612_145146543_486.jpg", "W", regDate);
-	List<PortfolioWork> pList = new ArrayList<>();
-	pList.add(new PortfolioWork(135,"hosi","작푸명","기간","배역","ㅇㅇㅇㅇ", workA1));
-	pList.add(new PortfolioWork(131,"hosi","거침없이","2022.08 ~ 2022.09","부석순","링크", workA2));
+	PortAttachment profile = (PortAttachment) request.getAttribute("profile"); 
+	ActorInfo actorInfo = (ActorInfo) request.getAttribute("actorInfo");
+	List<PortfolioWork> pList = (List<PortfolioWork>) request.getAttribute("pList");
 	
 	List<WishListAnn> wishlistAnn = (List<WishListAnn>) request.getAttribute("wishlistAnn");
 
@@ -50,10 +43,9 @@
 			<span id="cast-role"><%= cast.getCastRole() %></span>&nbsp;|&nbsp;<span id="cast-name"><%= cast.getCastName() %>역</span>
 			<h5 id="work-title"> <%= work.getProduction() %>&nbsp;|&nbsp;<%= work.getDirector() %>&nbsp;|&nbsp;<<%= work.getTitle() %>> </h5>
 			<p><%= ann.getAnnEndDate() %> 마감 | <%= ann.getAnnRegDate() %> 게시</p>
-			
-			<!-- Button Apply loginMemebr.getMemeberRole이 P인 경우에만 노출 -->
-			<button type="button" id="btn-apply" class="rounded view" data-bs-toggle="modal"
-				data-bs-target="#applyModal" >간편지원</button>
+			<% if(loginMember.getMemberRole().toString().equals("P")) { %>			
+				<button type="button" id="btn-apply" class="rounded view" data-bs-toggle="modal" data-bs-target="#applyModal" >간편지원</button>
+			<% } %>
 	
 			<!-- Modal -->
 			<div class="modal fade" id="applyModal" tabindex="-1"
