@@ -29,7 +29,7 @@ public class BoardListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// 1. 사용자 입력값 처리
-			int numPerPage = 10;
+			int numPerPage = 15;
 			int cPage = 1;
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));

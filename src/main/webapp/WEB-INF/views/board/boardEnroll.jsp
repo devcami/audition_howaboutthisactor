@@ -37,11 +37,35 @@ window.onload = () => {
 
 <section id="board-container">
 <div id="board-E">
-<form
-	name="boardEnrollFrm"
-	action="<%=request.getContextPath() %>/board/boardEnroll" 
-	method="post"
-	enctype="multipart/form-data">
+<form name="boardEnrollFrm"
+	  action="<%=request.getContextPath() %>/board/boardEnroll" 
+	  method="post"	enctype="multipart/form-data">
+	  
+  <div class="mb-3 row">
+    <label for="title" class="col-sm-2 col-form-label">제  목</label>
+    <div class="col-sm-10">
+      <input type="text" readonly class="form-control" name="title" id="enroll-title" required>
+    </div>
+  </div>
+  
+  <div class="row">
+  <div class="col">
+  	<label for="memberId" class="col-sm-2 col-form-label">작성자</label>
+    <input type="text" class="form-control" name="memberId" class="form-control" value="<%= loginMember.getMemberId() %>" readonly/>
+  </div>
+  <div class="col">
+  <label for="memberId" class="col-sm-2 col-form-label">첨부파일
+    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name"></label>
+  </div>
+</div>
+
+  <div class="mb-3 row">
+    <label for="memberId" class="col-sm-2 col-form-label">작성자</label>
+    <div class="col-sm-10">
+      <input input type="text" name="memberId" class="form-control" value="<%= loginMember.getMemberId() %>" readonly/>
+    </div>
+  </div>
+  
 	<table id="tbl-board-view">
 	<tr>
 		<th>제 목</th>

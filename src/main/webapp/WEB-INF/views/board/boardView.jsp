@@ -16,20 +16,19 @@
 	
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
+<div class="top-logo">
+ <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
+</div>
+
 <section id="board-container">
-	<h2>게시판</h2>
 	<table id="tbl-board-view">
-		<tr>
-			<th>글번호</th>
-			<td><%= board.getNo() %></td>
-		</tr>
-		<tr>
-			<th>제 목</th>
-			<td><%= board.getTitle() %></td>
-		</tr>
 		<tr>
 			<th>작성자</th>
 			<td><%= board.getMemberId() %></td>
+		</tr>
+		<tr>
+			<th>제 목</th> 
+			<td><%= board.getTitle() %></td>
 		</tr>
 		<tr>
 			<th>조회수</th>
@@ -54,7 +53,7 @@
 		%>
 		<tr>
 			<th>내 용</th>
-			<td><%= board.getContent() %></td>
+			<td id="view-content"><%= board.getContent() %></td>
 		</tr>
 		<% if(canEdit){ %>
 		<tr>
@@ -70,24 +69,12 @@
 	<hr style="margin-top:30px;" />	
     
 	<div class="comment-container">
-        <div class="comment-editor">
-            <form
-				action="<%=request.getContextPath()%>/board/boardCommentEnroll" method="post" name="boardCommentFrm">
-                <input type="hidden" name="boardNo" value="<%= board.getNo() %>" />
-                <input type="hidden" name="memberId" value="<%= loginMember != null ? loginMember.getMemberId() : "" %>" />
-                <input type="hidden" name="commentLevel" value="1" />
-                <input type="hidden" name="commentRef" value="0" />    
-				<textarea name="content" cols="60" rows="3"></textarea>
-                <button type="submit" id="btn-comment-enroll1">등록</button>
-            </form>
-        </div>
-		<!--table#tbl-comment-->
+      <!--table#tbl-comment-->
 		<% if (comments != null && !comments.isEmpty()) {%>
 		<table id="tbl-comment">
 			<tbody>
 			<% 
 				for (BoardComment bc : comments){ 
-					
 					boolean canDelete = loginMember != null 
 							&& (loginMember.getMemberId().equals(bc.getMemberId()) 
 									|| loginMember.getMemberRole() == MemberRole.A);
@@ -95,11 +82,10 @@
 					if(bc.getCommentLevel() == 1){
 			%>
 				<tr class="level1">
-					<td>
-						<sub class="comment-writer"><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %></sub>
-						<sub class="comment-date"><%= bc.getRegDate() %></sub>
-						<br />
-						<%= bc.getContent() %>
+					<td><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)"%>
+					<td><%= bc.getRegDate() %></td>
+				<br />
+					<%= bc.getContent() %>
 					</td>
 					<td>
 						<button class="btn-reply" value="<%= bc.getNo() %>">답글</button>
@@ -110,15 +96,16 @@
 				</tr>
 			<% 		} else { %>
 				<tr class="level2">
-					<td>
-						<sub class="comment-writer"><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %></sub>
-						<sub class="comment-date"><%= bc.getRegDate() %></sub>
+						<td class="cwriterdate">
+						<%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %>
 						<br />
+						<%= bc.getRegDate() %>
+						<td class="cm-contents">
 						<%= bc.getContent() %>
 					</td>
 					<td>
 						<% if(canDelete){ %>
-							<button class="btn-delete" value="<%= bc.getNo() %>">삭제</button>
+							<button class="btn btn-delete" value="<%= bc.getNo() %>">삭제</button>
 						<% } %>
 					</td>
 				</tr>
@@ -128,10 +115,24 @@
 			%>
 			</tbody>
 		</table>
-		<% } %>
 	</div>
+	
+		 <div class="comment-editor">
+            <form
+				action="<%=request.getContextPath()%>/board/boardCommentEnroll" method="post" 
+				name="boardCommentFrm" id="#comment-h">
+                <input type="hidden" name="boardNo" value="<%= board.getNo() %>" />
+                <input type="hidden" name="memberId" value="<%= loginMember != null ? loginMember.getMemberId() : "" %>" />
+                <input type="hidden" name="commentLevel" value="1" />
+                <input type="hidden" name="commentRef" value="0" />    
+				<textarea name="content" cols="60" rows="3" placeholder="댓글을 작성하세요"></textarea>
+                <button type="submit"  class="btn" id="btn-comment-enroll1">등록</button>
+            </form>
+        </div>
+		<% } %>
 </section>
-<%-- @실습문제 - .btn-delete 클릭핸들러를 통해 boardCommentDelFrm 동적으로 전송 --%>
+	<hr style="margin-top:30px;" />	
+
 <form action="<%=request.getContextPath()%>/board/boardCommentDelete" name="boardCommentDelFrm" method="POST">
 	<input type="hidden" name="no" /> <!-- 댓글 번호 -->
 	<input type="hidden" name="boardNo" value="<%= board.getNo() %>" />
@@ -290,3 +291,4 @@ const updateBoard = () => {
 </script>
 <% } %>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
+	

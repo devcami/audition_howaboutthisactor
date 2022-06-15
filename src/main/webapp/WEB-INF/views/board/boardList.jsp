@@ -13,10 +13,8 @@
 </div>
 <div id="board-t">
 <section id="board-container">
-
-
-	<table id="tbl-board">
-		<thead>
+<table class="table table-hover" id="tbl-board">
+  <thead>
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
@@ -27,6 +25,7 @@
 			</tr>
 		</thead>
 		<tbody>
+		
 <%
 	if(list == null || list.isEmpty()){
 %>
