@@ -11,19 +11,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ann.model.dto.Ann;
 import board.model.dto.Board;
+import board.model.dto.Report;
 import common.HelloMvcUtils;
 import mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class MyBoardServlet
+ * Servlet implementation class ReportList
  */
-@WebServlet("/mypage/myboard")
-public class MyBoardServlet extends HttpServlet {
+@WebServlet("/mypage/reportList")
+public class ReportListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			
@@ -33,10 +33,10 @@ public class MyBoardServlet extends HttpServlet {
 			String memberId = "hosi";
 			
 
-			int numPerPage = mypageService.BOARD_NUM_PER_PAGE; // 12
-			int totalContent = mypageService.getTotalMyBoard(memberId);
+			int numPerPage = mypageService.REPORT_NUM_PER_PAGE; // 15
+			int totalContent = mypageService.getTotalReport();
 
-			System.out.println("MyBoardServlet@totalContent = " + totalContent);
+			System.out.println("ReportListServlet@totalContent = " + totalContent);
 			int cPage = 1; 
 			
 			try {
@@ -51,19 +51,23 @@ public class MyBoardServlet extends HttpServlet {
 			param.put("start", start);
 			param.put("end", end);
 			
-			String sortType = request.getParameter("sortType");
-			List<Board> list = null;
+			String searchType = request.getParameter("searchType");
+			List<Report> list = null;
 			
-			if("end_date".equals(sortType)) {
-				list = mypageService.myBoardEndDateSort(memberId, param);
+			if("undo".equals(searchType)) {
+				list = mypageService.ReportUndoList(param);
+			} else if("ing".equals(searchType)) {
+				list = mypageService.ReportIngList(param);
+			} else if("end".equals(searchType)) {
+				list = mypageService.ReportEndList(param);
 			} else {
-				list = mypageService.findMyAllBoard(memberId, param);
+				list = mypageService.ReportList(param);
 			}
 			
-//				System.out.println("MyBoardServlet@list 길이 = " + list.size());
-//				System.out.println("MyBoardServlet@list.get(0) = " + list.get(0));
-//				System.out.println("MyBoardServlet@list.get(1) = " + list.get(1));
-//				System.out.println("MyBoardServlet@list.get(2)" + list.get(2));
+				System.out.println("ReportListServlet@list 길이 = " + list.size());
+				System.out.println("ReportListServlet@list.get(0) = " + list.get(0));
+				System.out.println("ReportListServlet@list.get(1) = " + list.get(1));
+				System.out.println("ReportListServlet@list.get(2)" + list.get(2));
 
 			
 			String url = request.getRequestURI(); // /app/mypage/Pmywish
@@ -73,18 +77,19 @@ public class MyBoardServlet extends HttpServlet {
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			System.out.println("pagebar =" + pagebar);
 			
-			request.setAttribute("sortType", sortType);
+			request.setAttribute("searchType", searchType);
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
 			
-			request.getRequestDispatcher("/WEB-INF/views/mypage/myboard.jsp")
+			request.getRequestDispatcher("/WEB-INF/views/mypage/reportlist.jsp")
 			.forward(request, response);
-
 				
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
+		
+		
 	}
 
 }

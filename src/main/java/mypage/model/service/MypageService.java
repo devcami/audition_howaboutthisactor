@@ -8,6 +8,7 @@ import java.util.Map;
 
 import ann.model.dto.Ann;
 import board.model.dto.Board;
+import board.model.dto.Report;
 import mypage.model.dao.MypageDao;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
@@ -19,7 +20,9 @@ public class MypageService {
 	public static final int APPLY_NUM_PER_PAGE = 8;
 	public static final int ANN_NUM_PER_PAGE = 8;
 	public static final int BOARD_NUM_PER_PAGE = 15;
+	public static final int REPORT_NUM_PER_PAGE = 15;
 
+	
 	public List<Integer> insertPortWork(PortfolioWork work) {
 		List<Integer> resultNo = new ArrayList<>();
 		int result = 0;
@@ -300,6 +303,42 @@ public class MypageService {
 			close(conn);
 		}
 		return result;
+	}
+
+	public int getTotalReport() {
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalReport(conn);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<Report> ReportUndoList(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Report> list = mypageDao.ReportUndoList(conn, param);
+		close(conn);
+		return list;
+	}
+
+	public List<Report> ReportIngList(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Report> list = mypageDao.ReportIngList(conn, param);
+		close(conn);
+		return list;
+	}
+
+	public List<Report> ReportEndList(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Report> list = mypageDao.ReportEndList(conn, param);
+		close(conn);
+		return list;
+	}
+
+	public List<Report> ReportList(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Report> list = mypageDao.ReportList(conn, param);
+		close(conn);
+		return list;
+		
 	}
 	
 

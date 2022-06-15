@@ -15,6 +15,7 @@ import java.util.Properties;
 import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
 import board.model.dto.Board;
+import board.model.dto.Report;
 import member.model.exception.MemberException;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
@@ -644,6 +645,147 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public int getTotalReport(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalReport");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> getTotalReport@신고리스트 전체 게시글수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
+		
+	}
+
+	private Report handleReportResultSet(ResultSet rset) throws SQLException {
+		Report report = new Report();
+		
+		report.setNo(rset.getInt("no"));
+		report.setMemberId(rset.getString("member_Id"));
+		report.setAnnNo(rset.getInt("ann_no"));
+		report.setActor_no(rset.getInt("actor_no"));
+		report.setBoardNo(rset.getInt("board_no"));
+		report.setCommentNo(rset.getInt("comment_no"));
+		report.setReportContent(rset.getString("report_content"));
+		report.setReportDate(rset.getDate("report_date"));
+		report.setReportStatus(rset.getString("report_status"));
+		
+		return report;
+	}
+	
+	
+	public List<Report> ReportUndoList(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Report> list = new ArrayList<>();
+		String sql = prop.getProperty("ReportUndoList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Report report = handleReportResultSet(rset);
+				list.add(report);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 신고내역조회 - undo 신고 정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
+
+	public List<Report> ReportIngList(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Report> list = new ArrayList<>();
+		String sql = prop.getProperty("ReportIngList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Report report = handleReportResultSet(rset);
+				list.add(report);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 신고내역조회 - Ing 신고 정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<Report> ReportEndList(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Report> list = new ArrayList<>();
+		String sql = prop.getProperty("ReportEndList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Report report = handleReportResultSet(rset);
+				list.add(report);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 신고내역조회 - End 신고 정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<Report> ReportList(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Report> list = new ArrayList<>();
+		String sql = prop.getProperty("ReportList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Report report = handleReportResultSet(rset);
+				list.add(report);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> 신고내역조회 - 전체 신고 정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
 	}
 	
 	

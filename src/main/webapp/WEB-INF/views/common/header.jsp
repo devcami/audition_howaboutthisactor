@@ -9,7 +9,8 @@
 	
 	String url = "";
 	switch(memberRole){
-	case("A"):		
+	case("A"):	
+		url = "/mypage/memberList";
 		break;
 	case("D"):
 		url = "/mypage/myAnn?memberId=" + memberId + "&memberRole=" + memberRole;
@@ -19,7 +20,6 @@
 		break;
 	}
 	
-
 %>
 <!DOCTYPE html>
 <html>
