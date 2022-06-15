@@ -1,7 +1,7 @@
 @charset "UTF-8";
 form{
   font-family: 'Hahmlet', serif;
-  padding:40px 550px 0 550px;
+  padding:40px 250px 0 250px;
   
 }
 
@@ -13,14 +13,64 @@ form{
 	padding: 0 0 30px 0;
 }
 
+td {
+	padding: 0 0 10px 100px;
+}
+
+th {
+	padding: 0 0 10px 100px;
+}
+
+td#msg1 {
+	color: red;
+}
+
+td#msg2 {
+	color: red;
+}
+
+.exform_txt{
+	padding:12px 0 19px 0; 
+	text-align: right;
+	color:#9a9a9a;
+	font-size:13px;border-bottom:1px solid #ececec;
+}
+
+.exform_txt span{
+	display: inline-block;
+	position:relative;  
+	padding-left:10px;
+}
+
+.exform_txt span:after{
+	content:'*';
+	position:absolute;
+	left:0;
+	top:0; 
+	color:#f95427; 
+	font-size: 13px; 
+	font-weight: bold;
+}
+.agree_wrap{
+	margin:36px 0 0;
+}
+
+.agree_wrap .checkbox_wrap{
+	text-align:left;
+}
+
+.mar27{
+	margin:27px 0 0;
+}
+
 #button1 {
-	width: 200px;
+	width: 350px;
 	background-color: #bbded6;
 	color: white;
 }
 
 #button2 {
-	width: 200px;
+	width: 350px;
 	background-color: #bbded6;
 	color: white;
 }

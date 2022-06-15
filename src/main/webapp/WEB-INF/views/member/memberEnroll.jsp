@@ -1,8 +1,11 @@
 <%-- '회원가입에 성공하였습니다.' 혹은 유효성 검사 확인 --%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+
+<%@page import="java.sql.Date"%>
+<%@page import="member.model.dto.Member"%>	
+<%@page import="member.model.dto.Production" %>
+<%@page import="ann.model.dto.Ann"%>	
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mEnroll.css" />
 <section id=enroll-container>
@@ -21,16 +24,19 @@
 				</td>
 			</tr>
 			<tr>
-				<th>숫자, 영문자 포함</th>
+				<th></th>
+					<td id="msg1">숫자, 영문자 포함</td>
+			</tr>
 			<tr>
-				<th>비밀번호<sup>*</sup></th>
+				<th>비밀번호<sup>*</sup></th>	
 				<td>
 					<input type="password" placeholder="6글자이상" name="password" id="_password"><br>
 				</td>
 			</tr>
 			<tr>
-				<th>숫자, 영문자, 특수기호 포함</th>
-			<tr>
+				<th></th>
+					<td id="msg2">숫자, 영문자, 특수기호 포함</td>
+			</tr>
 			<tr>
 				<th>비밀번호 확인<sup>*</sup></th>
 				<td>	
@@ -56,12 +62,6 @@
 				</td>
 			</tr>
 			<tr>
-				<th>주소</th>
-				<td>	
-					<input type="text" placeholder="" name="address" id="address"><br>
-				</td>
-			</tr>
-			<tr>
 				<th>성별 </th>
 				<td>
 					<input type="radio" name="gender" id="gender0" value="M">
@@ -73,9 +73,9 @@
 			<tr>
 				<th>회원 유형 </th>
 				<td>
-					<input type="radio" name="type" id="type0" value="P">
+					<input type="radio" name="memberRole" id="memberRole0" value="P">
 					<label for="type0">배우 및 아티스트</label>
-					<input type="radio" name="type" id="type1" value="D">
+					<input type="radio" name="memberRole" id="memberRole1" value="D">
 					<label for="type1">제작자 및 캐스팅 담당자</label>
 				</td>
 			</tr>
@@ -92,6 +92,8 @@
 						<tr>
 				<th>이메일</th>
 				<td>	
+					<input type="email" placeholder="abc123@xyz.com" name="email" id="email"><br>
+					<%-- 가능하다면 아래처럼 구현하고픔... 
 					<input type="email" placeholder="abc123" name="email" id="email">
 					<b>@</b>
 					<select name="email_back">
@@ -104,13 +106,33 @@
 						<option value="ms">microsoft.com</option>
 						<option value="outlook">outlook.com</option>
 					</select>
-					<input type="button" value="인증메일 받기" onclick="checkEmail();" />
+					--%>
 				</td>
 			</tr>
 		</table>
 		<br>
-		<input type="submit" id="button1" value="가입" >
-		<input type="reset" id="button2" value="취소">
+		<div class="exform_txt"><span>표시는 필수적으로 입력해주셔야 가입이 가능합니다.</span></div>
+		<br>
+		    <div class="agree_wrap">
+            <div class="checkbox_wrap">
+              <input type="checkbox" id="news_letter" name="news_letter" class="agree_chk">
+              <label for="news_letter">[선택]뉴스레터 수신동의</label>
+            </div>
+            <div class="checkbox_wrap mar27">
+              <input type="checkbox" id="marketing" name="marketing" class="agree_chk">
+              <label for="marketing">[선택]마케팅 목적 개인정보 수집 및 이용에 대한 동의</label>
+              <ul class="explan_txt">
+                <li><span class="red_txt">항목 : 성별, 생년월일</span></li>
+                <li>고객님께서는 위의 개인정보 및 회원정보 수정 등을 통해 추가로 수집하는 개인정보에<br/>
+                  대해 동의하지 않거나 개인정보를 기재하지 않음으로써 거부하실 수 있습니다.<br/>
+                  다만 이때 회원 대상 서비스가 제한될 수 있습니다.
+                </li>
+              </ul>
+            </div>
+          </div>
+          <br>
+		<input type="submit" id="button1" value="이메일 인증하여 가입" >
+		<input type="reset" id="button2" value="다시입력">
 	</form>
 </section>
 <form name="checkIdDuplicateFrm" action="<%= request.getContextPath() %>/member/checkIdDuplicate">
