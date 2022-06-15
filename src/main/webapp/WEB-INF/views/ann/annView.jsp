@@ -27,10 +27,7 @@
 	
 	
 	//header#loginMember에서 가져올 내용들
-	Date birthday = Date.valueOf("1996-06-15");
-	Date enrollDate = Date.valueOf("2022-06-11");
 	Date regDate = Date.valueOf("2022-06-12");
-	Member loginMember = new Member("hosi", "1234", "호시", "hosi13@naver.com", MemberRole.P, "01013131313", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
 	PortAttachment profile = new PortAttachment(136, "hosi", "hosi3.jpg", "20220612_232138889_840.jpg", "P", regDate);
 	ActorInfo actorInfo = new ActorInfo("hosi", "권순영", 45, "1996-06-15", 26, "인하대학교 연극영화과", 177, 60, "세븐틴", "010-1234-1223", "hosi615@gmail.com", "춤, 노래", "@ho5hi_kwon", 136, profile);
 

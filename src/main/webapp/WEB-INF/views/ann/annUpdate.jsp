@@ -15,9 +15,6 @@
 	Work work = ann.getWork();
 	List<WorkAttachment> attachments = work.getAttachments();
 	Cast cast = work.getCast();
-	Date birthday = Date.valueOf("1990-09-09");
-	Date enrollDate = Date.valueOf("2022-06-10");
-	Member loginMember = new Member("director", "1234", "디렉터샘플", "director@naver.com", MemberRole.D, "01015971597", "M", birthday, enrollDate, "경기도 성남시", "영화,드라마");
 	Production p = new Production("director", "testProduction", "디렉터", "01015971597", "director@naver.com", "N", "Y");
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />

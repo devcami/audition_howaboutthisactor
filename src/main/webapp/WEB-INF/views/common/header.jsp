@@ -9,7 +9,7 @@
 	// String memberId = "director";
 	// String memberRole = "D";
 	
-	Member member = (Member)session.getAttribute("loginMember");
+	Member loginMember = (Member)session.getAttribute("loginMember");
 	String msg = (String) session.getAttribute("msg");	
 	
 	String url = "";
