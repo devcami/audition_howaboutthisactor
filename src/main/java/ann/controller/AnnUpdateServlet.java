@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
@@ -22,6 +22,7 @@ import common.HelloMvcFileRenamePolicy;
 import common.model.dto.Cast;
 import common.model.dto.Work;
 import common.model.dto.WorkAttachment;
+import member.model.dto.Member;
 import member.model.dto.Production;
 
 @WebServlet("/ann/annUpdate")
@@ -32,6 +33,10 @@ public class AnnUpdateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int annNo = Integer.parseInt(request.getParameter("annNo"));
 		Ann ann = annService.findByAnnNo(annNo);
+		HttpSession session = request.getSession();
+		Member loginMember = (Member) session.getAttribute("loginMember");
+		Production p = annService.findProductionByMemberId(loginMember.getMemberId());
+		request.setAttribute("production", p);
 		request.setAttribute("ann", ann);
 		request.getRequestDispatcher("/WEB-INF/views/ann/annUpdate.jsp").forward(request, response);
 	}

@@ -43,9 +43,8 @@
 			<span id="cast-role"><%= cast.getCastRole() %></span>&nbsp;|&nbsp;<span id="cast-name"><%= cast.getCastName() %>역</span>
 			<h5 id="work-title"> <%= work.getProduction() %>&nbsp;|&nbsp;<%= work.getDirector() %>&nbsp;|&nbsp;<<%= work.getTitle() %>> </h5>
 			<p><%= ann.getAnnEndDate() %> 마감 | <%= ann.getAnnRegDate() %> 게시</p>
-			<% if(loginMember.getMemberRole().toString().equals("P")) { %>			
+			<% if(loginMember != null && loginMember.getMemberRole().toString().equals("P")) { %>			
 				<button type="button" id="btn-apply" class="rounded view" data-bs-toggle="modal" data-bs-target="#applyModal" >간편지원</button>
-			<% } %>
 	
 			<!-- Modal -->
 			<div class="modal fade" id="applyModal" tabindex="-1"
@@ -191,7 +190,7 @@
 					</div>
 				</div>
 			</div>
-			
+		<% } %>
 			<div id="btn-wish" onclick="addWishlist(this);">
 			<% if(wishlistAnn != null && !wishlistAnn.isEmpty()){
 					for(int i = 0; i < wishlistAnn.size(); i++){
@@ -254,7 +253,7 @@
 		<hr />
 		<div class="work-content mrgbtm">
 			<h2>작품 설명</h2>
-			<p>
+			<p class="workD">
 				<%= work.getDescription() %>
 			</p>
 		</div>
