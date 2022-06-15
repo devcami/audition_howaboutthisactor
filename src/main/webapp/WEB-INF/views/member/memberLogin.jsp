@@ -36,7 +36,8 @@
 	</div><br>
 	
 	<div id="enroll">회원가입</div>
-	<div id="enroll">아이디 찾기</div>
+	<div id="id_find">ID 찾기</div>
+	<div id="ps_find">비밀번호 찾기</div>
 	
 	</form>
 </section>
