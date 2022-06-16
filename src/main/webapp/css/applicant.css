@@ -1,4 +1,6 @@
 @charset "UTF-8";
+
+@charset "UTF-8";
 #container {
   display: flex;
   font-family: 'Hahmlet', serif;
@@ -49,7 +51,6 @@
 
 
 #mywish{
-  /* height: 70vh; */
   margin-bottom: 100px;
   width: 80%;
   margin-left: 4%;
@@ -65,7 +66,7 @@
 #pagebar {
 text-align: center;
     font-size: 20px;
-    margin: 100px 0 20px;
+    margin: 50px 0 20px;
     color: #639488;
 }
 #pagebar span {
@@ -83,6 +84,10 @@ text-align: center;
   display: flex;
   flex-wrap: wrap;
   margin-top: 30px;
+  margin-left: 20px;
+  height: 80%;
+  align-content: flex-start;
+
 }
 
 
@@ -116,12 +121,14 @@ text-align: center;
 }
 /* 공고 하나하나 */
 .col{
-  flex: 0 0 auto;
-  width: 22%;
+  flex: 0 0 auto !important;
+  width: 23%;
   margin: 10px;
 }
 .card {
-  height: 100%!important;
+  width: 45%;
+  margin-left: 15px;
+  margin-top: 10px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -144,21 +151,35 @@ p {
   margin-top: 0;
   margin-bottom: 1rem;
 }
-.card-footer{
-  color: #ffffff;
-  background-color: #bbded6;
-  padding: 0.5rem 1rem;
-  /* border-top: 1px solid rgba(0,0,0,.125); */
-}
-.card-footer:last-child {
-  border-radius: 0 0 calc(0.25rem - 1px) calc(0.25rem - 1px);
-} 
 .text-muted {
   color: white !important;
 }
-
 .card:hover {
   cursor: pointer;
   background-color: #bbded645;
   box-shadow: 0px 0px 8px rgb(172 172 172 / 50%);
 }
+
+  #btnbtn {
+    width: 30%;
+    background-color: #bbded6;
+    border-color: #bbded6;
+  }
+  #btnbtn:hover {
+    color: #fff;
+    background-color: #fae3d9;
+    border-color:#fae3d9;
+  }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  #btn-div {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .offcanvas {
+  	width: 46%;
+  }
