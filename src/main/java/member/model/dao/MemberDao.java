@@ -61,27 +61,56 @@ public class MemberDao {
 		return member;
 	}
 	
-	public String findId(String memberName, String phone) {
-		String Id = null;
+	public String findId(Connection conn, String memberName, String phone) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findId");
+		String Id = "";
 		
 		try {
-			String sql = "findId";
-			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberName);
 			pstmt.setString(2, phone);
 			
-			ResultSet rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				Id = rs.getString("member.member_Id");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Id = rset.getString("member_id");
 			}
-				
+			System.out.println("dao단 아이디"+ Id);	
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
 		}
 		return Id;
 	}
 
+	public String findPw(Connection conn, String memberId, String memberName) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findPw");
+		String password = "";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, memberName);
+			
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				password = rset.getString("password");
+			}
+			System.out.println("dao단 비밀번호"+ password);		
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return password;
+	}
+	
 	private Member handleMemberResultSet(ResultSet rset) throws SQLException {
 		Member member = new Member();
 		member.setMemberId(rset.getString("member_id"));

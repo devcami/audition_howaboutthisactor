@@ -10,50 +10,42 @@ import javax.servlet.http.HttpServletResponse;
 import member.model.service.MemberService;
 
 /**
- * Servlet implementation class FindIdServlet
+ * Servlet implementation class FindPwServlet
  */
-@WebServlet("/member/findId")
-public class FindIdServlet extends HttpServlet {
+@WebServlet("/member/findPw")
+public class FindPwServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-  */
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("findIdServlet 도착");
-		
+		System.out.println("findPwServlet 도착");
 		request
-		.getRequestDispatcher("/WEB-INF/views/member/findId.jsp")
+		.getRequestDispatcher("/WEB-INF/views/member/findPw.jsp")
 		.forward(request, response);
 	}
-		 
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	*/
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-
 		 request.setCharacterEncoding("utf-8");
 
+		 String memberId = request.getParameter("memberId");
 		 String memberName = request.getParameter("memberName");
-		 String phone = request.getParameter("phone");
-		 System.out.println("memberId@findIdServlet = " + memberName + phone);
+		 System.out.println("memberId@findIdServlet = " + memberId + memberName);
 		 
-		 String Id = memberService.findId(memberName, phone);
-		 boolean available = (Id == null);
+		 String password = memberService.findPw(memberId, memberName);
+		 boolean available = ( password == null);
 		 
-		 request.setAttribute("Id",  Id);
+		 request.setAttribute("password",  password);
 		 request.setAttribute("available", available);
 		 
 		
 		 request
 			.getRequestDispatcher("/WEB-INF/views/member/findIdResult.jsp")
 			.forward(request, response);
-		 
 	}
-
 }
-
-
