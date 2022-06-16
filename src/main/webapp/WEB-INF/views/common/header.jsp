@@ -80,35 +80,8 @@ window.addEventListener('load', () => {
             <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>
-            <div class="nav-item login"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
-            <div class="nav-item login"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>
-            <div class="nav-item logout"><a href="<%= request.getContextPath() %>/member/logout">로그아웃</a></div>
+            <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
+            <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>
         </div>
     </div>
     
-<script>
-<% if(loginMember == null){ %>
-	const login = document.querySelectorAll(".login");
-	const logout = document.querySelectorAll(".logout");
-	login.forEach((e) => {
-		e.classList.remove("none");
-		e.classList.add("inline");
-	});
-	logout.forEach((e) => {
-		e.classList.remove("inline");
-		e.classList.add("none");
-	});
-	
-<% } else { %>
-	const login = document.querySelectorAll(".login");
-	const logout = document.querySelectorAll(".logout");
-	login.forEach((e) => {
-		e.classList.add("none");
-		e.classList.remove("inline");
-	});
-	logout.forEach((e) => {
-		e.classList.add("inline");
-		e.classList.remove("none");
-	});
-<% }%>
-</script>
