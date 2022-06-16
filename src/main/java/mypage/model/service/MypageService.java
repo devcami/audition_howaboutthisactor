@@ -380,5 +380,26 @@ public class MypageService {
 		close(conn);
 		return production;
 	}
+
+	public int updateProduction(Production production) {
+		int result = 0;
+		// 1. Connection 객체 생성
+		Connection conn = getConnection();
+		try {
+			// 2. dao 요청
+			result = mypageDao.updateProduction(conn, production); 
+					
+			// 3. 트랜잭션 처리 - commit
+			commit(conn);
+		} catch(Exception e) {
+			// 3. 트랜잭션 처리 - rollback 
+			rollback(conn);
+			throw e;  // controller 통보용
+		} finally {
+			// 4. Connection 객체 반환
+			close(conn); 
+		}
+		return result;
+	}
 	
 }
