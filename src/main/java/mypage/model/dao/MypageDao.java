@@ -17,6 +17,7 @@ import ann.model.exception.AnnException;
 import board.model.dto.Board;
 import board.model.dto.Report;
 import member.model.dto.Member;
+import member.model.dto.MemberRole;
 import member.model.dto.Production;
 import member.model.exception.MemberException;
 import mypage.model.dto.ActorInfo;
@@ -910,6 +911,231 @@ public class MypageDao {
 		}
 		
 		return result;
+		
+	}
+
+	public List<Member> findAllMember(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Member> list = new ArrayList<>();
+		String sql = prop.getProperty("findAllMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Member member = handleMemberResultSet(rset);
+				list.add(member);
+			}
+			
+		} catch(Exception e) {
+			throw new MemberException("관리자 회원 목록 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+		
+	}
+
+	public int getTotalMember(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalContents = 0;
+		String sql = prop.getProperty("getTotalMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				totalContents = rset.getInt(1);  // 컬럼 인덱스로 가져오기
+			}			
+		} catch (Exception e) {
+			throw new MemberException("전체회원수 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContents;
+	}
+	
+	private Member handleMemberResultSet(ResultSet rset) throws SQLException {
+		
+		Member member = new Member();
+		
+		member.setMemberId(rset.getString("member_id"));
+		member.setPassword(rset.getString("password"));
+		member.setMemberName(rset.getString("member_name"));
+		member.setEmail(rset.getString("email"));
+		// 문자열 "U" -> MemberRole.U, "A" -> MemberRole.A
+		member.setMemberRole(MemberRole.valueOf(rset.getString("member_role")));
+		member.setPhone(rset.getString("phone"));
+		member.setGender(rset.getString("gender"));
+		member.setBirthday(rset.getDate("birthday"));
+		member.setEnrollDate(rset.getDate("enroll_date"));
+		member.setGenre(rset.getString("genre"));
+		
+		return member;
+	}
+
+	public List<Member> findBy(Connection conn, Map<String, String> param, Map<String, Object> pageParam) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Member> list = new ArrayList<>();
+		String sql = prop.getProperty("findBy");
+		sql = sql.replace("#", param.get("searchType"));
+		System.out.println("sql = " + sql);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + param.get("searchKeyword") + "%");
+			pstmt.setInt(2, (int) pageParam.get("start"));
+			pstmt.setInt(3, (int) pageParam.get("end"));
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Member member = handleMemberResultSet(rset);
+				list.add(member);
+			}
+			
+		} catch(Exception e) {
+			throw new MemberException("관리자 회원 검색 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int getTotalSearchedMember(Connection conn, Map<String, String> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int totalContents = 0;
+		String sql = prop.getProperty("getTotalSearchedMember");
+		sql = sql.replace("#", param.get("searchType"));
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + param.get("searchKeyword") + "%");
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				totalContents = rset.getInt(1);  // 컬럼 인덱스로 가져오기
+			}			
+		} catch (Exception e) {
+			throw new MemberException("관리자 회원 검색 전체 회원수 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return totalContents;
+	}
+
+	public List<Integer> GetMyApplys(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Integer> myApplys = new ArrayList<>();
+		String sql = prop.getProperty("GetMyApplys");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				int no = rset.getInt("ann_no");
+				myApplys.add(no);
+			}
+			
+		} catch(Exception e) {
+			throw new MemberException("GetMyApplys@내 ann_no 찾기 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return myApplys;
+		
+	}
+
+	public List<Ann> findAllMyApply(Connection conn, Map<String, Object> param, String myApplys) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Ann> myApplyAnns = new ArrayList<>();
+		String sql = prop.getProperty("findAllMyApply");
+		sql = sql.replace("#", myApplys);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Ann ann = new Ann();
+				
+				ann.setAnnNo(rset.getInt("ann_no"));
+				ann.setMemberId(rset.getString("member_Id"));
+				ann.setAnnTitle(rset.getString("ann_title"));
+				ann.setAnnRegDate(rset.getDate("ann_reg_date"));
+				ann.setAnnEndDate(rset.getDate("ann_end_date"));
+				ann.setIsClose(rset.getString("is_close"));
+				
+				myApplyAnns.add(ann);
+			}			
+		} catch (Exception e) {
+			throw new MemberException("내 지원목록 최신순 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return myApplyAnns;
+	}
+
+	public List<Ann> myApplyEndDateSort(Connection conn, Map<String, Object> param, String myApplys) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Ann> myApplyAnns = new ArrayList<>();
+		String sql = prop.getProperty("myApplyEndDateSort");
+		sql = sql.replace("#", myApplys);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, (int) param.get("start"));
+			pstmt.setInt(2, (int) param.get("end"));
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Ann ann = new Ann();
+				
+				ann.setAnnNo(rset.getInt("ann_no"));
+				ann.setMemberId(rset.getString("member_Id"));
+				ann.setAnnTitle(rset.getString("ann_title"));
+				ann.setAnnRegDate(rset.getDate("ann_reg_date"));
+				ann.setAnnEndDate(rset.getDate("ann_end_date"));
+				ann.setIsClose(rset.getString("is_close"));
+				
+				myApplyAnns.add(ann);
+			}			
+		} catch (Exception e) {
+			throw new MemberException("내 지원목록 마감순 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return myApplyAnns;
 		
 	}
 	
