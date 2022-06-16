@@ -137,6 +137,7 @@ public class BoardDao {
 			pstmt.setInt(1, attach.getBoardNo());
 			pstmt.setString(2, attach.getOriginalFilename());
 			pstmt.setString(3, attach.getRenamedFilename());
+			
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new BoardException("첨부파일 등록 오류", e);
@@ -302,10 +303,10 @@ public class BoardDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-//			pstmt.setInt(1, bc.getCommentLevel());
-			pstmt.setString(2, bc.getMemberId());
-			pstmt.setString(3, bc.getContent());
-			pstmt.setInt(4, bc.getBoardNo());
+			pstmt.setInt(1, bc.getCommentLevel());
+			pstmt.setInt(2, bc.getBoardNo());
+			pstmt.setString(3, bc.getMemberId());
+			pstmt.setString(4, bc.getContent());
 			// BoardComment#commentRef 0 ~ n -> board_comment.comment_ref null ~ n
 			pstmt.setObject(5, bc.getCommentRef() == 0 ? null : bc.getCommentRef());
 			

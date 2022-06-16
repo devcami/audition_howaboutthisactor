@@ -27,12 +27,13 @@ public class BoardCommentServlet extends HttpServlet {
 			// 1. 사용자입력값 처리
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 			int commentLevel = Integer.parseInt(request.getParameter("commentLevel"));
-			int commentRef = Integer.parseInt(request.getParameter("commentRef"));
 			String memberId = request.getParameter("memberId");
+//			System.out.println("memberId:" + memberId);
 			String content = request.getParameter("content");
+			int commentRef = Integer.parseInt(request.getParameter("commentRef"));
 			
 			BoardComment bc = 
-					new BoardComment(0, commentLevel, memberId, content, boardNo, commentRef, null);
+					new BoardComment(0, commentLevel, memberId, content,  boardNo, commentRef, null);
 			System.out.println("boardComment = " + bc);
 			
 			// 2. 업무로직

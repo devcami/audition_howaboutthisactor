@@ -48,7 +48,7 @@
 				<td><%= board.getRegDate() %></td>
 				<td>
 		<% if(board.getAttachCount() > 0) { %>					
-					<img src="<%= request.getContextPath() %>/images/file.png" alt="" />
+					<img src="<%= request.getContextPath() %>/images/attachfile.png" width= 20px; alt="" />
 		<% } %>					
 				</td>
 				<td><%= board.getReadCount() %></td>
