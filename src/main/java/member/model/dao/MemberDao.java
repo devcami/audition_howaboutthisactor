@@ -153,7 +153,7 @@ public class MemberDao {
 		}
 		return result;
 	}
-
+	
 	/**
 	 * 1건 조회시 member객체 하나 또는 null 리턴
 	 * n건 조회시 여러건의 member객체를 가진 list 또는 빈 list
