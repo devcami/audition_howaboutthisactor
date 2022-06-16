@@ -421,11 +421,11 @@ public class AnnDao {
 		return result;
 	}
 
-	public WorkAttachment findOneAttachByWorkNo(Connection conn, int waNo) {
+	public WorkAttachment findOneAttachByWaNo(Connection conn, int waNo) {
 		WorkAttachment attach = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		String sql = prop.getProperty("findOneAttachByWorkNo");
+		String sql = prop.getProperty("findOneAttachByWaNo");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -630,6 +630,113 @@ public class AnnDao {
 		}
 		
 		return totalContent;
+	}
+
+	public List<Ann> detailFinderGender(Connection conn, Map<String, Object> param, List<Ann> list) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("detailFinderGender");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String) param.get("annGender"));
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				for(int i = 0; i < list.size(); i++) {
+					if(list.get(i).getAnnNo() == ann.getAnnNo())
+						list.remove(i);
+				}
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고 상세 게시물 검색 - 성별 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<Ann> detailFinderAge(Connection conn, Map<String, Object> param, List<Ann> list) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("detailFinderAge");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String) param.get("annAge"));
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				for(int i = 0; i < list.size(); i++) {
+					if(list.get(i).getAnnNo() == ann.getAnnNo())
+						list.remove(i);
+				}
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고 상세 게시물 검색 - 나이 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<Ann> detailFinderHeight(Connection conn, Map<String, Object> param, List<Ann> list) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("detailFinderHeight");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String) param.get("annHeight"));
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				for(int i = 0; i < list.size(); i++) {
+					if(list.get(i).getAnnNo() == ann.getAnnNo())
+						list.remove(i);
+				}
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고 상세 게시물 검색 - 키 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public List<Ann> detailFinderBody(Connection conn, Map<String, Object> param, List<Ann> list) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("detailFinderBody");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String) param.get("annBody"));
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				for(int i = 0; i < list.size(); i++) {
+					if(list.get(i).getAnnNo() == ann.getAnnNo())
+						list.remove(i);
+				}
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고 상세 게시물 검색 - 체형 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 	
 }

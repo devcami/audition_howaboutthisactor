@@ -393,5 +393,16 @@ select * from wishlist_actor;
 select * from wishlist_ann;
 select * from report;
 
+delete from actor_apply where ann_no = 27;
+commit;
+
+update production set caster_email = 'jyjmjs2@naver.com' where member_id = 'director';
+------------------------------
+-- 채팅리스트
+------------------------------
+select * from (select row_number() over(order by ann_reg_date desc) rnum , a.* from announcement a) where ann_body <> '마름' and rnum between 1 and 12;
+
+
+
 
 

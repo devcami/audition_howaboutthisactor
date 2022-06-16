@@ -7,6 +7,7 @@ import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -133,9 +134,9 @@ public class AnnService {
 		return result;
 	}
 
-	public WorkAttachment findOneAttachByWorkNo(int waNo) {
+	public WorkAttachment findOneAttachByWaNo(int waNo) {
 		Connection conn = getConnection();
-		WorkAttachment attach = annDao.findOneAttachByWorkNo(conn, waNo);
+		WorkAttachment attach = annDao.findOneAttachByWaNo(conn, waNo);
 		close(conn);
 		return attach;
 	}
@@ -239,6 +240,34 @@ public class AnnService {
 		int totalContent = annDao.getTotalByTitle(conn, searchKeyword);
 		close(conn);
 		return totalContent;
+	}
+
+	public List<Ann> detailFinderGender(List<Ann> list, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Ann> annList = annDao.detailFinderGender(conn, param, list);
+		close(conn);
+		return annList;
+	}
+
+	public List<Ann> detailFinderAge(List<Ann> list, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Ann> annList = annDao.detailFinderAge(conn, param, list);
+		close(conn);
+		return annList;
+	}
+
+	public List<Ann> detailFinderHeight(List<Ann> list, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Ann> annList = annDao.detailFinderHeight(conn, param, list);
+		close(conn);
+		return annList;
+	}
+
+	public List<Ann> detailFinderBody(List<Ann> list, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Ann> annList = annDao.detailFinderBody(conn, param, list);
+		close(conn);
+		return annList;
 	}
 
 }

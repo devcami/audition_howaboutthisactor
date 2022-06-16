@@ -23,18 +23,15 @@ section{
   width: 100px !important;
   margin-bottom: 20px;
 }
-.inner .form-select{
-  display: inline;
-}
-#annFinderFrm{
-  margin: 40px 0;
+.inner{
+  height: 100%;
 }
 #searchTitle{
   position: relative;
   width: 350px;
   height: 35px;
 }
-.btn-search-title{
+.btn-search-title, .btn-search-detail{
   margin-left: 5px;
   border: none;
   border: #bbded6 2px solid;
@@ -50,12 +47,24 @@ section{
   top: 3px;
   box-shadow: none;
 }
+.btn-search-detail{
+  width: 100px;
+  float: right;
+  position: relative;
+  right: 50px;
+}
+.btn-search-detail:active{
+  float: right;
+  position: relative;
+  left: -47px;
+  top: 3px;
+  box-shadow: none;
+}
 .inner .btn{
   border: none;
   float: right;
   margin-right: 20px;
   position: relative;
-  bottom: 50px;
   background-color: #bbded6;
   transition: .2s;
 }
@@ -128,6 +137,31 @@ section{
   font-size: 20px;
   color: #000000;
 }
+.btn.btn-lg{
+  position: relative;
+  bottom: 30px;
+}
+
+/* 상세검색 */
+.form-label{
+  font-size: 20px;
+  font-weight: 500;
+  padding: 20px;
+  border-right: #bbded6 2px solid;
+}
+.form-check{
+  display: inline-block;
+  margin-left: 15px;
+}
+#annDetailFinderFrm .form-select{
+  display: inline-block;
+  margin-left: 15px;
+  width: 200px !important;
+}
+#dfHeight{
+  padding-left: 19px;
+}
+
 
 /* annView */
 #btn-apply{

@@ -72,6 +72,7 @@ window.addEventListener('load', () => {
              	   }
 
              %>
+             	<div class="nav-item"><a href="<%= request.getContextPath() %>/chat/chatList">메세지</a></div>  
              	<div class="nav-item"><a href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>  
             	<div class="nav-item"><a href="<%= request.getContextPath() %>/member/logout">로그아웃</a></div>
              

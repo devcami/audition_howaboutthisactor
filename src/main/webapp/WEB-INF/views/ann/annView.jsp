@@ -18,6 +18,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annApply.css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <% 
    Ann ann = (Ann) request.getAttribute("ann");
    Work work = ann.getWork();
@@ -398,38 +399,61 @@ const ApplySubmit = () => {
                   if(cnt == resp.length){
                      document.annApplyFrm.submit();
                      alert('공고 지원이 완료되었습니다.');
+					 sendEmail();
                   }
                }
                   
             } else {
-               document.annApplyFrm.submit();
-               alert('공고 지원이 완료되었습니다.');
+            	document.annApplyFrm.submit();
+				alert('공고 지원이 완료되었습니다.');
+				sendEmail();
             }
          },
-         error : console.log
+         error : console.log,
+         complete(){
+         }
       });
    }
 };
 
+(function(){
+	emailjs.init("qr-nmLS4V0i4h59Yx");		
+})();
+
+const sendEmail = () => {
+	var templateParams = {	
+		director: "<%= p.getCasterName() %>",
+		annTitle: "<%= ann.getAnnTitle() %>",
+		directorEmail: "<%= p.getCasterEmail() %>"
+	};
+                    
+	emailjs.send('service_r6ea1ha', 'template_hxvvope', templateParams)
+		.then(function(response) {
+			console.log('SUCCESS!', response.status, response.text);
+		}, function(error) {
+			console.log('FAILED...', error);
+		});
+}
+
 /**
  * 하트 클릭 시 wishlist_ann에 추가 | 삭제 비동기
  */
-const addWishlist = (e) => {
-   const wishBtn = document.querySelector("#btn-wish");
-   let wishBtnSrc = wishBtn.lastElementChild.src;
-   if(wishBtnSrc.substr(33,) == "fullHeartWish.png"){
-      $.ajax({
-         url : "<%= request.getContextPath() %>/ann/delWishAnn",
-         data : {
-            annNo : <%= ann.getAnnNo() %>,
-            memberId : "<%= loginMember.getMemberId() %>"
-         },
-         success(resp){
-            //하트가 empty로
-            wishBtn.lastElementChild.src = "<%= request.getContextPath() %>/images/emptyHeartWish.png";
-         },
-         error : console.log
-      });
+ const addWishlist = (e) => {
+	   const wishBtn = document.querySelector("#btn-wish");
+	   let wishBtnSrc = wishBtn.lastElementChild.src;
+	   if(wishBtnSrc.substr(33,) == "fullHeartWish.png"){
+	      $.ajax({
+	         url : "<%= request.getContextPath() %>/ann/delWishAnn",
+	         data : {
+	            annNo : <%= ann.getAnnNo() %>,
+	            memberId : "<%= loginMember.getMemberId() %>"
+	         },
+	         success(resp){
+	            //하트가 empty로
+	            wishBtn.lastElementChild.src = "<%= request.getContextPath() %>/images/emptyHeartWish.png";
+	         },
+	         error : console.log
+	      });
    } else {
       $.ajax({
          url : "<%= request.getContextPath() %>/ann/addWishAnn",
