@@ -7,9 +7,6 @@
 <%
 
 	Production production = (Production) request.getAttribute("production");
-
-	System.out.println(production.getIsPhoneOpen());
-	System.out.println(production.getIsEmailOpen());
 	
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/companyInfo.css" />
@@ -53,7 +50,7 @@
           <label for="exampleFormControlInput1" class="form-label">담당자명</label>
           <input 
           	type="text" readonly class="form-control-plaintext inputs" 
-          	name="memberId" id="memberId" value="<%= production.getCasterName() %>" >
+          	name="casterName" id="casterName" value="<%= production.getCasterName() %>" >
         </div>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">담당자 번호</label>
@@ -69,7 +66,8 @@
         </div>
         <div class="form-check">
           <input 
-          	class="form-check-input" type="checkbox" value="phone_open" id="flexCheckDefault"
+          	class="form-check-input ckinput" type="checkbox" value="Y" id="phone_open"
+          	name="phone_open"
           	<%="Y".equals(production.getIsPhoneOpen()) ? "checked" : ""%> disabled>
           <label class="form-check-label" for="flexCheckDefault">
             전화번호 공개
@@ -77,48 +75,72 @@
         </div>
         <div class="form-check">
           <input 
-          	class="form-check-input" type="checkbox" value="email_open" id="flexCheckChecked"
+          	class="form-check-input ckinput" type="checkbox" value="Y" id="email_open"
+          	name="email_open"
           	<%="Y".equals(production.getIsEmailOpen()) ? "checked" : ""%> disabled>
           <label class="form-check-label" for="flexCheckChecked">
             이메일 공개
           </label>
         </div>
         <div class="btn-div">
-          <button id="cancelbtn" class="btn" style="display: none;">취소</button>
-          <button id="savebtn" class="btn" style="display: none;">저장</button>
+          <button type="button" id="cancelbtn" class="btn" style="display: none;" onclick="cancel();">취소</button>
+          <button type="button" id="savebtn" class="btn" style="display: none;" onclick="save();">저장</button>
         </div>
       </form>
     </div> 
-<!-- 깃 풀리퀘용 -->
+    
   <script>
+  
+  
   	const edit = () => {
+
   		$('.btn').css('display', '');
-  		$('input').prop.('readonly', false);
+  		$('.inputs').attr('readonly', false);
+  		$('#memberId').attr('readonly', true);
+  		$(".ckinput").attr("disabled", false);
+  		$('.inputs').css('border-bottom', '2px solid #bbded6');
+  		$('#memberId').css('border-bottom', '');
+  		$('#update-btn').css('display', 'none');
   		
+  	}
+  	
+  	const cancel = () => {
+  		alert('취소하셨습니다.');
   		
-		   $.ajax({
-			   url : "<%= request.getContextPath() %>/mypage/deleteAnn",
+  		$('#companyName').val("<%= production.getProductionName() %>");
+  		$('#casterName').val("<%= production.getCasterName() %>");
+  		$('#phone').val("<%= production.getCasterPhone() %>");
+  		$('#email').val("<%= production.getCasterEmail() %>");
+  		
+  		$('input:[type=checkbox]').attr('checked', false);
+  		
+		endWork();  		
+
+  	}
+  	
+  	const endWork = () => {
+  		$('.btn').css('display', 'none');
+  		$('.inputs').attr('readonly', true);
+  		$(".ckinput").attr("disabled", true);
+  		$('.inputs').css('border-bottom', '');
+  		$('#update-btn').css('display', '');
+  	}
+  	
+  	const save = () => {
+  			const updateFrm = $("form[name=updateInfoFrm]").serialize();
+  			console.log(updateFrm);
+			
+   		   $.ajax({
+			   url : "<%= request.getContextPath() %>/mypage/updateProduction",
 			   method : "POST",
 			   dataType : "json",
-			   data : {
-				   "memberId" : "<%= loginMember.getMemberId() %>",
-				   "deleteAnn" : selectedArr
-			   },
-			   success(arrs){
-				   console.log("arrs = ", arrs);
-		           $.each(arrs, function(index, num){
-		        	   console.log("num = ", num);
-		        	   let colName = "#col" + num;
-		        	   console.log(colName);
-		           
-		        	   $(".col").remove(colName);
-		           });
-		          alert('공고가 삭제되었습니다.');
-		          location.reload();
+			   data : updateFrm,
+			   success(p){
+				   alert('저장되었습니다');
+				   endWork();
 			   },
 			   error : console.log
 		   });
-  		
   	}
 
    
