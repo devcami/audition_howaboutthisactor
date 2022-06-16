@@ -18,21 +18,21 @@ import member.model.dto.Member;
 import mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class ApplyListServlet
+ * Servlet implementation class ApplyListEndDateServlet
  */
-@WebServlet("/mypage/applylist")
-public class ApplyListServlet extends HttpServlet {
+@WebServlet("/mypage/myApplyEndDateSort")
+public class ApplyListEndDateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			
 			HttpSession session = request.getSession();
 	         Member member = (Member) session.getAttribute("loginMember");
 	         String memberId = member.getMemberId();
-			// String memberId = request.getParameter("memberId");
-			System.out.println("ApplyListServlet@memberId = " + memberId);
+	         
+			System.out.println("ApplyListEndDateServlet@memberId = " + memberId);
 			
 			
 			List<Integer> _myApplys = mypageService.GetMyApplys(memberId);
@@ -71,10 +71,13 @@ public class ApplyListServlet extends HttpServlet {
 			
 			String sortType = request.getParameter("sortType");
 			List<Ann> list = null;
+			String url = request.getRequestURI(); // /app/mypage/Pmywish
 			if("end_date".equals(sortType)) {
 				list = mypageService.myApplyEndDateSort(param, myApplys);
+				url += "?sortType=end_date";
 			} else {
 				list = mypageService.findAllMyApply(param, myApplys);
+				url += "?sortType=end_date";
 			}
 			
 			System.out.println("ApplyListServlet@list 길이 = " + list.size());
@@ -83,8 +86,7 @@ public class ApplyListServlet extends HttpServlet {
 			System.out.println("ApplyListServlet@list.get(2)" + list.get(2));
 
 			
-			String url = request.getRequestURI(); // /app/mypage/Pmywish
-			System.out.println(url);
+			
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
 			System.out.println("pagebaor =" + pagebar);
 			
@@ -99,8 +101,7 @@ public class ApplyListServlet extends HttpServlet {
 			e.printStackTrace();
 			throw e;
 		}
-	}
-	
 		
+	}
 
 }
