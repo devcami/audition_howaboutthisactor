@@ -180,6 +180,127 @@ p {
     justify-content: flex-end;
   }
   
-  .offcanvas {
-  	width: 46%;
+  * {
+    font-family: 'Hahmlet', sans-serif;
   }
+  .offcanvas {
+    width: 46%;
+  }
+  .wrapper{
+    width: 48% !important;
+    /* height: 450px; */
+    padding: 10px !important;
+    overflow: hidden !important;
+
+    position: relative !important;
+    display: inline-block !important;
+    overflow: hidden !important;
+  }
+  img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    box-shadow: 3px 3px 3px grey !important;
+
+
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    transition: 0.3s ease-out
+
+  }
+  .offcanvas-body {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    overflow-y: scroll !important;
+
+  }
+  .btn-close {
+    transform: translateY(-35px);
+  }
+
+
+  .bg{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 96%;
+    height: 97%;
+    z-index: 1;
+    transition: 0.25s ease-out;
+  }
+  .view{
+    width: 100%;
+    top: 110%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    position: absolute;
+    box-sizing: border-box;
+    text-align: center;
+    transition: .33s ease;
+    z-index: 2;
+  }
+
+
+  .view h3{
+      text-align: center;
+      font-size: 50px;
+      margin: 0;
+      color: #fff;
+      
+  }
+  .view h3>span {
+  }
+  .view p{
+      font-size: 25px;
+      color: #fff;
+      opacity: 0;
+      transition: .2s ease-out;
+      font-weight: bold;
+
+    }
+    #p-phone {
+      margin: 0;
+    }
+  .view a{
+      display: inline-block;
+      text-decoration: none;
+      padding: 7px 35px;
+      margin-top: 10px;
+      color: #fff;
+      border: 1px solid #fff;
+      transition: 0.28s;
+      opacity: 0;
+    }
+  
+  .wrapper:hover img{
+      top: -10px;
+  }
+  .view a:hover{
+      background-color: #fff;
+      color: #000;
+  }
+  .wrapper:hover .bg{
+      background: rgba(0,0,0, 0.44);
+  }
+  .wrapper:hover .view{
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+  .wrapper:hover .view>p, .wrapper:hover .view>a{
+        opacity: 1;
+    }
+    #offcanvasRightLabel {
+      margin-left: 10px;
+      font-size: 40px;
+    }
+    #smallLabel {
+      transform: translate(11px, 5px);
+      font-size: 30px;
+    }
+    #smallLabel span{
+      background-color: #bbded6;
+    }
+  

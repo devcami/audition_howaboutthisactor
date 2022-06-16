@@ -57,24 +57,109 @@
 		<% } else { %>
 			<div><p>조회된 공고가 없습니다.</p></div>
 		<% } %> 
-		
-		<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-          <div class="offcanvas-header">
-            <h5 id="offcanvasRightLabel">Offcanvas right</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-          </div>
-          <div class="offcanvas-body">
-            ...
-          </div>
-        </div>
-		
 
     </div>
 	<div id="pagebar">
 		<%= pagebar %>
 	</div>
+	
   </div>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+          <div class="offcanvas-header">
+            <div>
+              <h3 id="offcanvasRightLabel">공고명: 함께할 조연배우 모집합니다.</h3>
+              <h5 id="smallLabel"><span>지원자 목록</span></h5>
+            </div>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
+          </div>
+          <div class="offcanvas-body">
+            <div class="wrapper">
+              <img src="<%= request.getContextPath() %>/images/default.png">
+              <div class="bg"></div>
+              <div class="view">
+                <h3><span>권순영</span></h3>
+                <p>플레디스</p>
+                <p>1996-06-15</p>
+                <p id="p-phone">010-1234-5678</p>
+                <p>sunyoung@naver.com</p>
+                <a href="#">상세보기</a>
+              </div>
+            </div>
+                        <div class="wrapper">
+              <img src="<%= request.getContextPath() %>/images/hosi/hosi7.jpg">
+              <div class="bg"></div>
+              <div class="view">
+                <h3><span>권순영</span></h3>
+                <p>플레디스</p>
+                <p>1996-06-15</p>
+                <p id="p-phone">010-1234-5678</p>
+                <p>sunyoung@naver.com</p>
+                <a href="#">상세보기</a>
+              </div>
+            </div>
+                        <div class="wrapper">
+              <img src="<%= request.getContextPath() %>/images/hosi/hosi9.jpg">
+              <div class="bg"></div>
+              <div class="view">
+                <h3><span>권순영</span></h3>
+                <p>플레디스</p>
+                <p>1996-06-15</p>
+                <p id="p-phone">010-1234-5678</p>
+                <p>sunyoung@naver.com</p>
+                <a href="#">상세보기</a>
+              </div>
+            </div>
+                        <div class="wrapper">
+              <img src="<%= request.getContextPath() %>/images/hosi/hosi10.jpg">
+              <div class="bg"></div>
+              <div class="view">
+                <h3><span>권순영</span></h3>
+                <p>플레디스</p>
+                <p>1996-06-15</p>
+                <p id="p-phone">010-1234-5678</p>
+                <p>sunyoung@naver.com</p>
+                <a href="#">상세보기</a>
+              </div>
+            </div>
+                        <div class="wrapper">
+              <img src="<%= request.getContextPath() %>/images/hosi/hosi11.jpg">
+              <div class="bg"></div>
+              <div class="view">
+                <h3><span>권순영</span></h3>
+                <p>플레디스</p>
+                <p>1996-06-15</p>
+                <p id="p-phone">010-1234-5678</p>
+                <p>sunyoung@naver.com</p>
+                <a href="#">상세보기</a>
+              </div>
+            </div>
+            <div class="wrapper">
+              <img src="<%= request.getContextPath() %>/images/hosi/hosi13.jpg">
+              <div class="bg"></div>
+              <div class="view">
+                <h3><span>권순영</span></h3>
+                <p>플레디스</p>
+                <p>1996-06-15</p>
+                <p id="p-phone">010-1234-5678</p>
+                <p>sunyoung@naver.com</p>
+                <a href="#">상세보기</a>
+              </div>
+            </div>
+                        <div class="wrapper">
+              <img src="<%= request.getContextPath() %>/images/hosi/lee3.jpg">
+              <div class="bg"></div>
+              <div class="view">
+                <h3><span>권순영</span></h3>
+                <p>플레디스</p>
+                <p>1996-06-15</p>
+                <p id="p-phone">010-1234-5678</p>
+                <p>sunyoung@naver.com</p>
+                <a href="#">상세보기</a>
+              </div>
+            </div>
+           </div>
+           
   <script>
   
   sortType.addEventListener('change', (e) => {
