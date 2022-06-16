@@ -1,3 +1,5 @@
+<%@page import="member.model.dto.MemberRole"%>
+<%@page import="member.model.dto.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="member.model.dto.MemberRole"%>
@@ -13,9 +15,11 @@
 	String msg = (String) session.getAttribute("msg");	
 	if(msg != null)
 		session.removeAttribute("msg");
-	
-	
+
 %>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +51,7 @@ window.addEventListener('load', () => {
         <div class="nav-right-items">
             <div class="nav-item"><a href="<%= request.getContextPath() %>/actor/actorSearch">배우찾기</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/ann/annList">공고찾기</a></div>
+            <div class="nav-item"><a href="<%= request.getContextPath() %>/board/boardList">게시판</a></div>
 
              <% 
              	String url = "";
@@ -74,7 +79,6 @@ window.addEventListener('load', () => {
 
             <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>
-			<div class="nav-item"><a href="<%= request.getContextPath() %>/board/boardList">게시판</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>
             <div class="nav-item login"><a href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
             <div class="nav-item login"><a href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>

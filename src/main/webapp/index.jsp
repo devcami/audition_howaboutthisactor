@@ -79,7 +79,8 @@
 			<div class="list-item-detail">Lorem ipsum dolor sit amet
 				consectetur adipisicing elit.</div>
 			<button class="list-item-button"
-			onclick="location.href='<%= request.getContextPath() %>/board/boardList">click</button>
+				onclick="location.href='<%= request.getContextPath() %>/board/boardList'">
+				click</button>
 		</div>
 	</div>
 	<div class="fourth position-fixed"></div>

@@ -35,7 +35,7 @@
 			</tr>
 			<tr>
 				<th></th>
-					<td id="msg2">숫자, 영문자, 특수기호 포함</td>
+					<td id="msg2">숫자, 영문자, 특수기호(!@#$%^&*()) 포함</td>
 			</tr>
 			<tr>
 				<th>비밀번호 확인<sup>*</sup></th>
@@ -131,7 +131,7 @@
             </div>
           </div>
           <br>
-		<input type="submit" id="button1" value="이메일 인증하여 가입" >
+		<input type="submit" id="button1" value="이메일 인증하여 가입">
 		<input type="reset" id="button2" value="다시입력">
 	</form>
 </section>
@@ -163,7 +163,7 @@ document.memberEnrollFrm.onsubmit = () => {
 		return false;
 	}
 	// password 영문자/숫자/특수문자!@#$%^&*()
-	if(!/^[A-Za-z0-9!@#$%^&*()]{4,}$/.test(_password.value)){
+	if(!/^[A-Za-z0-9!@#$%^&*()]{6,}$/.test(_password.value)){
 		alert("비밀번호는 영문자/숫자/특수문자!@#$%^&*()로 6글자 이상이어야 합니다.");
 		return false;
 	}
