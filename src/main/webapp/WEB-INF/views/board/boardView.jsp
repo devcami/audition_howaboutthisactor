@@ -46,9 +46,9 @@
           <hr>
          <!-- Post content-->
            <section class="mb-5">
-           <br />
-           <h2>
-           <span><%= board.getContent() %></span>
+           	<br />
+           	<h2>
+           		<span><%= board.getContent() %></span>
            </h2>
 
            </section>
@@ -60,8 +60,8 @@
 					for(Attachment attach : attachments){
 			%>
             <div style="float:right;">
-            <img src="<%=request.getContextPath() %>/images/attachfile2.png" width= 45px;>
-            <a href="<%= request.getContextPath() %>/board/fileDownload?no=<%= attach.getNo() %>"><%= attach.getOriginalFilename() %></a>
+           	 	<img src="<%=request.getContextPath() %>/images/attachfile2.png" width= 45px;>
+           		<a href="<%= request.getContextPath() %>/board/fileDownload?no=<%= attach.getNo() %>"><%= attach.getOriginalFilename() %></a>
             <%      	}   					}    			%>
 			</div>
 			
@@ -70,8 +70,8 @@
 			<% if(canEdit){ %>
 		   <div>
 		  <%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
-		   <input type="button" value="수정하기" onclick="updateBoard()">
-		   <input type="button" value="삭제하기" onclick="deleteBoard()">
+		  		 <input type="button" value="수정하기" onclick="updateBoard()">
+		   		 <input type="button" value="삭제하기" onclick="deleteBoard()">
 		   </div>
 			<% } %>
 		</article>
@@ -101,7 +101,7 @@
 						</td>
 					
 						<td>
-							<button class="btn-reply" value="<%= bc.getNo() %>">답글</button>
+							<button type="submit" class="btn-reply" value="<%= bc.getNo() %>">답글</button>
 							<% if(canDelete){ %>
 								<button class="btn-delete" value="<%= bc.getNo() %>">삭제</button>
 							<% } %>
@@ -112,12 +112,12 @@
 						else { %>
 				<tr class="level2">
 						<td class="cwriterdate">
-						<%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %>
-						<br />
-						<%= bc.getRegDate() %>
-						<td class="cm-contents">
+							<%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %>
+							<br />
+							<%= bc.getRegDate() %>
+							<td class="cm-contents">
 						<%= bc.getContent() %>
-					</td>
+						</td>
 					<td>
 						<% if(canDelete){ %>
 							<button class="btn btn-delete" value="<%= bc.getNo() %>">삭제</button>
@@ -139,7 +139,7 @@
 	                <input type="hidden" name="commentLevel" value="1" />
 	                <input type="hidden" name="commentRef" value="0" />    
 					<textarea name="content" cols="60" rows="3" placeholder="댓글을 작성하세요"></textarea>
-	                <button type="submit"  class="btn" id="btn-comment-enroll1">등록</button>
+	                <button type="submit"  class="btn" id="btn-comment-enroll1" position= "relative;">등록</button>
 	            </form>
 	         </div>
 			</tbody>
@@ -275,7 +275,7 @@ const commentSubmitHandler = (e) => {
 		e.target.content.focus();
 		return false;
 	}
-	
+
 };
 
 document.boardCommentFrm.onsubmit = commentSubmitHandler;

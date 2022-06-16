@@ -75,7 +75,7 @@ window.onload = () => {
 
 <%-- 폼제출 --%>
 const enrollSubmit = (e) => {
-	if(confirm('공고를 등록하시겠습니까?')){
+	if(confirm('게시글을 등록하시겠습니까?')){
 		document.boardEnrollFrm.submit();
 	}
 };

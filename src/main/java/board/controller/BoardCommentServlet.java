@@ -24,6 +24,7 @@ public class BoardCommentServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			request.setCharacterEncoding("utf-8");
 			// 1. 사용자입력값 처리
 			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 			int commentLevel = Integer.parseInt(request.getParameter("commentLevel"));
