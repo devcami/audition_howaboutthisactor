@@ -82,7 +82,13 @@ sortType.addEventListener('change', (e) => {
 	location.href=`<%= request.getContextPath() %>/ann/annEndDateList?sortType=\${value}`;
 });
 const annView = (ann) => {
-	const annNo = ann.firstElementChild.lastElementChild.value;
+	let annNo;
+	if(ann.classList.contains("expirated")){
+		annNo = ann.firstElementChild.nextElementSibling.lastElementChild.value;
+	}
+	else{
+		annNo = ann.firstElementChild.lastElementChild.value;
+	}
 	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
 };
 
