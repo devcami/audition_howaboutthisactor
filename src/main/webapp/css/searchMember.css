@@ -2,7 +2,7 @@
   display: flex;
   font-family: 'Hahmlet', serif;
   justify-content: center;
-  /* margin: 0 130px 0 30px; */
+  margin: 0 130px 0 30px;
 }
 .top-logo{
   height: 180px;
@@ -22,7 +22,6 @@
 #Pmypage-submenu {
   margin-top: 100px;
   text-align: right;
-  /* width: 15%*/
 }
 #Pmypage-submenu ul {
   padding: 0;
@@ -78,7 +77,6 @@
 
 /* 테이블 */
 #myboard{
-  height: 70vh;
   width: 80%;
   margin-left: 4%;
   display: flex;
@@ -96,14 +94,20 @@
   border-collapse: collapse
 }
 #pagebar {
-  display: flex;
-  justify-content: center;
+text-align: center;
+    font-size: 20px;
+    margin: 100px 0 20px;
+    color: #639488;
 }
-.page {
-  margin: 3px;
-  text-decoration: none;
-  color: #bbded6;
-  font-size: 23px;
+#pagebar span {
+	padding: 10px;
+    color: #639488;
+}
+#pagebar a {
+	padding: 10px;
+    text-decoration: none;
+    color: #bbded6;
+    transition: all 0.2s ease-in-out;
 }
 #list-head {
   font-size: medium;
@@ -111,6 +115,7 @@
   border-bottom: 2px solid gray;
 }
 #list-head th{
+  	text-align: center;
   padding-bottom: 7px;
 }
 #list-head th:nth-child(2){
@@ -125,6 +130,7 @@
   align-items: center;
 }
 #searchType{
+  margin-bottom: 15px;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   appearance: none;
   background-repeat: no-repeat;
@@ -140,14 +146,15 @@
   margin: 15px 10px;
 }
 .keyword-input{
+	transform: translateY(2px);
   width: 250px;
   height: 30px;
   border-radius: 0.25rem;
 }
 div#search-memberId {
-  display: inline-block;
+  display: none;
 }
-div#search-memberType {
+div#search-memberRole {
   display: none;
 }
 div#search-memberName {
@@ -157,7 +164,12 @@ div#search-memberName {
 .radio-btn {
   width: 20px;
   height: 16px;
+  border: 1px solid #ced4da;
+  transform: translate(1px, 2px);
 }
 #search-memberType button {
   margin-left: 10px;
+}
+table tr {
+	line-height: 2.3;
 }

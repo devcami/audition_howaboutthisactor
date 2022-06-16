@@ -1,19 +1,17 @@
+<%@page import="java.sql.Date"%>
 <%@page import="ann.model.dto.Ann"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/Pwishlist.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/applylist.css" />
 <%
-   // String memberId = 'hosi';
-   // String memberId = loginMember.getMemberId();
-   
-   // char memberRole = 'P';
-   // char memberRole = loginMember.getMemberRole();
-   
 	List<Ann> list = (List<Ann>) request.getAttribute("list");
 	String pagebar = (String) request.getAttribute("pagebar");
 	String sortType = request.getParameter("sortType");
+	System.out.println(sortType);
+	
+	String searchKeyword = request.getParameter("searchKeyword");
 	
 %>
 <div class="top-logo">
@@ -22,15 +20,15 @@
 <section id="container">
   <div id="Pmypage-submenu" class="submenu">
     <ul id="sub">
-      <li><a href="<%= request.getContextPath() %>/mypage/portfolio?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/myboard" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/portfolio" onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/myboardd?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/Pmywish?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
       <li><a id="now_menu" class="current" onmouseout="mouseout(this)">지원한 공고</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=del&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
     </ul>
   </div>
-  <div id="mywish">
+    <div id="mywish">
     <div>
       <div id="wishlist-head">
         <h2>지원한 공고</h2>
@@ -42,127 +40,55 @@
         </div>
       </div>
       <div id="updown-container">
-      	<div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
+      <% if(list != null && !list.isEmpty()){
+			long miliseconds = System.currentTimeMillis();
+			Date today = new Date(miliseconds); 
+			for(int i = 0; i < list.size(); i++){ 
+		%>
+        <div class="card">
+          <div class="card-header">
+            모집중
+          </div>
+          <div class="card-body">
+            <div id="card-body-top">
+              <h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
+              <p class="card-text"><%= list.get(i).getAnnRegDate() %> ~ <%= list.get(i).getAnnEndDate() %></p>
+            </div>
+            <div id="btn-div">
+              <a 
+              	href="<%= request.getContextPath() %>/ann/annView?annNo=<%= list.get(i).getAnnNo() %>" 
+              	id="btnbtn" class="btn btn-primary">공고보러가기</a>
             </div>
           </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">테스트제목6</h5>
-                <p class="card-text">director</p>
-                <input type="hidden" name="annNo" id="annNo" value="23">
-              </div>
-              <div class="card-footer">
-                <small class="text-muted">2022-06-07</small> ~ 
-                <small class="text-muted">2022-06-12</small>
-              </div>
-            </div>
-          </div>
-      </div>
-    </div>
-    <div>
-    	<button style="margin: 10px;">하이</button>
-    </div>
-    <div id="pagebar">
-      <a href='/mvc/admin/memberList?cPage=1' class="page">1</a>
-      <a href='/mvc/admin/memberList?cPage=1' class="page">2</a>
-      <a href='/mvc/admin/memberList?cPage=1' class="page">3</a>
-      <a href='/mvc/admin/memberList?cPage=1' class="page">4</a>
-      <a href='/mvc/admin/memberList?cPage=1' class="page">5</a>
-      <a href='/mvc/admin/memberList?cPage=6' class="page">next</a>
-    </div>
+        </div>
+              <% } %>
+		<% } else { %>
+			<div><p>조회된 공고가 없습니다.</p></div>
+		<% } %> 
 
+    </div>
+	<div id="pagebar">
+		<%= pagebar %>
+	</div>
   </div>
 
   <script>
+  
+  sortType.addEventListener('change', (e) => {
+		document.querySelector("#updown-container").innerHTML = "";
+		const {value} = e.target;
+		
+		console.log(value);
+		// 공고 마감순 선택 시 페이지 요청
+		location.href=`<%= request.getContextPath() %>/mypage/myApplyEndDateSort?sortType=\${value}`;
+	});
+  
+  
+	const annView = (ann) => {
+		const annNo = ann.firstElementChild.lastElementChild.value;
+		location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
+	};
+ 
     const mousein = (menu) => {
       now_menu.classList.remove('current');
       menu.classList.add('current');
