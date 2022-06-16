@@ -19,22 +19,22 @@
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annApply.css" />
 <% 
-	Ann ann = (Ann) request.getAttribute("ann");
-	Work work = ann.getWork();
-	List<WorkAttachment> workAttachments = work.getAttachments();
-	Cast cast = work.getCast();
-	Production p = (Production) request.getAttribute("production");
-	
-	
-	PortAttachment profile = (PortAttachment) request.getAttribute("profile"); 
-	ActorInfo actorInfo = (ActorInfo) request.getAttribute("actorInfo");
-	List<PortfolioWork> pList = (List<PortfolioWork>) request.getAttribute("pList");
-	
-	List<WishListAnn> wishlistAnn = (List<WishListAnn>) request.getAttribute("wishlistAnn");
+   Ann ann = (Ann) request.getAttribute("ann");
+   Work work = ann.getWork();
+   List<WorkAttachment> workAttachments = work.getAttachments();
+   Cast cast = work.getCast();
+   Production p = (Production) request.getAttribute("production");
+   
+   
+   PortAttachment profile = (PortAttachment) request.getAttribute("profile"); 
+   ActorInfo actorInfo = (ActorInfo) request.getAttribute("actorInfo");
+   List<PortfolioWork> pList = (List<PortfolioWork>) request.getAttribute("pList");
+   
+   List<WishListAnn> wishlistAnn = (List<WishListAnn>) request.getAttribute("wishlistAnn");
 
-	boolean canEdit = loginMember != null 
-			&& (loginMember.getMemberId().equals(ann.getMemberId()) 
-					|| loginMember.getMemberRole() == MemberRole.A);
+   boolean canEdit = loginMember != null 
+         && (loginMember.getMemberId().equals(ann.getMemberId()) 
+               || loginMember.getMemberRole() == MemberRole.A);
 %>
 <section id="ann-view-container">
 	<div class="container">
@@ -331,43 +331,44 @@
 		<button type="button" class="btn btn-primary view" data-bs-toggle="modal"
 			data-bs-target="#reportModal" id="btn-report">신고하기</button>
 
-		<!-- Modal -->
-		<div class="modal fade" id="reportModal" tabindex="-1"
-			aria-labelledby="reportModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="reportModalLabel">신고</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<form name="annReportFrm" 
-						action="<%= request.getContextPath() %>/ann/annReport"
-						method="POST">
-						<input type="hidden" name="annNoReport" value="<%= ann.getAnnNo() %>">
-						<div class="modal-body">
-							<div class="mb-3">
-								<label for="message-text" class="col-form-label">신고자:</label>
-								<input type="text" name="reportWriter" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
-							</div>
-							<div class="mb-3">
-								<label for="message-text" class="col-form-label">신고내용:</label>
-								<textarea class="form-control" name="reportContent" id="content"></textarea>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
-							<button type="submit" class="btn btn-primary" id="btn-report-submit" >제출</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-		<% if(canEdit){ %>
-				<input type="button" value="삭제하기" class="btn-delete view" id="btn-delete" onclick="deleteAnn()">
-				<input type="button" value="수정하기" class="btn-update view" id="btn-update" onclick="updateAnn()">
-		<% } %>
-	</div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="reportModal" tabindex="-1"
+         aria-labelledby="reportModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="reportModalLabel">신고</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                     aria-label="Close"></button>
+               </div>
+               <form name="annReportFrm" 
+                  action="<%= request.getContextPath() %>/ann/annReport"
+                  method="POST">
+                  <input type="hidden" name="annNoReport" value="<%= ann.getAnnNo() %>">
+                  <div class="modal-body">
+                     <div class="mb-3">
+                        <label for="message-text" class="col-form-label">신고자:</label>
+                        <input type="text" name="reportWriter" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
+                     </div>
+                     <div class="mb-3">
+                        <label for="message-text" class="col-form-label">신고내용:</label>
+                        <textarea class="form-control" name="reportContent" id="content"></textarea>
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                     <button type="submit" class="btn btn-primary" id="btn-report-submit" >제출</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+      <% if(canEdit){ %>
+            <input type="button" value="삭제하기" class="btn-delete view" id="btn-delete" onclick="deleteAnn()">
+            <input type="button" value="수정하기" class="btn-update view" id="btn-update" onclick="updateAnn()">
+      <% } %>
+   </div>
 
 </section>
 <script>
@@ -375,128 +376,128 @@
  * 포트폴리오 제출 버튼 클릭 시 제출 & 이미 한것 
  */
 const ApplySubmit = () => {
-	let applyList;
-	if(confirm('포트폴리오를 제출하시겠습니까?')){
-		$.ajax({
-			url : "<%= request.getContextPath() %>/ann/getApplyList",
-			data : {
-				"memberId" : "<%= loginMember.getMemberId() %>"	
-			},
-			success(resp){
-				let cnt = 0;
-				if(resp != null && resp.length > 0){
-					for(let i = 0; i < resp.length; i++){
-						const {applyAnnNo} = resp[i];
-						if(applyAnnNo == <%= ann.getAnnNo() %>){
-							alert('이미 지원한 공고입니다.');			
-							break;
-						} else {
-							cnt++;
-						}
-						
-						if(cnt == resp.length){
-							document.annApplyFrm.submit();
-							alert('공고 지원이 완료되었습니다.');
-						}
-					}
-						
-				} else {
-					document.annApplyFrm.submit();
-					alert('공고 지원이 완료되었습니다.');
-				}
-			},
-			error : console.log
-		});
-	}
+   let applyList;
+   if(confirm('포트폴리오를 제출하시겠습니까?')){
+      $.ajax({
+         url : "<%= request.getContextPath() %>/ann/getApplyList",
+         data : {
+            "memberId" : "<%= loginMember.getMemberId() %>"   
+         },
+         success(resp){
+            let cnt = 0;
+            if(resp != null && resp.length > 0){
+               for(let i = 0; i < resp.length; i++){
+                  const {applyAnnNo} = resp[i];
+                  if(applyAnnNo == <%= ann.getAnnNo() %>){
+                     alert('이미 지원한 공고입니다.');         
+                     break;
+                  } else {
+                     cnt++;
+                  }
+                  
+                  if(cnt == resp.length){
+                     document.annApplyFrm.submit();
+                     alert('공고 지원이 완료되었습니다.');
+                  }
+               }
+                  
+            } else {
+               document.annApplyFrm.submit();
+               alert('공고 지원이 완료되었습니다.');
+            }
+         },
+         error : console.log
+      });
+   }
 };
 
 /**
  * 하트 클릭 시 wishlist_ann에 추가 | 삭제 비동기
  */
 const addWishlist = (e) => {
-	const wishBtn = document.querySelector("#btn-wish");
-	let wishBtnSrc = wishBtn.lastElementChild.src;
-	if(wishBtnSrc.substr(33,) == "fullHeartWish.png"){
-		$.ajax({
-			url : "<%= request.getContextPath() %>/ann/delWishAnn",
-			data : {
-				annNo : <%= ann.getAnnNo() %>,
-				memberId : "<%= loginMember.getMemberId() %>"
-			},
-			success(resp){
-				//하트가 empty로
-				wishBtn.lastElementChild.src = "<%= request.getContextPath() %>/images/emptyHeartWish.png";
-			},
-			error : console.log
-		});
-	} else {
-		$.ajax({
-			url : "<%= request.getContextPath() %>/ann/addWishAnn",
-			data : {
-				annNo : <%= ann.getAnnNo() %>,
-				memberId : "<%= loginMember.getMemberId() %>"
-			},
-			success(resp){
-				//하트가 full로
-				wishBtn.lastElementChild.src = "<%= request.getContextPath() %>/images/fullHeartWish.png";
-			},
-			error : console.log
-		});
-	}
+   const wishBtn = document.querySelector("#btn-wish");
+   let wishBtnSrc = wishBtn.lastElementChild.src;
+   if(wishBtnSrc.substr(33,) == "fullHeartWish.png"){
+      $.ajax({
+         url : "<%= request.getContextPath() %>/ann/delWishAnn",
+         data : {
+            annNo : <%= ann.getAnnNo() %>,
+            memberId : "<%= loginMember.getMemberId() %>"
+         },
+         success(resp){
+            //하트가 empty로
+            wishBtn.lastElementChild.src = "<%= request.getContextPath() %>/images/emptyHeartWish.png";
+         },
+         error : console.log
+      });
+   } else {
+      $.ajax({
+         url : "<%= request.getContextPath() %>/ann/addWishAnn",
+         data : {
+            annNo : <%= ann.getAnnNo() %>,
+            memberId : "<%= loginMember.getMemberId() %>"
+         },
+         success(resp){
+            //하트가 full로
+            wishBtn.lastElementChild.src = "<%= request.getContextPath() %>/images/fullHeartWish.png";
+         },
+         error : console.log
+      });
+   }
 };
 
 /**
  * 마감된 공고일 시 지원하기 버튼 비활성화 
  */
 <% if(ann.getIsClose().equals("Y")){ %>
-	btnApply.innerText = "모집 마감";
-	btnApply.style.backgroundColor = "gainsboro";
-	btnApply.style.boxShadow = "none";
-	btnApply.disabled = 'disabled';
+   btnApply.innerText = "모집 마감";
+   btnApply.style.backgroundColor = "gainsboro";
+   btnApply.style.boxShadow = "none";
+   btnApply.disabled = 'disabled';
 <% } %>
 
 /**
  *  신고하기 300자 이내
  */
 $(content).keyup(function(e) {
-	let content = $(this).val();
-	if(content.length > 300){
-		alert("신고 내용은 최대 300자까지 입력 가능합니다.");
-		$(this).val(content.substring(0, 300));
-		$(this).focus();
-	}
+   let content = $(this).val();
+   if(content.length > 300){
+      alert("신고 내용은 최대 300자까지 입력 가능합니다.");
+      $(this).val(content.substring(0, 300));
+      $(this).focus();
+   }
 });
 document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
-	//내용을 작성하지 않은 경우 폼제출할 수 없음.
-	const contentVal = content.value.trim(); 
-	console.log(contentVal);
-	if(!/^(.|\n)+$/.test(contentVal)){ //아무글자(.)가 아닌 개행문자가 있어서 인식못함. -> (.|\n)으로 바꿔줘야 함.
-		alert('내용을 작성해주세요.');				
-		content.select();
-		return false;
-	}
-	
-	if(confirm('신고내역을 제출하시겠습니까?')){
-		console.log('신고진행');
-	}
+   //내용을 작성하지 않은 경우 폼제출할 수 없음.
+   const contentVal = content.value.trim(); 
+   console.log(contentVal);
+   if(!/^(.|\n)+$/.test(contentVal)){ //아무글자(.)가 아닌 개행문자가 있어서 인식못함. -> (.|\n)으로 바꿔줘야 함.
+      alert('내용을 작성해주세요.');            
+      content.select();
+      return false;
+   }
+   
+   if(confirm('신고내역을 제출하시겠습니까?')){
+      console.log('신고진행');
+   }
 });
 </script>
 
 <%-- 수정하기 삭제하기 --%>
 <% if(canEdit) { %>
 <form 
-	name="annDelFrm" 
-	action="<%= request.getContextPath() %>/ann/annDelete"
-	method="POST">
-	<input type="hidden" name="annNo" value="<%= ann.getAnnNo() %>" />
+   name="annDelFrm" 
+   action="<%= request.getContextPath() %>/ann/annDelete"
+   method="POST">
+   <input type="hidden" name="annNo" value="<%= ann.getAnnNo() %>" />
 </form> 
 <script>
 const deleteAnn = () => {
-	if(confirm('확인을 누르시면 되돌이킬 수 없습니다. 공고를 삭제하시겠습니까?'))
-		document.annDelFrm.submit();
+   if(confirm('확인을 누르시면 되돌이킬 수 없습니다. 공고를 삭제하시겠습니까?'))
+      document.annDelFrm.submit();
 }
 const updateAnn = () => {
-	location.href = "<%= request.getContextPath() %>/ann/annUpdate?annNo=<%= ann.getAnnNo() %>"; 
+   location.href = "<%= request.getContextPath() %>/ann/annUpdate?annNo=<%= ann.getAnnNo() %>"; 
 }
 </script>
 <% } %>

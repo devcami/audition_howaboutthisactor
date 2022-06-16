@@ -10,9 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ann.model.dto.Ann;
 import common.HelloMvcUtils;
+import member.model.dto.Member;
 import mypage.model.service.MypageService;
 
 /**
@@ -27,10 +29,9 @@ public class MyAnnServlet extends HttpServlet {
 		try {
 			// 로그인한 회원이 캐스팅디렉터 회원인 경우
 			
-//			String memberId = request.getParameter("memberId");
-//			String memberRole = request.getParameter("memberRole");
-
-			String memberId = "director";
+			HttpSession session = request.getSession();
+			Member member = (Member) session.getAttribute("loginMember");
+			String memberId = member.getMemberId();
 			
 			int numPerPage = mypageService.ANN_NUM_PER_PAGE; // 12
 			int totalContent = mypageService.getTotalMyAnn(memberId);

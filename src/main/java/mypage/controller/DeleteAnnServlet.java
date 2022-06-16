@@ -32,7 +32,7 @@ public class DeleteAnnServlet extends HttpServlet {
 			
 			int result = mypageService.deleteAnns(deleteArr);
 			
-			response.setContentType("pplication/json; charset=utf-8");
+			response.setContentType("application/json; charset=utf-8");
 			new Gson().toJson(deleteArr, response.getWriter());
 			
 			

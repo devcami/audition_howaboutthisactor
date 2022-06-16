@@ -108,6 +108,7 @@
 }
 #list-head th{
   padding-bottom: 7px;
+  text-align: center;
 }
 #list-content{
   text-align: center;
@@ -148,4 +149,30 @@ div#search-memberType {
 }
 #search-memberType button {
   margin-left: 10px;
+}
+
+
+#pagebar {
+	text-align: center;
+    font-size: 20px;
+    margin: 100px 0 20px;
+    color: #639488;
+}
+#pagebar span {
+	padding: 6px;
+    color: #639488;
+}
+#pagebar a {
+	padding: 10px;
+    text-decoration: none;
+    color: #bbded6;
+    transition: all 0.2s ease-in-out;
+}
+#list-content a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+    font-weight: 600;
+    border-bottom: 2px solid black;
+    
 }

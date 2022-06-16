@@ -87,7 +87,6 @@ public class EnrollWorkServlet extends HttpServlet {
 		int no = resultNo.get(1);
 		work.setNo(no);
 		
-//		System.out.println("방금 등록된 게시물의 no는?? = " + no);
 		
 		// 4. 응답 : 생성된 work객체 반환
 		response.setContentType("application/json; charset=utf-8");

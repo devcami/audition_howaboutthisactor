@@ -20,6 +20,7 @@ public class DeleteBoardServlet extends HttpServlet {
 	private MypageService mypageService = new MypageService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String[] deleteBoard = request.getParameterValues("delBoard[]");
 		String memberId = request.getParameter("memberId");
 		
