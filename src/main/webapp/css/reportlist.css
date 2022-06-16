@@ -2,7 +2,7 @@
   display: flex;
   font-family: 'Hahmlet', serif;
   justify-content: center;
-  /* margin: 0 130px 0 30px; */
+  margin: 0 130px 0 30px; 
 }
 .top-logo{
   height: 180px;
@@ -79,7 +79,6 @@
 
 /* 테이블 */
 #myboard{
-  height: 70vh;
   width: 80%;
   margin-left: 4%;
   display: flex;
@@ -89,17 +88,10 @@
 }
 #myboard table {
   width: 100%;
-  border-collapse: collapse
+  border-collapse: collapse;
 }
-#pagebar {
-  display: flex;
-  justify-content: center;
-}
-.page {
-  margin: 3px;
-  text-decoration: none;
-  color: #bbded6;
-  font-size: 23px;
+table tr {
+	line-height: 2.3;
 }
 #list-head {
   font-size: medium;
@@ -159,7 +151,7 @@ div#search-memberType {
     color: #639488;
 }
 #pagebar span {
-	padding: 6px;
+	padding: 10px;
     color: #639488;
 }
 #pagebar a {
