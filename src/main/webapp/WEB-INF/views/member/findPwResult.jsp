@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@page import="java.sql.Date"%>
-<%@page import="member.model.dto.Member"%>	
-<%@page import="member.model.dto.Production" %>
-<%@page import="member.model.dao.MemberDao" %>
-<%@page import="member.controller.FindIdServlet" %>
-<%@page import="member.controller.FindIdResultServlet" %>
-<%@page import="ann.model.dto.Ann"%>	
+<%@page import="member.model.dto.Member"%>
+<%@page import="member.model.service.MemberService" %>
+<%@page import="java.util.List"%>	
 
+<%
+	String password = (String) request.getAttribute("password");
+    System.out.println("resultjsp단 패스워드"+ password);
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/fResult.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/findIdPw.css" />
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
@@ -23,12 +24,12 @@
       	<div class = "found-success">
 	      <h4>  회원님의 비밀번호는 </h4>  
 	      <div class ="found-pw"> 
-	       <%-- <%=pw.value> --%>  
+     <div class ="found-pw"><%= password%></div>
 	         </div>
 	      <h4>  입니다 </h4>
 	     </div>
 	     <div class = "found-pw-login">
- 		    <input type="button" id="btnLogin" value="로그인하기" onClick ="window.close()"/>
+ 		    <input type="button" id="btnLogin" value="창닫기" onClick ="window.close()"/>
        	</div>
        	</div>
       </form>

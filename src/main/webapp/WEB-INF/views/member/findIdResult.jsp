@@ -1,21 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="member.model.dto.Member"%>
+<%@page import="member.model.service.MemberService" %>
+<%@page import="java.util.List"%>
 
-<%@page import="java.sql.Date"%>
-<%@page import="member.model.dto.Member"%>	
-<%@page import="member.model.dto.Production" %>
-<%@page import="member.model.dao.MemberDao" %>
-<%@page import="member.controller.FindIdServlet" %>
-<%@page import="member.controller.FindIdResultServlet" %>
-<%@page import="ann.model.dto.Ann"%>	
+<%
+	String memberId = (String) request.getAttribute("Id");
+     System.out.println("resultjsp단 아이디"+ memberId);
 
+%>
 
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/fResult.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/findIdPw.css" />
 <meta charset="UTF-8">
-<title></title>
+<title>아이디 찾기</title>
 </head>
 <body>
 
@@ -23,15 +23,13 @@
       <div class = "container">
       	<div class = "found-success">
 	      <h4>  회원님의 아이디는 </h4>  
-	      <div class ="found-id"> 
-	       <%-- <%=member_id.value> --%>  
-	         </div>
+     <div class ="found-id"><%= memberId%></div>
 	      <h4>  입니다 </h4>
 	     </div>
 	     <div class = "found-login">
- 		    <input type="button" id="btnLogin" value="로그인하기" onClick ="window.close()"/>
+ 		    <input type="button" id="btnLogin" value="창닫기" onClick ="window.close()"/>
        	</div>
-       	</div>
+      </div>
       </form>
    
 </body>

@@ -1,14 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/findPw.css" />
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/findIdPw.css" />
 <meta charset="UTF-8">
-<title></title>
+<title>패스워드 찾기</title>
 </head>
 <body>
-<form name="pwfindscreen" method = "POST">
+<form name="pwfindscreen" method = "POST" action= "<%= request.getContextPath() %>/member/findPwResult">
 	<div id="findPw_head">
       <h2>패스워드 찾기</h2>
     </div><br><br>
@@ -28,10 +29,18 @@
 			<br>
 	</section>
 	<div class ="btnSearch">
-		<input type="button" name="enter" value="찾기" onclick="location.href='<%= request.getContextPath() %>/member/findPwResult';">
+		<input type="button" name="enter" value="찾기" onclick="frmsubmit1()">
 		<input type="button" name="cancle" value="취소" onclick= "window.close()">
  	</div>
  </form>
-
+<script>
+const frmsubmit1 = () => {
+	console.log("폼을 보냅니다.");
+	const frm = document.pwfindscreen;
+	console.log(frm);
+//	frm.target = title;
+	frm.submit();
+};
+</script>
 </body>
 </html>

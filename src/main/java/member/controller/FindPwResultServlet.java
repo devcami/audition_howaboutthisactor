@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.dao.MemberDao;
+import member.model.service.MemberService;
 
 /**
  * Servlet implementation class FindPwResultServlet
@@ -15,47 +15,32 @@ import member.model.dao.MemberDao;
 @WebServlet("/member/findPwResult")
 public class FindPwResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request
-		.getRequestDispatcher("/WEB-INF/views/member/findPwResult.jsp")
-		.forward(request, response);
-	}
+	private MemberService memberService = new MemberService();
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 try {
-			 request.setCharacterEncoding("utf-8");
-			 
-			 
-			    MemberDao dao = new MemberDao();
-				String memberId = request.getParameter("memberId");
-				String memberName = request.getParameter("name");
-				String pw = dao.findPw(memberId, memberName);
-				request.setAttribute("password",  pw);
-	         
-	         //처리
-	         String password = dao.findPw(memberId, memberName);
-	         
-	         //출력
-	         if(password != null) {//결과가 있으면(정보가 맞다면)
-	            response.sendRedirect("findPwResult.jsp?password="+ password);
-	            
-	            request.getSession().setAttribute("password", password);
-	            response.sendRedirect("findPwResult.jsp");
-	         }
-	         else {//결과가 없으면(정보가 맞지 않으면)
-	            response.sendRedirect("findPw.jsp?error");
-	         }
-	      }
-	      catch(Exception e) {
-	         e.printStackTrace();
-	      }
+		try {
+			
+		 request.setCharacterEncoding("utf-8");
+			
+		 String memberId = request.getParameter("memberId");
+		 String memberName = request.getParameter("memberName");
+		 System.out.println("memberId@findIdResulteServlet = " + memberId + memberName);
+		 
+		 String password = memberService.findPw(memberId, memberName);
+		 System.out.println(password);
+		 
+		 request.setAttribute("password",  password);
+		 request
+			.getRequestDispatcher("/WEB-INF/views/member/findPwResult.jsp")
+			.forward(request, response);
+		 
+		} catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 }

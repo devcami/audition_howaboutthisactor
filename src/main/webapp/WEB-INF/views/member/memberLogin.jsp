@@ -136,7 +136,7 @@ function.btnClick() => {
 <script>
 const findId = () => {
 	const title = "findIdPopup";
-	const spec = "width=300px, height=200px";
+	const spec = "width=300px, height=350px";
 	const popup = open("", title, spec);
 	
 	const frm = document.findIdFrm;
@@ -151,7 +151,7 @@ const findId = () => {
 <script>
 const findPw = () => {
 	const title = "findPwPopup";
-	const spec = "width=300px, height=200px";
+	const spec = "width=300px, height=350px";
 	const popup = open("", title, spec);
 	
 	const frm = document.findPwFrm;
