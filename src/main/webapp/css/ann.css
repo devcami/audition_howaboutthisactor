@@ -277,3 +277,24 @@ section{
   max-width: 1200px;
   margin: 1.75rem auto;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 건들지마*/
+.actor_photo {
+	width : 50px;
+	border-radius: 50%;
+	height : 50px;
+	overflow:hidden;
+}

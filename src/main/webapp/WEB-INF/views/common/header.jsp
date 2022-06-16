@@ -49,7 +49,7 @@ window.addEventListener('load', () => {
             <a href="<%= request.getContextPath() %>" />배우어때</a>
         </div>
         <div class="nav-right-items">
-            <div class="nav-item"><a href="<%= request.getContextPath() %>/actor/actorSearch">배우찾기</a></div>
+            <div class="nav-item"><a href="<%= request.getContextPath() %>/actor/actorList">배우찾기</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/ann/annList">공고찾기</a></div>
             <div class="nav-item"><a href="<%= request.getContextPath() %>/board/boardList">게시판</a></div>
 

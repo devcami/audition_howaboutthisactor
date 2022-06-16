@@ -1,5 +1,4 @@
-<%@page import="actor.model.dto.Actor"%>
-<%@page import="actor.model.dto.ActorExt"%>
+<%@page import="mypage.model.dto.ActorInfo"%>
 <%@page import="member.model.dto.MemberRole"%>
 <%@page import="member.model.dto.Member"%>
 <%@page import="java.sql.Date"%>
@@ -8,13 +7,13 @@
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
-	List<ActorExt> list = (List<ActorExt>) request.getAttribute("list");
+	List<ActorInfo> list = (List<ActorInfo>) request.getAttribute("list");
 	String pagebar = (String) request.getAttribute("pagebar");
-	String sortType = request.getParameter("sortType");
-	
+
 	String searchKeyword = request.getParameter("searchKeyword");
 	
 %>
+
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <section id="ann-list-container">
 
@@ -23,8 +22,8 @@
 		<div class="inner">
 			
 			
-			<form action="<%= request.getContextPath() %>/ann/annFinder" id="annFinderFrm">
-				<input type="text" name="searchKeyword" id="searchTitle" placeholder="제목을 검색해보세요!"
+			<form action="<%= request.getContextPath() %>/actor/actorList" id="annFinderFrm">
+				<input type="text" name="searchKeyword" id="searchTitle" placeholder=" 배우를 검색하세요."
 						value="<%= (searchKeyword != null) ? searchKeyword : "" %>" />
 				<button class="btn-search-title">검색</button>
 			</form>
@@ -43,6 +42,7 @@
 					<div class="card-body">
 						<h5 class="card-title"><%= list.get(i).getActorName() %></h5>
 						<p class="card-text"><%= list.get(i).getMemberId() %></p>
+						 <img class="actor_photo"alt="" src="<%= request.getContextPath() %>/upload/portfolio/<%= list.get(i).getAttachment().getRenamedFilename()%>">
 						<input type="hidden" name="annNo" class="annNo" value="<%= list.get(i).getActorNo() %>" />
 					</div>
 					
@@ -55,7 +55,7 @@
 		</div>
 	</div>
 	<div id="pagebar">
-		<%= pagebar %>
+		<%= request.getAttribute("pagebar") %>
 	</div>
 	
 </section>
