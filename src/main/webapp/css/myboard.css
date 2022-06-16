@@ -92,8 +92,8 @@
 }
 
 
-    table tr{
-      line-height: 1.9rem;
+    tbody tr{
+      line-height: 2.3;
     }
 
     #list-content td:first-child{

@@ -77,11 +77,12 @@ public class HelloMvcUtils {
 		int pageNo = pagebarStart;
 		
 
-		if(url.contains("sortType")) {
+		if(url.contains("sortType") || url.contains("searchType")) {
 			url += "&cPage=";
 		}else {
 			url += "?cPage="; 
 		}
+		
 	
 		// 이전 prev 영역
 		if(pageNo == 1) {
@@ -119,6 +120,11 @@ public class HelloMvcUtils {
 		
 		return pagebar.toString();
 	}
+	
+	
+	
+	
+	
 	
 	public static void fileDownload(HttpServletResponse response, String saveDirectory, String originalFilename,
             String renamedFilename) throws UnsupportedEncodingException, IOException, FileNotFoundException {

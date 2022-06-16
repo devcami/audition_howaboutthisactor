@@ -99,11 +99,15 @@
   display: flex;
   justify-content: center;
 }
-.page {
-  margin: 3px;
-  text-decoration: none;
-  color: #bbded6;
-  font-size: 23px;
+#pagebar span {
+	padding: 10px;
+    color: #639488;
+}
+#pagebar a {
+	padding: 10px;
+    text-decoration: none;
+    color: #bbded6;
+    transition: all 0.2s ease-in-out;
 }
 #list-head {
   font-size: medium;
@@ -111,6 +115,7 @@
   border-bottom: 2px solid gray;
 }
 #list-head th{
+  text-align: center;
   padding-bottom: 7px;
 }
 #list-head th:nth-child(2){
@@ -160,4 +165,8 @@ div#search-memberName {
 }
 #search-memberType button {
   margin-left: 10px;
+}
+
+#table tr {
+	line-height: 1.9rem;
 }
