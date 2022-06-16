@@ -882,6 +882,36 @@ public class MypageDao {
 		}
 		return production;
 	}
+
+	public int updateProduction(Connection conn, Production production) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updateProduction");
+		
+		try {
+			// 1. pstmt 객체 생성 & 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, production.getProductionName());
+			pstmt.setString(2, production.getCasterName());
+			pstmt.setString(3, production.getCasterPhone());
+			pstmt.setString(4, production.getCasterEmail());
+			pstmt.setString(5, production.getIsPhoneOpen());
+			pstmt.setString(6, production.getIsEmailOpen());
+			pstmt.setString(7, production.getMemberId());
+
+			// 2. 실행
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new MemberException("회사정보수정 오류", e);
+		} finally {
+			// 3. 자원반납 - pstmt
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
 	
 	
 }
