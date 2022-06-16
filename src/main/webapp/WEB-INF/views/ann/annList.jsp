@@ -57,9 +57,9 @@
 					<div class="card-footer" id="<%= list.get(i).getAnnEndDate().before(today) ? "expFoot" : "" %>">
 						<small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
 						<small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
-						<% if(list.get(i).getAnnEndDate().before(today)){ %>
+					<% if(list.get(i).getAnnEndDate().before(today)){ %>
 						<small id="endAnn">&nbsp;! 모집마감 !</small>
-						<% } %>
+					<% } %>
 					</div>
 				</div>
 			  </div>

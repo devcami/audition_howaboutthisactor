@@ -102,7 +102,7 @@ function.btnClick() => {
 				
 	<% } else { %>
 		<%-- 로그인 성공시 --%>
-		<script type="text/javascript">
+<%-- 		<script type="text/javascript">
 		// 뒤로 갈 히스토리가 있는 경우 및 우리 시스템에서 링크를 통해 유입된 경우
 		if (document.referrer && document.referrer.indexOf("<%= request.getContextPath() %>") !== -1) {
 		    history.back();    // 뒤로가기
@@ -111,8 +111,8 @@ function.btnClick() => {
 		else {
 		    location.href = "<%= request.getContextPath() %>/";    // 메인페이지로 
 		}
-		</script>
-<%-- 		<table id="loginSuccess">
+		</script> --%>
+ 		<table id="loginSuccess">
 			<tbody>
 				<tr>
 					<td><%= loginMember.getMemberName() %>님, 안녕하세요.</td><br>
@@ -123,7 +123,7 @@ function.btnClick() => {
 				</td>
 				</tr>
 			</tbody>
-		</table> --%>
+		</table>
 	<% } %>
 	
 	</form>
