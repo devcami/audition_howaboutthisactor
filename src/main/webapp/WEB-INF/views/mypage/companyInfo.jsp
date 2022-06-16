@@ -112,8 +112,17 @@
   		$('#phone').val("<%= production.getCasterPhone() %>");
   		$('#email').val("<%= production.getCasterEmail() %>");
   		
-  		$('input:[type=checkbox]').attr('checked', false);
+  		$('#phone_open').prop('checked', false);
+  		$('#email_open').prop('checked', false);
   		
+  		isPhoneOpen = "<%= production.getIsPhoneOpen() %>";
+  		isEmailOpen = "<%= production.getIsEmailOpen() %>";
+		
+  		if(isPhoneOpen == 'Y')
+  			$('#phone_open').prop('checked', true);
+  		if(isEmailOpen = 'Y')
+  			$('#email_open').prop('checked', true);
+ 
 		endWork();  		
 
   	}
