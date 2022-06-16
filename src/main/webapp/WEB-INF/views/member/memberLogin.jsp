@@ -97,7 +97,7 @@ function.btnClick() => {
 	<div id="btn-group" class="btn-group" role="group" aria-label="Basic example">
 	  <button type="button" class="btn f-btn b-line" onclick="location.href='<%= request.getContextPath() %>/member/memberEnroll';">회원가입</button>
 	  <button type="button" class="btn f-btn b-line" id="id_find" onclick="findId();">아이디 찾기</button>
-	  <button type="button" class="btn f-btn" id="pwd_find" >비밀번호 찾기</button>
+	  <button type="button" class="btn f-btn" id="pwd_find" onclick="findPw();">비밀번호 찾기</button>
 	</div>
 				
 	<% } else { %>
@@ -136,10 +136,25 @@ function.btnClick() => {
 <script>
 const findId = () => {
 	const title = "findIdPopup";
-	const spec = "width=300px, height=200px";
+	const spec = "width=300px, height=350px";
 	const popup = open("", title, spec);
 	
 	const frm = document.findIdFrm;
+	frm.target = title; // 해당팝업에서 폼을 제출!
+	frm.submit();
+};
+</script>	
+
+<form name="findPwFrm" action="<%= request.getContextPath() %>/member/findPw">
+	<input type="hidden" name="password" />
+</form>
+<script>
+const findPw = () => {
+	const title = "findPwPopup";
+	const spec = "width=300px, height=350px";
+	const popup = open("", title, spec);
+	
+	const frm = document.findPwFrm;
 	frm.target = title; // 해당팝업에서 폼을 제출!
 	frm.submit();
 };

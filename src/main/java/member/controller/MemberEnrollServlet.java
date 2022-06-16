@@ -45,6 +45,7 @@ public class MemberEnrollServlet extends HttpServlet {
 		String memberName = request.getParameter("memberName");
 		String gender = request.getParameter("gender");
 		String email = request.getParameter("email");
+		String memberRole = request.getParameter("memberRole");
 		String phone = request.getParameter("phone");
 		
 		String _birthday = request.getParameter("birthday");
@@ -64,19 +65,20 @@ public class MemberEnrollServlet extends HttpServlet {
 		if(_type !=null)
 			type = String.join(",", _type);
 */		
-	
+		System.out.println("memberRole은?" + memberRole);
+	if(memberRole.equals("P")) {
  		Member member = new Member(
 				memberId, password, memberName, email, MemberRole.P, 
-				phone, gender, birthday, null, genre
-			);
+				phone, gender, birthday, null, genre);
  		
 		System.out.println("member@memberEnroll = " + member);
 		
 		// 3. 업무로직 (db insert) 
 		int result = memberService.insertMember(member);
-	
 
-		String msg = "성공적으로 회원가입했습니다.";
+		
+
+		String msg = memberName + "배우님 회원가입을 축하합니다. ";
 		
 		// 4. 리다이렉트 (DML처리인 경우 url을 변경해서 새로고침오류를 방지한다.)
 		// 사용자 경고창 처리
@@ -85,6 +87,28 @@ public class MemberEnrollServlet extends HttpServlet {
 			.getSession()
 			.setAttribute("msg", msg);
 		response.sendRedirect(request.getContextPath() + "/");
+	} else if(memberRole.equals("D")) {
+ 		Member member = new Member(
+				memberId, password, memberName, email, MemberRole.D, 
+				phone, gender, birthday, null, genre);
+ 		
+		System.out.println("member@memberEnroll = " + member);
+		
+		// 3. 업무로직 (db insert) 
+		int result = memberService.insertMember(member);
+
+		
+
+		String msg = memberName + "디렉터님 회원가입을 축하합니다.";
+		
+		// 4. 리다이렉트 (DML처리인 경우 url을 변경해서 새로고침오류를 방지한다.)
+		// 사용자 경고창 처리
+		// 성공적으로 회원가입했습니다. | 회원가입 실패했습니다. 
+		request
+			.getSession()
+			.setAttribute("msg", msg);
+		response.sendRedirect(request.getContextPath() + "/");
+	}
 	} catch(Exception e) {
 		// 1. 로깅 및 관리팀 알림.
 		e.printStackTrace();

@@ -24,6 +24,22 @@ public class MemberService {
 		return member;
 	}
 	
+	public String findId(String memberName, String phone) {
+		Connection conn = getConnection();
+		String Id = memberDao.findId(conn, memberName, phone);
+		System.out.println("service단 아이디"+ Id);
+		close(conn);
+		return Id;
+	}
+	
+	public String findPw(String memberId, String memberName) {
+		Connection conn = getConnection();
+		String password = memberDao.findPw(conn, memberId, memberName);
+		System.out.println("service단 비밀번호"+ password);
+		close(conn);
+		return password;
+	}
+	
 	public int insertMember(Member member) {
 		int result = 0;
 		Connection conn = getConnection();
