@@ -39,8 +39,8 @@
 		%>
         <div 
         	class="card" data-bs-toggle="offcanvas" 
-        	data-bs-target="#offcanvasRight" 
-        	aria-controls="offcanvasRight"
+        	data-bs-target="#offcanvasTop" 
+        	aria-controls="offcanvasTop"
         	onclick="applicantView(this);">
           <input type="hidden" value="<%= list.get(i).getAnnNo() %>">
           <div class="card-header">
@@ -68,110 +68,28 @@
 		<%= pagebar %>
 	</div>
 	
-  </div>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
-          <div class="offcanvas-header">
-            <div>
-              <h3 id="offcanvasRightLabel">공고명: 함께할 조연배우 모집합니다.</h3>
-              <h5 id="smallLabel"><span>지원자 목록</span></h5>
+    </div>
+        <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+           <div class="offcanvas-header">
+          
+            <div id="text-div">
+              <h3 id="offcanvasTopLabel">공고명: 함께할 조연배우 모집합니다.</h3>
             </div>
             <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
           </div>
-          <div class="offcanvas-body">
-            <div class="wrapper">
-              <img src="<%= request.getContextPath() %>/images/default.png">
-              <div class="bg"></div>
-              <div class="view">
-                <h3><span>권순영</span></h3>
-                <p>플레디스</p>
-                <p>1996-06-15</p>
-                <p id="p-phone">010-1234-5678</p>
-                <p>sunyoung@naver.com</p>
-                <a href="#">상세보기</a>
-              </div>
-            </div>
-                        <div class="wrapper">
-              <img src="<%= request.getContextPath() %>/images/hosi/hosi7.jpg">
-              <div class="bg"></div>
-              <div class="view">
-                <h3><span>권순영</span></h3>
-                <p>플레디스</p>
-                <p>1996-06-15</p>
-                <p id="p-phone">010-1234-5678</p>
-                <p>sunyoung@naver.com</p>
-                <a href="#">상세보기</a>
-              </div>
-            </div>
-                        <div class="wrapper">
-              <img src="<%= request.getContextPath() %>/images/hosi/hosi9.jpg">
-              <div class="bg"></div>
-              <div class="view">
-                <h3><span>권순영</span></h3>
-                <p>플레디스</p>
-                <p>1996-06-15</p>
-                <p id="p-phone">010-1234-5678</p>
-                <p>sunyoung@naver.com</p>
-                <a href="#">상세보기</a>
-              </div>
-            </div>
-                        <div class="wrapper">
-              <img src="<%= request.getContextPath() %>/images/hosi/hosi10.jpg">
-              <div class="bg"></div>
-              <div class="view">
-                <h3><span>권순영</span></h3>
-                <p>플레디스</p>
-                <p>1996-06-15</p>
-                <p id="p-phone">010-1234-5678</p>
-                <p>sunyoung@naver.com</p>
-                <a href="#">상세보기</a>
-              </div>
-            </div>
-                        <div class="wrapper">
-              <img src="<%= request.getContextPath() %>/images/hosi/hosi11.jpg">
-              <div class="bg"></div>
-              <div class="view">
-                <h3><span>권순영</span></h3>
-                <p>플레디스</p>
-                <p>1996-06-15</p>
-                <p id="p-phone">010-1234-5678</p>
-                <p>sunyoung@naver.com</p>
-                <a href="#">상세보기</a>
-              </div>
-            </div>
-            <div class="wrapper">
-              <img src="<%= request.getContextPath() %>/images/hosi/hosi13.jpg">
-              <div class="bg"></div>
-              <div class="view">
-                <h3><span>권순영</span></h3>
-                <p>플레디스</p>
-                <p>1996-06-15</p>
-                <p id="p-phone">010-1234-5678</p>
-                <p>sunyoung@naver.com</p>
-                <a href="#">상세보기</a>
-              </div>
-            </div>
-                        <div class="wrapper">
-              <img src="<%= request.getContextPath() %>/images/hosi/lee3.jpg">
-              <div class="bg"></div>
-              <div class="view">
-                <h3><span>권순영</span></h3>
-                <p>플레디스</p>
-                <p>1996-06-15</p>
-                <p id="p-phone">010-1234-5678</p>
-                <p>sunyoung@naver.com</p>
-                <a href="#">상세보기</a>
-              </div>
-            </div>
+          <div class="offcanvas-body" id="applicant-div">
          </div>
-         </div>
+        </div>
+    </div>
            
   <script>
 
   	const applicantView = (ann) => {
   		const annNo = ann.firstElementChild.value;
-  		console.log(annNo);
-  		
+  		const div = document.getElementById("applicant-div");
+  		$('#applicant-div').empty();
+  		$('#smallLabel').remove();
   		$.ajax({
   			url: "<%= request.getContextPath() %>/mypage/getApplicant",
   			method: "POST",
@@ -180,8 +98,44 @@
   				"annNo" : annNo
   			},
   			success(applicants){
-  				// console.log(applicants);
   				console.log("성공");
+				const span  = `<span id="smallLabel">지원자가 없습니다.</span>`;
+				
+				if(applicants.length == 0) {
+					console.log("시발");
+					const textDiv = document.getElementById("text-div");
+					textDiv.insertAdjacentHTML('beforeend', span);
+					
+				} else {
+	  				applicants.forEach((actor, i) => {
+	
+	  				
+	  					const actorLink = `<%= request.getContextPath() %>/actor/actorView?actorNo=\${actor.actorNo}`;
+	  					console.log(actorLink);
+	  				
+	  					img_src = imgSrc(actor.attachment.renamedFilename);
+	  					// const actorName = nvl(actor.actorName);
+	  					// const company = nvl(actor.company);
+	  					//const birth = nvl(actor.birth);
+	  					//const phone = nvl(actor.phone);
+	  					//email = nvl(actor.email);
+	  	
+	  					const wrap = `
+	  			            <div class="wrapper">
+	 		              		<img src="\${img_src}">
+	 		              		<div class="bg"></div>
+	  		              		<div class="view">
+	  		                		<h3><span>\${nvl(actor.actorName)}</span></h3>
+	  		                		<p>\${nvl(actor.company)}</p>
+	  		                		<p>\${nvl(actor.birth)}</p>
+	  		                		<p id="p-phone">\${nvl(actor.phone)}</p>
+	  		                		<p>\${nvl(actor.email)}</p>
+	  		                		<a href="#">상세보기</a>
+	  		              		</div>
+	  		            	</div>`;			
+	  					div.insertAdjacentHTML('beforeend', wrap);			
+	  				});	
+				}
   			}, 
   			error: console.log
   			
@@ -189,6 +143,21 @@
   		
   	}
   
+	function nvl(str){
+		
+		if(typeof str == "undefined" || str == null || str == "")
+			str = `&nbsp;`
+		
+		return str;
+	}
+	
+	function imgSrc(fileName) {
+		
+		if(fileName == "undefined" || fileName == null || fileName == "")
+			return `<%= request.getContextPath() %>/images/default.png`;		
+		
+		return `<%= request.getContextPath() %>/upload/portfolio/\${fileName}`;
+	}
   
   
 	const annView = (ann) => {

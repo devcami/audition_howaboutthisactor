@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import mypage.model.dto.ActorInfo;
 import mypage.model.service.MypageService;
 
@@ -24,21 +26,20 @@ public class GetApplicantServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String annNo = request.getParameter("annNo");
-			System.out.println("GetApplicantServlet@annNo = " + annNo);
+//			System.out.println("GetApplicantServlet@annNo = " + annNo);
+
 			
-			List<String> actorIdList = mypageService.findApplicantActorNo(annNo);
-//			System.out.println(actorIdList);
-			
-			List<ActorInfo> actorList = mypageService.findApplicantActor(actorIdList);	
+			List<ActorInfo> actorList = mypageService.findApplicantActor(annNo);	
 //			System.out.println("actorList.size() = " + actorList.size());
+
 			
-			
+			response.setContentType("application/json; charset=utf-8");
+			new Gson().toJson(actorList, response.getWriter());
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-		
 		
 		
 	}

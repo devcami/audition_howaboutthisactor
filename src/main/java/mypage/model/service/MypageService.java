@@ -473,19 +473,19 @@ public class MypageService {
 		return totalContent;
 	}
 
-	public List<String> findApplicantActorNo(String annNo) {
+//	public List<String> findApplicantActorNo(String annNo) {
+//
+//		Connection conn = getConnection();
+//		List<String> list = mypageDao.findApplicantActorId(conn, annNo);
+//		close(conn);
+//		return list;
+//		
+//	}
 
-		Connection conn = getConnection();
-		List<String> list = mypageDao.findApplicantActorId(conn, annNo);
-		close(conn);
-		return list;
-		
-	}
-
-	public List<ActorInfo> findApplicantActor(List<String> actorIdList) {
+	public List<ActorInfo> findApplicantActor(String annNo) {
 		Connection conn = getConnection();
 		List<ActorInfo> actorList = new ArrayList<>();
-		
+		List<String> actorIdList = mypageDao.findApplicantActorId(conn, annNo);
 		try {	
 			for(int i = 0; i < actorIdList.size(); i++) {
 				ActorInfo actor = new ActorInfo();

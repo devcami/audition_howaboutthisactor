@@ -184,25 +184,31 @@ p {
     font-family: 'Hahmlet', sans-serif;
   }
   .offcanvas {
-    width: 46%;
+   height: 70%;
+  }
+  .offcanvas-header {
+  	padding: 1rem 1rem 0 1.5rem;
+  }
+  .offcanvas-header h3 {
+  	 font-family: 'Hahmlet', sans-serif;
   }
   .wrapper{
-    width: 48% !important;
-    /* height: 450px; */
-    padding: 10px !important;
-    overflow: hidden !important;
-
-    position: relative !important;
-    display: inline-block !important;
-    overflow: hidden !important;
+    /* width: 32% !important; */ 
+    height: 100%;  
+    width: 20%; 
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+   
+    
+    
   }
   img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    box-shadow: 3px 3px 3px grey !important;
-
-
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover !important; */
+    box-shadow: 3px 3px 3px grey;
     /* position: absolute; */
     top: 0;
     left: 0;
@@ -210,9 +216,12 @@ p {
 
   }
   .offcanvas-body {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    overflow-y: scroll !important;
+    display: flex;
+    flex-wrap: wrap ;
+    overflow-y: scroll;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0rem 1rem 1rem 1rem;
 
   }
   .btn-close {
@@ -224,8 +233,8 @@ p {
     position: absolute;
     top: 10px;
     left: 10px;
-    width: 96%;
-    height: 97%;
+    width: 95%;
+    height: 96.5%;
     z-index: 1;
     transition: 0.25s ease-out;
   }
@@ -245,15 +254,14 @@ p {
 
   .view h3{
       text-align: center;
-      font-size: 50px;
+      font-size: xx-large;
       margin: 0;
       color: #fff;
       
   }
-  .view h3>span {
-  }
+  
   .view p{
-      font-size: 25px;
+      font-size: medium;
       color: #fff;
       opacity: 0;
       transition: .2s ease-out;
@@ -300,7 +308,13 @@ p {
       transform: translate(11px, 5px);
       font-size: 30px;
     }
+    .hide {
+    	display: none;
+    }
     #smallLabel span{
       background-color: #bbded6;
     }
-  
+    
+    #img-div {
+    	border: 1px solid black;
+    }

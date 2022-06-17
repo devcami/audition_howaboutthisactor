@@ -435,7 +435,7 @@ public class MypageDao {
 //		ann.setAnnHeight(rset.getString("ann_height"));
 //		ann.setAnnBody(rset.getString("ann_body"));
 //		ann.setAnnNop(rset.getInt("ann_nop"));
-		ann.setIsClose(rset.getString("is_close"));
+//		ann.setIsClose(rset.getString("is_close"));
 		
 		return ann;
 	}
@@ -1090,7 +1090,7 @@ public class MypageDao {
 				ann.setAnnTitle(rset.getString("ann_title"));
 				ann.setAnnRegDate(rset.getDate("ann_reg_date"));
 				ann.setAnnEndDate(rset.getDate("ann_end_date"));
-				ann.setIsClose(rset.getString("is_close"));
+//				ann.setIsClose(rset.getString("is_close"));
 				
 				myApplyAnns.add(ann);
 			}			
@@ -1126,7 +1126,7 @@ public class MypageDao {
 				ann.setAnnTitle(rset.getString("ann_title"));
 				ann.setAnnRegDate(rset.getDate("ann_reg_date"));
 				ann.setAnnEndDate(rset.getDate("ann_end_date"));
-				ann.setIsClose(rset.getString("is_close"));
+//				ann.setIsClose(rset.getString("is_close"));
 				
 				myApplyAnns.add(ann);
 			}			
