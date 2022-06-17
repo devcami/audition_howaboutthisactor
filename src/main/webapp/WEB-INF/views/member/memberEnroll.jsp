@@ -70,16 +70,16 @@
 					<label for="gender1">여</label>
 				</td>
 			</tr>
-			<tr>
+			<tr >
 				<th>회원 유형 </th>
 				<td>
-					<input type="radio" name="memberRole" id="memberRole0" value="P">
+					<input type="radio" name="memberRole" id="memberRole0" value="P" onClick="viewGenre()">
 					<label for="type0">배우 및 아티스트</label>
-					<input type="radio" name="memberRole" id="memberRole1" value="D">
+					<input type="radio" name="memberRole" id="memberRole1" value="D" onClick="hideGenre()">
 					<label for="type1">제작자 및 캐스팅 담당자</label>
 				</td>
 			</tr>
-			<tr>
+			<tr id="genre">
 				<th>관심지원분야</th>
 				<td>
 					<input type="checkbox" name="genre" id="genre0" value="영화"><label for="genre0">영화</label>
@@ -149,6 +149,16 @@ const checkIdDuplicate = () => {
 	frm.memberId.value = _memberId.value;
 	frm.submit();
 };
+
+const hideGenre = () => {
+	  const row = document.getElementById('genre');
+	  row.style.display = 'none';
+}
+
+const viewGenre = () => {
+	  const row = document.getElementById('genre');
+	  row.style.display = '';
+}
 
 // 유효성 검사
 document.memberEnrollFrm.onsubmit = () => {
