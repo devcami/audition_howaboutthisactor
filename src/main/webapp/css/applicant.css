@@ -1,0 +1,320 @@
+@charset "UTF-8";
+
+@charset "UTF-8";
+#container {
+  display: flex;
+  font-family: 'Hahmlet', serif;
+  justify-content: center;
+  margin: 0 130px 0 30px;
+  /* height: 100vh; */
+}
+.top-logo{
+  height: 180px;
+  background-color: #bbded6;
+  position: relative;
+}
+.top-logo span {
+  position: absolute;
+  left: 2%;
+  bottom: 7%;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  font-weight: 900;
+  font-size: 320%;
+  
+}
+#Pmypage-submenu {
+  margin-top: 100px;
+  text-align: right;
+  width: 15%;
+}
+#Pmypage-submenu ul {
+  padding: 0;
+}
+#Pmypage-submenu li {
+  list-style: none;
+  margin: 15px 0;
+  font-weight: 500;
+  font-size: x-large;
+}
+/* #Pmypage-submenu a:hover {
+  color: #bbded6;
+} */
+#Pmypage-submenu a {
+  color: black;
+  text-decoration: none;
+}
+.current {
+  color: #bbded6 !important;
+}
+  /* 여기까지 submenu */
+
+
+#mywish{
+  margin-bottom: 100px;
+  width: 80%;
+  margin-left: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#mywish h2{
+  font-size: 40px;
+  padding: 10px;
+  margin: 15px 0 10px;
+}
+#pagebar {
+text-align: center;
+    font-size: 20px;
+    margin: 50px 0 20px;
+    color: #639488;
+}
+#pagebar span {
+	padding: 6px;
+    color: #639488;
+}
+#pagebar a {
+	padding: 10px;
+    text-decoration: none;
+    color: #bbded6;
+    transition: all 0.2s ease-in-out;
+}
+#updown-container{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 30px;
+  margin-left: 20px;
+  height: 80%;
+  align-content: flex-start;
+
+}
+
+
+#wishlist-head{
+  display: flex;
+  border-bottom: 2px solid gray;
+  justify-content: space-between;
+}
+#sortType-wrap{
+  display: flex;
+  align-items: flex-end;
+}
+#sortType{
+  /* width: 100px !important; */
+  appearance: none;
+  margin: 0 10px 10px;
+  font-family: "Hahmlet", sans-serif;
+  padding: 0.375rem 2.25rem 0.375rem 0.75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #212529;
+  background-color: #fff;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+/* 공고 하나하나 */
+.col{
+  flex: 0 0 auto !important;
+  width: 23%;
+  margin: 10px;
+}
+.card {
+  width: 45%;
+  margin-left: 15px;
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 0.25rem;
+}
+.card-body{
+  flex: 1 1 auto;
+  padding: 1rem 1rem;
+}
+.card-title{
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+.text-muted {
+  color: white !important;
+}
+.card:hover {
+  cursor: pointer;
+  background-color: #bbded645;
+  box-shadow: 0px 0px 8px rgb(172 172 172 / 50%);
+}
+
+  #btnbtn {
+    width: 30%;
+    background-color: #bbded6;
+    border-color: #bbded6;
+  }
+  #btnbtn:hover {
+    color: #fff;
+    background-color: #fae3d9;
+    border-color:#fae3d9;
+  }
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  #btn-div {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  * {
+    font-family: 'Hahmlet', sans-serif;
+  }
+  .offcanvas {
+   height: 70%;
+  }
+  .offcanvas-header {
+  	padding: 1rem 1rem 0 1.5rem;
+  }
+  .offcanvas-header h3 {
+  	 font-family: 'Hahmlet', sans-serif;
+  }
+  .wrapper{
+    /* width: 32% !important; */ 
+    height: 100%;  
+    width: 20%; 
+    padding: 10px;
+    overflow: hidden;
+    position: relative;
+    display: inline-block;
+   
+    
+    
+  }
+  img {
+    width: 100%;
+    height: 100%;
+    /* object-fit: cover !important; */
+    box-shadow: 3px 3px 3px grey;
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    transition: 0.3s ease-out
+
+  }
+  .offcanvas-body {
+    display: flex;
+    flex-wrap: wrap ;
+    overflow-y: scroll;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0rem 1rem 1rem 1rem;
+
+  }
+  .btn-close {
+    transform: translateY(-35px);
+  }
+
+
+  .bg{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 95%;
+    height: 96.5%;
+    z-index: 1;
+    transition: 0.25s ease-out;
+  }
+  .view{
+    width: 100%;
+    top: 110%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+    position: absolute;
+    box-sizing: border-box;
+    text-align: center;
+    transition: .33s ease;
+    z-index: 2;
+  }
+
+
+  .view h3{
+      text-align: center;
+      font-size: xx-large;
+      margin: 0;
+      color: #fff;
+      
+  }
+  
+  .view p{
+      font-size: medium;
+      color: #fff;
+      opacity: 0;
+      transition: .2s ease-out;
+      font-weight: bold;
+
+    }
+    #p-phone {
+      margin: 0;
+    }
+  .view a{
+      display: inline-block;
+      text-decoration: none;
+      padding: 7px 35px;
+      margin-top: 10px;
+      color: #fff;
+      border: 1px solid #fff;
+      transition: 0.28s;
+      opacity: 0;
+    }
+  
+  .wrapper:hover img{
+      top: -10px;
+  }
+  .view a:hover{
+      background-color: #fff;
+      color: #000;
+  }
+  .wrapper:hover .bg{
+      background: rgba(0,0,0, 0.44);
+  }
+  .wrapper:hover .view{
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+  }
+  .wrapper:hover .view>p, .wrapper:hover .view>a{
+        opacity: 1;
+    }
+    #offcanvasRightLabel {
+      margin-left: 10px;
+      font-size: 40px;
+    }
+    #smallLabel {
+      transform: translate(11px, 5px);
+      font-size: 30px;
+    }
+    .hide {
+    	display: none;
+    }
+    #smallLabel span{
+      background-color: #bbded6;
+    }
+    
+    #img-div {
+    	border: 1px solid black;
+    }

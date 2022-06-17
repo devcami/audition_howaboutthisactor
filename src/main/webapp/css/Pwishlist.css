@@ -117,7 +117,7 @@ text-align: center;
 /* 공고 하나하나 */
 .col{
   flex: 0 0 auto;
-  width: 23%;
+  width: 22%;
   margin: 10px;
 }
 .card {
