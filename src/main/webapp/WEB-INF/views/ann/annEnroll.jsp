@@ -12,7 +12,8 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 
-	Production p = (Production) request.getAttribute("p");
+	Production production = (Production) request.getAttribute("production");
+	System.out.println(production);
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
@@ -264,7 +265,7 @@
 			<input type="text" class="form-control" id="exampleFormControlInput14" value="<%= loginMember.getMemberName() %>" readonly> 
 		</div>
 		<div class="mb-3">
-			<label for="exampleFormControlInput15" class="form-label">담당자 휴대폰 번호 : <%= loginMember.getPhone() %></label> 
+			<label for="exampleFormControlInput15" class="form-label">담당자 휴대폰 번호 : <%= production.getCasterPhone() %></label> 
 			<div class="form-check">
 				<input class="form-check-input" type="radio" value="Y" name="isPhoneOpen" id="flexRadioDefault4"> 
 				<label class="form-check-label" for="flexRadioDefault4">공개</label>
@@ -275,7 +276,7 @@
 			</div>
 		</div>
 		<div class="mb-3">
-			<label for="exampleFormControlInput16" class="form-label">담당자 이메일 : <%= loginMember.getEmail() %></label> 
+			<label for="exampleFormControlInput16" class="form-label">담당자 이메일 : <%= production.getCasterEmail() %></label> 
 			<div class="form-check">
 				<input class="form-check-input" type="radio" value="Y" name="isEmailOpen" id="flexRadioDefault6"> 
 				<label class="form-check-label" for="flexRadioDefault6">공개</label>
@@ -340,6 +341,12 @@ document.annEnrollFrm.onsubmit = (e) => {
 	const annEndDateVal = f.annEndDate.value.trim();
 	if(!/^.+$/.test(annEndDateVal)){
 		alert('마감 날짜를 선택해주세요.');
+		f.annEndDate.select();
+		return false;
+	}
+	const annEndDate = new Date(annEndDateVal);
+	if(annEndDate < today){
+		alert('오늘 이후의 날짜를 선택해주세요.');
 		f.annEndDate.select();
 		return false;
 	}

@@ -118,6 +118,28 @@ public class AnnDao {
 		}
 		return list;
 	}
+	
+	public List<Ann> annPopSort(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Ann> list = new ArrayList<>();
+		String sql = prop.getProperty("annPopSort");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				list.add(ann);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 인기순정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 
 	public Ann findByAnnNo(Connection conn, int annNo) {
 		PreparedStatement pstmt = null;
@@ -746,5 +768,5 @@ public class AnnDao {
 		}
 		return list;
 	}
-	
+
 }

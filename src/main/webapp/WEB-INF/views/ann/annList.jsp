@@ -25,6 +25,7 @@
 			<select class="form-select" id="sortType" aria-label="Default select example">
 			  <option class="sort-type"  value="reg_date" id="reg_date" <%="reg_date".equals(sortType) ? "selected" : ""%>>최신순</option>
 			  <option class="sort-type"  value="end_date" id="end_date" <%="end_date".equals(sortType) ? "selected" : ""%>>마감순</option>
+			  <option class="sort-type"  value="popular" id="popular" <%="popular".equals(sortType) ? "selected" : ""%>>인기순</option>
 			</select>
 			<div id="annFinderFrm">
 				<input type="text" name="searchKeyword" id="searchTitle" placeholder="제목을 검색해보세요!"
@@ -298,12 +299,12 @@ const detailFinder = () => {
 	});
 }
 
-<%-- 마감순 정렬 --%>
+<%-- 최신순(default) | 마감순 | 인기순 정렬 --%>
 sortType.addEventListener('change', (e) => {
 	const {value} = e.target;
 	document.querySelector("#ann-container").innerHTML = "";
 	$.ajax({
-		url : "<%= request.getContextPath() %>/ann/annEndDateList",
+		url : "<%= request.getContextPath() %>/ann/annListSort",
 		data : {
 			sortType : value
 		},
@@ -351,6 +352,7 @@ sortType.addEventListener('change', (e) => {
 	});
 
 });
+
 
 <%-- 제목으로 검색 --%>
 const searchTitle = () => {
