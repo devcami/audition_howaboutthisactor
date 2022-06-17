@@ -48,9 +48,9 @@ public class AnnListServlet extends HttpServlet {
 			
 			List<Ann> list = null;
 			if("end_date".equals(sortType)) {
-				list = annService.annEndDateSort(param);
+				//list = annService.annEndDateSort(param);
 			} else {
-				list = annService.findAll(param);
+				//list = annService.findAll(param);
 			}
 			
 			
