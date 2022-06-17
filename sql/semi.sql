@@ -13,6 +13,7 @@ grant connect, resource, create view to "5zizoyeyo";
 alter user "5zizoyeyo" quota unlimited on users;
 
 
+
 -------------------------------------------
 -- member
 -------------------------------------------
@@ -374,24 +375,22 @@ insert into portfolio values (SEQ_PORTFOLIO_NO.nextval, 'actor', 1, '2019년 10�
 -------------------------------------
 --테이블 정보보기
 -------------------------------------
-
+select * from actor_apply;
+select * from actor_info;
+select * from announcement; 
 select * from board;
 select * from board_attachment;
 select * from board_comment;
+select * from cast;
 select * from member;
-select * from actor_info;
-select * from portfolio;
 select * from portfolio_work;
 select * from port_attachment;
 select * from production;
-select * from work;
-select * from work_attachment;
-select * from announcement; 
-select * from cast;
-select * from actor_apply;
+select * from report;
 select * from wishlist_actor;
 select * from wishlist_ann;
-select * from report;
+select * from work;
+select * from work_attachment;
 
 delete from actor_apply where ann_no = 27;
 commit;
@@ -402,6 +401,41 @@ update production set caster_email = 'jyjmjs2@naver.com' where member_id = 'dire
 ------------------------------
 select * from (select row_number() over(order by ann_reg_date desc) rnum , a.* from announcement a) where ann_gender = '남';
 
+
+select * from all_tables where tablespace_name = 'USERS';
+SELECT *  FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = 'ANNOUNCEMENT'; 
+
+SELECT column_name, data_type, data_length, nullable, data_default FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = 'wishlist_ann';
+
+--제약조건 조회    
+select
+    constraint_name
+    ,uc.table_name
+    ,ucc.column_name
+    ,uc.constraint_type
+    ,uc.search_condition
+    ,delete_rule 
+    ,r_constraint_name
+from
+    user_constraints uc join user_cons_columns ucc
+        using(constraint_name)
+where
+    uc.table_name = 'REPORT';
+
+
+
+
+-----------------------------------
+-- memberId varchar2(200) 으로 변경
+-----------------------------------
+select * from actor_info;
+alter table portfolio_work modify (member_id varchar2(200));
+alter table announcement modify (member_id varchar2(200));
+alter table actor_info modify (actor_email varchar2(200));
+alter table board_attachment modify (member_id varchar2(200));
+alter table PORT_ATTACHMENT modify (memberId varchar2(200));
+alter table report modify (member_id varchar2(200));
+alter table wishlist_actor modify (member_id varchar2(200));
 
 
 
