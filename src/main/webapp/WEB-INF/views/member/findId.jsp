@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" href="<%= request.getContextPath() %>/css/findId.css" />
-
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/findIdPw.css" />
 <meta charset="UTF-8">
-<title></title>
+<title>아이디 찾기</title>
 </head>
 <body>
-<form name="idfindscreen" method = "POST">
+<form name="idfindscreen" method = "POST" action= "<%= request.getContextPath() %>/member/findIdResult">
 	<div id="findId_head">
       <h2>아이디 찾기</h2>
     </div><br><br>
@@ -25,17 +24,24 @@
 			</div>
 			<div class = "find_phone">
 				<label>번호</label>
-				<input type="text" onKeyup = "addHypen(this);" name="phone" class = "btn-phone" placeholder = "휴대폰번호를 '-'없이 입력">
+				<input type="text" name="phone" class = "btn-phone" placeholder = "휴대폰번호를 '-'없이 입력">
 			</div>
 			<br>
 	</section>
 	<div class ="btnSearch">
-		<input type="button" name="enter" value="찾기">
-		<%--  onclick="location.href='<%= request.getContextPath() %>/member/findIdResult'; 아이디 찾는 창으로 이동 --%> 
-		<input type="button" name="cancle" value="취소">
+		<input type="button" name="enter" value="찾기" onclick="frmsubmit()">
+		<input type="button" name="cancle" value="취소" onclick= "window.close()">
  	</div>
  </form>
-
+<script>
+const frmsubmit = () => {
+	console.log("폼을 보냅니다.");
+	const frm = document.idfindscreen;
+	console.log(frm);
+//	frm.target = title;
+	frm.submit();
+};
+</script>
 
 </body>
 </html>

@@ -23,6 +23,7 @@ public class MypageService {
 	public static final int ANN_NUM_PER_PAGE = 8;
 	public static final int BOARD_NUM_PER_PAGE = 15;
 	public static final int REPORT_NUM_PER_PAGE = 15;
+	public static final int MEMBER_NUM_PER_PAGE = 15;
 
 	
 	public List<Integer> insertPortWork(PortfolioWork work) {
@@ -401,5 +402,57 @@ public class MypageService {
 		}
 		return result;
 	}
+
+	public List<Member> findAllMember(Map<String, Object> param) {
+		
+		Connection conn = getConnection();
+		List<Member> list = mypageDao.findAllMember(conn, param);
+		close(conn);
+		return list;
+		
+	}
+
+	public int getTotalMember() {
+		Connection conn = getConnection();
+		int totalContents = mypageDao.getTotalMember(conn);
+		close(conn);
+		return totalContents;
+	}
+
+	public List<Member> findBy(Map<String, String> param, Map<String, Object> pageParam) {
+		Connection conn = getConnection();
+		List<Member> list = mypageDao.findBy(conn, param, pageParam);
+		close(conn);
+		return list;
+	}
+
+	public int getTotalSearchedMember(Map<String, String> param) {
+		Connection conn = getConnection();
+		int totalContents = mypageDao.getTotalSearchedMember(conn, param);
+		close(conn);
+		return totalContents;
+	}
+
+	public List<Integer> GetMyApplys(String memberId) {
+		Connection conn = getConnection();
+		List<Integer> myApplys = mypageDao.GetMyApplys(conn, memberId);
+		close(conn);
+		return myApplys;
+	}
+
+	public List<Ann> findAllMyApply(Map<String, Object> param, String myApplys) {
+		Connection conn = getConnection();
+		List<Ann> list = mypageDao.findAllMyApply(conn, param, myApplys);
+		close(conn);
+		return list;
+	}
+
+	public List<Ann> myApplyEndDateSort(Map<String, Object> param, String myApplys) {
+		Connection conn = getConnection();
+		List<Ann> list = mypageDao.myApplyEndDateSort(conn, param, myApplys);
+		close(conn);
+		return list;
+	}
+
 	
 }
