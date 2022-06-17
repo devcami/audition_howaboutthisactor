@@ -69,7 +69,6 @@ public class AnnDao {
 		ann.setAnnHeight(rset.getString("ann_height"));
 		ann.setAnnBody(rset.getString("ann_body"));
 		ann.setAnnNop(rset.getInt("ann_nop"));
-		ann.setIsClose(rset.getString("is_close"));
 		ann.setHasTO(rset.getString("has_TO"));
 		
 		return ann;

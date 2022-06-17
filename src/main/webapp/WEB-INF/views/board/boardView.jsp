@@ -36,8 +36,40 @@
 				onclick="location.href='<%= request.getContextPath() %>/board/boardList'">
 			 	 뒤로 가기 </button>
 			 	 &nbsp;
-			 	 
-			 	 	<!-- Button trigger modal -->
+			 	
+    </div>
+  </div>
+
+          <hr>
+         <!-- Post content-->
+           <section class="mb-5">
+           	<br />
+           	<h2>
+           		<span><%= board.getContent() %></span>
+           </h2>
+
+           </section>
+                   
+		
+			
+           <% List<Attachment> attachments = board.getAttachments();
+				if(attachments != null && !attachments.isEmpty()){
+					for(Attachment attach : attachments){
+			%>
+            <div style="float:right;">
+           	 	<img src="<%=request.getContextPath() %>/images/attachfile2.png" width= 45px;>
+           		<a href="<%= request.getContextPath() %>/board/fileDownload?no=<%= attach.getNo() %>"><%= attach.getOriginalFilename() %></a>
+            <%      	}   					}    			%>
+			</div>
+			
+			
+			<br />
+			<% if(canEdit){ %>
+		   <div>
+		  <%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
+		  		 <input type="button" value="수정하기" onclick="updateBoard()">
+		   		 <input type="button" value="삭제하기" onclick="deleteBoard()">
+		   		 			 	 	<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary view" data-bs-toggle="modal"
 			data-bs-target="#reportModal" id="btn-report">신고하기</button>
 			 <!-- Modal -->
@@ -72,38 +104,6 @@
             </div>
          </div>
       </div>
-    </div>
-  </div>
-
-          <hr>
-         <!-- Post content-->
-           <section class="mb-5">
-           	<br />
-           	<h2>
-           		<span><%= board.getContent() %></span>
-           </h2>
-
-           </section>
-                   
-		
-			
-           <% List<Attachment> attachments = board.getAttachments();
-				if(attachments != null && !attachments.isEmpty()){
-					for(Attachment attach : attachments){
-			%>
-            <div style="float:right;">
-           	 	<img src="<%=request.getContextPath() %>/images/attachfile2.png" width= 45px;>
-           		<a href="<%= request.getContextPath() %>/board/fileDownload?no=<%= attach.getNo() %>"><%= attach.getOriginalFilename() %></a>
-            <%      	}   					}    			%>
-			</div>
-			
-			
-			<br />
-			<% if(canEdit){ %>
-		   <div>
-		  <%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
-		  		 <input type="button" value="수정하기" onclick="updateBoard()">
-		   		 <input type="button" value="삭제하기" onclick="deleteBoard()">
 		   </div>
 			<% } %>
 
@@ -363,6 +363,7 @@ $(content).keyup(function(e) {
 	   
 	   if(confirm('신고내역을 제출하시겠습니까?')){
 	      console.log('신고진행');
+	      	}
 	   }
 	});
 </script>
