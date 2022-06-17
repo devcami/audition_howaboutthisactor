@@ -1,0 +1,144 @@
+@charset "UTF-8";
+
+#container {
+  display: flex;
+  font-family: 'Hahmlet', serif;
+  justify-content: center;
+  margin: 0 130px 0 30px;
+  
+}
+.top-logo{
+  height: 180px;
+  background-color: #bbded6;
+  position: relative;
+}
+.top-logo span {
+  position: absolute;
+  left: 2%;
+  bottom: 7%;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  font-weight: 900;
+  font-size: 320%;
+  
+}
+#Pmypage-submenu {
+  margin-top: 100px;
+  text-align: right;
+  width: 18%;
+}
+#Pmypage-submenu ul {
+  padding: 0;
+}
+#Pmypage-submenu li {
+  list-style: none;
+  margin: 15px 0;
+  font-weight: 500;
+  font-size: x-large;
+}
+#Pmypage-submenu a:hover {
+  color: #bbded6;
+}
+#Pmypage-submenu a {
+  color: black;
+  text-decoration: none;
+}
+.current {
+  color: #bbded6 !important;
+}
+/* 여기까지 submenu */
+
+#update-info{
+  margin-left: 4%;
+  width: 80%;
+  margin-bottom: 100px;
+}
+#update-info h2 {
+  font-size: 40px;
+  border-bottom: 2px solid gray;
+  padding: 10px;
+  margin: 15px 0 10px;
+}
+
+/* 수정 내용 content */
+#update-info form {
+  margin: 40px 0;
+}
+
+  .btn {
+    margin: 0 auto;
+    font-size: 20px;
+    letter-spacing: 10px;
+    width: 300px;
+    height: 50px;
+    color: #ffffff;
+    background-color: #bbded6;
+    transition: .2s;
+    border: none;
+}
+.btn-div {
+  margin-top: 60px;
+}
+
+#company-info{
+  width: 80%;
+  margin-left: 4%;
+  margin-bottom: 100px;
+}
+#company-info h2 {
+  font-size: 40px;
+  padding: 10px;
+  margin: 20px 0 10px;
+  
+}
+
+/* 제목 & 수정하기 버튼 */
+#company_head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 2px solid gray;
+}
+
+#update-btn {
+  margin-bottom: 13px;
+  padding: 6px 11px;
+  font-size: medium;
+  font-family: 'Hahmlet', serif;
+  border: none;
+  background-color: #bbded6;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  transition: all 0.3s ease 0s;
+  display: none;
+}
+form {
+  margin: 30px 0 0 30px;
+}
+.inputs {
+  font-size: large;
+  width: 50%;
+  padding: 0.375rem 0.75rem;
+  outline: none;
+  border-bottom: 2px solid #bbded6;
+}
+.edit {
+  width: 50%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 1px solid black;
+  border-radius: 0;
+}
+
+.inputInfo{
+  width: 50%;
+  border: none;
+  font-size: large;
+}
+.form-control:disabled, .form-control[readonly] {
+  background-color: #ffffff;
+}
+#memberId {
+	border-bottom: none;
+}

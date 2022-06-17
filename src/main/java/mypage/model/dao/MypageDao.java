@@ -868,7 +868,7 @@ public class MypageDao {
 			
 			while(rset.next()) {
 				
-				production.setMemberId(rset.getString("member_id"));
+				// production.setMemberId(rset.getString("member_id"));
 				production.setProductionName(rset.getString("production_name"));
 				production.setCasterName(rset.getString("caster_name"));
 				production.setCasterPhone(rset.getString("caster_phone"));
@@ -913,7 +913,6 @@ public class MypageDao {
 		}
 		
 		return result;
-		
 	}
 
 	public List<Member> findAllMember(Connection conn, Map<String, Object> param) {
@@ -1243,6 +1242,59 @@ public class MypageDao {
 			close(pstmt);
 		}
 		return attachment;
+	}
+
+	public int isProduction(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("isProduction");
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> isProduction@회사정보 있는지 없는지 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return result;
+		
+		
+	}
+
+	public int insertProduction(Connection conn, Production production) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertProduction");
+		
+		try {
+			// 1. pstmt 객체 생성 & 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, production.getMemberId());
+			pstmt.setString(2, production.getProductionName());
+			pstmt.setString(3, production.getCasterName());
+			pstmt.setString(4, production.getCasterPhone());
+			pstmt.setString(5, production.getCasterEmail());
+			pstmt.setString(6, production.getIsPhoneOpen());
+			pstmt.setString(7, production.getIsEmailOpen());
+
+			// 2. 실행
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new MemberException("insertProduction@회사정보입력 오류", e);
+		} finally {
+			// 3. 자원반납 - pstmt
+			close(pstmt);
+		}
+		
+		return result;
 	}
 	
 	
