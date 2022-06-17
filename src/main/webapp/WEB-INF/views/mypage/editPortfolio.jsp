@@ -23,9 +23,9 @@
 	
 	String img_src = (String) request.getAttribute("img_src");
 	
-	System.out.println("editPortfolio.jsp@memberId = " + loginMember.getMemberId());
-	System.out.println("editPortfolio.jsp@portType = " + portType);
-	System.out.println("editPortfolio.jsp@attachNo = " + attachNo);
+//	System.out.println("editPortfolio.jsp@memberId = " + loginMember.getMemberId());
+//	System.out.println("editPortfolio.jsp@portType = " + portType);
+//	System.out.println("editPortfolio.jsp@attachNo = " + attachNo);
 
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/editPortfolio.css" />
@@ -257,8 +257,11 @@
   		    }
   		});
   		
-  		console.log("noArr", noArr);
-  		console.log(noArr.length);
+  		if(noArr.length == 0){
+  			alert('삭제할 파일을 선택해주세요');
+  			return;
+  		}
+  		
   		const msg = "총 " + noArr.length + "개의 파일이 선택되었습니다. 삭제하시겠습니까?"
   		
   		const check = confirm(msg);
