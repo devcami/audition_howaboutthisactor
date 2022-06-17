@@ -12,8 +12,9 @@
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
+
 <section id="board-container">
-	<table class="table table-hover id="tbl-board">
+	<table class="table table-hover" id="tbl-board">
 		<thead>
 			<tr>
 				<th>번호</th>
@@ -38,7 +39,9 @@
 			<tr>
 				<td><%= board.getNo() %></td>
 				<td>
-					<a href="<%= request.getContextPath() %>/board/boardView?no=<%= board.getNo() %>"><%= board.getTitle() %></a>
+					<a href="<%= request.getContextPath() %>/board/boardView?no=<%= board.getNo() %>">
+					<%= board.getTitle() %>
+					</a>
 					<%-- 댓글개수 표시 --%>
 					<% if(board.getCommentCount() > 0){ %>
 						(<%= board.getCommentCount() %>)
@@ -48,7 +51,7 @@
 				<td><%= board.getRegDate() %></td>
 				<td>
 		<% if(board.getAttachCount() > 0) { %>					
-					<img src="<%= request.getContextPath() %>/images/attachfile.png" width= 20px; alt="" />
+					<img src="<%= request.getContextPath() %>/images/attachfile.png" style="width: 23px" />
 		<% } %>					
 				</td>
 				<td><%= board.getReadCount() %></td>
@@ -59,10 +62,11 @@
 %>
 		</tbody>
 	</table>
+</section>
 	<input 
 	type="button" value="글쓰기" id="btn-add"  class="btn"
 	onclick="location.href='<%= request.getContextPath() %>/board/boardEnroll';"/>
-</section>
+	
 <div id="pagebar">
 		<%= pagebar %>
 	</div>

@@ -332,9 +332,10 @@ public class BoardDao {
 			while(rset.next()) {
 				BoardComment bc = new BoardComment();
 				bc.setNo(rset.getInt("no"));
+				bc.setCommentLevel(rset.getInt("comment_level")); // 이게 빠져있었음 ㅜㅜ
+				bc.setBoardNo(rset.getInt("board_no"));
 				bc.setMemberId(rset.getString("member_id"));
 				bc.setContent(rset.getString("content"));
-				bc.setBoardNo(rset.getInt("board_no"));
 				bc.setCommentRef(rset.getInt("comment_ref"));
 				bc.setRegDate(rset.getDate("reg_date"));
 				comments.add(bc);

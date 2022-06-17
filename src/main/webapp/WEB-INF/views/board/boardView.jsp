@@ -21,7 +21,7 @@
 </div>
 
 <!-- Page content-->
-      <div>
+
       <br />
           <div class="col-lg-8">
           <!-- Post content-->
@@ -76,7 +76,7 @@
 			<% } %>
 		</article>
                 </div>
-            </div>
+         
                     
                    	
 	<hr style="margin-top:30px;" />	
@@ -95,32 +95,33 @@
 						if(bc.getCommentLevel() == 1){
 						%>
 					<tr class="level1">
-						<td><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)"%>
-							<td><%= bc.getRegDate() %></td>
+					<td>
+						<sub class="cwriterdate"><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %></sub>
+						<sub class="cwriterdate"><%= bc.getRegDate() %></sub>
+						<br />
+					
 						<%= bc.getContent() %>
 						</td>
 					
 						<td>
-							<button type="submit" class="btn-reply" value="<%= bc.getNo() %>">답글</button>
+							<button class="btn-reply" value="<%= bc.getNo() %>">답글</button>
 							<% if(canDelete){ %>
 								<button class="btn-delete" value="<%= bc.getNo() %>">삭제</button>
 							<% } %>
 						</td>
 					</tr>
 				<% 		} /*레벨 1*/
-						
 						else { %>
 				<tr class="level2">
-						<td class="cwriterdate">
-							<%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %>
-							<br />
-							<%= bc.getRegDate() %>
-							<td class="cm-contents">
+					<td class="cwriterdate">
+						<sub class="cwriterdate"><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %></sub>
+						<sub class="cwriterdate"><%= bc.getRegDate() %></sub>
+						<br />
 						<%= bc.getContent() %>
 						</td>
 					<td>
 						<% if(canDelete){ %>
-							<button class="btn btn-delete" value="<%= bc.getNo() %>">삭제</button>
+							<button class="btn-delete" value="<%= bc.getNo() %>">삭제</button>
 						<% } %>
 					</td>
 				</tr>
@@ -139,7 +140,7 @@
 	                <input type="hidden" name="commentLevel" value="1" />
 	                <input type="hidden" name="commentRef" value="0" />    
 					<textarea name="content" cols="60" rows="3" placeholder="댓글을 작성하세요"></textarea>
-	                <button type="submit"  class="btn" id="btn-comment-enroll1" position= "relative;">등록</button>
+	                <button type="submit"  class="btn" id="btn-comment-enroll1">등록</button>
 	            </form>
 	         </div>
 			</tbody>
@@ -307,5 +308,6 @@ const updateBoard = () => {
 }
 <% } %>
 </script>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	
