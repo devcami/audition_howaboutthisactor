@@ -111,8 +111,7 @@
 			<div id="attachImg<%= i + 1 %>">
 				<img src="<%= request.getContextPath() %>/upload/ann/<%= wa.getRenamedFilename() %>" width="200px" alt="첨부파일 미리보기" />
 				<br />
-				<input type="button" name="btn-delFile" id="delFile<%= i + 1 %>" value="삭제" onclick="fileDelete(this);"/>
-				<input type="hidden" name="delFile" value=<%= wa.getWorkNo() %> />
+				<input type="button" name="btn-delFile" id="delFile<%= i + 1 %>" value="삭제" onclick="fileDelete(this, <%= wa.getWorkAttachmentNo() %>);"/>
 			</div>
 			<br />
 		<%
@@ -449,12 +448,17 @@ $(addAttachBtn).click(function(){
 /**
  *  업로드 가능한 첨부파일 수 제한하기
  */
-const fileDelete = (e) => {
+const fileDelete = (e, waNo) => {
 	let fileNo = e.id.replace("delFile", "");
 	if(confirm('첨부파일을 삭제하시겠습니까?')){
 		let fileId = "attachImg" + fileNo;
 		const delFile = document.getElementById(fileId);
 		delFile.style.display = "none";
+		let input = document.createElement('input');
+		input.setAttribute('type', 'hidden');
+		input.setAttribute('name', 'delFile');
+		input.setAttribute('value', waNo);
+		e.append(input);
 		
 		document.querySelectorAll("input[type=file]").forEach((attach)=>{
 			console.log(attach);
