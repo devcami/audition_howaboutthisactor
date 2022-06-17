@@ -68,7 +68,7 @@ function.btnClick() => {
 					아이디
 				</th>
 				<td>
-					<input type="text" placeholder="아이디를 입력해주세요." name="memberId" id="_memberId">
+					<input type="text" placeholder="아이디를 입력해주세요." name="memberId" id="_memberId" value="<%= saveId != null ? saveId : "" %>">
 				</td>
 			</tr>
 			<tr>
@@ -136,7 +136,7 @@ function.btnClick() => {
 <script>
 const findId = () => {
 	const title = "findIdPopup";
-	const spec = "width=300px, height=350px";
+	const spec = "width=500px, height=350px";
 	const popup = open("", title, spec);
 	
 	const frm = document.findIdFrm;
@@ -151,7 +151,7 @@ const findId = () => {
 <script>
 const findPw = () => {
 	const title = "findPwPopup";
-	const spec = "width=300px, height=350px";
+	const spec = "width=500px, height=350px";
 	const popup = open("", title, spec);
 	
 	const frm = document.findPwFrm;
@@ -159,5 +159,8 @@ const findPw = () => {
 	frm.submit();
 };
 </script>	
+
+<script>
+</script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

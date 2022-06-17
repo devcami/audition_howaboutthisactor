@@ -7,7 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import common.HelloMvcUtils;
 import member.model.service.MemberService;
+import member.controller.FindPwServlet;
 
 /**
  * Servlet implementation class FindPwResultServlet
@@ -24,12 +26,11 @@ public class FindPwResultServlet extends HttpServlet {
 		try {
 			
 		 request.setCharacterEncoding("utf-8");
-			
-		 String memberId = request.getParameter("memberId");
-		 String memberName = request.getParameter("memberName");
-		 System.out.println("memberId@findIdResulteServlet = " + memberId + memberName);
 		 
-		 String password = memberService.findPw(memberId, memberName);
+		 String memberId = (String) request.getAttribute("memberId");
+		 String password = HelloMvcUtils.encrypt(request.getParameter("password"), memberId);
+//		 System.out.println("memberId@findPwResulteServlet = " + memberId + memberName);
+
 		 System.out.println(password);
 		 
 		 request.setAttribute("password",  password);
