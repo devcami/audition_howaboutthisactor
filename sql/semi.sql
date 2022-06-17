@@ -386,12 +386,23 @@ select * from port_attachment;
 select * from production;
 select * from work;
 select * from work_attachment;
-select * from announcement;
+select * from announcement; 
 select * from cast;
 select * from actor_apply;
 select * from wishlist_actor;
 select * from wishlist_ann;
 select * from report;
+
+delete from actor_apply where ann_no = 27;
+commit;
+
+update production set caster_email = 'jyjmjs2@naver.com' where member_id = 'director';
+------------------------------
+-- 채팅리스트
+------------------------------
+select * from (select row_number() over(order by ann_reg_date desc) rnum , a.* from announcement a) where ann_gender = '남';
+
+
 
 
 

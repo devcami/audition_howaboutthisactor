@@ -6,7 +6,6 @@ import static common.JdbcTemplate.getConnection;
 import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -32,16 +31,16 @@ public class AnnService {
 		return totalContent;
 	}
 
-	public List<Ann> findAll(Map<String, Object> param) {
+	public List<Ann> findAll() {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.findAll(conn, param);
+		List<Ann> list = annDao.findAll(conn);
 		close(conn);
 		return list;
 	}
 
-	public List<Ann> annEndDateSort(Map<String, Object> param) {
+	public List<Ann> annEndDateSort() {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.annEndDateSort(conn, param);
+		List<Ann> list = annDao.annEndDateSort(conn);
 		close(conn);
 		return list;
 	}
@@ -133,9 +132,9 @@ public class AnnService {
 		return result;
 	}
 
-	public WorkAttachment findOneAttachByWorkNo(int waNo) {
+	public WorkAttachment findOneAttachByWaNo(int waNo) {
 		Connection conn = getConnection();
-		WorkAttachment attach = annDao.findOneAttachByWorkNo(conn, waNo);
+		WorkAttachment attach = annDao.findOneAttachByWaNo(conn, waNo);
 		close(conn);
 		return attach;
 	}
@@ -189,9 +188,9 @@ public class AnnService {
 		return result;
 	}
 
-	public List<Ann> findByAnnTitle(Map<String, Object> param) {
+	public List<Ann> findByAnnTitle(String searchKeyword) {
 		Connection conn = getConnection();
-		List<Ann> list = annDao.findByAnnTitle(conn, param);
+		List<Ann> list = annDao.findByAnnTitle(conn, searchKeyword);
 		close(conn);
 		return list;
 	}
@@ -239,6 +238,41 @@ public class AnnService {
 		int totalContent = annDao.getTotalByTitle(conn, searchKeyword);
 		close(conn);
 		return totalContent;
+	}
+
+	public List<Ann> detailFinderGender(List<Ann> list, String annGender) {
+		Connection conn = getConnection();
+		List<Ann> annList = annDao.detailFinderGender(conn, annGender, list);
+		close(conn);
+		return annList;
+	}
+
+	public List<Ann> detailFinderAge(List<Ann> list, String annAge) {
+		Connection conn = getConnection();
+		List<Ann> annList = annDao.detailFinderAge(conn, annAge, list);
+		close(conn);
+		return annList;
+	}
+
+	public List<Ann> detailFinderHeight(List<Ann> list, String annHeight) {
+		Connection conn = getConnection();
+		List<Ann> annList = annDao.detailFinderHeight(conn, annHeight, list);
+		close(conn);
+		return annList;
+	}
+
+	public List<Ann> detailFinderBody(List<Ann> list, String annBody) {
+		Connection conn = getConnection();
+		List<Ann> annList = annDao.detailFinderBody(conn, annBody, list);
+		close(conn);
+		return annList;
+	}
+
+	public List<Ann> findMorePage(Map<String, Integer> param) {
+		Connection conn = getConnection();
+		List<Ann> list = annDao.findMorePage(conn, param);
+		close(conn);
+		return list;
 	}
 
 }
