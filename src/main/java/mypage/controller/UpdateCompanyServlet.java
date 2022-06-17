@@ -34,15 +34,26 @@ public class UpdateCompanyServlet extends HttpServlet {
 				String phone_open = request.getParameter("phone_open");
 				String email_open = request.getParameter("email_open");
 				
+				System.out.println("UpdateCompanyServlet@memberId = " + memberId);
+				System.out.println("UpdateCompanyServlet@companyName = " + companyName);
+				System.out.println("UpdateCompanyServlet@casterName = " + casterName);
+				System.out.println("UpdateCompanyServlet@phone = " + phone);
+				System.out.println("UpdateCompanyServlet@email = " + email);
+				System.out.println("UpdateCompanyServlet@phone_open = " + phone_open);
+				System.out.println("UpdateCompanyServlet@email_open = " + email_open);
+				
 				if(email_open == null) {
 					email_open = "N";					
 				}
 				if(phone_open == null) {
 					phone_open = "N";					
 				}
+				
+				
 
 				Production production = 
 						new Production(memberId, companyName, casterName, phone, email, phone_open, email_open);
+				
 				int result = mypageService.updateProduction(production);
 		
 				response.setContentType("application/json; charset=utf-8");
