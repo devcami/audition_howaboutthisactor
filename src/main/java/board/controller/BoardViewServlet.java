@@ -27,7 +27,7 @@ public class BoardViewServlet extends HttpServlet {
 		
 		try {
 			// 1.사용자입력값처리
-			int board_no = Integer.parseInt(request.getParameter("board_no"));
+			int no = Integer.parseInt(request.getParameter("no")); // 게시판 넘버
 			
 			// 쿠키처리
 			boolean hasRead = false;
@@ -39,7 +39,7 @@ public class BoardViewServlet extends HttpServlet {
 					String value = cookie.getValue();
 					if("boardCookie".equals(name)) {
 						boardCookieVal = value; // 기존쿠키값
-						if(value.contains("|" + board_no + "|")) {
+						if(value.contains("|" + no + "|")) {
 							hasRead = true;
 						}
 						break;
@@ -52,9 +52,9 @@ public class BoardViewServlet extends HttpServlet {
 			
 			// 조회수증가
 			if(!hasRead) {
-				int result = boardService.updateReadCount(board_no);
+				int result = boardService.updateReadCount(no);
 				// 쿠키 새로 전송 (boardCookie 없는 경우 | 요청된 boardCookie에 현재 no가 없는 경우)
-				Cookie cookie = new Cookie("boardCookie", boardCookieVal + "|" + board_no + "|");
+				Cookie cookie = new Cookie("boardCookie", boardCookieVal + "|" + no + "|");
 				cookie.setPath(request.getContextPath() + "/board/boardView"); // 쿠키를 사용할 경로
 				cookie.setMaxAge(365 * 24 * 60 * 60); // 1년
 				response.addCookie(cookie); // 응답헤더에 Set-Cookie로 전송
@@ -62,7 +62,8 @@ public class BoardViewServlet extends HttpServlet {
 			}
 			
 			// 게시글 조회
-			BoardExt board = boardService.findByNo(board_no);
+			BoardExt board = boardService.findByNo(no);
+			
 			
 			// XSS공격대비(Cross-site Scripting공격) 변환
 			board.setTitle(board.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));

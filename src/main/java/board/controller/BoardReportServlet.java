@@ -17,19 +17,26 @@ public class BoardReportServlet extends HttpServlet {
 	private BoardService boardService = new BoardService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
 		request.setCharacterEncoding("UTF-8");
-		int board_no = Integer.parseInt(request.getParameter("boardNoReport"));
+		int no = Integer.parseInt(request.getParameter("boardNoReport"));
 		String memberId = request.getParameter("reportWriter");
 		String reportContent = request.getParameter("reportContent");
 		Map<String, Object> param = new HashMap<>();
 	
-		param.put("board_no", board_no);
+		param.put("no", no);
 		param.put("memberId", memberId);
 		param.put("reportContent", reportContent);
 		
 		int result = boardService.insertBoardReport(param);
-		response.sendRedirect(request.getContextPath() + "/board/boardView?board_no=" + board_no);
+		request.getSession().setAttribute("msg", "게시글을 신고했습니다.");
+		response.sendRedirect(request.getContextPath() + "/board/boardView?no=" + no);
 		
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
 	}
 
 }

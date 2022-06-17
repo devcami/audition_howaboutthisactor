@@ -24,10 +24,6 @@
 
       <br />
           <div class="col-lg-8">
-          <!-- Post content-->
-            <article>
-          <!-- Post header-->
-            <header class="mb-4">
           <!-- Post title-->
              <h1 class="fw-bolder mb-1"><span><%= board.getTitle() %></span></h1>
   
@@ -78,10 +74,7 @@
       </div>
     </div>
   </div>
-</div>
-            
-            </div>
-           </header>
+
           <hr>
          <!-- Post content-->
            <section class="mb-5">
@@ -113,8 +106,7 @@
 		   		 <input type="button" value="삭제하기" onclick="deleteBoard()">
 		   </div>
 			<% } %>
-		</article>
-                </div>
+
          
                     
                    	
@@ -181,7 +173,7 @@
 					<textarea name="content" cols="60" rows="3" placeholder="댓글을 작성하세요"></textarea>
 	                <button type="submit"  class="btn" id="btn-comment-enroll1">등록</button>
 	            </form>
-	         </div>
+	       </div>
 			</tbody>
 		</table>
 	</div>

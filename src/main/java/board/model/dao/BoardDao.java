@@ -377,7 +377,7 @@ public class BoardDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, (String) param.get("memberId"));
-			pstmt.setInt(2, (int) param.get("board_no"));
+			pstmt.setInt(2, (int) param.get("no"));
 //			System.out.println("board_no :" + board_no);
 			pstmt.setString(3, (String) param.get("reportContent"));
 			result = pstmt.executeUpdate();

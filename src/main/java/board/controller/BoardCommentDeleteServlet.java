@@ -24,14 +24,14 @@ public class BoardCommentDeleteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			//1. 파라미터값 가져오기
-			int board_no = Integer.parseInt(request.getParameter("board_no"));
-			int no = Integer.parseInt(request.getParameter("no")); //댓글번호
-			System.out.println("board_no="+board_no+", no=" + no);
+			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			int no = Integer.parseInt(request.getParameter("no"));
+			System.out.println("boardNo="+boardNo+", no=" + no);
 			//2. 비지니스로직 호출
 			int result = boardService.deleteBoardComment(no);		
 			//3. 리다이렉트
 			request.getSession().setAttribute("msg", "댓글 삭제 성공!");
-			response.sendRedirect(request.getContextPath() + "/board/boardView?no=" + board_no);
+			response.sendRedirect(request.getContextPath() + "/board/boardView?no=" + boardNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -40,3 +40,4 @@ public class BoardCommentDeleteServlet extends HttpServlet {
 	}
 
 }
+
