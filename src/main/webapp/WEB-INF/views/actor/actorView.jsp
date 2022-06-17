@@ -10,14 +10,19 @@
 
 <%
   List<ActorInfo> list = (List<ActorInfo>) request.getAttribute("list");
+  ActorInfo actorInfo = (ActorInfo) request.getAttribute("actorInfo");
+  
+  List<WishListActor> wishlistActor = (List<WishListActor>) request.getAttribute("wishlistActor");
 
 
  %>
-
-
+<link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <body>
+ <h2> 배우 상세 프로필</h2>
 	<form method="POST" action="actorView.jsp">
+	 <img class="actor_photo"alt="" src="<%= request.getContextPath() %>/upload/portfolio/<%=list.get(i).getAttachment().getRenamedFilename()%>">
 		<table>
+		
 			<tr>
 				<td>멤버아이디</td>
 				<td><input type="text" name="name"></td>
@@ -70,7 +75,7 @@
 		</table>
 	</form>
 </body>
-
-
+<% 	} %>
+<% 	} %>
 </html>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -25,7 +25,7 @@ import mypage.model.dto.ActorInfo;
  */
 
 
-@WebServlet("/actor/actorList")
+@WebServlet("/actor/actorSearch")
 public class ActorListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ActorService actorService = new ActorService();
