@@ -32,11 +32,11 @@ public class BoardDeleteServlet extends HttpServlet {
 
 		try {
 			// 1.사용자입력처리
-			int no = Integer.parseInt(request.getParameter("no"));
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
 
 			// 2.업무로직
 			// 첨부파일 존재시 삭제
-			List<Attachment> attachments = boardService.findByNo(no).getAttachments();
+			List<Attachment> attachments = boardService.findByNo(board_no).getAttachments();
 			if(attachments != null && !attachments.isEmpty())
 				for(Attachment attach : attachments) {
 					String saveDirectory = getServletContext().getRealPath("/upload/board");
@@ -49,7 +49,7 @@ public class BoardDeleteServlet extends HttpServlet {
 					
 			
 			// board 레코드(행) 삭제 (attachment는 on delete cascade에 의해 자동으로 제거된다.)
-			int result = boardService.deleteBoard(no);
+			int result = boardService.deleteBoard(board_no);
 			
 			// 3. redirect : /mvc/board/boardList로 이동
 			request.getSession().setAttribute("msg", "게시글을 삭제했습니다.");

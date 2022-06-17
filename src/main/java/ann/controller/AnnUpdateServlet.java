@@ -69,8 +69,11 @@ public class AnnUpdateServlet extends HttpServlet {
 			if(delFiles != null) {
 				for(String temp : delFiles) {
 					int waNo = Integer.parseInt(temp);
-					WorkAttachment wa = annService.findOneAttachByWorkNo(waNo);
+					//System.out.println(waNo);
+					WorkAttachment wa = annService.findOneAttachByWaNo(waNo);
+					//System.out.println(wa);
 					File delFile = new File(saveDirectory, wa.getRenamedFilename());
+					if(delFile.exists()) delFile.delete();
 					int result = annService.deleteWorkAttachment(waNo);
 				}
 			}

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import ann.model.dto.Ann;
 import ann.model.service.AnnService;
 import common.HelloMvcUtils;
@@ -27,42 +29,19 @@ public class AnnEndDateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		try {
-			int numPerPage = AnnService.NUM_PER_PAGE; //12
-			int totalContent = annService.getTotalContent();
-
-			int cPage = 1; 
-			
-			try {
-				cPage = Integer.parseInt(request.getParameter("cPage"));
-			} catch (NumberFormatException e) {
-				// 예외 발생 : cPage가 존재하지 않을 때 , 현재 페이지는 1로 처리
-			}
-			
-			Map<String, Object> param = new HashMap<>();
-			int start = ((cPage - 1) * numPerPage ) + 1; 
-			int end = cPage * numPerPage;
-			param.put("start", start);
-			param.put("end", end);
-			
 			String sortType = request.getParameter("sortType");
 			List<Ann> list = null;
-			String url = request.getRequestURI(); // /app/ann/annList
+			
 			if(sortType.equals("end_date")) {
-				list = annService.annEndDateSort(param);
-				url += "?sortType=end_date";
+				list = annService.annEndDateSort();
 			} else {
-				list = annService.findAll(param);
-				url += "?sortType=reg_date";
+				list = annService.findAll();
 			}
 			
-			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-			
 			request.setAttribute("sortType", sortType);
-			request.setAttribute("list", list);
-			request.setAttribute("pagebar", pagebar);
-			request.getRequestDispatcher("/WEB-INF/views/ann/annList.jsp").forward(request, response);
+			response.setContentType("application/json; charset=utf-8");
+			new Gson().toJson(list, response.getWriter());
 				
 		} catch (Exception e) {
 			e.printStackTrace();

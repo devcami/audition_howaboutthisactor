@@ -40,6 +40,45 @@
 				onclick="location.href='<%= request.getContextPath() %>/board/boardList'">
 			 	 뒤로 가기 </button>
 			 	 &nbsp;
+			 	 
+			 	 	<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary view" data-bs-toggle="modal"
+			data-bs-target="#reportModal" id="btn-report">신고하기</button>
+			 <!-- Modal -->
+     <div class="modal fade" id="reportModal" tabindex="-1"
+         aria-labelledby="reportModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="reportModalLabel">신고</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                     aria-label="Close"></button>
+               </div>
+               <form name="boardReportFrm" 
+                  action="<%= request.getContextPath() %>/board/boardReport"
+                  method="POST">
+                  <input type="hidden" name="boardNoReport" value="<%= board.getNo() %>">
+                  <div class="modal-body">
+                     <div class="mb-3">
+                        <label for="message-text" class="col-form-label">신고자:</label>
+                        <input type="text" name="reportWriter" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
+                     </div>
+                     <div class="mb-3">
+                        <label for="message-text" class="col-form-label">신고내용:</label>
+                        <textarea class="form-control" name="reportContent" id="content"></textarea>
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                     <button type="submit" class="btn btn-primary" id="btn-report-submit" >제출</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+    </div>
+  </div>
+</div>
             
             </div>
            </header>
@@ -307,6 +346,33 @@ const updateBoard = () => {
 	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>";
 }
 <% } %>
+
+/*
+ * 신고
+ */
+ 
+$(content).keyup(function(e) {
+	   let content = $(this).val();
+	   if(content.length > 300){
+	      alert("신고 내용은 최대 300자까지 입력 가능합니다.");
+	      $(this).val(content.substring(0, 300));
+	      $(this).focus();
+	   }
+	});
+	document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
+	   
+	   const contentVal = content.value.trim(); 
+	   console.log(contentVal);
+	   if(!/^(.|\n)+$/.test(contentVal)){ 
+	      alert('내용을 작성해주세요.');            
+	      content.select();
+	      return false;
+	   }
+	   
+	   if(confirm('신고내역을 제출하시겠습니까?')){
+	      console.log('신고진행');
+	   }
+	});
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

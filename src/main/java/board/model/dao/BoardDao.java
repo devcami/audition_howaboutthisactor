@@ -1,6 +1,9 @@
 package board.model.dao;
 
 import static common.JdbcTemplate.close;
+import static common.JdbcTemplate.commit;
+import static common.JdbcTemplate.getConnection;
+import static common.JdbcTemplate.rollback;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -367,6 +370,24 @@ public class BoardDao {
 		return result;
 	}
 
+	public int insertBoardReport(Connection conn, Map<String, Object> param) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertBoardReport");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String) param.get("memberId"));
+			pstmt.setInt(2, (int) param.get("board_no"));
+//			System.out.println("board_no :" + board_no);
+			pstmt.setString(3, (String) param.get("reportContent"));
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new BoardException("> 게시판 - 게시글 신고하기 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 }
 

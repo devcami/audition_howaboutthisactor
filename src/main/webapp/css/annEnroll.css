@@ -154,3 +154,22 @@ li{
   display: inline;
   width: 50px;
 }
+.pgb {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: #F1F1F1;
+}
+
+.progress-container {
+  width: 100%;
+  height: 8px;
+  background: #fceee8;
+}
+
+.progress-container #progress-bar {
+  width: 0;
+  height: 8px;
+  background: #bbded6;
+}

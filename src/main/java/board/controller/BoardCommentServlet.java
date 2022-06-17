@@ -26,7 +26,7 @@ public class BoardCommentServlet extends HttpServlet {
 		try {
 			request.setCharacterEncoding("utf-8");
 			// 1. 사용자입력값 처리
-			int boardNo = Integer.parseInt(request.getParameter("boardNo"));
+			int board_no = Integer.parseInt(request.getParameter("board_no"));
 			int commentLevel = Integer.parseInt(request.getParameter("commentLevel"));
 			String memberId = request.getParameter("memberId");
 //			System.out.println("memberId:" + memberId);
@@ -34,14 +34,14 @@ public class BoardCommentServlet extends HttpServlet {
 			int commentRef = Integer.parseInt(request.getParameter("commentRef"));
 			
 			BoardComment bc = 
-					new BoardComment(0, commentLevel, memberId, content,  boardNo, commentRef, null);
+					new BoardComment(0, commentLevel, memberId, content,  board_no, commentRef, null);
 			System.out.println("boardComment = " + bc);
 			
 			// 2. 업무로직
 			int result = boardService.insertBoardComment(bc);
 			
 			// 3. 리다이렉트
-			response.sendRedirect(request.getContextPath() + "/board/boardView?no=" + boardNo);
+			response.sendRedirect(request.getContextPath() + "/board/boardView?no=" + board_no);
 
 		} catch (Exception e) {
 			e.printStackTrace();
