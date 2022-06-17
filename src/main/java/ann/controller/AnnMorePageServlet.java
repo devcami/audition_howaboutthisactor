@@ -15,24 +15,33 @@ import com.google.gson.Gson;
 
 import ann.model.dto.Ann;
 import ann.model.service.AnnService;
-import common.HelloMvcUtils;
 
-@WebServlet("/ann/annFinder")
-public class AnnFinderServlet extends HttpServlet {
+/**
+ * Servlet implementation class AnnMorePageServlet
+ */
+@WebServlet("/ann/morePage")
+public class AnnMorePageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AnnService annService = new AnnService();
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String searchKeyword = request.getParameter("searchKeyword");
-		
-			List<Ann> list = annService.findByAnnTitle(searchKeyword);
+			// 1. 사용자입력값 처리
+			int numPerPage = annService.NUM_PER_PAGE;
+			int cPage = Integer.parseInt(request.getParameter("cPage"));
 			
-			request.setAttribute("list", list);
-			request.setAttribute("searchKeyword", searchKeyword);
+			Map<String, Integer> param = new HashMap<>();
+			param.put("start", (cPage - 1) * numPerPage + 1);
+			param.put("end", cPage * numPerPage);
+			
+			// 2. 업무로직
+			List<Ann> list = annService.findMorePage(param);
+			
+			// 3. 응답처리 json
 			response.setContentType("application/json; charset=utf-8");
 			new Gson().toJson(list, response.getWriter());
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

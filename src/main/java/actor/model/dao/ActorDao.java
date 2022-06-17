@@ -136,6 +136,56 @@ private Properties prop = new Properties();
   		
   		return pa;
       }
+	
+	public  ActorInfo detailActorInfo (Connection conn, String memberId) {
+		 PreparedStatement pstmt = null;
+   	  	 ResultSet rset = null;
+   	     String sql = prop.getProperty("detailActorInfo");
+ 			
+   	     ActorInfo dta = new ActorInfo();
+   	     PortAttachment po = new PortAttachment();
+		try {
+ 			pstmt = conn.prepareStatement(sql);
+ 			pstmt.setString(1,memberId);
+ 		
+ 			rset = pstmt.executeQuery();
+ 			
+ 			while(rset.next()) {
+ 				dta.setMemberId(memberId);
+ 				dta.setActorName(rset.getString("actor_name"));
+ 				dta.setActorNo(rset.getInt("actor_no"));
+ 				dta.setBirth(rset.getString("birth"));
+ 				dta.setAge(rset.getInt("actor_age"));
+ 				dta.setEducation(rset.getString("education"));
+ 				dta.setHeight(rset.getDouble("height"));
+ 				dta.setWeight(rset.getDouble("weight"));
+ 				dta.setCompany(rset.getString("company"));
+ 				dta.setPhone(rset.getNString("phone"));
+ 				dta.setEmail(rset.getString("email"));
+ 				dta.setSpeciality(rset.getString("speciality"));
+ 				dta.setSns(rset.getString("sns"));
+ 				dta.setAttachNo(rset.getInt("attach_no"));
+ 			
+ 			
+ 			}
+ 			
+ 			
+ 		} catch (SQLException e) {
+ 			throw new ActorException("배우 조회 오류!", e);
+ 		} finally {
+ 			close(rset);
+ 			close(pstmt);
+ 		}
+ 		
+ 		return dta;
+ 		
+ 		
+    
+	}
+	
+	
+	
+	
 	}
       
 	

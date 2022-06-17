@@ -27,7 +27,7 @@
 						value="<%= (searchKeyword != null) ? searchKeyword : "" %>" />
 				<button class="btn-search-title">검색</button>
 			</form>
-		
+		<br>
 		</div>
 		<div class="row row-cols-1 row-cols-md-3 g-4" id="ann-container">
 		<script> let a; </script>

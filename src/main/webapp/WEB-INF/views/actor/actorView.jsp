@@ -1,10 +1,22 @@
+<%@page import="mypage.model.dto.ActorInfo"%>
+<%@page import="member.model.dto.MemberRole"%>
+<%@page import="member.model.dto.Member"%>
 <%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.sql.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="/WEB-INF/views/common/header.jsp" %> 
+
+<%
+  List<ActorInfo> list = (List<ActorInfo>) request.getAttribute("list");
+
+
+ %>
+
 
 <body>
-	<form method="POST" action="actorSerch.jsp">
+	<form method="POST" action="actorView.jsp">
 		<table>
 			<tr>
 				<td>멤버아이디</td>

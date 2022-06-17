@@ -23,6 +23,8 @@ public class ActorService {
 		for(ActorInfo actor : list ) {
 			PortAttachment pa = actorDao.getfindActorProfile(conn, actor.getMemberId());
 			actor.setAttachment(pa);
+			
+			
 		}	
 		close(conn);
 		return list;
@@ -36,4 +38,10 @@ public class ActorService {
 		return totalContents;
 	}
 
+//		
+//	public List<ActorInfo> detailActorInfo(Map<String, Object>param) {
+//		Connection conn = getConnection();
+//		List<ActorInfo> list = actorDao.detailActorInfo(conn,param);
+//		
+//	}
 }
