@@ -25,6 +25,7 @@
 			<div class = "find_phone">
 				<label>번호</label>
 				<input type="text" name="phone" class = "btn-phone" placeholder = "휴대폰번호를 '-'없이 입력">
+				<%--onKeyup = "addHypen(this);"  --%>
 			</div>
 			<br>
 	</section>
@@ -35,12 +36,53 @@
  </form>
 <script>
 const frmsubmit = () => {
-	console.log("폼을 보냅니다.");
+//	console.log("폼을 보냅니다.");
 	const frm = document.idfindscreen;
-	console.log(frm);
-//	frm.target = title;
+ 	if (frm.memberName.value.length < 1) {
+		  alert("이름을 입력해주세요");
+		  return;
+		 }
+
+	if (!/^010\d{8}$/.test(frm.phone.value)) { // 하이픈 있다면 숫자바뀜
+			  alert("유효한 전화번호가 아닙니다. 010으로 시작하는 11자리 번호를 정확하게 적어주세요.");
+			  return;
+	 }
+	
+//	console.log(frm);
 	frm.submit();
 };
+
+
+
+
+/* 자동 하이픈 처리 구현...
+function addHypen(obj) {
+    var number = obj.value.replace(/[^0-9]/g, "");
+    var phone = "";
+
+    if(number.length < 4) {
+        return number;
+    } else if(number.length < 7) {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3);
+    } else if(number.length < 11) {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3, 3);
+        phone += "-";
+        phone += number.substr(6);
+    } else {
+        phone += number.substr(0, 3);
+        phone += "-";
+        phone += number.substr(3, 4);
+        phone += "-";
+        phone += number.substr(7);
+    }
+    obj.value = phone;
+}
+*/
+
 </script>
 
 </body>

@@ -40,6 +40,7 @@ public class FindPwServlet extends HttpServlet {
 		 String password = memberService.findPw(memberId, memberName);
 		 boolean available = ( password == null);
 		 
+		 request.setAttribute("memberId", memberId);
 		 request.setAttribute("password",  password);
 		 request.setAttribute("available", available);
 		 
@@ -47,5 +48,6 @@ public class FindPwServlet extends HttpServlet {
 		 request
 			.getRequestDispatcher("/WEB-INF/views/member/findIdResult.jsp")
 			.forward(request, response);
+		 
 	}
 }
