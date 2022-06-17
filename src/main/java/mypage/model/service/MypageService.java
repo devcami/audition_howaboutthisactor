@@ -318,6 +318,21 @@ public class MypageService {
 		close(conn);
 		return totalContent;
 	}
+	
+	public int getTotalUndoReport() {
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalUndoReport(conn);
+		close(conn);
+		return totalContent;
+	}
+	
+	public int getTotalIngReport() {
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalIngReport(conn);
+		close(conn);
+		return totalContent;
+	}
+	
 
 	public List<Report> ReportUndoList(Map<String, Object> param) {
 		Connection conn = getConnection();
@@ -532,6 +547,13 @@ public class MypageService {
 			close(conn); 
 		}
 		return result;
+	}
+
+	public List<Board> findMyBoardByTitle(String searchKeyword, String memberId) {
+		Connection conn = getConnection();
+		List<Board> list = mypageDao.findMyBoardByTitle(conn, searchKeyword, memberId);
+		close(conn);
+		return list;
 	}
 
 

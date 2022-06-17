@@ -672,7 +672,48 @@ public class MypageDao {
 			close(pstmt);
 		}		
 		return totalContent;
-		
+	}
+	
+	public int getTotalUndoReport(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalUndoReport");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> getTotalUndoReport@신고리스트(undo) 전체 게시글수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
+	}
+	
+	public int getTotalIngReport(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalIngReport");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> getTotalUndoReport@신고리스트(Ing) 전체 게시글수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
 	}
 
 	private Report handleReportResultSet(ResultSet rset) throws SQLException {
@@ -1296,6 +1337,33 @@ public class MypageDao {
 		
 		return result;
 	}
+
+	public List<Board> findMyBoardByTitle(Connection conn, String searchKeyword, String memberId) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("findMyBoardByTitle");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, "%" + searchKeyword + "%");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Board board = handleBoardResultSet(rset);
+				list.add(board);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 내게시물 찾기 - 게시물 제목으로 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+
 	
 	
 }
