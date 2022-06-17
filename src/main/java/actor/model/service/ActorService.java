@@ -38,10 +38,16 @@ public class ActorService {
 		return totalContents;
 	}
 
-//		
-//	public List<ActorInfo> detailActorInfo(Map<String, Object>param) {
+	
+		
+//	public List<ActorInfo> detailActorInfo(String memberId) {
 //		Connection conn = getConnection();
-//		List<ActorInfo> list = actorDao.detailActorInfo(conn,param);
+//		List<ActorInfo> list = actorDao.detailActorInfo(conn, memberId);
+//		close(conn);
+//		return totalContents;
 //		
-//	}
+		
+		
+		
+	
 }

@@ -171,7 +171,7 @@ private Properties prop = new Properties();
  			
  			
  		} catch (SQLException e) {
- 			throw new ActorException("배우 조회 오류!", e);
+ 			throw new ActorException("배우 다시 검색하세요", e);
  		} finally {
  			close(rset);
  			close(pstmt);
