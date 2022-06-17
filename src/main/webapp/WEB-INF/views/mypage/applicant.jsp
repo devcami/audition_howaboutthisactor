@@ -37,7 +37,12 @@
 			Date today = new Date(miliseconds); 
 			for(int i = 0; i < list.size(); i++){ 
 		%>
-        <div class="card" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+        <div 
+        	class="card" data-bs-toggle="offcanvas" 
+        	data-bs-target="#offcanvasRight" 
+        	aria-controls="offcanvasRight"
+        	onclick="applicantView(this);">
+          <input type="hidden" value="<%= list.get(i).getAnnNo() %>">
           <div class="card-header">
             모집중
           </div>
@@ -158,18 +163,32 @@
                 <a href="#">상세보기</a>
               </div>
             </div>
-           </div>
+         </div>
+         </div>
            
   <script>
+
+  	const applicantView = (ann) => {
+  		const annNo = ann.firstElementChild.value;
+  		console.log(annNo);
+  		
+  		$.ajax({
+  			url: "<%= request.getContextPath() %>/mypage/getApplicant",
+  			method: "POST",
+  			dataType: "json",
+  			data: {
+  				"annNo" : annNo
+  			},
+  			success(applicants){
+  				// console.log(applicants);
+  				console.log("성공");
+  			}, 
+  			error: console.log
+  			
+  		});
+  		
+  	}
   
-  sortType.addEventListener('change', (e) => {
-		document.querySelector("#updown-container").innerHTML = "";
-		const {value} = e.target;
-		
-		console.log(value);
-		// 공고 마감순 선택 시 페이지 요청
-		location.href=`<%= request.getContextPath() %>/mypage/myApplyEndDateSort?sortType=\${value}`;
-	});
   
   
 	const annView = (ann) => {

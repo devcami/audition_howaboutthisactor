@@ -34,9 +34,9 @@ public class ApplicantListServlet extends HttpServlet {
 			
 			
 			int numPerPage = mypageService.APPLY_NUM_PER_PAGE; // 12
-			int totalContent = mypageService.getTotalMyAnn(memberId);
+			int totalContent = mypageService.getTotalMyCurrentAnn(memberId);
 
-			System.out.println("ApplicantListServlet@totalContent = " + totalContent);
+//			System.out.println("ApplicantListServlet@totalContent = " + totalContent);
 			int cPage = 1; 
 			
 			try {
@@ -51,7 +51,8 @@ public class ApplicantListServlet extends HttpServlet {
 			param.put("start", start);
 			param.put("end", end);
 			
-			List<Ann> list = mypageService.findMyAllAnn(memberId, param);
+			List<Ann> list = mypageService.findMyAllCurrentAnn(memberId, param);
+			System.out.println("ApplicantListServlet@list = " + list.size());
 
 			
 //				System.out.println("PwishListServlet@list 길이 = " + list.size());

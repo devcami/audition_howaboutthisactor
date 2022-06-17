@@ -1,5 +1,8 @@
 package mypage.model.service;
-import static common.JdbcTemplate.*;
+import static common.JdbcTemplate.close;
+import static common.JdbcTemplate.commit;
+import static common.JdbcTemplate.getConnection;
+import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import member.model.dto.Member;
 import member.model.dto.Production;
 import mypage.model.dao.MypageDao;
 import mypage.model.dto.ActorInfo;
+import mypage.model.dto.ActorInfoExt;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
 
@@ -453,6 +457,54 @@ public class MypageService {
 		close(conn);
 		return list;
 	}
+
+	public List<Ann> findMyAllCurrentAnn(String memberId, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Ann> list = mypageDao.findMyAllCurrentAnn(conn, memberId, param);
+		close(conn);
+		return list;
+	}
+	
+	public int getTotalMyCurrentAnn(String memberId) {
+		
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalMyCurrentAnn(conn, memberId);
+		close(conn);
+		return totalContent;
+	}
+
+	public List<String> findApplicantActorNo(String annNo) {
+
+		Connection conn = getConnection();
+		List<String> list = mypageDao.findApplicantActorId(conn, annNo);
+		close(conn);
+		return list;
+		
+	}
+
+	public List<ActorInfo> findApplicantActor(List<String> actorIdList) {
+		Connection conn = getConnection();
+		List<ActorInfo> actorList = new ArrayList<>();
+		
+		try {	
+			for(int i = 0; i < actorIdList.size(); i++) {
+				ActorInfo actor = new ActorInfo();
+				actor = mypageDao.findActorInfo(conn, actorIdList.get(i));
+				PortAttachment profilePic = mypageDao.getProfilePic(conn, actorIdList.get(i), "P");
+				actor.setAttachment(profilePic);
+				
+				actorList.add(actor);			
+			}
+			
+		} catch(Exception e) {
+			throw e;	
+		} finally {
+			close(conn);
+		}
+		
+		return actorList;
+	}
+
 
 	
 }
