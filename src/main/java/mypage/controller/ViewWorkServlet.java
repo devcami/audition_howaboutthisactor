@@ -41,7 +41,8 @@ public class ViewWorkServlet extends HttpServlet {
 			new Gson().toJson(works, response.getWriter());
 			
 		} catch(Exception e) {
-			
+			e.printStackTrace();
+			throw e;
 		}
 
 		
