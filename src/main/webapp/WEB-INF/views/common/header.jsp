@@ -16,6 +16,21 @@
 	if(msg != null)
 		session.removeAttribute("msg");
 
+/*
+	String saveId = null; // 아이디저장을 체크한 경우, memberId값이 담길 변수
+	Cookie[] cookies = request.getCookies();
+	if(cookies != null){
+		for(Cookie cookie : cookies){
+			// System.out.println("Cookie{" + cookie.getName() + "=" + cookie.getValue() + "}");
+			if("saveId".equals(cookie.getName())){
+				saveId = cookie.getValue();
+			}
+		}
+	}
+	else {
+		// System.out.println("> 이번 요청에 전달된 cookie가 없습니다.");
+	}
+*/
 %>
 
 
