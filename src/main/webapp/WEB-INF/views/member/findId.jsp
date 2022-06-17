@@ -43,13 +43,17 @@ const frmsubmit = () => {
 		  return;
 		 }
 
-		 if (frm.phone.value.length != 11) { // 하이픈 있다면 13
-			  alert("핸드폰번호를 정확하게 입력해주세요");
+	if (!/^010\d{8}$/.test(frm.phone.value)) { // 하이픈 있다면 숫자바뀜
+			  alert("유효한 전화번호가 아닙니다. 010으로 시작하는 11자리 번호를 정확하게 적어주세요.");
 			  return;
-		 }
+	 }
+	
 //	console.log(frm);
 	frm.submit();
 };
+
+
+
 
 /* 자동 하이픈 처리 구현...
 function addHypen(obj) {

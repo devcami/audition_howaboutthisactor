@@ -18,7 +18,7 @@
 <title>아이디 찾기</title>
 </head>
 <body>
-
+<% if(memberId != null){ %>
   <form name="idsearch" method="post">
       <div class = "container">
       	<div class = "found-success">
@@ -32,6 +32,22 @@
        	</div>
       </div>
       </form>
+    <% } else { %>
+      
+   <form name= "id_misssearch" method="post">
+         <div class = "container">
+      	<div class = "found-success">
+	      <h4>  회원정보가 없습니다. </h4>  
+	     </div>
+	     <div class = "find-after">
+ 		    <input type="button" id="btnLogin" value="다시 입력하기" onClick ="findId1()"/>
+ 		    <input type="button" id="btnLogin" value="창닫기" onClick ="window.close()"/>
+       	</div>
+      </div>
+   
+   </form>
+   	<% } %>   
+      
 <form name="findPwFrm" action="<%= request.getContextPath() %>/member/findPw">
 	<input type="hidden" name="password" />
 </form>
@@ -47,5 +63,22 @@ const findPw1 = () => {
 	frm.submit();
 };
 </Script>
+
+<form name="findIdFrm" action="<%= request.getContextPath() %>/member/findId">
+	<input type="hidden" name="memberId" />
+</form>
+<script>
+const findId1 = () => {
+	const title = "findIdPopup";
+	const spec = "width=500px, height=350px";
+	const popup = open("", title, spec);
+	
+	const frm = document.findIdFrm;
+	frm.target = title; // 해당팝업에서 폼을 제출!
+	frm.submit();
+};
+
+</script>
+
 </body>
 </html>

@@ -13,8 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import common.HelloMvcUtils;
-import common.JdbcTemplate;
+// import common.HelloMvcUtils;
+// import common.JdbcTemplate;
 import member.model.dto.Member;
 import member.model.dto.MemberRole;
 import member.model.exception.MemberException;
@@ -65,7 +65,7 @@ public class MemberDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("findId");
-		String Id = "";
+		String Id = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);

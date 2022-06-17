@@ -43,10 +43,17 @@ public class FindIdResultServlet extends HttpServlet {
 		 String Id = memberService.findId(memberName, phone);
 		 System.out.println(Id);
 		 
+		 if(Id != null) {
 		 request.setAttribute("Id",  Id);
 		 request
 			.getRequestDispatcher("/WEB-INF/views/member/findIdResult.jsp")
 			.forward(request, response);
+		 } else {
+			 request.setAttribute("Id",  null);
+			 request
+				.getRequestDispatcher("/WEB-INF/views/member/findIdResult.jsp")
+				.forward(request, response);
+		 }
 		 
 		} catch(Exception e) {
 			e.printStackTrace();
