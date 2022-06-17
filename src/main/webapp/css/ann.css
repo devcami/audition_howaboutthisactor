@@ -108,21 +108,22 @@ section{
 #pagebar a:hover{
   color: #639488;
 }
-
-.btn-more{
-	text-align: center;
-	margin: 20px;
+div#btn-more-container{
+  text-align: center;
 }
-.btn-more .btn{
+button#btn-more{
+  width: 400px;
+	text-align: center;
+	margin-top: 40px;
   color: #bbded6;
   font-size: 25px;
   background-color: #ffffff;
   letter-spacing:10px;
 	border: none;
 }
-.btn-more .btn:hover{
+#btn-more-container #btn-more:hover{
   background-color: #fae3d963;
-  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
 }
 .expirated{
   background-color: gainsboro;
@@ -130,8 +131,8 @@ section{
 .expirated:hover{
   background-color: gainsboro;
 }
-#expFoot{
-  background-color: rgb(139, 139, 139);
+.card-footer.expFoot{
+  background-color: rgb(139, 139, 139) !important;
 }
 #endAnn{
   font-size: 20px;

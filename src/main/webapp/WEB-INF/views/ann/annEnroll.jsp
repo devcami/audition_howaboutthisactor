@@ -18,6 +18,23 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js"></script>
+<script>
+    $(window).scroll(function() {
+    	  var wins = $(this).scrollTop();
+    	  var hei = 3800; //전체 페이지 높이
+    	  var hei2 = document.documentElement.clientHeight; //윈도우의 높이
+    	  var height = hei - hei2;
+    	  var bar = (wins / height) * 100;
+
+    	  $('#progress-bar').css('width', bar + '%');
+
+    	});
+</script>
+<div class="pgb">
+    <div class="progress-container">
+        <div id="progress-bar"></div>
+    </div>
+</div>
 <form 
 	id = "annEnrollFrm" 
 	name = "annEnrollFrm" 
@@ -27,7 +44,7 @@
 <%-- 작품정보섹션 --%>
 <section id="ann-enroll-first">
 	<div class="container">
-		<div class="root">
+	<!-- 	<div class="root">
 			<div class="head-progressbar">
 	          <ul class="progressbar">
 	            <li class="active">작품 정보</li>
@@ -36,7 +53,7 @@
 	            <li>공고 리뷰</li>
 	          </ul>
 		    </div>
-		</div>
+		</div> -->
 		<h1>작품 정보</h1>
 		<p class="description">작품에 대해 자세히 알려주세요.</p>
 		<div class="mb-3">
@@ -434,7 +451,6 @@ $(addAttachBtn).click(function(){
 <%-- 다음버튼 클릭 시 다음장 + 스크롤 다운 --%>
 const nextStep = (e) => {
 	let thisSec = e.parentElement.parentElement.id.substr(11,);
-	console.log(thisSec);
 	let nextSec;
 	let nextTop;
 	switch(thisSec){

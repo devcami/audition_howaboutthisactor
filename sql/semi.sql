@@ -386,7 +386,7 @@ select * from port_attachment;
 select * from production;
 select * from work;
 select * from work_attachment;
-select * from announcement;
+select * from announcement; 
 select * from cast;
 select * from actor_apply;
 select * from wishlist_actor;
@@ -400,7 +400,7 @@ update production set caster_email = 'jyjmjs2@naver.com' where member_id = 'dire
 ------------------------------
 -- 채팅리스트
 ------------------------------
-select * from (select row_number() over(order by ann_reg_date desc) rnum , a.* from announcement a) where ann_body <> '마름' and rnum between 1 and 12;
+select * from (select row_number() over(order by ann_reg_date desc) rnum , a.* from announcement a) where ann_gender = '남';
 
 
 

@@ -37,6 +37,7 @@
          && (loginMember.getMemberId().equals(ann.getMemberId()) 
                || loginMember.getMemberRole() == MemberRole.A);
 %>
+
 <section id="ann-view-container">
 	<div class="container">
 		<div class="ann-info mrgbtm">

@@ -8,66 +8,12 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <%
-	List<Ann> list = (List<Ann>) request.getAttribute("list");
-	String pagebar = (String) request.getAttribute("pagebar");
 	String sortType = request.getParameter("sortType");
 	
 	String searchKeyword = request.getParameter("searchKeyword");
+	
+	int totalPage = (int)request.getAttribute("totalPage");
 %>
-
-<script>
-<%-- 상세검색 비동기 --%>
-const detailFinder = () => {
-	let gender;
-	let age;
-	let height;
-	let body;
-	document.querySelectorAll("[name=annGender]").forEach((e) =>{
-		if(e.checked){
-			gender = e.value;
-		}
-	}); 
-	document.querySelectorAll("[name=annAge]").forEach((select) => {
-		Array.from(select.children).forEach((e) => {
-			if(e.selected){
-				if(e.value != '선택해주세요')
-					age = e.value;
-			}			
-		});
-	});
-	document.querySelectorAll("[name=annHeight]").forEach((select) => {
-		Array.from(select.children).forEach((e) => {
-			if(e.selected){
-				if(e.value != '선택해주세요') 
-					height = e.value;
-			}			
-		});
-	});
-	document.querySelectorAll("[name=annBody]").forEach((select) => {
-		Array.from(select.children).forEach((e) => {
-			if(e.selected){
-				if(e.value != '선택해주세요')
-					body = e.value;
-			}			
-		});
-	});
-	$.ajax({
-		url : "<%= request.getContextPath() %>/ann/annDFinder",
-		data : {
-			annGender : gender,
-			annAge : age,
-			annHeight : height,
-			annBody : body
-		},
-		success(annList){
-			
-			
-		},
-		error : console.log
-	});
-}
-</script>
-
 
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <section id="ann-list-container">
@@ -80,12 +26,11 @@ const detailFinder = () => {
 			  <option class="sort-type"  value="reg_date" id="reg_date" <%="reg_date".equals(sortType) ? "selected" : ""%>>최신순</option>
 			  <option class="sort-type"  value="end_date" id="end_date" <%="end_date".equals(sortType) ? "selected" : ""%>>마감순</option>
 			</select>
-			<form action="<%= request.getContextPath() %>/ann/annFinder" id="annFinderFrm">
+			<div id="annFinderFrm">
 				<input type="text" name="searchKeyword" id="searchTitle" placeholder="제목을 검색해보세요!"
 						value="<%= (searchKeyword != null) ? searchKeyword : "" %>" />
-				<button class="btn-search-title">검색</button>
-			</form>
-			
+				<button type="button" onclick="searchTitle();" class="btn-search-title">검색</button>
+			</div>
 			<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
 			  <div class="offcanvas-header">
 			    <h2 id="offcanvasRightLabel">상세검색</h2>
@@ -156,64 +101,84 @@ const detailFinder = () => {
 		<% } %>
 		</div>
 		<div class="row row-cols-1 row-cols-md-3 g-4" id="ann-container">
-		<script> let a; </script>
-		<% if(list != null && !list.isEmpty()){
-			long miliseconds = System.currentTimeMillis();
-			Date today = new Date(miliseconds); 
-			for(int i = 0; i < list.size(); i++){ 
-		%>
-			 <div class="col">
-			    <div class="card h-100 ann-card" onclick="annView(this);">
-					<% if(list.get(i).getAnnEndDate().before(today)){ %>
-						<script>
-						    a = Array.from(this.$(".ann-card"));
-						    a.at(-1).classList.add('expirated')
-						</script>
-					<% } %>
-					<div class="card-body">
-						<h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
-						<p class="card-text"><%= list.get(i).getMemberId() %></p>
-						<input type="hidden" name="annNo" class="annNo" value="<%= list.get(i).getAnnNo() %>" />
-					</div>
-					<div class="card-footer" id="<%= list.get(i).getAnnEndDate().before(today) ? "expFoot" : "" %>">
-						<small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
-						<small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
-					<% if(list.get(i).getAnnEndDate().before(today)){ %>
-						<small id="endAnn">&nbsp;! 모집마감 !</small>
-					<% } %>
-					</div>
-				</div>
-			  </div>
-	<% 	} %>
-	<% } else { %>
-			<div><p>조회된 공고가 없습니다.</p></div>
-	<% } %>
+
+		</div>
+		<div id='btn-more-container'>
+			<button id="btn-more" class="btn" type="button">더보기 (<span id="cPage"></span>/<span id="totalPage"><%= totalPage %></span>)</button>
 		</div>
 	</div>
-	<div id="pagebar">
-		<%= pagebar %>
-	</div>
-	
 </section>
 <script>
-sortType.addEventListener('change', (e) => {
-	document.querySelector("#ann-container").innerHTML = "";
-	const {value} = e.target;
-	// 공고 마감순 선택 시 페이지 요청
-	location.href=`<%= request.getContextPath() %>/ann/annEndDateList?sortType=\${value}`;
-});
+document.querySelector("#btn-more").onclick = () => {
+	const cPageVal = Number(document.querySelector("#cPage").innerText) + 1;
+	getPage(cPageVal);
+};
+
+
 const annView = (ann) => {
 	let annNo;
-	if(ann.classList.contains("expirated")){
-		annNo = ann.firstElementChild.nextElementSibling.lastElementChild.value;
-	}
-	else{
-		annNo = ann.firstElementChild.lastElementChild.value;
-	}
+	annNo = ann.firstElementChild.lastElementChild.value;
 	location.href=`<%= request.getContextPath() %>/ann/annView?annNo=\${annNo}`;
+};
+/*
+ * 현재페이지
+ */  
+const getPage = (cPage) => {
+	$.ajax({
+		url : "<%= request.getContextPath() %>/ann/morePage",
+		data : {cPage},	
+		success(resp) {
+			const container = document.querySelector("#ann-container");
+			let i = 1;
+			if(cPage > 1){
+				i = i * 12;
+			}
+			resp.forEach((ann) => {
+				const {annNo, memberId, workNo, annTitle, annEndDate, annRegDate, isClose} = ann;
+				const div = `
+				<div class="col">
+					<div class="card h-100 ann-card" id="annCard\${i}" onclick="annView(this);">
+						<div class="card-body">
+							<h5 class="card-title">\${annTitle}</h5>
+							<p class="card-text">\${memberId}</p>
+							<input type="hidden" name="annNo" class="annNo" value="\${annNo}" />
+						</div>
+						<div class="card-footer" id="cardFooter\${i}">
+							<small class="text-muted">\${annRegDate}</small> ~ 
+							<small class="text-muted">\${annEndDate}</small>
+						</div>
+					</div>
+				</div>
+				`;
+				container.insertAdjacentHTML('beforeend', div); // 자식요소로 맨뒤에 추가
+				const today = new Date();
+				const endDate = new Date(annEndDate);
+				const cardFooter = document.querySelector(`#cardFooter\${i}`);
+				const annCard = document.querySelector(`#annCard\${i}`);
+				if(endDate < today){
+					cardFooter.insertAdjacentHTML('beforeend', '<small id="endAnn">&nbsp;! 모집마감 !</small>');
+					cardFooter.classList.add("expFoot");
+					annCard.classList.add("expirated")
+				}
+				i++;
+			});
+		},
+		error : console.log,
+		complete(){
+			document.querySelector("#cPage").innerHTML = cPage;
+		
+			if(cPage === <%= totalPage %>){
+				const btn = document.querySelector("#btn-more")
+				btn.disabled = "disabled";
+				btn.style.cursor = "not-allowed";
+				
+			}
+		}
+	});
 };
 
 <%-- 상세검색 비동기 --%>
+
 const detailFinder = () => {
 	let gender;
 	let age;
@@ -256,13 +221,194 @@ const detailFinder = () => {
 			annHeight : height,
 			annBody : body
 		},
-		success(annList){
-			console.log(annList);
-						
+		success(resp){
+			
+			const container = document.querySelector("#ann-container");
+			let i = 1;
+			if(cPage > 1){
+				i = i * 12;
+			}
+			while(container.hasChildNodes()){
+				container.removeChild(container.firstChild);
+			}
+			resp.forEach((ann) => {
+				const {annNo, memberId, workNo, annTitle, annEndDate, annRegDate, isClose} = ann;
+				const div = `
+				<div class="col">
+					<div class="card h-100 ann-card" id="annCard\${i}" onclick="annView(this);">
+						<div class="card-body">
+							<h5 class="card-title">\${annTitle}</h5>
+							<p class="card-text">\${memberId}</p>
+							<input type="hidden" name="annNo" class="annNo" value="\${annNo}" />
+						</div>
+						<div class="card-footer" id="cardFooter\${i}">
+							<small class="text-muted">\${annRegDate}</small> ~ 
+							<small class="text-muted">\${annEndDate}</small>
+						</div>
+					</div>
+				</div>
+				`;
+				container.insertAdjacentHTML('beforeend', div); // 자식요소로 맨뒤에 추가
+				const today = new Date();
+				const endDate = new Date(annEndDate);
+				const cardFooter = document.querySelector(`#cardFooter\${i}`);
+				const annCard = document.querySelector(`#annCard\${i}`);
+				if(endDate < today){
+					cardFooter.insertAdjacentHTML('beforeend', '<small id="endAnn">&nbsp;! 모집마감 !</small>');
+					cardFooter.classList.add("expFoot");
+					annCard.classList.add("expirated")
+				}
+				i++;
+			});
+			
+		},
+		error : console.log,
+		complete() {
+			document.body.style = "";
+			const oc = document.querySelector("#offcanvasRight");
+			oc.style.visibility = "hidden";
+			oc.classList.remove("show");
+			oc.removeAttribute("aria-modal");
+			oc.removeAttribute("role");
+			oc.setAttribute("aria-hidden", "true");
+			
+			const ob = document.querySelector(".inner");
+			ob.removeChild(ob.lastChild);
+			
+			document.querySelectorAll("[name=annGender]").forEach((e) =>{
+				if(e.checked) e.checked = false;
+			}); 
+			document.querySelectorAll("[name=annAge]").forEach((select) => {
+				Array.from(select.children).forEach((e) => {
+					if(e.selected) e.selected = '선택해주세요';
+				});
+			});
+			document.querySelectorAll("[name=annHeight]").forEach((select) => {
+				Array.from(select.children).forEach((e) => {
+					if(e.selected) e.selected = '선택해주세요';
+				});
+			});
+			document.querySelectorAll("[name=annBody]").forEach((select) => {
+				Array.from(select.children).forEach((e) => {
+					if(e.selected) e.selected = '선택해주세요';
+				});
+			});
+			
+		}
+	});
+}
+
+<%-- 마감순 정렬 --%>
+sortType.addEventListener('change', (e) => {
+	const {value} = e.target;
+	document.querySelector("#ann-container").innerHTML = "";
+	$.ajax({
+		url : "<%= request.getContextPath() %>/ann/annEndDateList",
+		data : {
+			sortType : value
+		},
+		success(resp){
+			const container = document.querySelector("#ann-container");
+			let i = 1;
+			if(cPage > 1){
+				i = i * 12;
+			}
+			while(container.hasChildNodes()){
+				container.removeChild(container.firstChild);
+			}
+			resp.forEach((ann) => {
+				const {annNo, memberId, workNo, annTitle, annEndDate, annRegDate, isClose} = ann;
+				const div = `
+				<div class="col">
+					<div class="card h-100 ann-card" id="annCard\${i}" onclick="annView(this);">
+						<div class="card-body">
+							<h5 class="card-title">\${annTitle}</h5>
+							<p class="card-text">\${memberId}</p>
+							<input type="hidden" name="annNo" class="annNo" value="\${annNo}" />
+						</div>
+						<div class="card-footer" id="cardFooter\${i}">
+							<small class="text-muted">\${annRegDate}</small> ~ 
+							<small class="text-muted">\${annEndDate}</small>
+						</div>
+					</div>
+				</div>
+				`;
+				container.insertAdjacentHTML('beforeend', div); // 자식요소로 맨뒤에 추가
+				const today = new Date();
+				const endDate = new Date(annEndDate);
+				const cardFooter = document.querySelector(`#cardFooter\${i}`);
+				const annCard = document.querySelector(`#annCard\${i}`);
+				if(endDate < today){
+					cardFooter.insertAdjacentHTML('beforeend', '<small id="endAnn">&nbsp;! 모집마감 !</small>');
+					cardFooter.classList.add("expFoot");
+					annCard.classList.add("expirated")
+				}
+				i++;
+			});
+			
 		},
 		error : console.log
 	});
-}
-</script>
 
+});
+
+<%-- 제목으로 검색 --%>
+const searchTitle = () => {
+	const {value} = document.querySelector('#searchTitle');
+	document.querySelector("#ann-container").innerHTML = "";
+	$.ajax({
+		url : "<%= request.getContextPath() %>/ann/annFinder",
+		data : {
+			searchKeyword : value
+		},
+		success(resp){
+			const container = document.querySelector("#ann-container");
+			let i = 1;
+			if(cPage > 1){
+				i = i * 12;
+			}
+			while(container.hasChildNodes()){
+				container.removeChild(container.firstChild);
+			}
+			resp.forEach((ann) => {
+				const {annNo, memberId, workNo, annTitle, annEndDate, annRegDate, isClose} = ann;
+				const div = `
+				<div class="col">
+					<div class="card h-100 ann-card" id="annCard\${i}" onclick="annView(this);">
+						<div class="card-body">
+							<h5 class="card-title">\${annTitle}</h5>
+							<p class="card-text">\${memberId}</p>
+							<input type="hidden" name="annNo" class="annNo" value="\${annNo}" />
+						</div>
+						<div class="card-footer" id="cardFooter\${i}">
+							<small class="text-muted">\${annRegDate}</small> ~ 
+							<small class="text-muted">\${annEndDate}</small>
+						</div>
+					</div>
+				</div>
+				`;
+				container.insertAdjacentHTML('beforeend', div); // 자식요소로 맨뒤에 추가
+				const today = new Date();
+				const endDate = new Date(annEndDate);
+				const cardFooter = document.querySelector(`#cardFooter\${i}`);
+				const annCard = document.querySelector(`#annCard\${i}`);
+				if(endDate < today){
+					cardFooter.insertAdjacentHTML('beforeend', '<small id="endAnn">&nbsp;! 모집마감 !</small>');
+					cardFooter.classList.add("expFoot");
+					annCard.classList.add("expirated")
+				}
+				i++;
+			});
+			
+		},
+		error : console.log
+	});
+};
+
+
+window.addEventListener('load', () => {
+	// 페이지 로딩 시 첫 페이지 요청
+	getPage(1);
+});
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
