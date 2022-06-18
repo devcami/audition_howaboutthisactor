@@ -167,8 +167,8 @@
       </table>
     </form>
   </div>
-  <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/showpopup">
-  	<input type="hidden" name="memberId" />
+  <form name="viewWorkFrm" action="<%= request.getContextPath() %>/mypage/workView">
+  	<input type="hidden" name="selectedWorkNo" id="selectedWorkNo"/>
   </form>
   
   <script>
@@ -203,7 +203,7 @@
   	  		            </th>
   	  		            <td rowspan="5">
   	  		              <div id="work-img-container">
-  	  		                <img src="\${img_src}" class="work-img">
+  	  		                <img src="\${img_src}" class="work-img" value="\${work.no}" onclick="viewWork(this);">
   	  		              </div>
   	  		            </td>
   	  		            <td><br><br></td>
@@ -236,6 +236,24 @@
   		});  		
   		
   	}
+  	
+  	
+	const viewWork = (e) => {		
+		
+		const workNo = e.getAttribute('value');
+		document.getElementById("selectedWorkNo").value = workNo;
+		console.log($('#selectedWorkNo').val())
+
+		
+  		const title = "viewWorkPopup";
+  		const spec = "width=1000px, height=700px";
+  		const popup = open("", title, spec);
+ 	
+  		const frm = document.viewWorkFrm;
+  		frm.target = title; // 해당 팝업에서 폼을 제출 
+  		frm.submit();
+		
+	}
   
     const mousein = (menu) => {
       now_menu.classList.remove('current');

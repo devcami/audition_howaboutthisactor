@@ -23,6 +23,9 @@ table{
   border-collapse: separate;
   border-spacing: 0 10px;
   margin: 0 0 50px 20px;
+  display: flex;
+  justify-content: center;
+  margin-right: 70px;
 }
 table th {
   text-align: left;

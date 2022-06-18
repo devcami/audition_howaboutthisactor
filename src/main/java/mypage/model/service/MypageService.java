@@ -79,6 +79,7 @@ public class MypageService {
 		try {
 			for(String no : deleteArr) {   
 	            result = mypageDao.deleteWorks(conn, Integer.parseInt(no));
+	            result = mypageDao.deleteWorkAttachment(conn, Integer.parseInt(no));
 	            System.out.println(no + "번 경력 지우기 성공!");
 			}
 			commit(conn);

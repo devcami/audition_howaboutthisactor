@@ -36,7 +36,7 @@
   <div id="Pmypage-submenu" class="submenu">
     <ul id="sub">
       <li><a href="#" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">포트폴리오</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/myboard?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/myboardd?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/Pmywish" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/applylist" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원한 공고</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=P" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
@@ -69,13 +69,13 @@
             </td>
             <th>이름</th>
             <td colspan="3">
-		      <input type="text" name="Pname" id="Pname" value="<%= memberName %>">
+		      <input type="text" name="Pname" id="Pname" value="<%= memberName %>" placeholder="ex) 권순영">
             </td>
           </tr>
           <tr>
             <th>생년월일</th>
             <td style="width: 150px;">
-              <input type="text" name="Pbirth" id="Pbirth" value="<%= birth %>">
+              <input type="text" name="Pbirth" id="Pbirth" value="<%= birth %>" placeholder="ex) 1996-06-15">
             </td>
             <th style="text-align: right;">나이</th>
             <td>
@@ -85,24 +85,24 @@
           <tr>
             <th>소속사</th>
             <td colspan="3">
-              <input type="text" name="company" id="company" value="<%= company %>">
+              <input type="text" name="company" id="company" value="<%= company %>" placeholder="ex) 플레디스 엔터테인먼트">
             </td>
           </tr>
           <tr>
             <th>학력</th>
             <td colspan="3">
-              <input type="text" name="school" id="school" value="<%= education %>">
+              <input type="text" name="school" id="school" value="<%= education %>" placeholder="ex) 한양대학교 연극영화과">
             </td>
           </tr>
           <tr>
             <th>키</th>
             <td style="width: 150px;">
-              <input type="text" name="height" id="height" value="<%= height %>" style="text-align:right;">
+              <input type="text" name="height" id="height" value="<%= height %>" style="text-align:right;" placeholder="ex) 177">
               <span>cm</span>
             </td>
             <th style="text-align: right;">체중</th>
             <td>
-              <input type="text" name="weight" id="weight" value="<%= weight %>" style="text-align:right;">
+              <input type="text" name="weight" id="weight" value="<%= weight %>" style="text-align:right;" placeholder="ex) 64.8">
               <span>kg</span>
             </td>
           </tr>
@@ -110,28 +110,28 @@
             <th>휴대폰</th>
             <td colspan="3">
             	<!-- <span>010-1234-1234</span> -->
-              <input type="tel" name="Pphone" id="Pphone" value="<%= phone %>">
+              <input type="tel" name="Pphone" id="Pphone" value="<%= phone %>" placeholder="ex) 010-1234-1234">
             </td>
           </tr>
           <tr>
             <th>이메일</th>
             <td colspan="3">
               <!-- <span>hosi@naver.com</span> -->
-              <input type="email" name="Pemail" id="Pemail" value="<%= email %>">
+              <input type="email" name="Pemail" id="Pemail" value="<%= email %>" placeholder="ex) hosi@naver.com">
             </td>
           </tr>
           <tr>
             <th>sns</th>
             <td colspan="3">
             	<!-- <span>@ho5hi_kwon</span> -->
-              <input type="text" name="Psns" id="Psns" value="<%= sns %>">
+              <input type="text" name="Psns" id="Psns" value="<%= sns %>" placeholder="ex) @ho5si">
             </td>
           </tr>
           <tr>
             <th>특기</th>
             <td colspan="3">
             	<!-- <span>춤</span> -->
-              	<input type="text" name="Pspeciality" id="Pspeciality" value="<%= speciality %>">
+              	<input type="text" name="Pspeciality" id="Pspeciality" value="<%= speciality %>" placeholder="ex) 춤">
             </td>
           </tr>
           <tr>
@@ -151,7 +151,7 @@
             <td colspan="6" style="border-top: 1px solid grey;"></td>
           </tr>
 		</tbody>
-		<!-- 여기에 경력이 하나씩 추가됨 -->
+		<!-- 여기에 경력이 하ㄴ나씩 추가됨 -->
       </table>
     </form>
   </div>
@@ -185,7 +185,7 @@
   	  		            </th>
   	  		            <td rowspan="5">
   	  		              <div id="work-img-container">
-  	  		                <img src="\${img_src}" class="work-img">
+  	  		                <img src="\${img_src}" class="work-img" value="\${work.no}" onclick="viewWork(this);">
   	  		              </div>
   	  		            </td>
   	  		            <td><br><br></td>
@@ -219,8 +219,50 @@
   		
   	}
 	
-	
+
+
   	const viewPort = () => {
+  			
+		if(Pphone.value != ''){
+			// birth
+			if(!/^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/.test(Pbirth.value)) {
+				alert("유효한 생년월일을 형식에 맞게 입력하세요.");
+				return false;
+			}
+		}
+		
+		if(Pphone.value != '') {
+			// phone
+			if(!/^010-\d{4}-\d{4}$/.test(Pphone.value)){
+				alert("유효한 전화번호를 형식에 맞게 입력하세요.");
+				return false;
+			}
+		}	
+		
+		if(Pemail.value != ''){
+			// email
+			if(!/^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/.test(Pemail.value)){
+				alert("유효한 이메일을 작성해주세요.");
+				return false;
+			}
+		}
+		
+		if(height.value != ''){
+			// height
+			if(!/^[1-9]\d{2}(\.[0-9]+)?$/.test(height.value)){
+				alert("유효한 키를 입력하세요.");
+				return false;
+			}
+		}
+		
+		if(weight.value != ''){
+			// height
+			if(!/^[1-9]\d{2}(\.[0-9]+)?$/.test(height.value)){
+				alert("유효한 체중을 입력하세요.");
+				return false;
+			}
+		}
+  		
   		document.portfolioFrm.submit();
   	}
 	
@@ -238,7 +280,7 @@
   
 	const enrollWork = () => {
   		const title = "enrollWorkPopup";
-  		const spec = "width=700px, height=600px";
+  		const spec = "width=650px, height=600px";
   		const popup = open("", title, spec);
   		
   		const frm = document.enrollWorkFrm;

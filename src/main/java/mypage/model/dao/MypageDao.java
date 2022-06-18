@@ -132,6 +132,25 @@ public class MypageDao {
 		
 		return result;
 	}
+	
+	public int deleteWorkAttachment(Connection conn, int no) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteWorkAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, no);
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new MypageException("deleteWorkAttachment@포트폴리오 경력 첨부파일 삭제오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
 	public ActorInfo findActorInfo(Connection conn, String memberId) {
 		ActorInfo actorInfo = new ActorInfo();
@@ -1362,8 +1381,5 @@ public class MypageDao {
 		}
 		return list;
 	}
-
-
-	
 	
 }
