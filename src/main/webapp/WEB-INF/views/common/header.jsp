@@ -35,7 +35,9 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <script src="<%=request.getContextPath() %>/js/jquery-3.6.0.js"></script>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script>
+Kakao.init('ce88338f9fbc3bc4ed27f1e8bf1b1752'); 
 window.addEventListener('load', () => {
 <% if(msg != null) { %>
 	alert("<%= msg %>");
@@ -74,8 +76,13 @@ window.addEventListener('load', () => {
              %>
              	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/chat/chatList">메세지</a></div>  
              	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>  
+	             <% 
+	             	String memberId = loginMember.getMemberId();
+	             	if(memberId.substring(memberId.length()-5, memberId.length()).equals("Kakao")) { %>
+	            	<div class="nav-item"><a class="ahover" onclick="kakaoLogout();">로그아웃</a></div>
+	             <% } else { %>
             	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/member/logout">로그아웃</a></div>
-             
+				 <% } %>             
              <% } else { %>
 	            <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
     	        <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>     		
@@ -84,3 +91,20 @@ window.addEventListener('load', () => {
         </div>
     </div>
     
+<script>
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+        Kakao.API.request({
+          url: '/v1/user/unlink',
+          success: function (response) {
+          	console.log(response)
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+        location.href = "<%= request.getContextPath() %>/member/logout";
+        Kakao.Auth.setAccessToken(undefined)
+      }
+}
+</script>

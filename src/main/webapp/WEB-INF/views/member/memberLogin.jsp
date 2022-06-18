@@ -38,7 +38,7 @@ else {
 
 <%-- 유효성 검사 --%>
 <script> 
-function.btnClick() => {
+const btnClick = () => {
 <% if(msg != null){ %>
 	alert("<%= msg %>");
 <% } %>
@@ -86,8 +86,14 @@ function.btnClick() => {
 					비밀번호
 				</th>
 				<td>
-					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password"><br>
+					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password" ><br>
 				</td>
+			</tr>
+			<tr>
+				<th>
+					<label for="showPw" class="showPw">비밀번호 보기</label>
+					<br>
+				</th>
 			</tr>
 			<tr>
 				<td colspan="2">
@@ -99,14 +105,9 @@ function.btnClick() => {
 		</table>
 	<div id="SNSLogin">
 		<%--<a href="${url}"></a> 네이버 로그인 페이지 이동 --%>
-		<img id="naver" src="${pageContext.request.contextPath}/images/naverLogin.png">
-		
-	  <a id="naverIdLogin_loginButton" href="javascript:void(0)">
-          <span>네이버 로그인</span>
-      </a>
-		
+		<img id="naver" src="${pageContext.request.contextPath}/images/naverLogin.png" >
 		<%--<a href="${url}"></a> 카카오 로그인 페이지 이동 --%>
-		<img id="kakao" src="${pageContext.request.contextPath}/images/kakaoLogin.png">
+		<img id="kakao" src="${pageContext.request.contextPath}/images/kakaoLogin.png" onclick="kakaoLogin();">
 	</div>
 	
 	<div id="btn-group" class="btn-group" role="group" aria-label="Basic example">
@@ -117,28 +118,9 @@ function.btnClick() => {
 				
 	<% } else { %>
 		<%-- 로그인 성공시 --%>
-<%-- 		<script type="text/javascript">
-		// 뒤로 갈 히스토리가 있는 경우 및 우리 시스템에서 링크를 통해 유입된 경우
-		if (document.referrer && document.referrer.indexOf("<%= request.getContextPath() %>") !== -1) {
-		    history.back();    // 뒤로가기
-		}
-		// 히스토리가 없는 경우 (URL을 직접 입력하여 유입된 경우)
-		else {
+ 		<script type="text/javascript">
 		    location.href = "<%= request.getContextPath() %>/";    // 메인페이지로 
-		}
-		</script> --%>
- 		<table id="loginSuccess" onClick = "callback()">
-			<tbody>
-				<tr>
-					<td><%= loginMember.getMemberName() %>님, 안녕하세요.</td><br>
-				</tr>
-				<tr>
-				<td>
-					<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>							
-				</td>
-				</tr>
-			</tbody>
-		</table>
+		</script>
 	<% } %>
 	
 	</form>
@@ -174,6 +156,7 @@ const findPw = () => {
 	frm.submit();
 };
 </script>	
+
 
 <script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
 
@@ -217,4 +200,58 @@ window.addEventListener('load', function () {
 
 
 
+
+<script>
+<!-- 카카오 스크립트 -->
+//console.log(Kakao.isInitialized()); // sdk초기화여부판단
+//카카오로그인
+function kakaoLogin() {
+    Kakao.Auth.login({
+        success: function(response) {
+            Kakao.API.request({ // 사용자 정보 가져오기 
+                url: '/v2/user/me',
+                success: (response) => {
+                	var memberId = response.id+"Kakao";
+ 		    		var email = response.kakao_account.email;
+                    $.ajax({
+    					type : "post",
+    					url : "<%= request.getContextPath() %>/member/idDuplicateCheck", // ID중복체크를 통해 회원가입 유무를 결정한다.
+    					data : {"memberId":memberId},
+    					dataType:"json",
+    					success : function(result){   				
+    						if(result == 1){
+    							// 존재하는 경우 로그인 처리
+    							createHiddenLoginForm(memberId);
+    							
+    						} else{
+    							// 회원가입
+    							alert("등록된 정보가 없으므로 카카오 계정을 기반으로 한 회원가입이 필요합니다.");
+    							location.href = `<%= request.getContextPath() %>/member/memberEnroll?memberId=\${memberId}&email=\${email}`;
+    						}						
+    					},
+    					error: console.log
+    				});
+                }
+            });
+        },
+        fail: function(error) {
+        	console.log(error);
+        }
+    });
+}
+
+function createHiddenLoginForm(kakaoId){
+	
+	var frm = document.createElement('form');
+	frm.setAttribute('method', 'post');
+	frm.setAttribute('action', '<%= request.getContextPath() %>/member/kakaoLogin');
+	var hiddenInput = document.createElement('input');
+	hiddenInput.setAttribute('type','hidden');
+	hiddenInput.setAttribute('name','memberId');
+	hiddenInput.setAttribute('value',kakaoId);
+	frm.appendChild(hiddenInput);
+	document.body.appendChild(frm);
+	frm.submit();
+}
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

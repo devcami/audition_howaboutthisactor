@@ -55,11 +55,13 @@
 }
 .carousel-inner{
   overflow: hidden;
-  height: 300px;
+  height: 350px;
 }
 .carousel-item img{
 	width: 100%;
 	opacity: 0.8;
+  position: relative;
+  bottom: 200px;
 }
 .main {
   width: 1000px;
