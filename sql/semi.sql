@@ -392,15 +392,8 @@ select * from wishlist_ann;
 select * from work;
 select * from work_attachment;
 
-delete from actor_apply where ann_no = 27;
-commit;
 
-update production set caster_email = 'jyjmjs2@naver.com' where member_id = 'director';
-------------------------------
--- 채팅리스트
-------------------------------
-select * from (select row_number() over(order by ann_reg_date desc) rnum , a.* from announcement a) where ann_gender = '남';
-
+select *  from announcement a join (select ann_no, count(*) cnt from wishlist_ann group by ann_no) w on a.ann_no = w.ann_no order by cnt desc, ann_reg_date desc;
 
 select * from all_tables where tablespace_name = 'USERS';
 SELECT *  FROM ALL_TAB_COLUMNS WHERE TABLE_NAME = 'ANNOUNCEMENT'; 
@@ -430,7 +423,7 @@ where
 -----------------------------------
 select * from actor_info;
 alter table portfolio_work modify (member_id varchar2(200));
-alter table announcement modify (member_id varchar2(200));
+alter table announcement modify (ann_gender varchar2(20));
 alter table actor_info modify (actor_email varchar2(200));
 alter table board_attachment modify (member_id varchar2(200));
 alter table PORT_ATTACHMENT modify (memberId varchar2(200));
