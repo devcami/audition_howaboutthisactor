@@ -18,6 +18,7 @@ import actor.model.service.ActorService;
 import common.HelloMvcUtils;
 
 import mypage.model.dto.ActorInfo;
+import wishlist.model.service.WishListService;
 
 
 /**
@@ -47,6 +48,7 @@ public class ActorListServlet extends HttpServlet {
         } catch(NumberFormatException e) {
         	
         }
+        
         Map<String, Object> param = new HashMap<>();
         int start = (cPage - 1) * numPerPage + 1;
         int end = cPage * numPerPage;

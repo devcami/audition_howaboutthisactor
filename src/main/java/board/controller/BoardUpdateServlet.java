@@ -31,7 +31,7 @@ public class BoardUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 1.사용자입력값 처리
-		int no = Integer.parseInt(request.getParameter("no"));
+		int no = Integer.parseInt(request.getParameter("no")); // 게시판 넘버
 		
 		// 2.업무로직
 		BoardExt board = boardService.findByNo(no);

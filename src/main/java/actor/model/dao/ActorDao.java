@@ -1,7 +1,6 @@
 package actor.model.dao;
 
 import static common.JdbcTemplate.close;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
@@ -13,15 +12,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-
+import actor.model.dto.Actor;
 import actor.model.exception.ActorException;
+import ann.model.dto.Ann;
 import mypage.model.dto.ActorInfo;
+import mypage.model.dto.ActorInfoExt;
 import mypage.model.dto.PortAttachment;
 
 
 public class ActorDao {
-
-
 private Properties prop = new Properties();
    
    public ActorDao() {
@@ -137,7 +136,7 @@ private Properties prop = new Properties();
   		return pa;
       }
 	
-	public  ActorInfo detailActorInfo (Connection conn, String memberId) {
+	public  ActorInfo detailActorInfo (Connection conn, int actorno) {
 		 PreparedStatement pstmt = null;
    	  	 ResultSet rset = null;
    	     String sql = prop.getProperty("detailActorInfo");
@@ -146,12 +145,12 @@ private Properties prop = new Properties();
    	     PortAttachment po = new PortAttachment();
 		try {
  			pstmt = conn.prepareStatement(sql);
- 			pstmt.setString(1,memberId);
+ 			pstmt.setInt(1,actorno);
  		
  			rset = pstmt.executeQuery();
  			
  			while(rset.next()) {
- 				dta.setMemberId(memberId);
+ 				dta.setMemberId(rset.getString("memberId"));
  				dta.setActorName(rset.getString("actor_name"));
  				dta.setActorNo(rset.getInt("actor_no"));
  				dta.setBirth(rset.getString("birth"));
@@ -180,13 +179,8 @@ private Properties prop = new Properties();
  		return dta;
  		
  		
+	}
+}
     
-	}
 	
-	
-	
-	
-	}
-      
-	
-   
+

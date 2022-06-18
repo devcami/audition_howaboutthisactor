@@ -27,7 +27,7 @@ public class BoardViewServlet extends HttpServlet {
 		
 		try {
 			// 1.사용자입력값처리
-			int no = Integer.parseInt(request.getParameter("no"));
+			int no = Integer.parseInt(request.getParameter("no")); // 게시판 넘버
 			
 			// 쿠키처리
 			boolean hasRead = false;
@@ -63,6 +63,7 @@ public class BoardViewServlet extends HttpServlet {
 			
 			// 게시글 조회
 			BoardExt board = boardService.findByNo(no);
+			
 			
 			// XSS공격대비(Cross-site Scripting공격) 변환
 			board.setTitle(board.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));

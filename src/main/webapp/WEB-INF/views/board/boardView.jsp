@@ -2,8 +2,7 @@
 <%@page import="board.model.dto.Attachment"%>
 <%@page import="java.util.List"%>
 <%@page import="board.model.dto.BoardExt"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	BoardExt board = (BoardExt) request.getAttribute("board");
@@ -20,118 +19,168 @@
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
 
-<section id="board-container">
-	<table id="tbl-board-view">
-		<tr>
-			<th>작성자</th>
-			<td><%= board.getMemberId() %></td>
-		</tr>
-		<tr>
-			<th>제 목</th> 
-			<td><%= board.getTitle() %></td>
-		</tr>
-		<tr>
-			<th>조회수</th>
-			<td><%= board.getReadCount() %></td>
-		</tr>
-		<% 
-			List<Attachment> attachments = board.getAttachments();
-			if(attachments != null && !attachments.isEmpty()){
-				for(Attachment attach : attachments){
-		%>
-		<tr>
-			<th>첨부파일</th>
-			<td>
-				<%-- 첨부파일이 있을경우만, 이미지와 함께 original파일명 표시 --%>
-				<img alt="첨부파일" src="<%=request.getContextPath() %>/images/file.png" width=16px>
-				<a href="<%= request.getContextPath() %>/board/fileDownload?no=<%= attach.getNo() %>"><%= attach.getOriginalFilename() %></a>
-			</td>
-		</tr>
-		<%
-				}
-			}
-		%>
-		<tr>
-			<th>내 용</th>
-			<td id="view-content"><%= board.getContent() %></td>
-		</tr>
-		<% if(canEdit){ %>
-		<tr>
-			<%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
-			<th colspan="2">
-				<input type="button" value="수정하기" onclick="updateBoard()">
-				<input type="button" value="삭제하기" onclick="deleteBoard()">
-			</th>
-		</tr>
-		<% } %>
-	</table>
-	
+<!-- Page content-->
+
+      <br />
+          <div class="col-lg-8">
+          <!-- Post title-->
+             <h1 class="fw-bolder mb-1"><span><%= board.getTitle() %></span></h1>
+  
+          <!-- Post meta content-->
+             <div class="text-muted fst-italic mb-2">
+              Posted on <%= board.getRegDate() %>&nbsp;
+              read count <%= board.getReadCount() %>
+             &nbsp;
+             <button class="btn" style="float:right"
+				onclick="location.href='<%= request.getContextPath() %>/board/boardList'">
+			 	 뒤로 가기 </button>
+			 	 &nbsp;
+			 	
+    </div>
+  </div>
+
+          <hr>
+         <!-- Post content-->
+           <section class="mb-5">
+           	<br />
+           	<h2>
+           		<span><%= board.getContent() %></span>
+           </h2>
+
+           </section>
+                   
+		
+			
+           <% List<Attachment> attachments = board.getAttachments();
+				if(attachments != null && !attachments.isEmpty()){
+					for(Attachment attach : attachments){
+			%>
+            <div style="float:right;">
+           	 	<img src="<%=request.getContextPath() %>/images/attachfile2.png" width= 45px;>
+           		<a href="<%= request.getContextPath() %>/board/fileDownload?no=<%= attach.getNo() %>"><%= attach.getOriginalFilename() %></a>
+            <%      	}   					}    			%>
+			</div>
+			
+			
+			<br />
+			<% if(canEdit){ %>
+		   <div>
+		  <%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
+		  		 <input type="button" value="수정하기" onclick="updateBoard()">
+		   		 <input type="button" value="삭제하기" onclick="deleteBoard()">
+			<% } %>
+		   		 
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary view" data-bs-toggle="modal"
+			data-bs-target="#reportModal" id="btn-report">신고하기</button>
+			 <!-- Modal -->
+     <div class="modal fade" id="reportModal" tabindex="-1"
+         aria-labelledby="reportModalLabel" aria-hidden="true">
+         <div class="modal-dialog">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="reportModalLabel">신고</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"
+                     aria-label="Close"></button>
+               </div>
+               <form name="boardReportFrm" 
+                  action="<%= request.getContextPath() %>/board/boardReport"
+                  method="POST">
+                  <input type="hidden" name="boardNoReport" value="<%= board.getNo() %>">
+                  <div class="modal-body">
+                     <div class="mb-3">
+                        <label for="message-text" class="col-form-label">신고자:</label>
+                        <input type="text" name="reportWriter" id="report-writer" value="<%= loginMember.getMemberId() %>" readonly>
+                     </div>
+                     <div class="mb-3">
+                        <label for="message-text" class="col-form-label">신고내용:</label>
+                        <textarea class="form-control" name="reportContent" id="content"></textarea>
+                     </div>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                     <button type="submit" class="btn btn-primary" id="btn-report-submit" >제출</button>
+                  </div>
+               </form>
+            </div>
+         </div>
+      </div>
+		   </div>
+
+         
+                    
+                   	
 	<hr style="margin-top:30px;" />	
-    
+ <!-- Comments section-->
 	<div class="comment-container">
       <!--table#tbl-comment-->
 		<% if (comments != null && !comments.isEmpty()) {%>
-		<table id="tbl-comment">
-			<tbody>
-			<% 
-				for (BoardComment bc : comments){ 
-					boolean canDelete = loginMember != null 
-							&& (loginMember.getMemberId().equals(bc.getMemberId()) 
-									|| loginMember.getMemberRole() == MemberRole.A);
+			<table id="tbl-comment">
+				<tbody>
+				<% 
+					for (BoardComment bc : comments){ 
+						boolean canDelete = loginMember != null 
+								&& (loginMember.getMemberId().equals(bc.getMemberId()) 
+										|| loginMember.getMemberRole() == MemberRole.A);
 							
-					if(bc.getCommentLevel() == 1){
-			%>
-				<tr class="level1">
-					<td><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)"%>
-					<td><%= bc.getRegDate() %></td>
-				<br />
-					<%= bc.getContent() %>
-					</td>
+						if(bc.getCommentLevel() == 1){
+						%>
+					<tr class="level1">
 					<td>
-						<button class="btn-reply" value="<%= bc.getNo() %>">답글</button>
+						<sub class="cwriterdate"><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %></sub>
+						<sub class="cwriterdate"><%= bc.getRegDate() %></sub>
+						<br />
+					
+						<%= bc.getContent() %>
+						</td>
+					
+						<td>
+							<button class="btn-reply" value="<%= bc.getNo() %>">답글</button>
+							<% if(canDelete){ %>
+								<button class="btn-delete" value="<%= bc.getNo() %>">삭제</button>
+							<% } %>
+						</td>
+					</tr>
+				<% 		} /*레벨 1*/
+						else { %>
+				<tr class="level2">
+					<td class="cwriterdate">
+						<sub class="cwriterdate"><%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %></sub>
+						<sub class="cwriterdate"><%= bc.getRegDate() %></sub>
+						<br />
+						<%= bc.getContent() %>
+						</td>
+					<td>
 						<% if(canDelete){ %>
 							<button class="btn-delete" value="<%= bc.getNo() %>">삭제</button>
 						<% } %>
 					</td>
 				</tr>
-			<% 		} else { %>
-				<tr class="level2">
-						<td class="cwriterdate">
-						<%= bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)" %>
-						<br />
-						<%= bc.getRegDate() %>
-						<td class="cm-contents">
-						<%= bc.getContent() %>
-					</td>
-					<td>
-						<% if(canDelete){ %>
-							<button class="btn btn-delete" value="<%= bc.getNo() %>">삭제</button>
-						<% } %>
-					</td>
-				</tr>
 			<% 
-					}	
-				} 
+					}	/*레벨 2*/
+				} /*FOR 문*/
 			%>
+		<% } %> <!-- IF 문 끝 -->
+		
+		 	<div class="comment-editor">
+            	<form
+					action="<%=request.getContextPath()%>/board/boardCommentEnroll" method="post" 
+					name="boardCommentFrm" id="#comment-h">
+	               	<input type="hidden" name="boardNo" value="<%= board.getNo() %>" />
+	                <input type="hidden" name="memberId" value="<%= loginMember != null ? loginMember.getMemberId() : "" %>" />
+	                <input type="hidden" name="commentLevel" value="1" />
+	                <input type="hidden" name="commentRef" value="0" />    
+					<textarea name="content" cols="60" rows="3" placeholder="댓글을 작성하세요"></textarea>
+	                <button type="submit"  class="btn" id="btn-comment-enroll1">등록</button>
+	            </form>
+	       </div>
 			</tbody>
 		</table>
 	</div>
 	
-		 <div class="comment-editor">
-            <form
-				action="<%=request.getContextPath()%>/board/boardCommentEnroll" method="post" 
-				name="boardCommentFrm" id="#comment-h">
-                <input type="hidden" name="boardNo" value="<%= board.getNo() %>" />
-                <input type="hidden" name="memberId" value="<%= loginMember != null ? loginMember.getMemberId() : "" %>" />
-                <input type="hidden" name="commentLevel" value="1" />
-                <input type="hidden" name="commentRef" value="0" />    
-				<textarea name="content" cols="60" rows="3" placeholder="댓글을 작성하세요"></textarea>
-                <button type="submit"  class="btn" id="btn-comment-enroll1">등록</button>
-            </form>
-        </div>
-		<% } %>
-</section>
 	<hr style="margin-top:30px;" />	
+
+			 	 
 
 <form action="<%=request.getContextPath()%>/board/boardCommentDelete" name="boardCommentDelFrm" method="POST">
 	<input type="hidden" name="no" /> <!-- 댓글 번호 -->
@@ -194,7 +243,7 @@ document.querySelectorAll(".btn-reply").forEach((button) => {
 			
 		const textarea = document.createElement("textarea");
 		textarea.name = "content";
-		textarea.cols = "60";
+		textarea.cols = "80";
 		textarea.rows = "1";
 		
 		const button = document.createElement("button");
@@ -258,7 +307,7 @@ const commentSubmitHandler = (e) => {
 		e.target.content.focus();
 		return false;
 	}
-	
+
 };
 
 document.boardCommentFrm.onsubmit = commentSubmitHandler;
@@ -288,7 +337,36 @@ const deleteBoard = () => {
 const updateBoard = () => {
 	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>";
 }
-</script>
 <% } %>
+
+/*
+ * 신고
+ */
+ 
+$(content).keyup(function(e) {
+	   let content = $(this).val();
+	   if(content.length > 300){
+	      alert("신고 내용은 최대 300자까지 입력 가능합니다.");
+	      $(this).val(content.substring(0, 300));
+	      $(this).focus();
+	   }
+	});
+	document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
+	   
+	   const contentVal = content.value.trim(); 
+	   console.log(contentVal);
+	   if(!/^(.|\n)+$/.test(contentVal)){ 
+	      alert('내용을 작성해주세요.');            
+	      content.select();
+	      return false;
+	   }
+	   
+	   if(confirm('신고내역을 제출하시겠습니까?')){
+	      console.log('신고진행');
+	      	}
+	  
+	});
+</script>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
 	

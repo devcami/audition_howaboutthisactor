@@ -323,13 +323,15 @@ button#btn-more{
 
 
 
-
-
-
-/* 건들지마*/
+/*프로필*/
 .actor_photo {
+	
 	width : 50px;
 	border-radius: 50%;
 	height : 50px;
 	overflow:hidden;
+	float: right;
 }
+
+
+

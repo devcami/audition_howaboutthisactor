@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import actor.model.dao.ActorDao;
+import board.model.dto.BoardExt;
+import member.model.dto.Production;
 import mypage.model.dto.ActorInfo;
+import mypage.model.dto.ActorInfoExt;
 import mypage.model.dto.PortAttachment;
 
 
@@ -23,8 +26,6 @@ public class ActorService {
 		for(ActorInfo actor : list ) {
 			PortAttachment pa = actorDao.getfindActorProfile(conn, actor.getMemberId());
 			actor.setAttachment(pa);
-			
-			
 		}	
 		close(conn);
 		return list;
@@ -37,17 +38,15 @@ public class ActorService {
 		close(conn);
 		return totalContents;
 	}
+	
+	//
 
+	public ActorInfo detailActorInfo(int actorNo) {
+		Connection conn = getConnection();	
+		ActorInfo actorInfo = actorDao.detailActorInfo(conn, actorNo);
+		close(conn);
+		return actorInfo;
+	}
 	
-		
-//	public List<ActorInfo> detailActorInfo(String memberId) {
-//		Connection conn = getConnection();
-//		List<ActorInfo> list = actorDao.detailActorInfo(conn, memberId);
-//		close(conn);
-//		return totalContents;
-//		
-		
-		
-		
-	
+
 }

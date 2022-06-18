@@ -1,7 +1,6 @@
 package ann.model.dao;
 
 import static common.JdbcTemplate.close;
-
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;

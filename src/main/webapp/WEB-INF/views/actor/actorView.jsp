@@ -10,72 +10,87 @@
 
 <%
   List<ActorInfo> list = (List<ActorInfo>) request.getAttribute("list");
-  ActorInfo actorInfo = (ActorInfo) request.getAttribute("actorInfo");
-  
-  List<WishListActor> wishlistActor = (List<WishListActor>) request.getAttribute("wishlistActor");
-
-
+  ActorInfoExt actorInfo = (ActorInfoExt) request.getAttribute("actorInfo");
+ 
  %>
+<script> let a; </script>
+		<% if(list != null && !list.isEmpty()){
+			long miliseconds = System.currentTimeMillis();
+			Date today = new Date(miliseconds); 
+			for(int i = 0; i < list.size(); i++){ 
+%>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <body>
  <h2> 배우 상세 프로필</h2>
-	<form method="POST" action="actorView.jsp">
-	 <img class="actor_photo"alt="" src="<%= request.getContextPath() %>/upload/portfolio/<%=list.get(i).getAttachment().getRenamedFilename()%>">
+	
 		<table>
 		
 			<tr>
 				<td>멤버아이디</td>
-				<td><input type="text" name="name"></td>
+				<td><input type="text" name="name"><%= list.get(i).getmemberId() %></td>
 			</tr>
 			<tr>
-				<td>배우번호</td>
-				<td><input type="text" name="name"></td>
+				<td>이름</td>
+				<td><input type="text" name="name"<%= list.get(i).getactorName() %>></td>
 			</tr>
 			<tr>
-				<td>학교</td>
-				<td><input type="text" name="name"></td>
+				<td>배우 번호</td>
+				<td><input type="text" name="name"<%= list.get(i).getactorNo() %>></td>
 			</tr>
 			<tr>
-				<td>배우키 </td>
-				<td><input type="text" name="name"></td>
+				<td>생일 </td>
+				<td><input type="text" name="name"<%= list.get(i).getbirth() %>></td>
+			</tr>
+			<tr>
+				<td>나이 </td>
+				<td><input type="text" name="name"<%= list.get(i).getage() %>></td>
+			</tr>
+			<tr>
+				<td>학력 </td>
+				<td><input type="text" name="name"<%= list.get(i).geteducation() %>></td>
 			</tr>
 			<tr>
 				<td>소속사</td>
-				<td><input type="text" name="name"></td>
+				<td><input type="text" name="name"<%= list.get(i).getcompany() %>></td>
+			</tr>
+			<tr>
+				<td>키</td>
+				<td><input type="text" name="name"<%= list.get(i).getheight() %>></td>
+			</tr>
+			<tr>
+				<td>몸무게</td>
+				<td><input type="text" name="name"<%= list.get(i).getweight() %>></td>
+			</tr>
+			<tr>
+				<td>소속사</td>
+				<td><input type="image" name="name"<%= list.get(i).getcompany() %>></td>
+			</tr>
+			<tr>
+				<td>핸드폰 번호</td>
+				<td><input type="text" name="name"<%= list.get(i).getphone() %>></td>
+			</tr>
+			<tr>
+				<td>이메일</td>
+				<td><input type="text" name="name"<%= list.get(i).getemail() %>></td>
 			</tr>
 			<tr>
 				<td>취미</td>
-				<td><input type="text" name="name"></td>
+				<td><input type="text" name="name"<%= list.get(i).getmemverId() %>></td>
 			</tr>
 			<tr>
 				<td>SNS</td>
-				<td><input type="text" name="name"></td>
-			</tr>
-			<tr>
-				<td>사진</td>
-				<td><input type="image" name="name"></td>
-			</tr>
-			<tr>
-				<td>이름</td>
-				<td><input type="text" name="name"></td>
-			</tr>
+				<td><input type="text" name="name"<%= list.get(i).getsns()%>></td>
+			
 			
 			<tr>
-				<td>이름</td>
-				<td><input type="text" name="name"></td>
+				<td>프로필</td>
+				<td><<img class="actor_photo" src="<%= request.getContextPath() %>/upload/portfolio/<%= list.get(i).getAttachment().getRenamedFilename()%>">></td>
 			</tr>
 			
-			<tr>
-				<td>설명</td>
-				<td><textarea rows="8" cols="40" name="description"></textarea></td>
-			</tr>
-			<tr>
-				<td><input type="submit" value="전송"><input type="reset" value="취소"></td>
-			</tr>
+			
 		</table>
-	</form>
+	
 </body>
-<% 	} %>
-<% 	} %>
+
 </html>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

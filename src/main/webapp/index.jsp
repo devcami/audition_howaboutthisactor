@@ -29,21 +29,21 @@
 		</div>
 		<div class="carousel-inner">
 			<div class="carousel-item active" data-bs-interval="6000"> <!-- 다음장 6초 -->
-				<img src="<%=request.getContextPath()%>/images/indexPageTestPic.jpeg" class="d-block w-100" alt="">
+				<img src="<%=request.getContextPath()%>/images/movie.jpg" class="d-block w-100" alt="">
 				<div class="carousel-caption d-none d-md-block">
 					<h5>First slide label</h5>
 					<p>Some representative placeholder content for the first slide.</p>
 				</div>
 			</div>
 			<div class="carousel-item" data-bs-interval="6000">
-				<img src="<%=request.getContextPath()%>/images/indexPageTestPic.jpeg" class="d-block w-100" alt="">
+				<img src="<%=request.getContextPath()%>/images/slate.jpg" class="d-block w-100" alt="">
 				<div class="carousel-caption d-none d-md-block">
 					<h5>Second slide label</h5>
 					<p>Some representative placeholder content for the second slide.</p>
 				</div>
 			</div>
 			<div class="carousel-item" data-bs-interval="6000">
-				<img src="<%=request.getContextPath()%>/images/indexPageTestPic.jpeg" class="d-block w-100" alt="">
+				<img src="<%=request.getContextPath()%>/images/hollywood.jpg" class="d-block w-100" alt="">
 				<div class="carousel-caption d-none d-md-block">
 					<h5>Third slide label</h5>
 					<p>Some representative placeholder content for the third slide.</p>

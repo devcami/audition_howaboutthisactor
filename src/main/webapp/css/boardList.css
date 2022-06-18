@@ -1,0 +1,57 @@
+@CHARSET "UTF-8";
+
+
+.top-logo{
+  overflow: hidden;
+  height: 180px;
+}
+.top-logo img{
+  width: 100%;
+  position:relative;
+  bottom: 240px; /* 사진 위치*/
+  opacity: 0.7; /* 흐리게*/
+}
+
+/*버튼*/
+.btn {
+  font-size: medium;
+  font-family: 'Hahmlet', serif;
+  border: none;
+  background-color: #bbded6;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  transition: all 0.3s ease 0s;
+}
+
+.btn:hover {
+  background-color: #fae3d9;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  border: none;
+  box-shadow: 1px 3px 5px rgb(0 0 0 / 20%);
+}
+/*-------------------------------------------------------------------------*/
+
+section#board-container{
+	 
+	margin:0 10px 10px 0; 
+	text-align:center;  font-family: 'Hahmlet', serif;
+	}
+
+table#tbl-board {
+	width:90%;
+	position:absolute;
+}	
+		
+table#tbl-board th, td {border-bottom:1px solid; padding: 5px 0; text-align:center;} 
+
+table#tbl-board a href{
+	text-decoration-line: none;
+}
+
+/*글쓰기*/
+ input#btn-add{
+ border:none;
+ margin: 20px;
+ padding: 6px 11px;
+}
