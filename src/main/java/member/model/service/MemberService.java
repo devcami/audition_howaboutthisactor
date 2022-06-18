@@ -77,4 +77,11 @@ public class MemberService {
 		close(conn);
 		return totalContents;
 	}
+
+	public int idDuplicationCheck(String memberId) {
+		Connection conn = getConnection();
+		int result = memberDao.idDuplicationCheck(conn, memberId);
+		close(conn);
+		return result;
+	}
 }

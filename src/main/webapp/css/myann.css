@@ -215,3 +215,17 @@ span {
 small {
 	font-size: .855em;
 }
+
+.expirated {
+	 background-color: gainsboro;
+}
+.expirated:hover{
+  background-color: gainsboro;
+}
+.card-footer.expFoot{
+  background-color: rgb(139, 139, 139) !important;
+}
+#endAnn{
+  font-size: 20px;
+  color: #000000;
+}

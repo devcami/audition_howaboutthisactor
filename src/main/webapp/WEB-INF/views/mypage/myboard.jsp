@@ -8,6 +8,8 @@
 	List<Board> list = (List<Board>) request.getAttribute("list");
 	String pagebar = (String) request.getAttribute("pagebar");
 	String sortType = request.getParameter("sortType");
+	String searchKeyword = request.getParameter("searchKeyword");
+
 	
 %>
 <div class="top-logo">
@@ -21,7 +23,7 @@
 	      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
 	      <li><a href="<%= request.getContextPath() %>/mypage/Dmywish?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
 	      <li><a href="<%= request.getContextPath() %>/mypage/applylist?memberId=<%= loginMember.getMemberId() %>" onmouseout="mouseout(this)">지원자 목록</a></li>
-	      <li><a href="<%= request.getContextPath() %>/mypage/applicantList"  onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
+	      <li><a href="<%= request.getContextPath() %>/mypage/applicantList"  onmouseover="mousein(this);" onmouseout="mouseout(this)">담당자 정보</a></li>
 	      <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
       	  <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=del&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
 	    </ul>
@@ -68,7 +70,7 @@
           <tr class="trs" id="tr<%= list.get(i).getNo() %>" >
           	<td><input type="checkbox" name="ck" class="ckbox" id="ck<%= list.get(i).getNo() %>" value="<%= list.get(i).getNo() %>"></td>
             <td><%= list.get(i).getNo() %></td>
-            <td><a href="보드로넘어가자"><%= list.get(i).getTitle() %></a></td>
+            <td><a href="<%= request.getContextPath() %>/board/boardView?no=<%= list.get(i).getNo() %>"><%= list.get(i).getTitle() %></a></td>
             <td><%= list.get(i).getRegDate() %></td>
           </tr>
   			<% 	} %>
@@ -80,9 +82,10 @@
 		<% } %>
 
       <div id="search-wrap">
-        <input type="text" id="search" name="search" placeholder="제목을 검색해보세요!"/>
-        <button id="btn" class="btn">검색</button>
-       </div>
+        <input type="text" id="search" name="search" placeholder="제목을 검색해보세요!"
+        		value="<%= (searchKeyword != null) ? searchKeyword : "" %>"/>
+        <button type="button" onclick="searchTitle();" id="btn" class="btn">검색</button>
+      </div> 
     </div>
 	<div id="pagebar">
 		<%= pagebar %>
@@ -90,6 +93,15 @@
   </div>
 
   <script>
+  const mousein = (menu) => {
+      now_menu.classList.remove('current');
+      menu.classList.add('current');
+    };
+
+    const mouseout = (menu) => {
+      now_menu.classList.add('current');
+      menu.classList.remove('current');
+    }
   	
 	const deleteBoard = () => {
   		console.log("버튼선택");	
@@ -133,6 +145,52 @@
   		};
   		
   	}
+	
+	const searchTitle = () => {
+		const {value} = document.querySelector("#search");
+		console.log(value);
+		document.querySelector("#list-content").innerHTML = "";
+		
+		$.ajax({
+			url : "<%= request.getContextPath() %>/mypage/myBoardFinder",
+			method : "GET",
+  			dataType : "json",
+			data : {
+				"searchKeyword" : value,
+				"memberId" : "<%= loginMember.getMemberId() %>"
+			},
+			success(resp){
+				const container = document.querySelector("#list-content");
+				console.log(resp);
+						
+//				while(container.hasChildNodes()){
+//					container.removeChild(container.firstChild);
+//				}
+
+	            resp.forEach((board) => {
+	                console.log(board);
+	                const {content, memberId, no, readCount, regDate, title} = board;
+	                console.log(regDate);
+	                const tr = `
+	                       <tr class="trs" id="tr\${no}" >
+	                          <td><input type="checkbox" name="ck" class="ckbox" id="ck\${no}" value="\${no}"></td>
+	                         <td>\${no}</td>
+	                         <td><a href="<%= request.getContextPath() %>/board/boardView?no=\${no}">\${title}</a></td>
+	                         <td>\${regDate}</td>
+	                         </tr>`;
+	                         
+	                 console.log(tr);
+	                 container.insertAdjacentHTML('beforeend', tr);
+	             });
+
+
+
+			},
+			error : console.log
+		});
+		
+		
+	}
 
   	
   
@@ -148,15 +206,7 @@
 	  	  location.href=`/app/ann/annView?annNo=\${annNo}`;
 	  };
   
-    const mousein = (menu) => {
-      now_menu.classList.remove('current');
-      menu.classList.add('current');
-    };
 
-    const mouseout = (menu) => {
-      now_menu.classList.add('current');
-      menu.classList.remove('current');
-    }
   </script>
 </section>
 

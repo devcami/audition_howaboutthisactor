@@ -230,4 +230,26 @@ public class MemberDao {
 		}
 		return totalContents;
 	}
+
+	public int idDuplicationCheck(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		String sql = prop.getProperty("idDuplicationCheck");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MemberException("아이디 중복 조회 오류!", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
 }

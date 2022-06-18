@@ -1,3 +1,4 @@
+<%@page import="java.sql.Date"%>
 <%@page import="ann.model.dto.Ann"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -40,25 +41,48 @@
       </div>
       <div id="updown-container">
       <% if(list != null && !list.isEmpty()){
-		for(int i = 0; i < list.size(); i++){ 
+    		long miliseconds = System.currentTimeMillis();
+    	    Date today = new Date(miliseconds);
+    	    
+			for(int i = 0; i < list.size(); i++){ 
+				
+				if(list.get(i).getAnnEndDate().before(today)){ 
 		%>
-        <div class="col">
-          <div class="card" onclick="annView(this);">
-            <div class="card-body">
-              <h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
-              <p class="card-text"><%= list.get(i).getMemberId() %></p>
-              <input type="hidden" name="annNo" id="annNo" value="<%= list.get(i).getAnnNo() %>">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
-              <small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
-            </div>
-          </div>
-        </div>
-        		<% 	} %>
-		<% } else { %>
-			<div><p>조회된 공고가 없습니다.</p></div>
-		<% } %>
+			        <div class="col">
+			          <div class="card expirated"> <!--  onclick="annView(this);" -->
+			            <div class="card-body">
+			              <h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
+			              <p class="card-text"><%= list.get(i).getMemberId() %></p>
+			              <input type="hidden" name="annNo" id="annNo" value="<%= list.get(i).getAnnNo() %>">
+			            </div>
+			            <div class="card-footer expFoot">
+			              <small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
+			              <small class="text-muted"><%= list.get(i).getAnnEndDate() %>(마감)</small>
+			            </div>
+			          </div>
+			        </div>
+	       
+        	<% 	} else { %>
+		        	<div class="col">
+			          <div class="card" onclick="annView(this)"> <!--  onclick="annView(this);" -->
+			            <div class="card-body">
+			              <h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
+			              <p class="card-text"><%= list.get(i).getMemberId() %></p>
+			              <input type="hidden" name="annNo" id="annNo" value="<%= list.get(i).getAnnNo() %>">
+			            </div>
+			            <div class="card-footer">
+			              <small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
+			              <small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
+			            </div>
+			          </div>
+			        </div>
+	<%  		}
+			}		
+	    } else {
+	%>
+		<p>등록된 공고가 없습니다.</p>
+		
+	<% } %>
       </div>
     </div>
 	<div id="pagebar">
@@ -74,8 +98,11 @@
       location.href=`/app/mypage/PendDateWishList?sortType=\${value}`;
    });
 
-   const annView = (ann) => {
+  const annView = (ann) => {
+	  console.log(ann);
       const annNo = ann.firstElementChild.lastElementChild.value;
+      //const annNo = ann.currentTarget.firstElementChild.children.annNo.value;
+      console.log(annNo);
    	  location.href=`/app/ann/annView?annNo=\${annNo}`;
    };
    
