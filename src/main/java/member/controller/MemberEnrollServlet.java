@@ -26,6 +26,8 @@ public class MemberEnrollServlet extends HttpServlet {
 	 * 회원가입폼 요청
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setAttribute("memberId", request.getParameter("memberId"));
+		request.setAttribute("email", request.getParameter("email"));
 		request
 			.getRequestDispatcher("/WEB-INF/views/member/memberEnroll.jsp")
 			.forward(request, response);
