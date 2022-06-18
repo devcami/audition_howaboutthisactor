@@ -24,6 +24,13 @@ public class MemberService {
 		return member;
 	}
 	
+	public Member findByEmail(String email) {
+		Connection conn = getConnection();
+		Member member = memberDao.findByEmail(conn, email);
+		close(conn);
+		return member;
+	}
+	
 	public String findId(String memberName, String phone) {
 		Connection conn = getConnection();
 		String Id = memberDao.findId(conn, memberName, phone);

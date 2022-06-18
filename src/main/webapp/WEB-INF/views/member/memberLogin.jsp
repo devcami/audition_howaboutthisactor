@@ -16,6 +16,7 @@
     pageEncoding="UTF-8"%>
  <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mLogin.css" />
+<script src="https://kit.fontawesome.com/92c9a159bd.js" crossorigin="anonymous"></script>
 <%
 
 
@@ -86,18 +87,15 @@ const btnClick = () => {
 					비밀번호
 				</th>
 				<td>
-					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password" ><br>
+					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password">
+					<i class="fa-solid fa-eye"></i>
+					 <br>
+					
 				</td>
 			</tr>
 			<tr>
-				<th>
-					<label for="showPw" class="showPw">비밀번호 보기</label>
-					<br>
-				</th>
-			</tr>
-			<tr>
 				<td colspan="2">
-					<input type="checkbox" name="saveId" class="saveId" id="saveId" <%= saveId != null ? "checked" : "" %>/>
+					<input type="checkbox" name="saveId" class="saveId" id="saveId" <%= saveId != null ? "checked" : "" %> />
 					<label for="saveId" class="saveId">아이디저장</label>
 					<input type="submit" id="btn-login" class="btn btn-primary" value="Login" onClick='btnClick()'>
 				</td>
@@ -253,5 +251,19 @@ function createHiddenLoginForm(kakaoId){
 	document.body.appendChild(frm);
 	frm.submit();
 }
+
+$(document).ready(function(){
+    $('i').on('click',function(){
+        $('input').toggleClass('active');
+        if($('input').hasClass('active')){
+            $(this).attr('class',"fa-solid fa-eye")
+            .prev('input').attr('type',"text");
+        }else{
+            $(this).attr('class',"fa-solid fa-eye")
+            .prev('input').attr('type','password');
+        }
+    });
+});
+
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

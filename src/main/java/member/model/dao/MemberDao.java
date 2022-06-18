@@ -61,6 +61,32 @@ public class MemberDao {
 		return member;
 	}
 	
+	public Member findByEmail(Connection conn, String email) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findByEmail");
+		Member member = null;
+		
+		try {
+			// 1. pstmt객체 & 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			
+			// 2. 실행 및 rset처리
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				member = handleMemberResultSet(rset);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// 3. 자원반납(rset, pstmt)
+			close(rset);
+			close(pstmt);
+		}
+		return member;
+	}
+	
 	public String findId(Connection conn, String memberName, String phone) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;

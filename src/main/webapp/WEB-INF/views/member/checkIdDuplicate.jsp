@@ -24,6 +24,7 @@
 			frm.memberId.value = '<%= memberId %>';
 			frm.idValid.value = 1;
 			
+			
 			self.close();
 		};
 		</script>

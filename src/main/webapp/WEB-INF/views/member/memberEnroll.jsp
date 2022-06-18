@@ -27,7 +27,7 @@
 				</td>	
 			<% } else {%>
 				<td>
-					<input type="text" placeholder="10글자이상" name="memberId" id="_memberId">
+					<input type="text" placeholder="10글자이상" name="memberId" id="_memberId" required>
 					<input type="button" value="ID 중복검사" onclick="checkIdDuplicate();" />
 					<input type="hidden" id="idValid" value="0" />
 					<%-- #idValid 0이면 중복검사전, 1이면 중복검사통과 --%>
@@ -41,7 +41,7 @@
 			<tr>
 				<th>비밀번호<sup>*</sup></th>	
 				<td>
-					<input type="password" placeholder="6글자이상" name="password" id="_password"><br>
+					<input type="password" placeholder="6글자이상" name="password" id="_password" required><br>
 				</td>
 			</tr>
 			<tr>
@@ -51,42 +51,42 @@
 			<tr>
 				<th>비밀번호 확인<sup>*</sup></th>
 				<td>	
-					<input type="password" id="passwordCheck"><br>
+					<input type="password" id="passwordCheck" required><br>
 				</td>
 			</tr>  
 			<tr>
 				<th>이름<sup>*</sup></th>
 				<td>	
-				<input type="text"  name="memberName" id="memberName"><br>
+				<input type="text"  name="memberName" id="memberName" required><br>
 				</td>
 			</tr>
 			<tr>
-				<th>생년월일</th>
+				<th>생년월일<sup>*</sup></th>
 				<td>	
-				<input type="date" name="birthday" id="birthday"><br/>
+				<input type="date" name="birthday" id="birthday" required><br/>
 				</td>
 			</tr> 
 			<tr>
 				<th>휴대폰<sup>*</sup></th>
 				<td>	
-					<input type="tel" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11"><br>
+					<input type="tel" placeholder="(-없이)01012345678" name="phone" id="phone" maxlength="11" required><br>
 				</td>
 			</tr>
 			<tr>
-				<th>성별 </th>
+				<th>성별<sup>*</sup></th>
 				<td>
-					<input type="radio" name="gender" id="gender0" value="M">
+					<input type="radio" name="gender" id="gender0" value="M" required>
 					<label for="gender0">남</label>
-					<input type="radio" name="gender" id="gender1" value="F">
+					<input type="radio" name="gender" id="gender1" value="F" required>
 					<label for="gender1">여</label>
 				</td>
 			</tr>
 			<tr >
-				<th>회원 유형 </th>
+				<th>회원 유형<sup>*</sup></th>
 				<td>
-					<input type="radio" name="memberRole" id="memberRole0" value="P" onClick="viewGenre()">
+					<input type="radio" name="memberRole" id="memberRole0" value="P" required onClick="viewGenre()">
 					<label for="type0">배우 및 아티스트</label>
-					<input type="radio" name="memberRole" id="memberRole1" value="D" onClick="hideGenre()">
+					<input type="radio" name="memberRole" id="memberRole1" value="D" required onClick="hideGenre()">
 					<label for="type1">제작자 및 캐스팅 담당자</label>
 				</td>
 			</tr>
@@ -101,14 +101,18 @@
 				</td>
 			</tr>
 			<tr>
-				<th>이메일</th>
+				<th>이메일<sup>*</sup></th>
 			<% if(email != null) { %>
 				<td>
 					<input type="email" name="email" value="<%= email %>" readonly />
 				</td>
 			<% } else { %>
 				<td>	
-					<input type="email" placeholder="abc123@xyz.com" name="email" id="email"><br>
+					<input type="email" placeholder="abc123@xyz.com" name="email" id="email" required>
+					<input type="button" value="Email 중복검사" onclick="checkEmailDuplicate();" />
+					<input type="hidden" id="emailValid" value="0" />
+					<%-- #idValid 0이면 중복검사전, 1이면 중복검사통과 --%>
+					<br>
 					<%-- 가능하다면 아래처럼 구현하고픔... 
 					<input type="email" placeholder="abc123" name="email" id="email">
 					<b>@</b>
@@ -148,12 +152,15 @@
             </div>
           </div>
           <br>
-		<input type="submit" id="button1" value="이메일 인증하여 가입">
+		<input type="submit" id="button1" value="가입">
 		<input type="reset" id="button2" value="다시입력">
 	</form>
 </section>
 <form name="checkIdDuplicateFrm" action="<%= request.getContextPath() %>/member/checkIdDuplicate">
 	<input type="hidden" name="memberId" />
+</form>
+<form name="checkEmailDuplicateFrm" action="<%= request.getContextPath() %>/member/checkEmailDuplicate">
+	<input type="hidden" name="email" />
 </form>
 <script>
 const checkIdDuplicate = () => {
@@ -165,6 +172,18 @@ const checkIdDuplicate = () => {
 	frm.target = title; // 해당팝업에서 폼을 제출!
 	frm.memberId.value = _memberId.value;
 	frm.submit();
+
+};
+
+const checkEmailDuplicate = () => {
+const title = "checkEmailDuplicatePopup";
+const spec = "width=300px, height=200px";
+const popup = open("", title, spec);
+
+const frm = document.checkEmailDuplicateFrm;
+frm.target = title; // 해당팝업에서 폼을 제출!
+frm.email.value = email.value;
+frm.submit();
 };
 
 const hideGenre = () => {
@@ -180,18 +199,21 @@ const viewGenre = () => {
 // 유효성 검사
 document.memberEnrollFrm.onsubmit = () => {
 	// memberId 영문자/숫자 10글자 이상
-	if(!/^[A-Za-z0-9]{10,}$/.test(_memberId.value)){
-		alert("아이디는 영문자/숫자로 10글자 이상이어야 합니다.");
+	if(!/^[A-Za-z0-9]{6,}$/.test(_memberId.value)){
+		alert("아이디는 영문자/숫자로 6글자 이상이어야 합니다.");
+		idValid=0;
 		return false;
 	}  
 	// 중복검사여부 체크
 	if(idValid.value !== "1") {
-		alert("아이디 중복검사 해주세요.");
+		alert("아이디 중복검사 해주세요." + idValid);
+		
 		return false;
 	}
 	// password 영문자/숫자/특수문자!@#$%^&*()
 	if(!/^[A-Za-z0-9!@#$%^&*()]{6,}$/.test(_password.value)){
 		alert("비밀번호는 영문자/숫자/특수문자!@#$%^&*()로 6글자 이상이어야 합니다.");
+		
 		return false;
 	}
 	if(!passwordCheck.onblur()){
@@ -209,6 +231,15 @@ document.memberEnrollFrm.onsubmit = () => {
 		alert("유효한 전화번호를 입력하세요.");
 		return false;
 	}
+	
+	// 이메일 중복검사여부 체크
+	if(emailValid.value !== "1") {
+		alert("이메일 중복검사 해주세요.");
+		return false;
+	}
+
 };
+
+
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
