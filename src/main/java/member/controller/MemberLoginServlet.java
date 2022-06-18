@@ -35,40 +35,40 @@ public class MemberLoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	try {	
-		
-		// 사용자입력값 처리
-		String memberId = request.getParameter("memberId");
-		String password = HelloMvcUtils.encrypt(request.getParameter("password"), memberId);
-		String saveId = request.getParameter("saveId"); 
-		
-		// 업무로직
-		Member member = memberService.findByMemberId(memberId);
-		HttpSession session = request.getSession();
-		
-		if(member != null && password.equals(member.getPassword())) {
-			session.setAttribute("loginMember", member);
+		try {	
 			
-            Cookie cookie = new Cookie("saveId", memberId);
-			cookie.setPath(request.getContextPath()); 
-			if(saveId != null) {
-				cookie.setMaxAge(7 * 24 * 60 * 60); 
+			// 사용자입력값 처리
+			String memberId = request.getParameter("memberId");
+			String password = HelloMvcUtils.encrypt(request.getParameter("password"), memberId);
+			String saveId = request.getParameter("saveId"); 
+			
+			// 업무로직
+			Member member = memberService.findByMemberId(memberId);
+			HttpSession session = request.getSession();
+			
+			if(member != null && password.equals(member.getPassword())) {
+				session.setAttribute("loginMember", member);
+				
+	            Cookie cookie = new Cookie("saveId", memberId);
+				cookie.setPath(request.getContextPath()); 
+				if(saveId != null) {
+					cookie.setMaxAge(7 * 24 * 60 * 60); 
+				}
+				else {
+					cookie.setMaxAge(0); 
+				}
+				response.addCookie(cookie); 
 			}
 			else {
-				cookie.setMaxAge(0); 
+				session.setAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
 			}
-			response.addCookie(cookie); 
-		}
-		else {
-			session.setAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
-		}
-		
-		// 응답처리 : 리다이렉트
-		//response.sendRedirect(request.getContextPath() + "/");
-		String Referer = request.getHeader("Referer"); // 절대 주소값 http://localhost:9090/mvc/board/boardList
-		response.sendRedirect(Referer); 
-		
-	} catch(Exception e) {
+			
+			// 응답처리 : 리다이렉트
+			//response.sendRedirect(request.getContextPath() + "/");
+			String Referer = request.getHeader("Referer"); // 절대 주소값 http://localhost:9090/mvc/board/boardList
+			response.sendRedirect(Referer); 
+			
+		} catch(Exception e) {
 		e.printStackTrace();
 		throw e;
 		}

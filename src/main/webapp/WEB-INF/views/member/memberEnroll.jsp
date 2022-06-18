@@ -7,6 +7,11 @@
 <%@page import="member.model.dto.Production" %>
 <%@page import="ann.model.dto.Ann"%>	
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%
+	String memberId = (String) request.getAttribute("memberId");
+	String email = (String) request.getAttribute("email");
+
+%>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mEnroll.css" />
 <section id=enroll-container>
 	<form name="memberEnrollFrm" method="POST">
@@ -16,12 +21,18 @@
 		<table>
 			<tr>
 				<th>ID<sup>*</sup></th>
+			<% if(memberId != null){ %>
+				<td>
+					<input type="text" name="memberId" value="<%= memberId %>" readonly />
+				</td>	
+			<% } else {%>
 				<td>
 					<input type="text" placeholder="10글자이상" name="memberId" id="_memberId">
 					<input type="button" value="ID 중복검사" onclick="checkIdDuplicate();" />
 					<input type="hidden" id="idValid" value="0" />
 					<%-- #idValid 0이면 중복검사전, 1이면 중복검사통과 --%>
 				</td>
+			<% } %>
 			</tr>
 			<tr>
 				<th></th>
@@ -89,8 +100,13 @@
 					<input type="checkbox" name="genre" id="genre4" value="재연"><label for="genre4">재연</label><br/>
 				</td>
 			</tr>
-						<tr>
+			<tr>
 				<th>이메일</th>
+			<% if(email != null) { %>
+				<td>
+					<input type="email" name="email" value="<%= email %>" readonly />
+				</td>
+			<% } else { %>
 				<td>	
 					<input type="email" placeholder="abc123@xyz.com" name="email" id="email"><br>
 					<%-- 가능하다면 아래처럼 구현하고픔... 
@@ -108,6 +124,7 @@
 					</select>
 					--%>
 				</td>
+			<% } %>
 			</tr>
 		</table>
 		<br>
