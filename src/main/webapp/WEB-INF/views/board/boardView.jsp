@@ -2,8 +2,7 @@
 <%@page import="board.model.dto.Attachment"%>
 <%@page import="java.util.List"%>
 <%@page import="board.model.dto.BoardExt"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	BoardExt board = (BoardExt) request.getAttribute("board");
@@ -69,7 +68,9 @@
 		  <%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
 		  		 <input type="button" value="수정하기" onclick="updateBoard()">
 		   		 <input type="button" value="삭제하기" onclick="deleteBoard()">
-		   		 			 	 	<!-- Button trigger modal -->
+			<% } %>
+		   		 
+		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary view" data-bs-toggle="modal"
 			data-bs-target="#reportModal" id="btn-report">신고하기</button>
 			 <!-- Modal -->
@@ -105,7 +106,6 @@
          </div>
       </div>
 		   </div>
-			<% } %>
 
          
                     
@@ -364,7 +364,7 @@ $(content).keyup(function(e) {
 	   if(confirm('신고내역을 제출하시겠습니까?')){
 	      console.log('신고진행');
 	      	}
-	   }
+	  
 	});
 </script>
 

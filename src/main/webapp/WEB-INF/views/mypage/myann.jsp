@@ -9,6 +9,7 @@
 	String pagebar = (String) request.getAttribute("pagebar");
 	String sortType = request.getParameter("sortType");
 	
+	
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/myann.css" />
 

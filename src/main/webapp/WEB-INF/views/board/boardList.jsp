@@ -5,7 +5,10 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <% 
 	List<BoardExt> list = (List<BoardExt>) request.getAttribute("list");
+
 	String pagebar = (String) request.getAttribute("pagebar");
+	
+	String searchKeyword = request.getParameter("searchKeyword");
 
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
@@ -14,6 +17,24 @@
 </div>
 
 <section id="board-container">
+	<div>
+		<div class="row">
+			<form method="post" name="search" action="searchbbs.jsp">
+				<table class="pull-right">
+					<tr>
+						<td><select class="form-control" name="searchField">
+								<option value="0">선택</option>
+								<option value="bbsTitle">제목</option>
+								<option value="userID">작성자</option>
+						</select></td>
+						<td><input type="text" class="form-control"
+							placeholder="검색어 입력" name="searchText" maxlength="100"></td>
+						<td><button type="submit" class="btn btn-success">검색</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
 	<table class="table table-hover" id="tbl-board">
 		<thead>
 			<tr>
@@ -26,6 +47,7 @@
 			</tr>
 		</thead>
 		<tbody>
+
 <%
 	if(list == null || list.isEmpty()){
 %>
@@ -67,7 +89,11 @@
 	type="button" value="글쓰기" id="btn-add"  class="btn"
 	onclick="location.href='<%= request.getContextPath() %>/board/boardEnroll';"/>
 	
-<div id="pagebar">
+	<div id="pagebar">
 		<%= pagebar %>
 	</div>
+	
+<script>
+
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

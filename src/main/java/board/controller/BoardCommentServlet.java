@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+
 import board.model.dto.BoardComment;
+import board.model.dto.BoardExt;
 import board.model.service.BoardService;
 
 /**
@@ -19,8 +22,12 @@ public class BoardCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BoardService boardService = new BoardService();
 	
+
+	
 		protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			try {
+						
+				request.setCharacterEncoding("utf-8");
 				// 1. 사용자입력값 처리
 				int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 				int commentLevel = Integer.parseInt(request.getParameter("commentLevel"));

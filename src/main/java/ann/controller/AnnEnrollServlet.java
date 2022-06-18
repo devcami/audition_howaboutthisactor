@@ -34,8 +34,8 @@ public class AnnEnrollServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Member loginMember = (Member) session.getAttribute("loginMember");
-		Production p = annService.findProductionByMemberId(loginMember.getMemberId());
-		request.setAttribute("production", p);
+		Production production = annService.findProductionByMemberId(loginMember.getMemberId());
+		request.setAttribute("production", production);
 		request.getRequestDispatcher("/WEB-INF/views/ann/annEnroll.jsp").forward(request, response);
 	}
 
@@ -140,7 +140,8 @@ public class AnnEnrollServlet extends HttpServlet {
 			int result = annService.insertAnn(ann, work, cast, p);
 			
 			// 리다이렉트
-			response.sendRedirect(request.getContextPath() + "/ann/annList");			
+			
+			response.sendRedirect(request.getContextPath() + "/ann/annListAsync");			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
