@@ -648,6 +648,38 @@ public class MypageService {
 		return result;
 	}
 
+	public PortfolioWorkExt findWorkByNo(int workNo, String memberId) {
+		Connection conn = getConnection();
+		PortfolioWorkExt work = new PortfolioWorkExt();
+		try {
+			work = mypageDao.getWorkByNo(conn, workNo);
+			PortAttachment bossAttach = mypageDao.getBossWorkAttach(conn, memberId, workNo);
+			work.setAttachment(bossAttach);
+			
+			List<PortAttachment> list = mypageDao.getSubWorkAttach(conn, memberId, workNo);
+			
+			if(list.size() == 1) {
+				work.setAttach1(list.get(0));
+			}
+			if(list.size() == 2) {
+				work.setAttach1(list.get(0));
+				work.setAttach2(list.get(1));
+			}
+			if(list.size() == 3) {
+				work.setAttach1(list.get(0));
+				work.setAttach2(list.get(1));
+				work.setAttach3(list.get(2));
+			}
+			
+			
+			close(conn);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return work;
+	}
+
 
 	
 }

@@ -169,6 +169,7 @@
   </div>
   <form name="viewWorkFrm" action="<%= request.getContextPath() %>/mypage/workView">
   	<input type="hidden" name="selectedWorkNo" id="selectedWorkNo"/>
+  	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
   </form>
   
   <script>

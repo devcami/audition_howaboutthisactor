@@ -15,6 +15,7 @@
 	String period = work.getPeriod();
 	String videoLink = work.getVideolink();
 	String bossPic = attachs.get(0).getRenamedFilename();
+	int bossPicNo = attachs.get(0).getNo();
 	
 	
 %>
@@ -43,6 +44,7 @@
 			     <img src="<%= request.getContextPath() %>/upload/portfolio/<%= attachs.get(0).getRenamedFilename() %>" alt="" id="boss-img"/>
 		      </div>
 		      <input type="button" name="btn-delFile" class="del-btn" id="delFile0" value="삭제" onclick="fileDelete(this, <%= attachs.get(0).getNo() %>);"/>
+              <input type="hidden" name="Obosspic" id="Obosspic" value="<%= bossPicNo %>" />
               <input type="file" name="workpic" id="workpic" accept="image/*" onchange="loadImage(this);" style="display: none;">
             </td>
           </tr>
@@ -133,6 +135,7 @@
   				$('#delFile0').css('display', 'none');
   				// 첨부하기 버튼(input) 추가
   				$('#workpic').css('display', '');
+  				// $('#Obosspic').val
   			} 
   			else {
   	  			let fileId = "attachImg" + fileNo;

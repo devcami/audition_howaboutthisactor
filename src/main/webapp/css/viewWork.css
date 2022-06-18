@@ -44,7 +44,7 @@
     position: relative;
     border-color: #ededed;
     background-color: #fff;
-    /* margin: 30px; */
+    margin: 100px 0;
   }
   #first-div{
     display: flex;    
@@ -104,9 +104,9 @@
 	margin-bottom: 60px;
 }
 #boss-img-container{
-    width: 300px;
-    height: 420px;
+    width: 360px;
     align-items: center;
+    height: 505px;
 }
 #img-msg {
 	margin: 0;
@@ -120,6 +120,7 @@
 	width: 466px;
     height: 530px;
     align-items: center;
+        margin-bottom: 70px;
 }
 .work-img {
   width: 100%;
@@ -168,4 +169,21 @@
 
 #second-page {
 	margin-bottom: 50px;
+	margin-top: 0px;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+iframe {
+	width: 850px;
+	height: 565px;
+}
+#iframe-msg {
+	margin: 0;
+    font-size: xx-large;
+    margin-bottom: 30px;
+    border-bottom: 2px solid gray;
+    padding: 0 50px 11px 50px;
+    font-weight: 400;
 }

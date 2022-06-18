@@ -1505,6 +1505,34 @@ public class MypageDao {
 		return result;
 		
 	}
+
+	public PortfolioWorkExt getWorkByNo(Connection conn, int workNo) {
+		PortfolioWorkExt work = new PortfolioWorkExt();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getWorkByNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, workNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				work.setNo(workNo);
+				work.setMemberId(rset.getString("member_Id"));
+				work.setTitle(rset.getString("title"));
+				work.setPeriod(rset.getString("period"));
+				work.setMyrole(rset.getString("myrole"));
+				work.setVideolink(rset.getString("youtube"));
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 경력상세조회 - getWorkByNo 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return work;
+	}
 	
 	
 }
