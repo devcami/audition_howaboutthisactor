@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import ann.model.dto.Ann;
+import ann.model.exception.AnnException;
 import board.model.dto.Attachment;
 import board.model.dto.Board;
 import board.model.dto.BoardComment;
@@ -75,8 +77,8 @@ public class BoardDao {
 	public int getTotalContents(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		int totalContents = 0;
 		String sql = prop.getProperty("getTotalContents");
+		int totalContents = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
@@ -84,7 +86,7 @@ public class BoardDao {
 				totalContents = rset.getInt(1);
 			}
 		} catch (Exception e) {
-			throw new BoardException("총게시물수 조회 오류", e);
+			throw new BoardException("총게시물수 조회 오류");
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -389,7 +391,30 @@ public class BoardDao {
 		return result;
 	}
 
+	public List<Board> findByBoardTitle(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("findByAnnTitle");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + searchKeyword + "%");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Board board = handleBoardResultSet(rset);
+				list.add(board);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 제목으로 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 }
+
 
 
 

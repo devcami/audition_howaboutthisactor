@@ -210,6 +210,13 @@ public class BoardService {
 		return result;
 	}
 
+		public List<Board> findByBoardTitle(String searchKeyword) {
+			Connection conn = getConnection();
+			List<Board> list = boardDao.findByBoardTitle(conn, searchKeyword);
+			close(conn);
+			return list;
+		}
+
 
 	}
 
