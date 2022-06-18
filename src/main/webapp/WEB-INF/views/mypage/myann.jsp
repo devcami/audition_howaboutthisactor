@@ -1,3 +1,4 @@
+<%@page import="java.sql.Date"%>
 <%@page import="ann.model.dto.Ann"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -8,6 +9,11 @@
 	List<Ann> list = (List<Ann>) request.getAttribute("list");
 	String pagebar = (String) request.getAttribute("pagebar");
 	String sortType = request.getParameter("sortType");
+	
+	long miliseconds = System.currentTimeMillis();
+    Date today = new Date(miliseconds);
+    
+
 	
 %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/myann.css" />
@@ -21,8 +27,8 @@
       <li><a href="#" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">내 공고 관리</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/myboardd?memberId=<%= loginMember.getMemberId() %>&memberRole=<%= loginMember.getMemberRole() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">내가 쓴 게시글</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/Dmywish?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">찜목록</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/portfolio?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원자 관리</a></li>
-      <li><a href="<%= request.getContextPath() %>/mypage/companyInfo?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">회사 정보</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/applicantList" onmouseover="mousein(this);" onmouseout="mouseout(this)">지원자 관리</a></li>
+      <li><a href="<%= request.getContextPath() %>/mypage/companyInfo?memberId=<%= loginMember.getMemberId() %>" onmouseover="mousein(this);" onmouseout="mouseout(this)">담당자 정보</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=update&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원정보 수정</a></li>
       <li><a href="<%= request.getContextPath() %>/mypage/ckpw?type=del&role=D" onmouseover="mousein(this);" onmouseout="mouseout(this)">회원탈퇴</a></li>
     </ul>
@@ -47,28 +53,48 @@
         	</div>
         </div>
       </div>
-      <span>공고를 선택해주세요.</span>
+      <span id="selectMsg" style="display: none;">공고를 선택해주세요.</span>
       <div id="updown-container">
       <% if(list != null && !list.isEmpty()){
     	  
 		for(int i = 0; i < list.size(); i++){ 
-		%>
-        <div class="col" id="col<%= list.get(i).getAnnNo() %>">
-          <div class="card"> <!--  onclick="annView(this);" -->
-            <div class="card-body">
-              <h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
-              <p class="card-text"><%= list.get(i).getMemberId() %></p>
-              <input type="hidden" name="annNo" id="annNo" value="<%= list.get(i).getAnnNo() %>">
-            </div>
-            <div class="card-footer">
-              <small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
-              <small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
-            </div>
-          </div>
-        </div>
-        		<% 	} %>
-		<% } else { %>
-		<% } %>
+			
+			if(list.get(i).getAnnEndDate().before(today)){ 
+		%> 
+					<div class="col" id="col<%= list.get(i).getAnnNo() %>">
+			          <div class="card expirated"> <!--  onclick="annView(this);" -->
+			            <div class="card-body">
+			              <h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
+			              <p class="card-text"><%= list.get(i).getMemberId() %></p>
+			              <input type="hidden" name="annNo" id="annNo" value="<%= list.get(i).getAnnNo() %>">
+			            </div>
+			            <div class="card-footer expFoot">
+			              <small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
+			              <small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>
+			            </div>
+			          </div>
+			        </div>	
+		<%	} else { %>
+				<div class="col" id="col<%= list.get(i).getAnnNo() %>">
+		          <div class="card" onclick="annView(this)">
+		            <div class="card-body">
+		              <h5 class="card-title"><%= list.get(i).getAnnTitle() %></h5>
+		              <p class="card-text"><%= list.get(i).getMemberId() %></p>
+		              <input type="hidden" name="annNo" id="annNo" value="<%= list.get(i).getAnnNo() %>">
+		            </div>
+		            <div class="card-footer">
+		              <small class="text-muted"><%= list.get(i).getAnnRegDate() %></small> ~ 
+		              <small class="text-muted"><%= list.get(i).getAnnEndDate() %></small>	            
+		            </div>
+		          </div>
+		        </div>				
+<%  		}
+		}		
+    } else {
+%>
+	<p>등록된 공고가 없습니다.</p>
+		
+<% } %>
       </div>
       <div id="options" style="display: none;">
         <button type="button" class="btn small-btn" onclick="delAnn();">삭제</button>
@@ -111,15 +137,16 @@
    } 
    
    const selectMode = () => {
-	   console.log("selectMode 실행");
+	   // console.log("selectMode 실행");
 	   //$(".card").removeEventListener('click', annView);
 	   //sortType.removeEventListener('change', sortTypeChange);
 	   $(".card").off("click");
 	   $('#choice-btn').css('display', 'none');
 	   $('#cancel-btn').css('display', '');
 	   $('#options').css('display', '');
-	   
+	   $('#selectMsg').css('display', '');
 	   $(".card").click(annSelect);
+	   
 	   
    };
    
@@ -129,6 +156,7 @@
 	   $('#choice-btn').css('display', '');
 	   $('#cancel-btn').css('display', 'none');
 	   $('#options').css('display', 'none');
+	   $('#selectMsg').css('display', 'none');
 	   
 	   const annArr = Array.from(document.querySelectorAll('.card'));
 	   ckremove(annArr);

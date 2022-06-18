@@ -223,7 +223,7 @@
 				</tr>
 				<tr>
 					<th>감독</th>
-					<td><%= work.getDirector() %></td>
+					<td><%= work.getDirector() %> 감독</td>
 				</tr>
 				<tr>
 					<th>제작사</th>
@@ -474,12 +474,18 @@ const sendEmail = () => {
 /**
  * 마감된 공고일 시 지원하기 버튼 비활성화 
  */
-<% if(ann.getIsClose().equals("Y")){ %>
-   btnApply.innerText = "모집 마감";
-   btnApply.style.backgroundColor = "gainsboro";
-   btnApply.style.boxShadow = "none";
-   btnApply.disabled = 'disabled';
-<% } %>
+ 
+const annEndDate = <%= ann.getAnnEndDate() %>
+const today = new Date();
+const endDate = new Date(annEndDate);
+const btnApply = document.querySelector("#btn-apply");
+if(endDate < today){ 
+	console.log(btnApply);
+	btnApply.innerText = "모집 마감";
+	btnApply.style.backgroundColor = "gainsboro";
+	btnApply.style.boxShadow = "none";
+	btnApply.disabled = 'disabled';
+}
 
 /**
  *  신고하기 300자 이내

@@ -70,7 +70,6 @@ public class AnnDao {
 		ann.setAnnHeight(rset.getString("ann_height"));
 		ann.setAnnBody(rset.getString("ann_body"));
 		ann.setAnnNop(rset.getInt("ann_nop"));
-		ann.setIsClose(rset.getString("is_close"));
 		ann.setHasTO(rset.getString("has_TO"));
 		
 		return ann;
@@ -113,6 +112,28 @@ public class AnnDao {
 			}
 		} catch (Exception e) {
 			throw new AnnException("> 공고찾기 - 공고 마감순정렬 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public List<Ann> annPopSort(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Ann> list = new ArrayList<>();
+		String sql = prop.getProperty("annPopSort");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				list.add(ann);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 인기순정렬 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -747,5 +768,5 @@ public class AnnDao {
 		}
 		return list;
 	}
-	
+
 }

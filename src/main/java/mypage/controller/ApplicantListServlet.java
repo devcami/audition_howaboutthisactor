@@ -12,34 +12,31 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import board.model.dto.Board;
+import ann.model.dto.Ann;
 import common.HelloMvcUtils;
 import member.model.dto.Member;
 import mypage.model.service.MypageService;
 
 /**
- * Servlet implementation class MyboardServlet
+ * Servlet implementation class ApplicantListServlet
  */
-@WebServlet("/mypage/myboardd")
-public class MyboardServlet extends HttpServlet {
+@WebServlet("/mypage/applicantList")
+public class ApplicantListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MypageService mypageService = new MypageService();
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			
+
 			HttpSession session = request.getSession();
-	        Member member = (Member) session.getAttribute("loginMember");
-	        String memberId = member.getMemberId();
+			Member member = (Member) session.getAttribute("loginMember");
+			String memberId = member.getMemberId();
 			
+			
+			int numPerPage = mypageService.APPLY_NUM_PER_PAGE; // 12
+			int totalContent = mypageService.getTotalMyCurrentAnn(memberId);
 
-			int numPerPage = mypageService.BOARD_NUM_PER_PAGE; // 12
-			int totalContent = mypageService.getTotalMyBoard(memberId);
-
-			System.out.println("MyBoardServlet@totalContent = " + totalContent);
+//			System.out.println("ApplicantListServlet@totalContent = " + totalContent);
 			int cPage = 1; 
 			
 			try {
@@ -54,39 +51,28 @@ public class MyboardServlet extends HttpServlet {
 			param.put("start", start);
 			param.put("end", end);
 			
-			String sortType = request.getParameter("sortType");
-			List<Board> list = null;
+			List<Ann> list = mypageService.findMyAllCurrentAnn(memberId, param);
+			System.out.println("ApplicantListServlet@list = " + list.size());
+
 			
-			if("end_date".equals(sortType)) {
-				list = mypageService.myBoardEndDateSort(memberId, param);
-			} else {
-				list = mypageService.findMyAllBoard(memberId, param);
-			}
-			
-//				System.out.println("MyBoardServlet@list 길이 = " + list.size());
-//				System.out.println("MyBoardServlet@list.get(0) = " + list.get(0));
-//				System.out.println("MyBoardServlet@list.get(1) = " + list.get(1));
-//				System.out.println("MyBoardServlet@list.get(2)" + list.get(2));
+//				System.out.println("PwishListServlet@list 길이 = " + list.size());
+//				System.out.println("PwishListServlet@list.get(0) = " + list.get(0));
+//				System.out.println("PwishListServlet@list.get(1) = " + list.get(1));
+//				System.out.println("PwishListServlet@list.get(2)" + list.get(2));
 
 			
 			String url = request.getRequestURI(); // /app/mypage/Pmywish
 			System.out.println(url);
-		
-			
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContent, url);
-			System.out.println("pagebar =" + pagebar);
-			
-			request.setAttribute("sortType", sortType);
+			System.out.println("pagebaor =" + pagebar);
+
 			request.setAttribute("list", list);
 			request.setAttribute("pagebar", pagebar);
 			
-			request.getRequestDispatcher("/WEB-INF/views/mypage/myboard.jsp")
-			.forward(request, response);
-
-				
-		} catch (Exception e) {
+			request.getRequestDispatcher("/WEB-INF/views/mypage/applicant.jsp")
+				.forward(request, response);
+		} catch(Exception e) {
 			e.printStackTrace();
-			throw e;
 		}
 	}
 

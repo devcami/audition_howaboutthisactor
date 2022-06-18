@@ -21,6 +21,7 @@ import member.model.dto.MemberRole;
 import member.model.dto.Production;
 import member.model.exception.MemberException;
 import mypage.model.dto.ActorInfo;
+import mypage.model.dto.ActorInfoExt;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
 import mypage.model.exception.MypageException;
@@ -418,6 +419,7 @@ public class MypageDao {
 		}		
 		return totalContent;
 	}
+	
 	private Ann handleAnnResultSet(ResultSet rset) throws SQLException {
 		Ann ann = new Ann();
 		ann.setAnnNo(rset.getInt("ann_no"));
@@ -433,7 +435,7 @@ public class MypageDao {
 //		ann.setAnnHeight(rset.getString("ann_height"));
 //		ann.setAnnBody(rset.getString("ann_body"));
 //		ann.setAnnNop(rset.getInt("ann_nop"));
-		ann.setIsClose(rset.getString("is_close"));
+//		ann.setIsClose(rset.getString("is_close"));
 		
 		return ann;
 	}
@@ -670,7 +672,48 @@ public class MypageDao {
 			close(pstmt);
 		}		
 		return totalContent;
-		
+	}
+	
+	public int getTotalUndoReport(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalUndoReport");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> getTotalUndoReport@신고리스트(undo) 전체 게시글수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
+	}
+	
+	public int getTotalIngReport(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalIngReport");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> getTotalUndoReport@신고리스트(Ing) 전체 게시글수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
 	}
 
 	private Report handleReportResultSet(ResultSet rset) throws SQLException {
@@ -866,7 +909,7 @@ public class MypageDao {
 			
 			while(rset.next()) {
 				
-				production.setMemberId(rset.getString("member_id"));
+				// production.setMemberId(rset.getString("member_id"));
 				production.setProductionName(rset.getString("production_name"));
 				production.setCasterName(rset.getString("caster_name"));
 				production.setCasterPhone(rset.getString("caster_phone"));
@@ -911,7 +954,6 @@ public class MypageDao {
 		}
 		
 		return result;
-		
 	}
 
 	public List<Member> findAllMember(Connection conn, Map<String, Object> param) {
@@ -1088,7 +1130,7 @@ public class MypageDao {
 				ann.setAnnTitle(rset.getString("ann_title"));
 				ann.setAnnRegDate(rset.getDate("ann_reg_date"));
 				ann.setAnnEndDate(rset.getDate("ann_end_date"));
-				ann.setIsClose(rset.getString("is_close"));
+//				ann.setIsClose(rset.getString("is_close"));
 				
 				myApplyAnns.add(ann);
 			}			
@@ -1124,7 +1166,7 @@ public class MypageDao {
 				ann.setAnnTitle(rset.getString("ann_title"));
 				ann.setAnnRegDate(rset.getDate("ann_reg_date"));
 				ann.setAnnEndDate(rset.getDate("ann_end_date"));
-				ann.setIsClose(rset.getString("is_close"));
+//				ann.setIsClose(rset.getString("is_close"));
 				
 				myApplyAnns.add(ann);
 			}			
@@ -1138,6 +1180,190 @@ public class MypageDao {
 		return myApplyAnns;
 		
 	}
+	
+	
+	public int getTotalMyCurrentAnn(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalMyCurrentAnn");
+		int totalContent = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				totalContent = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new WishListException("> getTotalMyAnn@마이페이지 내 전체공고(진행중인) 수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return totalContent;
+	}
+
+	public List<Ann> findMyAllCurrentAnn(Connection conn, String memberId, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Ann> list = new ArrayList<>();
+		String sql = prop.getProperty("findMyAllCurrentAnn");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, (int) param.get("start"));
+			pstmt.setInt(3, (int) param.get("end"));
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Ann ann = handleAnnResultSet(rset);
+				list.add(ann);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 전체목록(진행중인) 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
+	}
+
+	public List<String> findApplicantActorId(Connection conn, String annNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<String> actors = new ArrayList<>();
+		String sql = prop.getProperty("findApplicantActorId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(annNo));
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				String actorId = rset.getString("member_id");
+				actors.add(actorId);
+			}
+			
+		} catch(Exception e) {
+			throw new MemberException("findApplicantActorId@내공고 지원자 아이디 찾기 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return actors;
+	}
+	
+	public PortAttachment getProfilePic(Connection conn, String actor, String type) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		PortAttachment attachment = new PortAttachment();
+		String sql = prop.getProperty("getProfilePic");
+		attachment.setAttachType(type);
+		attachment.setMemberId(actor);
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, actor);
+			pstmt.setString(2, type);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				
+				attachment.setNo(rset.getInt("no"));
+				attachment.setOriginalFilename(rset.getString("original_filename"));
+				attachment.setRenamedFilename(rset.getString("renamed_filename"));
+				attachment.setRegDate(rset.getDate("reg_date"));
+				
+			}
+		} catch (Exception e) {
+			throw new WishListException("> getProfilePic@내 공고 지원 배우 프로필사진 조회오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return attachment;
+	}
+
+	public int isProduction(Connection conn, String memberId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("isProduction");
+		int result = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				result = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new MypageException("> isProduction@회사정보 있는지 없는지 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}		
+		return result;
+		
+		
+	}
+
+	public int insertProduction(Connection conn, Production production) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertProduction");
+		
+		try {
+			// 1. pstmt 객체 생성 & 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, production.getMemberId());
+			pstmt.setString(2, production.getProductionName());
+			pstmt.setString(3, production.getCasterName());
+			pstmt.setString(4, production.getCasterPhone());
+			pstmt.setString(5, production.getCasterEmail());
+			pstmt.setString(6, production.getIsPhoneOpen());
+			pstmt.setString(7, production.getIsEmailOpen());
+
+			// 2. 실행
+			result = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			throw new MemberException("insertProduction@회사정보입력 오류", e);
+		} finally {
+			// 3. 자원반납 - pstmt
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public List<Board> findMyBoardByTitle(Connection conn, String searchKeyword, String memberId) {
+
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("findMyBoardByTitle");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2, "%" + searchKeyword + "%");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Board board = handleBoardResultSet(rset);
+				list.add(board);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 내게시물 찾기 - 게시물 제목으로 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+
 	
 	
 }

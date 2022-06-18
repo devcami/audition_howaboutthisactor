@@ -275,4 +275,11 @@ public class AnnService {
 		return list;
 	}
 
+	public List<Ann> annPopSort() {
+		Connection conn = getConnection();
+		List<Ann> list = annDao.annPopSort(conn);
+		close(conn);
+		return list;
+	}
+
 }

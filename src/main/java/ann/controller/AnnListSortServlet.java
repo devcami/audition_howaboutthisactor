@@ -17,17 +17,11 @@ import ann.model.dto.Ann;
 import ann.model.service.AnnService;
 import common.HelloMvcUtils;
 
-/**
- * Servlet implementation class AnnEndDateServlet
- */
-@WebServlet("/ann/annEndDateList")
-public class AnnEndDateServlet extends HttpServlet {
+@WebServlet("/ann/annListSort")
+public class AnnListSortServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private AnnService annService = new AnnService();
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			String sortType = request.getParameter("sortType");
@@ -35,6 +29,8 @@ public class AnnEndDateServlet extends HttpServlet {
 			
 			if(sortType.equals("end_date")) {
 				list = annService.annEndDateSort();
+			} else if(sortType.equals("popular")){
+				list = annService.annPopSort();
 			} else {
 				list = annService.findAll();
 			}

@@ -117,7 +117,7 @@ text-align: center;
 /* 공고 하나하나 */
 .col{
   flex: 0 0 auto;
-  width: 23%;
+  width: 22%;
   margin: 10px;
 }
 .card {
@@ -161,4 +161,18 @@ p {
   cursor: pointer;
   background-color: #bbded645;
   box-shadow: 0px 0px 8px rgb(172 172 172 / 50%);
+}
+
+.expirated {
+	 background-color: gainsboro;
+}
+.expirated:hover{
+  background-color: gainsboro;
+}
+.card-footer.expFoot{
+  background-color: rgb(139, 139, 139) !important;
+}
+#endAnn{
+  font-size: 20px;
+  color: #000000;
 }

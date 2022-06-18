@@ -10,9 +10,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import ann.model.dto.Ann;
 import common.HelloMvcUtils;
+import member.model.dto.Member;
 import mypage.model.dto.ActorInfo;
 import wishlist.model.service.WishListService;
 
@@ -26,12 +28,10 @@ public class DwishListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-//		String memberId = request.getParameter("memberId");
-//		System.out.println("PwishListServlet@memberId = " + memberId);
-		
-		
-		
-		String memberId = "director";
+		HttpSession session = request.getSession();
+		Member member = (Member) session.getAttribute("loginMember");
+		String memberId = member.getMemberId();
+
 		
 		try {
 			int numPerPage = wishListService.WISH_NUM_PER_PAGE; // 12

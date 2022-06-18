@@ -29,15 +29,11 @@ public class UndoReportListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//		String memberId = request.getParameter("memberId");
-//		System.out.println("PwishListServlet@memberId = " + memberId);
-		
-		String memberId = "hosi";
 		
 		try {
 			
 			int numPerPage = mypageService.REPORT_NUM_PER_PAGE; // 12
-			int totalContent = mypageService.getTotalReport();
+			int totalContent = mypageService.getTotalUndoReport();
 
 			System.out.println("undoReportListServlet@totalContent = " + totalContent);
 			int cPage = 1; 

@@ -1,5 +1,8 @@
 package mypage.model.service;
-import static common.JdbcTemplate.*;
+import static common.JdbcTemplate.close;
+import static common.JdbcTemplate.commit;
+import static common.JdbcTemplate.getConnection;
+import static common.JdbcTemplate.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -13,6 +16,7 @@ import member.model.dto.Member;
 import member.model.dto.Production;
 import mypage.model.dao.MypageDao;
 import mypage.model.dto.ActorInfo;
+import mypage.model.dto.ActorInfoExt;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
 
@@ -314,6 +318,21 @@ public class MypageService {
 		close(conn);
 		return totalContent;
 	}
+	
+	public int getTotalUndoReport() {
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalUndoReport(conn);
+		close(conn);
+		return totalContent;
+	}
+	
+	public int getTotalIngReport() {
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalIngReport(conn);
+		close(conn);
+		return totalContent;
+	}
+	
 
 	public List<Report> ReportUndoList(Map<String, Object> param) {
 		Connection conn = getConnection();
@@ -453,6 +472,90 @@ public class MypageService {
 		close(conn);
 		return list;
 	}
+
+	public List<Ann> findMyAllCurrentAnn(String memberId, Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Ann> list = mypageDao.findMyAllCurrentAnn(conn, memberId, param);
+		close(conn);
+		return list;
+	}
+	
+	public int getTotalMyCurrentAnn(String memberId) {
+		
+		Connection conn = getConnection();
+		int totalContent = mypageDao.getTotalMyCurrentAnn(conn, memberId);
+		close(conn);
+		return totalContent;
+	}
+
+//	public List<String> findApplicantActorNo(String annNo) {
+//
+//		Connection conn = getConnection();
+//		List<String> list = mypageDao.findApplicantActorId(conn, annNo);
+//		close(conn);
+//		return list;
+//		
+//	}
+
+	public List<ActorInfo> findApplicantActor(String annNo) {
+		Connection conn = getConnection();
+		List<ActorInfo> actorList = new ArrayList<>();
+		List<String> actorIdList = mypageDao.findApplicantActorId(conn, annNo);
+		try {	
+			for(int i = 0; i < actorIdList.size(); i++) {
+				ActorInfo actor = new ActorInfo();
+				actor = mypageDao.findActorInfo(conn, actorIdList.get(i));
+				PortAttachment profilePic = mypageDao.getProfilePic(conn, actorIdList.get(i), "P");
+				actor.setAttachment(profilePic);
+				
+				actorList.add(actor);			
+			}
+			
+		} catch(Exception e) {
+			throw e;	
+		} finally {
+			close(conn);
+		}
+		
+		return actorList;
+	}
+
+	public int isProduction(String memberId) {
+		Connection conn = getConnection();
+		int isProduction = mypageDao.isProduction(conn, memberId);
+		close(conn);
+		return isProduction;
+	}
+
+	public int insertProduction(Production production) {
+
+		int result = 0;
+		// 1. Connection 객체 생성
+		Connection conn = getConnection();
+		try {
+			// 2. dao 요청
+			result = mypageDao.insertProduction(conn, production); 
+					
+			// 3. 트랜잭션 처리 - commit
+			commit(conn);
+		} catch(Exception e) {
+			// 3. 트랜잭션 처리 - rollback 
+			rollback(conn);
+			throw e;  // controller 통보용
+		} finally {
+			// 4. Connection 객체 반환
+			close(conn); 
+		}
+		return result;
+	}
+
+	public List<Board> findMyBoardByTitle(String searchKeyword, String memberId) {
+		Connection conn = getConnection();
+		List<Board> list = mypageDao.findMyBoardByTitle(conn, searchKeyword, memberId);
+		close(conn);
+		return list;
+	}
+
 
 	
 }
