@@ -12,13 +12,16 @@ import java.util.Map;
 import ann.model.dto.Ann;
 import board.model.dto.Board;
 import board.model.dto.Report;
+import common.model.dto.WorkAttachment;
 import member.model.dto.Member;
 import member.model.dto.Production;
 import mypage.model.dao.MypageDao;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.ActorInfoExt;
 import mypage.model.dto.PortAttachment;
+import mypage.model.dto.PortAttachmentExt;
 import mypage.model.dto.PortfolioWork;
+import mypage.model.dto.PortfolioWorkExt;
 
 public class MypageService {
 	
@@ -30,7 +33,7 @@ public class MypageService {
 	public static final int MEMBER_NUM_PER_PAGE = 15;
 
 	
-	public List<Integer> insertPortWork(PortfolioWork work) {
+	public List<Integer> insertPortWork(PortfolioWorkExt work) {
 		List<Integer> resultNo = new ArrayList<>();
 		int result = 0;
 		Connection conn = getConnection();
@@ -48,9 +51,25 @@ public class MypageService {
 			
 			// 3. attachment에 등록 
 			PortAttachment attachment = work.getAttachment();
+			PortAttachment attach1 = work.getAttach1();
+			PortAttachment attach2 = work.getAttach2();
+			PortAttachment attach3 = work.getAttach3();
+			
 			if(attachment != null) {
 				attachment.setNo(no);
-				result = mypageDao.insertAttachment(conn, attachment);
+				result = mypageDao.insertAttachment(conn, attachment, "W");
+			}
+			if(attach1 != null) {
+				attach1.setNo(no);
+				result = mypageDao.insertAttachment(conn, attach1, "WW");
+			}
+			if(attach2 != null) {
+				attach2.setNo(no);
+				result = mypageDao.insertAttachment(conn, attach2, "WW");
+			}
+			if(attach3 != null) {
+				attach3.setNo(no);
+				result = mypageDao.insertAttachment(conn, attach3, "WW");
 			}
 			
 			commit(conn);
@@ -79,6 +98,7 @@ public class MypageService {
 		try {
 			for(String no : deleteArr) {   
 	            result = mypageDao.deleteWorks(conn, Integer.parseInt(no));
+	            result = mypageDao.deleteWorkAttachment(conn, Integer.parseInt(no));
 	            System.out.println(no + "번 경력 지우기 성공!");
 			}
 			commit(conn);
@@ -554,6 +574,110 @@ public class MypageService {
 		List<Board> list = mypageDao.findMyBoardByTitle(conn, searchKeyword, memberId);
 		close(conn);
 		return list;
+	}
+
+	public List<PortAttachment> getAllWorkAttach(String memberId, int workNo) {
+		Connection conn = getConnection();
+		List<PortAttachment> list = mypageDao.getSubWorkAttach(conn, memberId, workNo);
+		
+		PortAttachment bossAttach = mypageDao.getBossWorkAttach(conn, memberId, workNo);
+		list.add(0, bossAttach);
+		
+		close(conn);
+		return list;
+		
+	}
+
+	public PortAttachment findOneAttachByPaNo(int paNo) {
+		Connection conn = getConnection();
+		PortAttachment attach = mypageDao.findOneAttachByPaNo(conn, paNo);
+		close(conn);
+		return attach;
+	}
+
+	public int deleteWorkAttachmentByNo(int paNo) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = mypageDao.deleteWorkAttachmentByNo(conn, paNo);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public int updatePortWork(PortfolioWorkExt work) {
+		int result = 0;
+		Connection conn = getConnection();
+		
+		try {
+			// 1. portfolio_work 업데이트
+			result = mypageDao.updatePortWork(conn, work);
+
+			
+			// 3. attachment 업데이트
+			PortAttachment attachment = work.getAttachment();
+			PortAttachment attach1 = work.getAttach1();
+			PortAttachment attach2 = work.getAttach2();
+			PortAttachment attach3 = work.getAttach3();
+			
+			if(attachment != null) {
+				result = mypageDao.insertAttachment(conn, attachment, "W");
+			}
+			if(attach1 != null) {
+				result = mypageDao.insertAttachment(conn, attach1, "WW");
+			}
+			if(attach2 != null) {
+				result = mypageDao.insertAttachment(conn, attach2, "WW");
+			}
+			if(attach3 != null) {
+				result = mypageDao.insertAttachment(conn, attach3, "WW");
+			}
+			
+			commit(conn);
+		} catch(Exception e) {
+			rollback(conn);
+		 	throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public PortfolioWorkExt findWorkByNo(int workNo, String memberId) {
+		Connection conn = getConnection();
+		PortfolioWorkExt work = new PortfolioWorkExt();
+		try {
+			work = mypageDao.getWorkByNo(conn, workNo);
+			PortAttachment bossAttach = mypageDao.getBossWorkAttach(conn, memberId, workNo);
+			work.setAttachment(bossAttach);
+			
+			List<PortAttachment> list = mypageDao.getSubWorkAttach(conn, memberId, workNo);
+			
+			if(list.size() == 1) {
+				work.setAttach1(list.get(0));
+			}
+			if(list.size() == 2) {
+				work.setAttach1(list.get(0));
+				work.setAttach2(list.get(1));
+			}
+			if(list.size() == 3) {
+				work.setAttach1(list.get(0));
+				work.setAttach2(list.get(1));
+				work.setAttach3(list.get(2));
+			}
+			
+			
+			close(conn);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return work;
 	}
 
 

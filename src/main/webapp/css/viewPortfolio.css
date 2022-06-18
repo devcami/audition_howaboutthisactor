@@ -143,6 +143,7 @@
   height: 280px;
   padding: 10px;
   border: 2px dashed darkgray;
+  cursor: pointer;
 }
 .work-img {
   width: 100%;
