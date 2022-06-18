@@ -158,6 +158,13 @@
   <form name="enrollWorkFrm" action="<%= request.getContextPath() %>/mypage/showpopup">
   	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>"/>
   </form>
+  <form name="editWorkFrm" action="<%= request.getContextPath() %>/mypage/editWork">
+  	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>"/>
+  	<input type="hidden" name="selectedWorkNo" id="selectedWorkNo"/>
+  	<input type="hidden" name="title" id="Etitle" />
+  	<input type="hidden" name="cast" id="Ecast" />
+  	<input type="hidden" name="period" id="Eperiod" />
+  </form>
   
   <script>
 	window.onload = () => {
@@ -177,6 +184,13 @@
   					const img_src = `<%= request.getContextPath() %>/upload/portfolio/\${work.attachment.renamedFilename}`;
   					const tbodyId = "work" + work.no;
   					
+  					
+  					const titleId = "workTitle" + work.no;
+  					const castId = "workCast" + work.no;
+  					const periodId = "workPeriod" + work.no;
+  					const imgId = "workImg" + work.no;
+
+  					
   	  				const trs = `
   	  				<tbody id="\${tbodyId}">
   	  		          <tr>
@@ -185,28 +199,27 @@
   	  		            </th>
   	  		            <td rowspan="5">
   	  		              <div id="work-img-container">
-  	  		                <img src="\${img_src}" class="work-img" value="\${work.no}" onclick="viewWork(this);">
+  	  		                <img src="\${img_src}" id="\${imgId}" class="work-img" value="\${work.no}" onclick="editWork(this);">
   	  		              </div>
   	  		            </td>
   	  		            <td><br><br></td>
   	  		          </tr>
   	  		          <tr class="work-tr">
   	  		            <th>작품명</th>
-  	  		            <td colspan="3">\${work.title}</td>
+  	  		            <td colspan="3" id="\${titleId}">\${work.title}</td>
   	  		          </tr>
   	  		          <tr class="work-tr">
   	  		            <th>배역</th>
-  	  		            <td colspan="3">\${work.myrole}</td>
+  	  		            <td colspan="3" id="\${castId}">\${work.myrole}</td>
   	  		          </tr>
   	  		          <tr class="work-tr">
   	  		            <th>기간</th>
-  	  		            <td colspan="3">\${work.period}</td>
+  	  		            <td colspan="3" id="\${periodId}">\${work.period}</td>
   	  		          </tr>
   	  		          <tr>
   	  		            <td><br><br></td>
   	  		          </tr>
-  	  		         <tbody>
-  	  				`;
+  	  		         <tbody>`;
   	  				
   	  				ptable.insertAdjacentHTML('beforeend', trs);
   					
@@ -218,6 +231,36 @@
   		});  		
   		
   	}
+	
+	  const editWork = (e) => {
+		  const workNo = e.getAttribute('value');
+		  const tbodyId = "work" + workNo;
+		  document.getElementById("selectedWorkNo").value = workNo;
+		  console.log($('#selectedWorkNo').val())
+		  
+		  const titleId = "workTitle" + workNo;
+		  const castId = "workCast" + workNo;
+		  const periodId = "workPeriod" + workNo;
+		  
+		  const title = document.getElementById(titleId).innerHTML;
+		  const cast = document.getElementById(castId).innerHTML;
+		  const period = document.getElementById(periodId).innerHTML;
+
+		  console.log(title, cast, period);
+		  
+		  document.getElementById("Etitle").value = title;
+		  document.getElementById("Ecast").value = cast;
+		  document.getElementById("Eperiod").value = period;
+		  
+		  const popupTitle = "viewEditWorkPopup";
+          const spec = "width=650px, height=600px";
+          const popup = open("", popupTitle, spec);
+      
+          const frm = document.editWorkFrm;
+          frm.target = popupTitle; // 해당 팝업에서 폼을 제출 
+          frm.submit();
+         
+	  }
 	
 
 
@@ -265,6 +308,7 @@
   		
   		document.portfolioFrm.submit();
   	}
+  	
 	
   const loadImage = (input) => {
   		console.log(input.files);

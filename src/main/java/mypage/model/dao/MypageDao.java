@@ -16,6 +16,7 @@ import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
 import board.model.dto.Board;
 import board.model.dto.Report;
+import common.model.dto.WorkAttachment;
 import member.model.dto.Member;
 import member.model.dto.MemberRole;
 import member.model.dto.Production;
@@ -24,6 +25,7 @@ import mypage.model.dto.ActorInfo;
 import mypage.model.dto.ActorInfoExt;
 import mypage.model.dto.PortAttachment;
 import mypage.model.dto.PortfolioWork;
+import mypage.model.dto.PortfolioWorkExt;
 import mypage.model.exception.MypageException;
 import wishlist.model.exception.WishListException;
 
@@ -89,7 +91,7 @@ public class MypageDao {
 		return no;
 	}
 
-	public int insertAttachment(Connection conn, PortAttachment attachment) {
+	public int insertAttachment(Connection conn, PortAttachment attachment, String attachType) {
 		int result = 0;
 		PreparedStatement pstmt = null;
 		String sql = prop.getProperty("insertAttachment");
@@ -101,7 +103,7 @@ public class MypageDao {
 			pstmt.setInt(2, attachment.getNo());
 			pstmt.setString(3, attachment.getOriginalFilename());
 			pstmt.setString(4, attachment.getRenamedFilename());
-			pstmt.setString(5, attachment.getAttachType());
+			pstmt.setString(5, attachType);
 			
 			result = pstmt.executeUpdate();
 			
@@ -1381,5 +1383,128 @@ public class MypageDao {
 		}
 		return list;
 	}
+
+
+	public List<PortAttachment> getSubWorkAttach(Connection conn, String memberId, int workNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<PortAttachment> list = new ArrayList<>();
+		String sql = prop.getProperty("getSubWorkAttach");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, workNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				PortAttachment attach = handleAttachResultSet(rset);
+				list.add(attach);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> workAttach(WW) 찾기 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public PortAttachment getBossWorkAttach(Connection conn, String memberId, int workNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		PortAttachment attach = new PortAttachment();
+		String sql = prop.getProperty("getBossWorkAttach");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setInt(2, workNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				attach = handleAttachResultSet(rset);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> workAttach(W-경력대표사진) 찾기 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return attach;
+	}
+	
+	private PortAttachment handleAttachResultSet(ResultSet rset) throws SQLException {
+		PortAttachment attach = new PortAttachment();
+		attach.setAttachType(rset.getString("attach_type"));
+		attach.setMemberId(rset.getString("memberId"));
+		attach.setNo(rset.getInt("no"));
+		attach.setOriginalFilename(rset.getString("original_Filename"));
+		attach.setRenamedFilename(rset.getString("renamed_Filename"));
+		attach.setRegDate(rset.getDate("reg_date"));		
+		return attach;
+	}
+
+	public PortAttachment findOneAttachByPaNo(Connection conn, int paNo) {
+		PortAttachment attach = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findOneAttachByPaNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paNo);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				attach = handleAttachResultSet(rset);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 경력수정 - 작품 첨부파일 한건 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return attach;
+	}
+
+	public int deleteWorkAttachmentByNo(Connection conn, int paNo) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("deleteWorkAttachmentByNo");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, paNo);
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 경력수정 - 작품 첨부파일 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updatePortWork(Connection conn, PortfolioWorkExt work) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updatePortWork");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, work.getTitle());
+			pstmt.setString(2, work.getPeriod());
+			pstmt.setString(3, work.getMyrole());
+			pstmt.setString(4, work.getVideolink());
+			pstmt.setInt(5, work.getNo());
+			
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			throw new MypageException("updatePortWork@포트폴리오 경력 수정 오류!", e);
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+		
+	}
+	
 	
 }

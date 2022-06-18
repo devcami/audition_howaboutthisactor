@@ -13,8 +13,6 @@
 <script src="<%=request.getContextPath() %>/js/jquery-3.6.0.js"></script>
   <link href="css/viewWork.css" rel="stylesheet" type ="text/css">
   <script src="https://kit.fontawesome.com/1c396dc14f.js" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 <title>Insert title here</title>
 </head>
@@ -47,32 +45,23 @@
             </ul>
           </div>
         </div>
-        <div id="carouselExampleIndicators" class="carousel slide img-container" data-bs-ride="carousel">
-          <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-          </div>
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="<%= request.getContextPath() %>/images/hosi/hosi11.jpg" class="d-block w-100 work-img">
-            </div>
-            <div class="carousel-item">
-              <img src="<%= request.getContextPath() %>/images/hosi/hosi12.jpg" class="d-block w-100 work-img">
-            </div>
-            <div class="carousel-item">
-              <img src="<%= request.getContextPath() %>/images/hosi/hosi13.jpg" class="d-block w-100 work-img">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+		<div id="boss-img-container">
+        	<img src="<%= request.getContextPath() %>/images/hosi/hosi11.jpg" class="work-img">
         </div>
+      </div>
+    </div>
+    <div>
+      <h3 id="img-msg">관련 사진</h3>
+    </div>
+    <div id="img-div">
+      <div class="img-container" style = "display: none;">
+        <img src="<%= request.getContextPath() %>/images/hosi/hosi13.jpg" class="work-img">
+      </div>
+      <div class="img-container" style = "display: none;">
+        <img src="<%= request.getContextPath() %>/images/hosi/hosi14.jpg" class="work-img">
+      </div>
+      <div class="img-container" style = "display: none;">
+        <img src="<%= request.getContextPath() %>/images/hosi/hosi12.jpg" class="work-img">
       </div>
     </div>
     <div id="second-page" class="page">

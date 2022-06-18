@@ -1,0 +1,96 @@
+* {
+  font-family: 'Hahmlet', serif;
+}
+legend {
+  color: white;
+  background-color: #ffb6b9;
+  font-size: 40px;
+  font-weight: 700;
+  padding: 50px 0 10px 20px;
+}
+#work-img-container{
+  width: 350px;
+  height: 300px;
+  padding: 10px;
+  border: 2px dashed darkgray;
+}
+.img-container{
+  width: 350px;
+  height: 300px;
+  padding: 10px;
+  border: 2px dashed darkgray;
+}
+.work-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#boss-img{
+	  width: 100%;
+  	height: 100%;
+  	object-fit: contain;
+}
+table{
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin: 0 0 50px 20px;
+  display: flex;
+  justify-content: center;
+  margin-right: 70px;
+}
+table th {
+  text-align: left;
+  padding: 0 20px 0 10px;
+}
+table input{
+  margin-top: 10px;
+  width: 370px;
+  height: 35px;
+  border-left-width:0;
+  border-right-width:0;
+  border-top-width:0;
+  border-bottom-width:1;
+}
+textarea {
+  margin-top: 10px;
+  width: 370px;
+  height: 35px;
+  border-left-width:0;
+  border-right-width:0;
+  border-top-width:0;
+  border-bottom-width:2;
+}
+input::file-selector-button, button{
+  background-color: #ffb6b9;
+  border: none;
+  border-radius: 0.3rem;
+  padding: 4px;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  cursor: pointer;
+}
+input::file-selector-button:hover, button:hover{
+  background-color: #fae3d9;
+  box-shadow: 4px 4px 8px rgb(0 0 0 / 20%);
+  cursor: pointer;
+}
+button {
+  transform: translateX(430px);
+  padding: 5px 10px;
+}
+.del-btn {
+background-color: #ffb6b9;
+    border: none;
+    border-radius: 0.3rem;
+    color: white;
+    font-family: 'Hahmlet', serif;
+    cursor: pointer;
+    width: 50px;
+    height: 26px;
+    letter-spacing: 2px;
+}
+.del-btn:hover {
+	    background-color: #fae3d9;
+    	box-shadow: 4px 4px 8px rgb(0 0 0 / 20%);
+    	cursor: pointer;
+}
