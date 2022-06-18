@@ -35,7 +35,7 @@ public class MemberService {
 	public String findPw(String memberId, String memberName) {
 		Connection conn = getConnection();
 		String password = memberDao.findPw(conn, memberId, memberName);
-		System.out.println("service단 비밀번호"+ password);
+		System.out.println("service단 아이디"+ memberId);
 		close(conn);
 		return password;
 	}

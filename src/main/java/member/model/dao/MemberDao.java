@@ -99,9 +99,9 @@ public class MemberDao {
 			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				password = rset.getString("password");
+				memberId = rset.getString("memberId");
 			}
-			System.out.println("dao단 비밀번호"+ password);		
+			System.out.println("dao단 아이디 확인용"+ memberId);		
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

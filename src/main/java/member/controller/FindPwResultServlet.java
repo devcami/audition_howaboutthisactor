@@ -28,12 +28,12 @@ public class FindPwResultServlet extends HttpServlet {
 		 request.setCharacterEncoding("utf-8");
 		 
 		 String memberId = (String) request.getAttribute("memberId");
-		 String password = HelloMvcUtils.encrypt(request.getParameter("password"), memberId);
+//		 String newpassword = HelloMvcUtils.encrypt(request.getParameter("newpassword"), memberId);
 //		 System.out.println("memberId@findPwResulteServlet = " + memberId + memberName);
 
-		 System.out.println(password);
+		 System.out.println("비밀번호 변경용 아이디 확인" + memberId);
 		 
-		 request.setAttribute("password",  password);
+//		 request.setAttribute("newpassword",  newpassword);
 		 request
 			.getRequestDispatcher("/WEB-INF/views/member/findPwResult.jsp")
 			.forward(request, response);

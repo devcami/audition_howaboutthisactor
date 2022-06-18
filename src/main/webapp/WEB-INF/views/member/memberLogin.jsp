@@ -192,25 +192,10 @@ var naverLogin = new naver.LoginWithNaverId(
 			
 		}
 	);	
+	
+	naverLogin.init();
 
-naverLogin.init();
-
-var naver_id_login = new naver_id_login("STWpWhi2HZaIbtQUjBBh", "http://localhost:9090/app/member/memberLogin");
-// 접근 토큰 값 출력
-alert(naver_id_login.oauthParams.access_token);
-// 네이버 사용자 프로필 조회
-naver_id_login.get_naver_userprofile("naverSignInCallback()");
-// 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
-function naverSignInCallback() {
-  alert(naver_id_login.getProfileData('email'));
-  alert(naver_id_login.getProfileData('nickname'));
-  alert(naver_id_login.getProfileData('age'));
-  </script>
-  
-  
- <script>
- <%--
-window.addEventListener('load', function ()) {
+window.addEventListener('load', function () {
 	naverLogin.getLoginStatus(function (status) {
 		if (status) {
 			var email = naverLogin.user.getEmail(); // 필수로 설정할것을 받아와 아래처럼 조건문을 줍니다.
@@ -226,94 +211,10 @@ window.addEventListener('load', function ()) {
 			console.log("callback 처리에 실패하였습니다.");
 		}
 	});
-};
---%>
-</script>
+});
 
+  </script>
 
-
-<script>
-<%--
-	function setLoginStatus(){
-		    
-		      const message_area=document.getElementById('message');
-		      message_area.innerHTML=`
-		      <h3> Login 성공 </h3>
-		      <div>user Nickname : ${naverLogin.user.nickname}</div>
-		      <div>user Age(범위) : ${naverLogin.user.age}</div>
-		      <div>user Birthday : ${naverLogin.user.birthday}</div>
-		      `;
-		     
-		      const button_area=document.getElementById('button_area');
-		      button_area.innerHTML="<button id='btn_logout'>로그아웃</button>";
-
-		      const logout=document.getElementById('btn_logout');
-		      logout.addEventListener('click',(e)=>{
-		        naverLogin.logout();
-			location.replace("http://127.0.0.1:5500");
-		      })
-		    }
-	--%>
-	</script>
-	
-
-<script>
-<%--
-String clientId = "STWpWhi2HZaIbtQUjBBh";//애플리케이션 클라이언트 아이디값";
-String redirectURI = URLEncoder.encode("http://localhost:9090/app/member/memberLogin", "UTF-8");
-SecureRandom random = new SecureRandom();
-String state = new BigInteger(130, random).toString();
-String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
-apiURL += "&client_id=" + clientId;
-apiURL += "&redirect_uri=" + redirectURI;
-apiURL += "&state=" + state;
-session.setAttribute("state", state);
---%>
-</script>
-
-<script>
-
-<%-- String clientId = "YOUR_CLIENT_ID";//애플리케이션 클라이언트 아이디값";
-String clientSecret = "YOUR_CLIENT_SECRET";//애플리케이션 클라이언트 시크릿값";
-String code = request.getParameter("code");
-String state = request.getParameter("state");
-String redirectURI = URLEncoder.encode("YOUR_CALLBACK_URL", "UTF-8");
-String apiURL;
-apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
-apiURL += "client_id=" + clientId;
-apiURL += "&client_secret=" + clientSecret;
-apiURL += "&redirect_uri=" + redirectURI;
-apiURL += "&code=" + code;
-apiURL += "&state=" + state;
-String access_token = "";
-String refresh_token = "";
-System.out.println("apiURL="+apiURL);
-try {
-  URL url = new URL(apiURL);
-  HttpURLConnection con = (HttpURLConnection)url.openConnection();
-  con.setRequestMethod("GET");
-  int responseCode = con.getResponseCode();
-  BufferedReader br;
-  System.out.print("responseCode="+responseCode);
-  if(responseCode==200) { // 정상 호출
-    br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-  } else {  // 에러 발생
-    br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-  }
-  String inputLine;
-  StringBuffer res = new StringBuffer();
-  while ((inputLine = br.readLine()) != null) {
-    res.append(inputLine);
-  }
-  br.close();
-  if(responseCode==200) {
-    out.println(res.toString());
-  }
-} catch (Exception e) {
-  System.out.println(e);
-}  --%>
-
-</script>
 
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
