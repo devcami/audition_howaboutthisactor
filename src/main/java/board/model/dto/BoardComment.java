@@ -22,9 +22,9 @@ public class BoardComment {
 		super();
 		this.no = no;
 		this.commentLevel = commentLevel;
+		this.boardNo = boardNo;
 		this.memberId = memberId;
 		this.content = content;
-		this.boardNo = boardNo;
 		this.commentRef = commentRef;
 		this.regDate = regDate;
 	}

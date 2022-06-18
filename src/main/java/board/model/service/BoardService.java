@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import ann.model.dto.Ann;
 import board.model.dao.BoardDao;
 import board.model.dto.Attachment;
 import board.model.dto.Board;
@@ -18,7 +19,8 @@ import board.model.dto.BoardExt;
 public class BoardService {
 
 	private BoardDao boardDao = new BoardDao();
-
+	public static final int NUM_PER_PAGE = 12;
+	
 	public List<BoardExt> findAll(Map<String, Object> param) {
 		Connection conn = getConnection();
 		List<BoardExt> list = boardDao.findAll(conn, param);
@@ -193,8 +195,30 @@ public class BoardService {
 		return result;
 	}
 
-}
+		public int insertBoardReport(Map<String, Object> param) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = boardDao.insertBoardReport(conn, param);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
 
+		public List<Board> findByBoardTitle(String searchKeyword) {
+			Connection conn = getConnection();
+			List<Board> list = boardDao.findByBoardTitle(conn, searchKeyword);
+			close(conn);
+			return list;
+		}
+
+
+	}
 
 
 

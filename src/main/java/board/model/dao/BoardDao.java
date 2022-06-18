@@ -1,6 +1,9 @@
 package board.model.dao;
 
 import static common.JdbcTemplate.close;
+import static common.JdbcTemplate.commit;
+import static common.JdbcTemplate.getConnection;
+import static common.JdbcTemplate.rollback;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -13,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import ann.model.dto.Ann;
+import ann.model.exception.AnnException;
 import board.model.dto.Attachment;
 import board.model.dto.Board;
 import board.model.dto.BoardComment;
@@ -72,8 +77,8 @@ public class BoardDao {
 	public int getTotalContents(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		int totalContents = 0;
 		String sql = prop.getProperty("getTotalContents");
+		int totalContents = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
 			rset = pstmt.executeQuery();
@@ -81,7 +86,7 @@ public class BoardDao {
 				totalContents = rset.getInt(1);
 			}
 		} catch (Exception e) {
-			throw new BoardException("총게시물수 조회 오류", e);
+			throw new BoardException("총게시물수 조회 오류");
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -137,6 +142,7 @@ public class BoardDao {
 			pstmt.setInt(1, attach.getBoardNo());
 			pstmt.setString(2, attach.getOriginalFilename());
 			pstmt.setString(3, attach.getRenamedFilename());
+			
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new BoardException("첨부파일 등록 오류", e);
@@ -302,10 +308,10 @@ public class BoardDao {
 		
 		try {
 			pstmt = conn.prepareStatement(query);
-//			pstmt.setInt(1, bc.getCommentLevel());
-			pstmt.setString(2, bc.getMemberId());
-			pstmt.setString(3, bc.getContent());
-			pstmt.setInt(4, bc.getBoardNo());
+			pstmt.setInt(1, bc.getCommentLevel());
+			pstmt.setInt(2, bc.getBoardNo());
+			pstmt.setString(3, bc.getMemberId());
+			pstmt.setString(4, bc.getContent());
 			// BoardComment#commentRef 0 ~ n -> board_comment.comment_ref null ~ n
 			pstmt.setObject(5, bc.getCommentRef() == 0 ? null : bc.getCommentRef());
 			
@@ -331,9 +337,10 @@ public class BoardDao {
 			while(rset.next()) {
 				BoardComment bc = new BoardComment();
 				bc.setNo(rset.getInt("no"));
+				bc.setCommentLevel(rset.getInt("comment_level")); // 이게 빠져있었음 ㅜㅜ
+				bc.setBoardNo(rset.getInt("board_no"));
 				bc.setMemberId(rset.getString("member_id"));
 				bc.setContent(rset.getString("content"));
-				bc.setBoardNo(rset.getInt("board_no"));
 				bc.setCommentRef(rset.getInt("comment_ref"));
 				bc.setRegDate(rset.getDate("reg_date"));
 				comments.add(bc);
@@ -365,8 +372,49 @@ public class BoardDao {
 		return result;
 	}
 
+	public int insertBoardReport(Connection conn, Map<String, Object> param) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertBoardReport");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String) param.get("memberId"));
+			pstmt.setInt(2, (int) param.get("no"));
+//			System.out.println("board_no :" + board_no);
+			pstmt.setString(3, (String) param.get("reportContent"));
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new BoardException("> 게시판 - 게시글 신고하기 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
+	public List<Board> findByBoardTitle(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("findByAnnTitle");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + searchKeyword + "%");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Board board = handleBoardResultSet(rset);
+				list.add(board);
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 공고찾기 - 공고 제목으로 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
 }
+
 
 
 

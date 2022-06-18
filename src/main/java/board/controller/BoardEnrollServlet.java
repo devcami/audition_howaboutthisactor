@@ -58,6 +58,11 @@ public class BoardEnrollServlet extends HttpServlet {
 		try {
 			// 2. MultipartRequest객체 생성
 			// b. 파일저장경로
+			// "D:\\Workspaces\\webserver_workspace\\hello-mvc\\src\\main\\webapp\\upload\\board"
+//			ServletContext application = getServletContext();
+//			String webRoot = application.getRealPath("/");
+//			// File.separator 운영체제별 경로 구분자 (window: \, mac/linux: /)
+//			String saveDirectory = webRoot + "upload" + File.separator + "board";
 			String saveDirectory = getServletContext().getRealPath("/upload/board");
 			System.out.println("saveDirectory = " + saveDirectory);
 			// c. 최대파일크기 10MB 
@@ -66,9 +71,10 @@ public class BoardEnrollServlet extends HttpServlet {
 			String encoding = "utf-8";
 			// e. 파일명 재지정 정책 객체
 			// DefaultFileRenamePolicy 파일명 중복시 numbering처리함.
+//			FileRenamePolicy policy = new DefaultFileRenamePolicy();
 			FileRenamePolicy policy = new HelloMvcFileRenamePolicy();
 			MultipartRequest multiReq = 
-				new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
+					new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
 			
 			// 3. 사용자입력값 처리
 			// dto 객체 생성
@@ -117,9 +123,6 @@ public class BoardEnrollServlet extends HttpServlet {
 	}
 
 }
-
-
-
 
 
 

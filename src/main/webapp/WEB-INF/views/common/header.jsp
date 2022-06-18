@@ -78,7 +78,7 @@ window.addEventListener('load', () => {
              	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>  
 	             <% 
 	             	String memberId = loginMember.getMemberId();
-	             	if(memberId.substring(memberId.length()-5, memberId.length()).equals("Kakao")) { %>
+	             	if(memberId.length() > 5 && memberId.substring(memberId.length()-5, memberId.length()).equals("Kakao")) { %>
 	            	<div class="nav-item"><a class="ahover" onclick="kakaoLogout();">로그아웃</a></div>
 	             <% } else { %>
             	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/member/logout">로그아웃</a></div>
