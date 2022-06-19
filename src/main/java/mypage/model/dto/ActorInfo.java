@@ -15,7 +15,7 @@ public class ActorInfo {
 	private String speciality;
 	private String sns;	
 	private int attachNo;
-	private PortAttachment attachment;
+	private PortAttachment attachment;  // 배우 프로필 사진
 	
 	public ActorInfo() {
 		super();

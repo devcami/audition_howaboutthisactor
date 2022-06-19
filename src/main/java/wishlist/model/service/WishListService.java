@@ -13,6 +13,7 @@ import ann.model.dto.Ann;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
 import wishlist.model.dao.WishListDao;
+import wishlist.model.dto.WishListActor;
 import wishlist.model.dto.WishListAnn;
 
 public class WishListService {
@@ -109,6 +110,43 @@ public class WishListService {
 		int result = 0;
 		try {
 			result = wishListDao.delWishlistAnn(conn, wishListAnn);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public List<WishListActor> actorWishlistbyMemberId(String loginId) {
+		Connection conn = getConnection();
+		List<WishListActor> list = wishListDao.actorWishlistbyMemberId(conn, loginId);
+		close(conn);
+		return list;
+	}
+
+	public int addWishlistActor(WishListActor wishListActor) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = wishListDao.addWishlistActor(conn, wishListActor);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+	}
+
+	public int delWishlistActor(WishListActor wishListActor) {
+		Connection conn = getConnection();
+		int result = 0;
+		try {
+			result = wishListDao.delWishlistActor(conn, wishListActor);
 			commit(conn);
 		} catch (Exception e) {
 			rollback(conn);
