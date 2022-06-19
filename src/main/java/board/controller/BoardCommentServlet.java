@@ -8,10 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oreilly.servlet.MultipartRequest;
-
 import board.model.dto.BoardComment;
-import board.model.dto.BoardExt;
 import board.model.service.BoardService;
 
 /**

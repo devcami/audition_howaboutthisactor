@@ -1,9 +1,6 @@
-package board.controller;
+package notice.cotroller;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,18 +12,17 @@ import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
 import board.model.dto.Attachment;
-import board.model.dto.BoardExt;
-import board.model.service.BoardService;
-
 import common.HelloMvcFileRenamePolicy;
+import notice.model.dto.NoticeExt;
+import notice.model.service.NoticeService;
 
 /**
  * Servlet implementation class BoardUpdateServlet
  */
-@WebServlet("/board/boardUpdate")
-public class BoardUpdateServlet extends HttpServlet {
+@WebServlet("/notice/noticeUpdate")
+public class NoticeUpdateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BoardService boardService = new BoardService();
+	private NoticeService noticeService = new NoticeService();
 	/**
 	 * 수정폼 요청
 	 */
@@ -35,10 +31,10 @@ public class BoardUpdateServlet extends HttpServlet {
 		int no = Integer.parseInt(request.getParameter("no")); // 게시판 넘버
 		
 		// 2.업무로직
-		BoardExt board = boardService.findByNo(no);
+		NoticeExt notice = noticeService.findByNo(no);
 		
 		// 3.view단처리
-		request.setAttribute("board", board);
+		request.setAttribute("board", notice);
 		request.getRequestDispatcher("/WEB-INF/views/board/boardUpdate.jsp")
 			.forward(request, response);
 	}
@@ -60,7 +56,7 @@ public class BoardUpdateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 2. MultipartRequest객체 생성 - 파일저장완료
-		String saveDirectory = getServletContext().getRealPath("/upload/board");
+		String saveDirectory = getServletContext().getRealPath("/upload/notice");
 		int maxPostSize = 1024 * 1024 * 10;
 		String encoding = "utf-8";
 		FileRenamePolicy policy = new HelloMvcFileRenamePolicy();
@@ -73,53 +69,21 @@ public class BoardUpdateServlet extends HttpServlet {
 		String title = multiReq.getParameter("title");
 		String memberId = multiReq.getParameter("memberId");
 		String content = multiReq.getParameter("content");
-		String[] delFiles = multiReq.getParameterValues("delFile"); // 삭제하려는 첨부파일 pk
 		
-		BoardExt board = new BoardExt();
-		board.setNo(no);
-		board.setTitle(title);
-		board.setMemberId(memberId);
-		board.setContent(content);
-		
-		File upFile1 = multiReq.getFile("upFile1");
-		File upFile2 = multiReq.getFile("upFile2");
-		if(upFile1 != null || upFile2 != null) {
-			List<Attachment> attachments = new ArrayList<>();
-			if(upFile1 != null)
-				attachments.add(getAttachment(multiReq, no, "upFile1"));
-			if(upFile2 != null)
-				attachments.add(getAttachment(multiReq, no, "upFile2"));
-			board.setAttachments(attachments);
-		}
+		NoticeExt notice = new NoticeExt();
+		notice.setNo(no);
+		notice.setTitle(title);
+		notice.setMemberId(memberId);
+		notice.setContent(content);
 		
 		// 4. 업무로직 - 
 		// db board(update), attachment(insert) 레코드 등록
-		int result = boardService.updateBoard(board);
+		int result = noticeService.updateNotice(notice);
 		// 첨부파일 삭제 처리
-		if(delFiles != null) {
-			for(String temp : delFiles) {
-				int attachNo = Integer.parseInt(temp); // attachment pk
-				Attachment attach = boardService.findAttachmentByNo(attachNo);
-				// a. 파일 삭제
-				File delFile = new File(saveDirectory, attach.getRenamedFilename());
-				if(delFile.exists()) delFile.delete();
-
-				// b. db record 삭제
-				result = boardService.deleteAttachment(attachNo);
-				System.out.println("> " + attachNo + "번 첨부파일 (" + attach.getRenamedFilename() + ") 삭제!");
-			}
-		}
+	
 		// 5. redirect
-		response.sendRedirect(request.getContextPath() + "/board/boardView?no=" + no);
+		response.sendRedirect(request.getContextPath() + "/notice/noticeView?no=" + no);
 		
-	}
-
-	private Attachment getAttachment(MultipartRequest multiReq, int boardNo, String name) {
-		Attachment attach = new Attachment();
-		attach.setBoardNo(boardNo);
-		attach.setOriginalFilename(multiReq.getOriginalFileName(name));
-		attach.setRenamedFilename(multiReq.getFilesystemName(name));
-		return attach;
 	}
 
 }

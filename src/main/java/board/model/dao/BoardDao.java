@@ -1,9 +1,6 @@
 package board.model.dao;
 
 import static common.JdbcTemplate.close;
-import static common.JdbcTemplate.commit;
-import static common.JdbcTemplate.getConnection;
-import static common.JdbcTemplate.rollback;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -16,13 +13,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import ann.model.dto.Ann;
-import ann.model.exception.AnnException;
 import board.model.dto.Attachment;
 import board.model.dto.Board;
 import board.model.dto.BoardComment;
 import board.model.dto.BoardExt;
 import board.model.exception.BoardException;
+import member.model.dto.Member;
+import member.model.exception.MemberException;
+
 
 public class BoardDao {
 
@@ -113,6 +111,27 @@ public class BoardDao {
 	}
 
 	public int findCurrentBoardNo(Connection conn) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int no = 0;
+		String sql = prop.getProperty("findCurrentBoardNo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			rset = pstmt.executeQuery();
+			while(rset.next())
+				no = rset.getInt(1);
+			
+		} catch (SQLException e) {
+			throw new BoardException("게시글번호 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return no;
+	}
+	
+	public int findCurrentNoticeBoardNo(Connection conn) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int no = 0;
@@ -395,7 +414,7 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		List<Board> list = new ArrayList<>();
-		String sql = prop.getProperty("findByAnnTitle");
+		String sql = prop.getProperty("findByBoardTitle");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -406,14 +425,91 @@ public class BoardDao {
 				list.add(board);
 			}
 		} catch (Exception e) {
-			throw new AnnException("> 공고찾기 - 공고 제목으로 조회 오류", e);
+			throw new BoardException("> 게시물 찾기 - 게시물 제목으로 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
 		return list;
 	}
+	public List<Board> findByBoardContent(Connection conn, String searchKeyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("findByBoardContent");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + searchKeyword + "%");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				Board board = handleBoardResultSet(rset);
+				list.add(board);
+			}
+		} catch (Exception e) {
+			throw new BoardException("> 게시물 찾기 - 게시물 내용으로 조회 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public List<Board> findBy(Connection conn, Map<String, String> param, Map<String, Object> pageParam) {
+	PreparedStatement pstmt = null;
+	ResultSet rset = null;
+	List<Board> list = new ArrayList<>();
+	String sql = prop.getProperty("findBy");
+	sql = sql.replace("#", param.get("searchType"));
+	System.out.println("sql = " + sql);
+	
+	try {
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, "%" + param.get("searchKeyword") + "%");
+		pstmt.setInt(2, (int) pageParam.get("start"));
+		pstmt.setInt(3, (int) pageParam.get("end"));
+		rset = pstmt.executeQuery();
+		
+		while(rset.next()) {
+			Board board = handleBoardResultSet(rset);
+			list.add(board);
+		}
+		
+	} catch(Exception e) {
+		throw new BoardException("검색 오류", e);
+	} finally {
+		close(rset);
+		close(pstmt);
+	}
+	
+	return list;
 }
+	
+	public int insertNotice(Connection conn, Board notice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("insertBoard");
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, notice.getTitle());
+			pstmt.setString(2, notice.getMemberId());
+			pstmt.setString(3, notice.getContent());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new BoardException("공지 등록 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+
+
+
+}
+
+
+
 
 
 

@@ -1,7 +1,7 @@
 <%@page import="board.model.dto.BoardComment"%>
 <%@page import="board.model.dto.Attachment"%>
-<%@page import="java.util.List"%>
 <%@page import="board.model.dto.BoardExt"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
@@ -10,9 +10,7 @@
 	List<BoardComment> comments = board.getBoardComments();
 	
 	boolean canEdit = loginMember != null 
-			&& (loginMember.getMemberId().equals(board.getMemberId()) 
-					|| loginMember.getMemberRole() == MemberRole.A);
-	
+	&& (loginMember.getMemberId().equals(board.getMemberId()));
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <div class="top-logo">
@@ -49,8 +47,6 @@
 
            </section>
                    
-		
-			
            <% List<Attachment> attachments = board.getAttachments();
 				if(attachments != null && !attachments.isEmpty()){
 					for(Attachment attach : attachments){
@@ -66,11 +62,10 @@
 			<% if(canEdit){ %>
 		   <div>
 		  <%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
-		  		 <input type="button" value="수정하기" onclick="updateBoard()">
-		   		 <input type="button" value="삭제하기" onclick="deleteBoard()">
-			<% } %>
+		  		
+		  		<input type="button" value="수정하기" onclick="updateBoard()">
+		  		<input type="button" value="삭제하기" onclick="deleteBoard()">
 		   		 
-		<!-- Button trigger modal -->
 		<button type="button" class="btn btn-primary view" data-bs-toggle="modal"
 			data-bs-target="#reportModal" id="btn-report">신고하기</button>
 			 <!-- Modal -->
@@ -105,7 +100,8 @@
             </div>
          </div>
       </div>
-		   </div>
+  </div>
+      	<% } %>
 
          
                     
@@ -174,7 +170,7 @@
 	                <button type="submit"  class="btn" id="btn-comment-enroll1">등록</button>
 	            </form>
 	       </div>
-			</tbody>
+					</tbody>
 		</table>
 	</div>
 	
@@ -188,6 +184,7 @@
 </form>
 
 
+<script>
 <script>
 /**
  * .btn-reply click eventhandler binding 
@@ -243,7 +240,7 @@ document.querySelectorAll(".btn-reply").forEach((button) => {
 			
 		const textarea = document.createElement("textarea");
 		textarea.name = "content";
-		textarea.cols = "80";
+		textarea.cols = "60";
 		textarea.rows = "1";
 		
 		const button = document.createElement("button");
@@ -307,7 +304,7 @@ const commentSubmitHandler = (e) => {
 		e.target.content.focus();
 		return false;
 	}
-
+	
 };
 
 document.boardCommentFrm.onsubmit = commentSubmitHandler;
@@ -334,11 +331,11 @@ const deleteBoard = () => {
 		document.boardDeleteFrm.submit();
 };	
 
-const updateBoard = () => {
-	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>";
+const updateBoard= () => {
+	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>;
 }
-<% } %>
 
+<% } %>
 /*
  * 신고
  */
