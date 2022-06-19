@@ -39,5 +39,4 @@ public class BoardFinderServlet extends HttpServlet {
 			throw e;
 		}
 	}
-
 }

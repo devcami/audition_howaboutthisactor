@@ -79,7 +79,7 @@
 				<div class="list-item-title">배우찾기</div>
 				<div class="list-item-detail">나의 작품에 딱 맞는 배우찾기</div>
 				<button class="list-item-button" 
-				onclick="location.href='<%= request.getContextPath() %>/actor/actorSearch'">
+				onclick="location.href='<%= request.getContextPath() %>/actor/actorList'">
 				click</button>
 			</div>
 	

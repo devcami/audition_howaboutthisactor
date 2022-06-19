@@ -10,10 +10,9 @@
 <section id="board-container">
 <div id="board-E">
 <form
-	name="boardEnrollFrm"
-	action="<%=request.getContextPath() %>/board/boardEnroll" 
-	method="post"
-	enctype="multipart/form-data">
+	name="noticeEnrollFrm"
+	action="<%=request.getContextPath() %>/notice/noticeEnroll" 
+	method="post">
 	<table id="tbl-board-view">
 	<tr>
 		<th>제 목</th>
@@ -23,31 +22,20 @@
 		<th>작성자</th>
 		<td>
 			<input type="text" name="memberId" value="<%= loginMember.getMemberId() %>" readonly/>
+			 
 		</td>
-		<tr>
-	<th>내 용</th>
-		<td><textarea rows="5" cols="40" name="content"></textarea></td>
-	</tr>
-	<tr>
-		<th>첨부파일</th>
-		<td>			
-			<input type="file" name="upFile1">
-			<br>
-			<input type="file" name="upFile2">
-		</td>
-	</tr>
 	<tr>
 		<th>내 용</th>
 		<td><textarea rows="5" cols="40" name="content"></textarea></td>
 	</tr>
 </table>
+<input type="submit" id="btn-submit" class="btn" type="button" value="등록하기">
+
 </form>
 </div>
 </section>
 
-<div>
-<button id="btn-submit" class="btn" type="button" onclick="enrollSubmit(this);">등록하기</button>
-</div>
+
 
 
 <script>
@@ -56,7 +44,7 @@
 */
 
 window.onload = () => {	
-	document.boardEnrollFrm.onsubmit = (e) => {
+	document.noticeEnrollFrm.onsubmit = (e) => {
 		const frm = e.target;
 		//제목을 작성하지 않은 경우 폼제출할 수 없음.
 		const titleVal = frm.title.value.trim(); // 좌우공백
@@ -67,7 +55,7 @@ window.onload = () => {
 		}		
 						   
 		//내용을 작성하지 않은 경우 폼제출할 수 없음.
-		const contentVal = frm.content.value.trim();
+		const contentVal = frm.notice.value.trim();
 		if(!/^(.|\n)+$/.test(contentVal)){
 			alert("내용을 작성해주세요.");
 			frm.content.select();
@@ -76,12 +64,14 @@ window.onload = () => {
 	}
 }
 
-<%-- 폼제출 --%>
-const enrollSubmit = (e) => {
-	if(confirm('게시글을 등록하시겠습니까?')){
-		document.boardEnrollFrm.submit();
+<%-- 폼제출 
+const enrollSubmit(this) = (e) => {
+	if(confirm('공지를 등록하시겠습니까?')){
+		document.noticeEnrollFrm.submit();
 	}
 };
+--%>
+
 
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
