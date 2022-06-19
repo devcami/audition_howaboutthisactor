@@ -61,12 +61,6 @@ public class MemberEnrollServlet extends HttpServlet {
 		if(_genre != null)
 			genre = String.join(",", _genre);
 		
-/*		// 추후 확인 요망(회원유형)
-		String[] _type = request.getParameterValues("type");
-		String type = null;
-		if(_type !=null)
-			type = String.join(",", _type);
-*/		
 		System.out.println("memberRole은?" + memberRole);
 	if(memberRole.equals("P")) {
  		Member member = new Member(

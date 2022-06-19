@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import common.HelloMvcUtils;
+import common.JdbcTemplate;
 // import common.HelloMvcUtils;
 // import common.JdbcTemplate;
 import member.model.dto.Member;
@@ -61,6 +63,62 @@ public class MemberDao {
 		return member;
 	}
 	
+	/* 
+	public Member findPw(Connection conn, String memberId, String memberName) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findPw");
+		Member member = null;
+		
+		try {
+			// 1. pstmt객체 & 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2,  memberName);
+			
+			// 2. 실행 및 rset처리
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				member = handleMemberResultSet(rset);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// 3. 자원반납(rset, pstmt)
+			close(rset);
+			close(pstmt);
+		}
+		return member;
+	}
+	*/
+	
+	public Member findByEmail(Connection conn, String email) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findByEmail");
+		Member member = null;
+		
+		try {
+			// 1. pstmt객체 & 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
+			
+			// 2. 실행 및 rset처리
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				member = handleMemberResultSet(rset);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// 3. 자원반납(rset, pstmt)
+			close(rset);
+			close(pstmt);
+		}
+		return member;
+	}
+	
 	public String findId(Connection conn, String memberName, String phone) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -86,6 +144,7 @@ public class MemberDao {
 		return Id;
 	}
 
+
 	public String findPw(Connection conn, String memberId, String memberName) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -99,9 +158,11 @@ public class MemberDao {
 			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				password = rset.getString("password");
+				memberId = rset.getString("memberId");
+				memberName = rset.getString("memberName");
 			}
-			System.out.println("dao단 비밀번호"+ password);		
+			System.out.println("dao단 아이디 확인용"+ memberId);		
+			System.out.println("dao단 이름 확인용" + memberName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -109,6 +170,51 @@ public class MemberDao {
 			close(pstmt);
 		}
 		return password;
+	}
+
+	public void pwFindUpdate() {
+		// 1. 회원아이디 조회 및 신규 비번 설정
+		Connection conn = JdbcTemplate.getConnection();
+		String sql = prop.getProperty("findPw");
+		List<Member> list = new ArrayList<>();
+		try(
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rset = pstmt.executeQuery();
+		){
+			while(rset.next()) {
+				String memberId = rset.getString("member_id");
+				
+				Member member = new Member();
+				member.setMemberId(memberId);
+				member.setPassword(HelloMvcUtils.encrypt("1234", memberId));
+				list.add(member);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println(list); 
+		
+		
+		// 2. 비밀번호 업데이트
+		sql = prop.getProperty("pwUpdate"); // update member set password = ? where member_id = ?
+		try(
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+		){
+			for(Member member : list) {
+				pstmt.setString(1, member.getPassword());
+				pstmt.setString(2, member.getMemberId());
+				pstmt.executeUpdate();
+				System.out.println("변경완료 : " + member.getMemberId() + " / " + member.getPassword());
+			}
+			conn.commit();
+		} catch (SQLException e) {
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 	}
 	
 	private Member handleMemberResultSet(ResultSet rset) throws SQLException {

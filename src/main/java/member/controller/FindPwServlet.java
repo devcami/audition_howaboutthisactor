@@ -35,18 +35,19 @@ public class FindPwServlet extends HttpServlet {
 
 		 String memberId = request.getParameter("memberId");
 		 String memberName = request.getParameter("memberName");
-		 System.out.println("memberId@findIdServlet = " + memberId + memberName);
+		 System.out.println("memberID@findPwServlet = " + memberId + memberName);
 		 
-		 String password = memberService.findPw(memberId, memberName);
-		 boolean available = ( password == null);
+		 memberService.findPw(memberId, memberName);
+		 System.out.println(memberId);
+//		 boolean available = ( password == null);
 		 
 		 request.setAttribute("memberId", memberId);
-		 request.setAttribute("password",  password);
-		 request.setAttribute("available", available);
+//		 request.setAttribute("password",  password);
+//		 request.setAttribute("available", available);
 		 
 		
 		 request
-			.getRequestDispatcher("/WEB-INF/views/member/findIdResult.jsp")
+			.getRequestDispatcher("/WEB-INF/views/member/findPwResult.jsp")
 			.forward(request, response);
 		 
 	}

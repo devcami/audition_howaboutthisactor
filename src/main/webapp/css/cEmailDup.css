@@ -1,0 +1,10 @@
+@charset "UTF-8";
+div#checkId-container{
+	text-align:center;
+	padding-top:50px;
+}
+
+span#duplicated{
+	color:red;
+	font-weight:bold;
+}
