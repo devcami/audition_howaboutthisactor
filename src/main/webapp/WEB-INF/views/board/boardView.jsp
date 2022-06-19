@@ -1,7 +1,7 @@
 <%@page import="board.model.dto.BoardComment"%>
 <%@page import="board.model.dto.Attachment"%>
-<%@page import="java.util.List"%>
 <%@page import="board.model.dto.BoardExt"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
@@ -10,9 +10,8 @@
 	List<BoardComment> comments = board.getBoardComments();
 	
 	boolean canEdit = loginMember != null 
-			&& (loginMember.getMemberId().equals(board.getMemberId()) 
-					|| loginMember.getMemberRole() == MemberRole.A);
-	
+	&& (loginMember.getMemberId().equals(board.getMemberId()) 
+	|| loginMember.getMemberRole() == MemberRole.A);
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <div class="top-logo">
@@ -49,8 +48,6 @@
 
            </section>
                    
-		
-			
            <% List<Attachment> attachments = board.getAttachments();
 				if(attachments != null && !attachments.isEmpty()){
 					for(Attachment attach : attachments){

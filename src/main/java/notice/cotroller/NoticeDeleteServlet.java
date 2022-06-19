@@ -1,4 +1,4 @@
-package board.controller;
+package notice.cotroller;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import board.model.dto.Attachment;
-import board.model.service.BoardService;
+import notice.model.dto.Attachment;
+import notice.model.service.NoticeService;
 
 /**
  * Servlet implementation class NoticeDeleteServlet
  */
-@WebServlet("/board/boardDelete")
-public class BoardDeleteServlet extends HttpServlet {
+@WebServlet("/notice/noticeDelete")
+public class NoticeDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BoardService boardService = new BoardService();
+	private NoticeService noticeService = new NoticeService();
 
 
 	/**
@@ -35,10 +35,10 @@ public class BoardDeleteServlet extends HttpServlet {
 
 			// 2.업무로직
 			// 첨부파일 존재시 삭제
-			List<Attachment> attachments = boardService.findByNo(no).getAttachments();
+			List<Attachment> attachments = noticeService.findByNo(no).getAttachments();
 			if(attachments != null && !attachments.isEmpty())
 				for(Attachment attach : attachments) {
-					String saveDirectory = getServletContext().getRealPath("/upload/board");
+					String saveDirectory = getServletContext().getRealPath("/upload/notice");
 					File delFile = new File(saveDirectory, attach.getRenamedFilename());
 					if(delFile.exists()) {
 						delFile.delete();
@@ -48,11 +48,11 @@ public class BoardDeleteServlet extends HttpServlet {
 					
 			
 			// board 레코드(행) 삭제 (attachment는 on delete cascade에 의해 자동으로 제거된다.)
-			int result = boardService.deleteBoard(no);
+			int result = noticeService.deleteNotice(no);
 			
 			// 3. redirect : /mvc/board/boardList로 이동
 			request.getSession().setAttribute("msg", "게시글을 삭제했습니다.");
-			response.sendRedirect(request.getContextPath() + "/board/boardList");
+			response.sendRedirect(request.getContextPath() + "/notice/noticeList");
 
 		} catch (Exception e) {
 			e.printStackTrace();

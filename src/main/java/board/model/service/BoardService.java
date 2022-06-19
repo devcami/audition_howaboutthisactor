@@ -9,12 +9,15 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
-import ann.model.dto.Ann;
 import board.model.dao.BoardDao;
+
 import board.model.dto.Attachment;
 import board.model.dto.Board;
 import board.model.dto.BoardComment;
 import board.model.dto.BoardExt;
+import member.model.dto.Member;
+;
+
 
 public class BoardService {
 
@@ -75,7 +78,7 @@ public class BoardService {
 		}
 		return result;
 	}
-
+	
 	public BoardExt findByNo(int no) {
 		Connection conn = getConnection();
 		BoardExt board = boardDao.findByNo(conn, no); // board테이블 조회
@@ -85,6 +88,13 @@ public class BoardService {
 		board.setBoardComments(comments);
 		close(conn);
 		return board;
+	}
+	
+	public List<Board> findBy(Map<String, String> param, Map<String, Object> pageParam) {
+		Connection conn = getConnection();
+		List<Board> list = boardDao.findBy(conn, param, pageParam);
+		close(conn);
+		return list;
 	}
 
 	public int updateReadCount(int no) {

@@ -1,4 +1,4 @@
-package board.controller;
+package notice.cotroller;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,24 +14,24 @@ import javax.servlet.http.HttpServletResponse;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.FileRenamePolicy;
 
-import board.model.dto.Attachment;
-import board.model.dto.BoardExt;
-import board.model.service.BoardService;
 import common.HelloMvcFileRenamePolicy;
+import notice.model.dto.NoticeExt;
+import notice.model.service.NoticeService;
 
 /**
  * Servlet implementation class BoardEnrollServlet
  */
-@WebServlet("/board/boardEnroll")
-public class BoardEnrollServlet extends HttpServlet {
+@WebServlet("/notice/noticeEnroll")
+public class NoticeEnrollServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BoardService boardService = new BoardService();
+	private NoticeService noticeService = new NoticeService();
+
 
 	/**
 	 * 게시글쓰기 폼 요청
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/WEB-INF/views/board/boardEnroll.jsp")
+		request.getRequestDispatcher("/WEB-INF/views/notice/noticeEnroll.jsp")
 			.forward(request, response);
 	}
 
@@ -62,7 +62,7 @@ public class BoardEnrollServlet extends HttpServlet {
 //			String webRoot = application.getRealPath("/");
 //			// File.separator 운영체제별 경로 구분자 (window: \, mac/linux: /)
 //			String saveDirectory = webRoot + "upload" + File.separator + "board";
-			String saveDirectory = getServletContext().getRealPath("/upload/board");
+			String saveDirectory = getServletContext().getRealPath("/upload/notice");
 			System.out.println("saveDirectory = " + saveDirectory);
 			// c. 최대파일크기 10MB 
 			int maxPostSize = 1024 * 1024 * 10;
@@ -80,45 +80,25 @@ public class BoardEnrollServlet extends HttpServlet {
 			String title = multiReq.getParameter("title");
 			String memberId = multiReq.getParameter("memberId");
 			String content = multiReq.getParameter("content");
-			BoardExt board = new BoardExt();
-			board.setTitle(title);
-			board.setMemberId(memberId);
-			board.setContent(content);
+			NoticeExt notice = new NoticeExt();
+			notice.setTitle(title);
+			notice.setMemberId(memberId);
+			notice.setContent(content);
 			
 			File upFile1 = multiReq.getFile("upFile1");
 			File upFile2 = multiReq.getFile("upFile2");
 			
-			// 첨부한 파일이 하나라도 있는 경우
-			if(upFile1 != null || upFile2 != null) {
-				List<Attachment> attachments = new ArrayList<>();
-				if(upFile1 != null) 
-					attachments.add(getAttachment(multiReq, "upFile1"));
-				if(upFile2 != null) 
-					attachments.add(getAttachment(multiReq, "upFile2"));
-				board.setAttachments(attachments);
-			}
-			
-			System.out.println("board = " + board);
 			
 			// 4. 업무로직
-			int result = boardService.insertBoard(board);
+			int result = noticeService.insertNotice(notice);
 			
 			// 5. redirect
-			response.sendRedirect(request.getContextPath() + "/board/boardView?no=" + board.getNo());
+			response.sendRedirect(request.getContextPath() + "/notice/noticeView?no=" + notice.getNo());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
-	}
-
-	private Attachment getAttachment(MultipartRequest multiReq, String name) {
-		Attachment attach = new Attachment();
-		String originalFilename = multiReq.getOriginalFileName(name); // 업로드한 파일명
-		String renamedFilename = multiReq.getFilesystemName(name); // 저장된 파일명
-		attach.setOriginalFilename(originalFilename);
-		attach.setRenamedFilename(renamedFilename);
-		return attach;
 	}
 
 }

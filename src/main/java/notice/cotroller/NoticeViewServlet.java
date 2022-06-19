@@ -1,4 +1,4 @@
-package board.controller;
+package notice.cotroller;
 
 import java.io.IOException;
 
@@ -10,17 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import board.model.dto.BoardExt;
-import board.model.service.BoardService;
-
-
+import notice.model.dto.NoticeExt;
+import notice.model.service.NoticeService;
 
 /**
- * Servlet implementation class BoardViewServlet
+ * Servlet implementation class NoticeViewServlet
  */
-@WebServlet("/board/boardView")
-public class BoardViewServlet extends HttpServlet {
+@WebServlet("/board/noticeView")
+public class NoticeViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private BoardService boardService = new BoardService();
+	private NoticeService noticeService = new NoticeService();
 	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -33,14 +32,14 @@ public class BoardViewServlet extends HttpServlet {
 			
 			// 쿠키처리
 			boolean hasRead = false;
-			String boardCookieVal = "";
+			String noticeCookieVal = "";
 			Cookie[] cookies = request.getCookies();
 			if(cookies != null) {				
 				for(Cookie cookie : cookies) {
 					String name = cookie.getName();
 					String value = cookie.getValue();
-					if("boardCookie".equals(name)) {
-						boardCookieVal = value; // 기존쿠키값
+					if("noticeCookie".equals(name)) {
+						noticeCookieVal = value; // 기존쿠키값
 						if(value.contains("|" + no + "|")) {
 							hasRead = true;
 						}
@@ -54,31 +53,31 @@ public class BoardViewServlet extends HttpServlet {
 			
 			// 조회수증가
 			if(!hasRead) {
-				int result = boardService.updateReadCount(no);
+				int result = noticeService.updateReadCount(no);
 				// 쿠키 새로 전송 (boardCookie 없는 경우 | 요청된 boardCookie에 현재 no가 없는 경우)
-				Cookie cookie = new Cookie("boardCookie", boardCookieVal + "|" + no + "|");
-				cookie.setPath(request.getContextPath() + "/board/boardView"); // 쿠키를 사용할 경로
+				Cookie cookie = new Cookie("noticeCookie", noticeCookieVal + "|" + no + "|");
+				cookie.setPath(request.getContextPath() + "/board/noticeView"); // 쿠키를 사용할 경로
 				cookie.setMaxAge(365 * 24 * 60 * 60); // 1년
 				response.addCookie(cookie); // 응답헤더에 Set-Cookie로 전송
 				System.out.println("> boardCookie가 새로 생성되었음.");
 			}
 			
 			// 게시글 조회
-			BoardExt board = boardService.findByNo(no);
+			NoticeExt notice = noticeService.findByNo(no);
 			
 			
 			// XSS공격대비(Cross-site Scripting공격) 변환
-			board.setTitle(board.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
-			board.setContent(board.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			notice.setTitle(notice.getTitle().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
+			notice.setContent(notice.getContent().replaceAll("<", "&lt;").replaceAll(">", "&gt;"));
 			
 			// board#content 개행처리
-			board.setContent(board.getContent().replaceAll("\n", "<br/>"));
+			notice.setContent(notice.getContent().replaceAll("\n", "<br/>"));
 			
-			System.out.println(board);
+			System.out.println(notice);
 			
 			// 3.view단 위임
-			request.setAttribute("board", board);
-			request.getRequestDispatcher("/WEB-INF/views/board/boardView.jsp")
+			request.setAttribute("notice", notice);
+			request.getRequestDispatcher("/WEB-INF/views/notice/noticeView.jsp")
 				.forward(request, response);
 			
 		} catch(Exception e) {
