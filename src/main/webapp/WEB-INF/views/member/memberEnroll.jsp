@@ -185,6 +185,14 @@ const checkIdDuplicate = () => {
 
 };
 
+passwordCheck.onblur = () => {
+	if(_password.value !== passwordCheck.value){
+		alert("비밀번호가 일치하지 않습니다.");
+		return false;
+	}	
+	return true;
+};
+
 const checkEmailDuplicate = () => {
 const title = "checkEmailDuplicatePopup";
 const spec = "width=300px, height=200px";
