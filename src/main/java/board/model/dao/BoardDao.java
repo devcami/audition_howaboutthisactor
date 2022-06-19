@@ -454,36 +454,6 @@ public class BoardDao {
 		}
 		return list;
 	}
-
-	public List<Board> findBy(Connection conn, Map<String, String> param, Map<String, Object> pageParam) {
-	PreparedStatement pstmt = null;
-	ResultSet rset = null;
-	List<Board> list = new ArrayList<>();
-	String sql = prop.getProperty("findBy");
-	sql = sql.replace("#", param.get("searchType"));
-	System.out.println("sql = " + sql);
-	
-	try {
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, "%" + param.get("searchKeyword") + "%");
-		pstmt.setInt(2, (int) pageParam.get("start"));
-		pstmt.setInt(3, (int) pageParam.get("end"));
-		rset = pstmt.executeQuery();
-		
-		while(rset.next()) {
-			Board board = handleBoardResultSet(rset);
-			list.add(board);
-		}
-		
-	} catch(Exception e) {
-		throw new BoardException("검색 오류", e);
-	} finally {
-		close(rset);
-		close(pstmt);
-	}
-	
-	return list;
-}
 	
 	public int insertNotice(Connection conn, Board notice) {
 		PreparedStatement pstmt = null;
@@ -501,6 +471,57 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return result;
+	}
+
+	public List<Board> findByType(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<Board> list = new ArrayList<>();
+		String sql = prop.getProperty("findByType");
+		sql = sql.replace("#", (String) param.get("searchType"));
+				
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, "%" + (String) param.get("searchKeyword") + "%");
+			pstmt.setInt(2, (int)param.get("start"));
+			pstmt.setInt(3, (int)param.get("end"));
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Board board = handleBoardResultSet(rset);
+				list.add(board);
+			}
+			
+		} catch(Exception e) {
+			throw new MemberException("SearchKeyword로 게시글 찾기 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int getTotalContentsByType(Connection conn, Map<String, Object> param) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getTotalContentsByType");
+		int totalContents = 0;
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, (String) param.get("searchType"));
+			pstmt.setString(2, "%" + (String) param.get("searchKeyword") + "%");
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				totalContents = rset.getInt(1);
+			}
+		} catch (Exception e) {
+			throw new BoardException("search Type으로 게시글 총 갯수 조회 오류");
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return totalContents;
 	}
 
 

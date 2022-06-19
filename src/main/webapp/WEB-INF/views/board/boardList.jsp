@@ -26,44 +26,43 @@
  </div>
 
 <div id="myboard">
-   <div>
-      <div id="boardList_head">
-         <h2>커뮤니티</h2>
-         <div id="condition">
-                  <select name="searchType" id="searchType">
-                       <option value="boardList_All" <%= searchKeyword == null ? "selected" : "" %>>전체</option>
-                       <option value="title" <%="title".equals(searchType)?"selected":""%>>제목</option>
-                       <option value="content" <%="content".equals(searchType)?"selected":""%>>글 내용</option>
-                       <option value="member_Id" <%="member_Id".equals(searchType)?"selected":""%>>작성자</option>
-                   </select>
- 
-                 <div id="search-title" class="search-type">
-                   <form action="<%=request.getContextPath()%>/board/boardFinder?searchType=<%= searchType%>&?searchKeyword=<%= searchKeyword %>">
-                        <input type="hidden" name="searchType" value="title">
-                        <input type="text" name="searchKeyword" class="keyword-input" placeholder="검색할 글 제목을 검색하세요"
-                        <%="title".equals(searchType) ? searchKeyword : "" %>>
-                           <button type="submit" class="btn">검색</button>
+	<div>
+		<div id="boardList_head">
+			<h2>커뮤니티</h2>
+			<div id="condition">
+				<select name="searchType" id="searchType">
+					<option value="boardListAll" <%= (searchType == null) ? "selected" : "" %>>전체</option>
+					<option value="title" <%="title".equals(searchType)?"selected":""%>>제목</option>
+					<option value="content" <%="content".equals(searchType)?"selected":""%>>글 내용</option>
+					<option value="member_id" <%="memberId".equals(searchType)?"selected":""%>>작성자</option>
+				</select>
+				<div id="search-boardListAll">
+	          		<form name="ViewAllBoardFrm" action="<%=request.getContextPath()%>/board/boardList"></form>
+          		</div>
+				<div id="search-title" class="search-type">
+					<form action="<%=request.getContextPath()%>/board/boardFinder?searchType=<%= searchType%>&?searchKeyword=<%= searchKeyword %>">
+						<input type="hidden" name="searchType" value="title">
+						<input type="text" name="searchKeyword" class="keyword-input" placeholder="검색할 글 제목을 검색하세요" value="<%="title".equals(searchType) ? searchKeyword : "" %>">
+						<button type="submit" class="btn">검색</button>
+					</form>
+               </div>
+               <div id="search-content" class="search-type">
+	         		<form action="<%=request.getContextPath()%>/board/boardFinder?searchType=<%= searchType%>&?searchKeyword=<%= searchKeyword %>">
+	                	<input type="hidden" name="searchType" value="content">
+						<input type="text" name="searchKeyword" class="keyword-input" placeholder="검색할 내용을 입력하세요." value="<%= "content".equals(searchType) ? searchKeyword : "" %>">
+						<button type="submit" class="btn">검색</button>
+	              	</form>
+               </div>
+               <div id="search-memberId" class="search-type">
+					<form action="<%=request.getContextPath()%>/board/boardFinder?searchType=<%= searchType%>&?searchKeyword=<%= searchKeyword %>">
+						<input type="hidden" name="searchType" value="member_id">
+						<input type="text" name="searchKeyword" class="keyword-input" placeholder="검색할 작성자를 입력하세요." value="<%= "memberId".equals(searchType) ? searchKeyword : "" %>">
+						<button type="submit" class="btn">검색</button>
                    </form>
-                 </div>
-                 <div id="search-content" class="search-type">
-                <form action="<%=request.getContextPath()%>/board/boardFinder?searchType=<%= searchType%>&?searchKeyword=<%= searchKeyword %>">
-                   <input type="hidden" name="searchType" value="content">
-                        <input type="text" name="searchKeyword" class="keyword-input" placeholder="검색할 내용을 입력하세요."
-                        value="<%= "content".equals(searchType) ? searchKeyword : "" %>">
-                         <button type="submit" class="btn">검색</button>
-                </form>
-                 </div>
-                 <div id="search-memberId" class="search-type">
-                     <form action="<%=request.getContextPath()%>/board/boardFinder?searchType=<%= searchType%>&?searchKeyword=<%= searchKeyword %>">
-                         <input type="hidden" name="searchType" value="member_Id">
-                         <input type="text" name="searchKeyword" class="keyword-input" placeholder="검색할 작성자를 입력하세요."
-                        value="<%= "member_Id".equals(searchType) ? searchKeyword : "" %>">
-                           <button type="submit" class="btn">검색</button>
-                     </form>
-                 </div>
-             </div>
-   		</div>   
-
+               </div>
+			</div>
+		</div>   
+		
    		<table class="table table-hover" id="tbl-board">
          	 <thead id="list-head">
         	 <tr>
@@ -108,73 +107,88 @@
             <td style="text-align: center;"><%= board.getReadCount() %></td>
          </tr>
 <%    
-      }
-   } 
-%>
+      } %>
       </tbody>
    </table>
+<%
+   } 
+%>
       <% if(loginMember != null && (loginMember.getMemberRole() == MemberRole.P) && (loginMember.getMemberRole() == MemberRole.D)){ %>
 	<input 
 		type="button" value="글쓰기" id="btn-add" 
 		onclick="location.href='<%= request.getContextPath() %>/notice/noticeEnroll';"/>
 <% } %>
-	</div>
    		
+	</div>
+</div>
+</section>
+<div id="pagebar">
+	<%= pagebar %>
 </div>   
 <script>
+const mousein = (menu) => {
+  now_menu.classList.remove('current');
+  menu.classList.add('current');
+};
+
+const mouseout = (menu) => {
+  now_menu.classList.add('current');
+  menu.classList.remove('current');
+}
 window.onload = () => {
-   if("<%= searchKeyword %>" != null){
-      console.log("nullㅠㅠㅠㅠㅠㅠ");
-      const value = $("#searchType option:selected").val()
-      
-        switch(value) {
-          case "title": 
-             id = "search-title"; 
-             $('#searchType').css("margin-bottom", '0');
-             break;
-          case "content": 
-             id = "search-content"; 
-             $('#searchType').css("margin-bottom", '0');
-             break;
-          case "member_Id": 
-             id = "search-member_Id"; 
-             $('#searchType').css("margin-bottom", '0');
-             break;
-          case "boardlistAll" : 
-             id = "search-boardlistAll"; 
-             break;
-        }
-      document.querySelector(`#\${id}`).style.display = "inline-block";
-      
+	document.querySelectorAll('.search-type').forEach((div) => {
+		div.style.display = "none";
+	});
+		   
+	if("<%= searchKeyword %>" != null){
+		const value = $("#searchType option:selected").val();
+		console.log(value);
+		switch(value) {
+		  case "title": 
+		     id = "search-title"; 
+		     $('#searchType').css("margin-bottom", '0');
+		     break;
+		  case "content": 
+		     id = "search-content"; 
+		     $('#searchType').css("margin-bottom", '0');
+		     break;
+		  case "member_id": 
+		     id = "search-memberId"; 
+		     $('#searchType').css("margin-bottom", '0');
+		     break;
+		  case "boardListAll" : 
+		     id = "search-boardListAll"; 
+		     break;
+		}
+		document.querySelector(`#\${id}`).style.display = "inline-block";
+   } else {
+	   
    }
 }
 
-   searchType.addEventListener('change', (e) => {
-      const {value} = e.target;
+searchType.addEventListener('change', (e) => {
+   const {value} = e.target;
 
-      document.querySelectorAll('.search-type').forEach((div) => {
-        div.style.display = "none";
-      });
-      
-      let id = "";
-      if(value == "boardlistAll") {
-         $('#searchType').css("margin-bottom", '15px');
-         document.ViewAllMemberFrm.submit();
-      }
+   document.querySelectorAll('.search-type').forEach((div) => {
+     div.style.display = "none";
+   });
    
-      switch(value) {
-        case "title": id = "search-title"; break;
-        case "content": id = "search-content"; break;
-        case "member_Id": id = "search-memberId"; break;
-      }
-      $('#searchType').css("margin-bottom", '0');
-      document.querySelector(`#\${id}`).style.display = "inline-block";
-    });
+   let id = "";
+   if(value == "boardListAll") {
+      $('#searchType').css("margin-bottom", '15px');
+      document.ViewAllBoardFrm.submit();
+   }
+
+   switch(value) {
+     case "title": id = "search-title"; break;
+     case "content": id = "search-content"; break;
+     case "member_id": id = "search-memberId"; break;
+   }
+   $('#searchType').css("margin-bottom", '0');
+   document.querySelector(`#\${id}`).style.display = "inline-block";
+ });
 
 
 </script>
-</section>
-<div id="pagebar">
-    		  <%= pagebar %>
-  		 </div>
+
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

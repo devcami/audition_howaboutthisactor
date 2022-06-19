@@ -39,7 +39,6 @@
 }
 
 #myboard{
-  height: 70vh;
   width: 80%;
   margin-left: 4%;
   display: flex;
@@ -135,7 +134,7 @@ div#search-content {
    div#pagebar {
 	   text-align: center;
 	   font-size: 20px;
-	   margin: 100px 0 20px;
+	   margin: 0px 0 20px;
 	   color: #639488;
    }
    div#pagebar span.cPage {

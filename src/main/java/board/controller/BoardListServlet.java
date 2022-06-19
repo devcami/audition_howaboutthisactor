@@ -29,7 +29,7 @@ public class BoardListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			// 1. 사용자 입력값 처리
-			int numPerPage = 15;
+			int numPerPage = BoardService.NUM_PER_PAGE;
 			int cPage = 1;
 			try {
 				cPage = Integer.parseInt(request.getParameter("cPage"));
@@ -43,11 +43,11 @@ public class BoardListServlet extends HttpServlet {
 			// 2. 업무로직
 			// 2.a content영역
 			List<BoardExt> list = boardService.findAll(param);
-			System.out.println(list);
+//			System.out.println(list);
 			// 2.b pagebar영역
 			int totalContents = boardService.getTotalContents();
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContents, request.getRequestURI());
-			System.out.println(pagebar);
+//			System.out.println(pagebar);
 			
 			// 3. view단 처리
 			request.setAttribute("list", list);
