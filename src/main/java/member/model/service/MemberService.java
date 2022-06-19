@@ -62,7 +62,7 @@ public class MemberService {
 		int result = 0;
 		Connection conn = getConnection();
 		try {
-			result = memberDao.pwUpdate(conn, member);
+//			result = memberDao.pwUpdate(conn, member);
 //			System.out.println("service단 아이디확인"+ memberId);
 			commit(conn);
 		} catch (Exception e) {
@@ -71,7 +71,7 @@ public class MemberService {
 		} finally {
 			close(conn);
 		}
-		return result;
+//		return result;
 
 	}
 	
