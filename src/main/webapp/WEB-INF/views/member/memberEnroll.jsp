@@ -28,7 +28,7 @@
 			<% } else {%>
 				<td>
 					<input type="text" placeholder="10글자이상" name="memberId" id="_memberId" required>
-					<input type="button" value="ID 중복검사" onclick="checkIdDuplicate();" />
+					<input type="button" value="ID 중복검사" onclick="checkIdDuplicate();"/>
 					<input type="hidden" id="idValid" value="0" />
 					<%-- #idValid 0이면 중복검사전, 1이면 중복검사통과 --%>
 				</td>
@@ -164,14 +164,24 @@
 </form>
 <script>
 const checkIdDuplicate = () => {
+	
 	const title = "checkIdDuplicatePopup";
 	const spec = "width=300px, height=200px";
 	const popup = open("", title, spec);
 	
 	const frm = document.checkIdDuplicateFrm;
+	
 	frm.target = title; // 해당팝업에서 폼을 제출!
+	
 	frm.memberId.value = _memberId.value;
 	frm.submit();
+	
+	<%--
+ 	if (frm.memberId.value.length < 1) {
+		  alert("아이디를 입력하고 눌러주세요.");
+		  
+	}
+	--%>
 
 };
 

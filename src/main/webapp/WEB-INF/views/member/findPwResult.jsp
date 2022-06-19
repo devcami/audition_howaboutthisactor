@@ -55,6 +55,11 @@
 	const spec = "width=500px, height=350px";
 	const popup = open("", title, spec);
 	
+	// 두개의 비밀번호 일치
+	if(!newPw1.onblur()){
+		return false;		
+	}
+	
 	alert("비밀번호 변경이 완료되었습니다.")
 };
    </script>

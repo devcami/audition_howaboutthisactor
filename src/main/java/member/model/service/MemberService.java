@@ -58,6 +58,22 @@ public class MemberService {
 		return password;
 	}
 	
+	public String pwUpdate(Member member) {
+		int result = 0;
+		Connection conn = getConnection();
+		try {
+			result = memberDao.pwUpdate(conn, member);
+//			System.out.println("service단 아이디확인"+ memberId);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+		return result;
+
+	}
 	
 	public int insertMember(Member member) {
 		int result = 0;

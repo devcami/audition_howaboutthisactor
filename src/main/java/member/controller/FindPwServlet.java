@@ -37,7 +37,8 @@ public class FindPwServlet extends HttpServlet {
 		 String memberName = request.getParameter("memberName");
 		 System.out.println("memberID@findPwServlet = " + memberId + memberName);
 		 
-//		 String password = memberService.findPw(memberId, memberName);
+		 memberService.findPw(memberId, memberName);
+		 System.out.println(memberId);
 //		 boolean available = ( password == null);
 		 
 		 request.setAttribute("memberId", memberId);
