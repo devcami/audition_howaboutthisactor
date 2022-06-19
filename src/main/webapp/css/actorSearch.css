@@ -1,0 +1,136 @@
+@charset "UTF-8";
+#ann-list-container .top-logo{
+  height: 180px;
+  background-color: #bbded6;
+  position: relative;
+}
+#ann-list-container .top-logo span {
+  position: absolute;
+  left: 2%;
+  bottom: 7%;
+  color: white;
+  font-family: 'Hahmlet', serif;
+  font-weight: 900;
+  font-size: 320%;
+  }
+section{
+  font-family: 'Hahmlet', serif;
+}
+
+.container{
+  padding: 100px;
+}
+#ann-list-container .form-select{
+  width: 100px !important;
+  margin-bottom: 20px;
+}
+.inner{
+  height: 100%;
+}
+#searchTitle{
+  position: relative;
+  width: 350px;
+  height: 35px;
+}
+.btn-search-title, .btn-search-detail{
+  margin-left: 5px;
+  border: none;
+  border: #bbded6 2px solid;
+  background-color: #bbded6;
+  height: 35px;
+  color: white;
+  border-radius: 15px;
+  box-shadow : 3px 3px 3px #657672;
+}
+.btn-search-title:active{
+  position: relative;
+  left: 3px;
+  top: 3px;
+  box-shadow: none;
+}
+.btn-search-detail{
+  width: 100px;
+  float: right;
+  position: relative;
+  right: 50px;
+}
+.btn-search-detail:active{
+  float: right;
+  position: relative;
+  left: -47px;
+  top: 3px;
+  box-shadow: none;
+}
+.inner .btn{
+  border: none;
+  float: right;
+  margin-right: 20px;
+  position: relative;
+  background-color: #bbded6;
+  transition: .2s;
+}
+.inner .btn:hover{
+  background-color: #fae3d9;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2);
+}
+.row{
+  width: 100%;
+}
+
+#cardBody{
+  font-size: 18px;
+}
+#cardBody .card-title{
+  font-size: 30px;
+  font-weight: 500;
+}
+.ann-card .card-footer{
+  background-color: #bbded6;
+}
+.ann-card .text-muted{
+  color: white !important;
+}
+.ann-card:hover{
+  cursor: pointer;
+  background-color: #bbded645;
+  box-shadow: 0px 0px 8px rgba(172, 172, 172, 0.5);
+}
+.ann-card .card-footer {
+  color: #ffffff;
+}
+
+#pagebar{
+  text-align: center;
+  font-size: 25px;
+  margin: 20px;
+  color: #639488;
+}
+#pagebar a{
+  padding: 10px;
+  text-decoration: none;
+  color: #bbded6;
+  transition:all 0.2s ease-in-out;
+}
+#pagebar span{
+  padding: 10px;
+  color: #639488;
+}
+#pagebar a:hover{
+  color: #639488;
+}
+
+
+
+/*프로필*/
+#cardBody{
+  height: 200px;
+}
+#cardBody img#profile {
+  float: right;
+  position: relative;
+  bottom: 70px;
+	max-width : 70px;
+  max-height: 100px;
+	border-radius: 50%;
+	overflow:hidden;
+}

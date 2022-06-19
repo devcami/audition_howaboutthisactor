@@ -9,9 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import board.model.service.BoardService;
-
 
 @WebServlet("/board/boardReport")
 public class BoardReportServlet extends HttpServlet {
