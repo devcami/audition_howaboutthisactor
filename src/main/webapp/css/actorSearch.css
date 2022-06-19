@@ -1,10 +1,10 @@
 @charset "UTF-8";
-.top-logo{
+#ann-list-container .top-logo{
   height: 180px;
   background-color: #bbded6;
   position: relative;
 }
-.top-logo span {
+#ann-list-container .top-logo span {
   position: absolute;
   left: 2%;
   bottom: 7%;
@@ -77,11 +77,13 @@ section{
   width: 100%;
 }
 
-
-
-
-
-
+#cardBody{
+  font-size: 18px;
+}
+#cardBody .card-title{
+  font-size: 30px;
+  font-weight: 500;
+}
 .ann-card .card-footer{
   background-color: #bbded6;
 }
@@ -96,7 +98,6 @@ section{
 .ann-card .card-footer {
   color: #ffffff;
 }
-
 
 #pagebar{
   text-align: center;
@@ -121,10 +122,15 @@ section{
 
 
 /*프로필*/
-.actor_photo {
-	
-	width : 50px;
+#cardBody{
+  height: 200px;
+}
+#cardBody img#profile {
+  float: right;
+  position: relative;
+  bottom: 70px;
+	max-width : 70px;
+  max-height: 100px;
 	border-radius: 50%;
-	height : 50px;
 	overflow:hidden;
 }

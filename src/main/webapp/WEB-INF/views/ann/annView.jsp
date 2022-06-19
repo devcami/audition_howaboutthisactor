@@ -64,6 +64,7 @@
 							<input type="hidden" name="annNoApply" value="<%= ann.getAnnNo() %>">
 							<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>">
 							<div class="modal-body">
+							<% if(profile != null && actorInfo != null && !pList.isEmpty()) { %>
 							     <table id="portTable">
 							        <tbody>
 							          <tr>
@@ -182,6 +183,7 @@
 									</tbody>
 									<% }%>
 							      </table>	
+							      <% } %>
 							</div>
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
@@ -475,12 +477,12 @@ const sendEmail = () => {
  * 마감된 공고일 시 지원하기 버튼 비활성화 
  */
  
-const annEndDate = <%= ann.getAnnEndDate() %>
+const annEndDate = "<%= ann.getAnnEndDate() %>";
 const today = new Date();
 const endDate = new Date(annEndDate);
 const btnApply = document.querySelector("#btn-apply");
 if(endDate < today){ 
-	console.log(btnApply);
+	console.log(today, annEndDate);
 	btnApply.innerText = "모집 마감";
 	btnApply.style.backgroundColor = "gainsboro";
 	btnApply.style.boxShadow = "none";
