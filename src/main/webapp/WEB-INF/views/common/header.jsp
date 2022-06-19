@@ -5,16 +5,16 @@
 <%@page import="member.model.dto.MemberRole"%>
 <%@page import="member.model.dto.Member"%>
 <%
-	//String memberId = "admin";
-	//String memberRole = "A";
-	
-	// String memberId = "director";
-	// String memberRole = "D";
-	
-	Member loginMember = (Member)session.getAttribute("loginMember");
-	String msg = (String) session.getAttribute("msg");	
-	if(msg != null)
-		session.removeAttribute("msg");
+   //String memberId = "admin";
+   //String memberRole = "A";
+   
+   // String memberId = "director";
+   // String memberRole = "D";
+   
+   Member loginMember = (Member)session.getAttribute("loginMember");
+   String msg = (String) session.getAttribute("msg");   
+   if(msg != null)
+      session.removeAttribute("msg");
 
 /*
 	String saveId = null; // 아이디저장을 체크한 경우, memberId값이 담길 변수
@@ -55,7 +55,7 @@
 Kakao.init('ce88338f9fbc3bc4ed27f1e8bf1b1752'); 
 window.addEventListener('load', () => {
 <% if(msg != null) { %>
-	alert("<%= msg %>");
+   alert("<%= msg %>");
 <% } %>
 });
 </script>
@@ -71,22 +71,22 @@ window.addEventListener('load', () => {
             <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/board/boardList">게시판</a></div>
 
              <% 
-             	String url = "";
-             	if(loginMember != null) {
-             		
-             	   MemberRole memberRole = loginMember.getMemberRole();
-             	   
-             	   switch(memberRole.toString()){
-             	   case("A"):   
-             	      url = "/mypage/memberList";
-             	      break;
-             	   case("D"):
-             	      url = "/mypage/myAnn";
-             	      break;
-             	   case("P"):
-             	      url = "/mypage/portfolio";
-             	      break;
-             	   }
+                String url = "";
+                if(loginMember != null) {
+                   
+                   MemberRole memberRole = loginMember.getMemberRole();
+                   
+                   switch(memberRole.toString()){
+                   case("A"):   
+                      url = "/mypage/memberList";
+                      break;
+                   case("D"):
+                      url = "/mypage/myAnn";
+                      break;
+                   case("P"):
+                      url = "/mypage/portfolio";
+                      break;
+                   }
 
              %>
              	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/chat/chatList">메세지</a></div>  
@@ -99,8 +99,8 @@ window.addEventListener('load', () => {
             	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/member/logout">로그아웃</a></div>
 				 <% } %>             
              <% } else { %>
-	            <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
-    	        <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>     		
+               <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/member/memberLogin">로그인</a></div>
+               <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/member/memberEnroll">회원가입</a></div>           
              <% } %>        
 
         </div>

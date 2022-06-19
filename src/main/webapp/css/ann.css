@@ -312,3 +312,26 @@ button#btn-more{
   max-width: 1200px;
   margin: 1.75rem auto;
 }
+
+
+
+
+
+
+
+
+
+
+
+/*프로필*/
+.actor_photo {
+	
+	width : 50px;
+	border-radius: 50%;
+	height : 50px;
+	overflow:hidden;
+	float: right;
+}
+
+
+
