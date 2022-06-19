@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import member.model.dto.Production;
 import mypage.model.dto.PortfolioWork;
 import mypage.model.service.MypageService;
 
@@ -26,8 +27,6 @@ public class ViewWorkServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		try {
 			String memberId = request.getParameter("memberId");
-			System.out.println("ViewWorkServlet@memberId = " + memberId);
-			
 			List<PortfolioWork> works = new ArrayList<>();
 			
 			works = mypageService.findAllWork(memberId);
@@ -45,7 +44,7 @@ public class ViewWorkServlet extends HttpServlet {
 			throw e;
 		}
 
-		
 	}
+
 
 }

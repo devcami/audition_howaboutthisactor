@@ -45,6 +45,25 @@
             <td><textarea name="videolink" id="videolink" cols="35" rows="5"></textarea></td>
             <!-- <td><input type="text" name="video" id="video"></td> -->
           </tr>
+                    <tr>
+            <th><label for="pic">첨부사진2</label></th>
+            <td>
+              <input type="file" name="pic2" id="pic2">
+            </td>
+          </tr>
+          <tr>
+            <th><label for="pic">첨부사진3</label></th>
+            <td>
+              <input type="file" name="pic3" id="pic3">
+            </td>
+          </tr>
+          <tr>
+            <th><label for="pic">첨부사진4</label></th>
+            <td>
+              <input type="file" name="pic4" id="pic4">
+            </td>
+          </tr>
+          
           <tr>
           	<td>
           		<input type="hidden" name="member" value="<%= memberId %>"/>
@@ -90,7 +109,12 @@
 
   				const img_src = `<%= request.getContextPath() %>/upload/portfolio/\${work.attachment.renamedFilename}`;
 				const tbodyId = "work" + work.no;
-					
+				
+				const titleId = "workTitle" + work.no;
+ 				const castId = "workCast" + work.no;
+ 				const periodId = "workPeriod" + work.no;
+ 				const imgId = "workImg" + work.no;
+ 				
   				const trs = `
   				<tbody id="\${tbodyId}">
   		          <tr>
@@ -99,22 +123,22 @@
   		            </th>
   		            <td rowspan="5">
   		              <div id="work-img-container">
-  		                <img src="\${img_src}" class="work-img">
+  		                <img src="\${img_src}" id="\${imgId}" class="work-img" onclick="editWork(this);">
   		              </div>
   		            </td>
   		            <td><br><br></td>
   		          </tr>
   		          <tr class="work-tr">
   		            <th>작품명</th>
-  		            <td colspan="3">\${work.title}</td>
+  		            <td colspan="3" id="\${titleId}">\${work.title}</td>
   		          </tr>
   		          <tr class="work-tr">
   		            <th>배역</th>
-  		            <td colspan="3">\${work.myrole}</td>
+  		            <td colspan="3" id="\${castId}">\${work.myrole}</td>
   		          </tr>
   		          <tr class="work-tr">
   		            <th>기간</th>
-  		            <td colspan="3">\${work.period}</td>
+  		            <td colspan="3" id="\${periodId}">\${work.period}</td>
   		          </tr>
   		          <tr>
   		            <td><br><br></td>
