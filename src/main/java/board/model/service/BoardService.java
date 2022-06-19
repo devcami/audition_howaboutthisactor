@@ -22,7 +22,7 @@ import member.model.dto.Member;
 public class BoardService {
 
 	private BoardDao boardDao = new BoardDao();
-	public static final int NUM_PER_PAGE = 12;
+	public static final int NUM_PER_PAGE = 15;
 	
 	public List<BoardExt> findAll(Map<String, Object> param) {
 		Connection conn = getConnection();
@@ -90,13 +90,6 @@ public class BoardService {
 		return board;
 	}
 	
-	public List<Board> findBy(Map<String, String> param, Map<String, Object> pageParam) {
-		Connection conn = getConnection();
-		List<Board> list = boardDao.findBy(conn, param, pageParam);
-		close(conn);
-		return list;
-	}
-
 	public int updateReadCount(int no) {
 		int result = 0;
 		Connection conn = getConnection();
@@ -220,15 +213,22 @@ public class BoardService {
 		return result;
 	}
 
-		public List<Board> findByBoardTitle(String searchKeyword) {
-			Connection conn = getConnection();
-			List<Board> list = boardDao.findByBoardTitle(conn, searchKeyword);
-			close(conn);
-			return list;
-		}
-
-
+	public List<Board> findByType(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<Board> list = boardDao.findByType(conn, param);
+		close(conn);
+		return list;
 	}
+
+	public int getTotalContentsByType(Map<String, Object> param) {
+		Connection conn = getConnection();
+		int totalContents = boardDao.getTotalContentsByType(conn, param);
+		close(conn);
+		return totalContents;
+	}
+
+
+}
 
 
 
