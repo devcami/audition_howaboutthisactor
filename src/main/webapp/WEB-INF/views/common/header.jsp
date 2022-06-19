@@ -66,7 +66,7 @@ window.addEventListener('load', () => {
             <a class="ahover" href="<%= request.getContextPath() %>">배우어때</a>
         </div>
         <div class="nav-right-items">
-            <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/actor/actorSearch">배우찾기</a></div>
+            <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/actor/actorList">배우찾기</a></div>
             <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/ann/annListAsync">공고찾기</a></div>
             <div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/board/boardList">게시판</a></div>
 
@@ -89,7 +89,6 @@ window.addEventListener('load', () => {
                    }
 
              %>
-             	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %>/chat/chatList">메세지</a></div>  
              	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>  
 	             <% 
 	             	String memberId = loginMember.getMemberId();

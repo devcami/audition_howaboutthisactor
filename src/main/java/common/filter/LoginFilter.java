@@ -26,6 +26,7 @@ import member.model.dto.Member;
 	"/ann/annReport",
 	"/ann/annDelete",
 	"/member/memberView", 
+	"/actor/actorView",
 	"/mypage/addWork",
 	"/mypage/ckpw_update", 
 	"/mypage/ckpw_delete",

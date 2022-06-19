@@ -376,7 +376,7 @@ insert into portfolio values (SEQ_PORTFOLIO_NO.nextval, 'actor', 1, '2019년 10�
 --테이블 정보보기
 -------------------------------------
 select * from actor_apply;
-select * from actor_info;
+select * from actor_info where actor_no = 45;
 select * from announcement; 
 select * from board;
 select * from board_attachment;
@@ -391,7 +391,7 @@ select * from wishlist_actor;
 select * from wishlist_ann;
 select * from work;
 select * from work_attachment;
-
+select * from port_attachment where attach_type = 'P' and memberid = 'hosi';
 
 select *  from announcement a join (select ann_no, count(*) cnt from wishlist_ann group by ann_no) w on a.ann_no = w.ann_no order by cnt desc, ann_reg_date desc;
 
@@ -430,6 +430,6 @@ alter table PORT_ATTACHMENT modify (memberId varchar2(200));
 alter table report modify (member_id varchar2(200));
 alter table wishlist_actor modify (member_id varchar2(200));
 
-
+select count(*) cnt from member where member_id = 'as';
 
 

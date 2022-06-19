@@ -21,7 +21,7 @@ public class ActorService {
 	private ActorDao actorDao = new ActorDao();
 	
 	public List<ActorInfo> findActorInfo(Map<String, Object>param) {
-		Connection conn=getConnection();
+		Connection conn = getConnection();
 		List<ActorInfo> list = actorDao.findActorInfo(conn,param);
 		for(ActorInfo actor : list ) {
 			PortAttachment pa = actorDao.getfindActorProfile(conn, actor.getMemberId());
@@ -33,19 +33,30 @@ public class ActorService {
 
 
 	public int getTotalContents() {
-		Connection conn=getConnection();
+		Connection conn = getConnection();
 		int totalContents = actorDao.getTotalContents(conn);
 		close(conn);
 		return totalContents;
 	}
-	
-	//
 
-	public ActorInfo detailActorInfo(int actorNo) {
-		Connection conn = getConnection();	
-		ActorInfo actorInfo = actorDao.detailActorInfo(conn, actorNo);
+
+	public ActorInfo getActorByActorNo(int actorNo) {
+		Connection conn = getConnection();
+		ActorInfo actor = actorDao.getActorByActorNo(conn, actorNo);
 		close(conn);
-		return actorInfo;
+		return actor;
+	}
+
+
+	public List<ActorInfo> findActorByName(Map<String, Object> param) {
+		Connection conn = getConnection();
+		List<ActorInfo> list = actorDao.findActorByName(conn, param);
+		for(ActorInfo actor : list) {
+			PortAttachment pa = actorDao.getfindActorProfile(conn, actor.getMemberId());
+			actor.setAttachment(pa);
+		}	
+		close(conn);
+		return list;
 	}
 	
 

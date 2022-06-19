@@ -17,6 +17,7 @@ import ann.model.dto.Ann;
 import ann.model.exception.AnnException;
 import mypage.model.dto.ActorInfo;
 import mypage.model.dto.PortAttachment;
+import wishlist.model.dto.WishListActor;
 import wishlist.model.dto.WishListAnn;
 import wishlist.model.exception.WishListException;
 
@@ -291,6 +292,67 @@ public class WishListDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, wishListAnn.getAnnNo());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 위시리스트 - 공고 찜목록 삭제 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public List<WishListActor> actorWishlistbyMemberId(Connection conn, String loginId) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		List<WishListActor> list = new ArrayList<>();
+		String sql = prop.getProperty("actorWishlistbyMemberId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, loginId);
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				WishListActor wishlistActor = new WishListActor();
+				wishlistActor.setMemberId(rset.getString("member_id"));
+				wishlistActor.setActorNo(rset.getInt("actor_no"));
+				list.add(wishlistActor);
+			}
+			
+		} catch (Exception e) {
+			throw new WishListException("> 위시리스트 로그인아이디로 조회오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public int addWishlistActor(Connection conn, WishListActor wishListActor) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("addWishlistActor");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, wishListActor.getMemberId());
+			pstmt.setInt(2, wishListActor.getActorNo());
+			result = pstmt.executeUpdate();
+		} catch (Exception e) {
+			throw new AnnException("> 위시리스트 - 공고 찜목록 추가 오류", e);
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int delWishlistActor(Connection conn, WishListActor wishListActor) {
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("delWishlistActor");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, wishListActor.getActorNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new AnnException("> 위시리스트 - 공고 찜목록 삭제 오류", e);
