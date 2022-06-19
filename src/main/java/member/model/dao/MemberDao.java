@@ -60,6 +60,35 @@ public class MemberDao {
 		}
 		return member;
 	}
+	/* 
+	public Member findPw(Connection conn, String memberId, String memberName) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("findPw");
+		Member member = null;
+		
+		try {
+			// 1. pstmt객체 & 미완성쿼리 값대입
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, memberId);
+			pstmt.setString(2,  memberName);
+			
+			// 2. 실행 및 rset처리
+			rset = pstmt.executeQuery();
+			while(rset.next()) {
+				member = handleMemberResultSet(rset);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// 3. 자원반납(rset, pstmt)
+			close(rset);
+			close(pstmt);
+		}
+		return member;
+	}
+	*/
 	
 	public Member findByEmail(Connection conn, String email) {
 		PreparedStatement pstmt = null;
@@ -112,6 +141,7 @@ public class MemberDao {
 		return Id;
 	}
 
+
 	public String findPw(Connection conn, String memberId, String memberName) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -126,8 +156,10 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				memberId = rset.getString("memberId");
+				memberName = rset.getString("memberName");
 			}
 			System.out.println("dao단 아이디 확인용"+ memberId);		
+			System.out.println("dao단 이름 확인용" + memberName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

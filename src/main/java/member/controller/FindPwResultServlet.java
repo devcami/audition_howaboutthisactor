@@ -19,6 +19,13 @@ public class FindPwResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("findPwResultServlet 도착");
+		request
+		.getRequestDispatcher("/WEB-INF/views/member/findPwResult.jsp")
+		.forward(request, response);
+	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -29,7 +36,7 @@ public class FindPwResultServlet extends HttpServlet {
 		 
 		 String memberId = (String) request.getAttribute("memberId");
 //		 String newpassword = HelloMvcUtils.encrypt(request.getParameter("newpassword"), memberId);
-//		 System.out.println("memberId@findPwResulteServlet = " + memberId + memberName);
+//		 System.out.println("memberId@findPwResulteServlet = " + memberId); // memberName
 
 		 System.out.println("비밀번호 변경용 아이디 확인" + memberId);
 		 

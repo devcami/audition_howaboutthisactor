@@ -38,14 +38,26 @@ public class MemberService {
 		close(conn);
 		return Id;
 	}
+	/*
+	public Member findPw(String memberId, String memberName) {
+		Connection conn = getConnection();
+		Member member = memberDao.findPw(conn, memberId, memberName);
+		System.out.println("service단 아이디확인"+ memberId);
+		System.out.println("service단 이름확인" + memberName);
+		close(conn);
+		return member;
+	}
+	*/
 	
 	public String findPw(String memberId, String memberName) {
 		Connection conn = getConnection();
 		String password = memberDao.findPw(conn, memberId, memberName);
-		System.out.println("service단 아이디"+ memberId);
+		System.out.println("service단 아이디확인"+ memberId);
+		System.out.println("service단 이름확인" + memberName);
 		close(conn);
 		return password;
 	}
+	
 	
 	public int insertMember(Member member) {
 		int result = 0;

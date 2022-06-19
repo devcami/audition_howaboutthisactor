@@ -7,6 +7,7 @@
 
 <%
 	String memberId = (String) request.getAttribute("memberId");
+	System.out.println("resultjps단 아이디" + memberId);
 //	String password = (String) request.getAttribute("password");
 //    System.out.println("resultjsp단 패스워드"+ password);
 
