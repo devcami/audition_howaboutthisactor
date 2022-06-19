@@ -5,7 +5,6 @@ import java.util.List;
 public class NoticeExt extends Notice {
 	private int attachCount;
 	private int commentCount;
-	private List<Attachment> attachments;
 
 	
 	public int getAttachCount() {
@@ -24,19 +23,10 @@ public class NoticeExt extends Notice {
 		this.commentCount = commentCount;
 	}
 
-
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
-	}
-
 	
 	@Override
 	public String toString() {
-		return "BoardExt [attachCount=" + attachCount + "attachments=" + attachments + "toString()=" + super.toString() + "]";
+		return "BoardExt [attachCount=" + attachCount + "toString()=" + super.toString() + "]";
 	}
 
 	

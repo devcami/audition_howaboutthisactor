@@ -60,8 +60,8 @@ public class BoardFinderServlet extends HttpServlet {
 					
 			request.setAttribute("list", list);
 			request.setAttribute("searchKeyword", searchKeyword);
-			response.setContentType("application/json; charset=utf-8");
-			new Gson().toJson(list, response.getWriter());
+			request.getRequestDispatcher("/WEB-INF/views/board/boardList.jsp").forward(request, response);
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();

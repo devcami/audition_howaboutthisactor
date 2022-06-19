@@ -11,7 +11,6 @@ import java.util.Map;
 
 
 import notice.model.dao.NoticeDao;
-import notice.model.dto.Attachment;
 import notice.model.dto.Notice;
 import notice.model.dto.NoticeExt;
 

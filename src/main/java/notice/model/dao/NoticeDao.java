@@ -96,12 +96,12 @@ public class NoticeDao {
 		String sql = prop.getProperty("insertNotice");
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, notice.getTitle());
-			pstmt.setString(2, notice.getMemberId());
+			pstmt.setString(1, notice.getMemberId());
+			pstmt.setString(2, notice.getTitle());
 			pstmt.setString(3, notice.getContent());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
-			throw new NoticeException("게시글 등록 오류", e);
+			throw new NoticeException("공지 등록 오류", e);
 		} finally {
 			close(pstmt);
 		}
@@ -112,7 +112,7 @@ public class NoticeDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		int no = 0;
-		String sql = prop.getProperty("findCurrentBoardNo");
+		String sql = prop.getProperty("findCurrentNoticeNo");
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -121,7 +121,7 @@ public class NoticeDao {
 				no = rset.getInt(1);
 			
 		} catch (SQLException e) {
-			throw new NoticeException("게시글번호 조회 오류", e);
+			throw new NoticeException("공지 번호 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -143,7 +143,7 @@ public class NoticeDao {
 				notice = handleNoticeResultSet(rset);
 			}
 		} catch (SQLException e) {
-			throw new NoticeException("게시글 한건 조회 오류", e);
+			throw new NoticeException("공지 한건 조회 오류", e);
 		} finally {
 			close(rset);
 			close(pstmt);
@@ -171,14 +171,14 @@ public class NoticeDao {
     public int deleteNotice(Connection conn, int no) {
 		int result = 0;
 		PreparedStatement pstmt = null;
-		String query = prop.getProperty("deleteBoard"); 
+		String query = prop.getProperty("deleteNotice"); 
 		
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, no);
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new NoticeException("게시글 삭제 오류", e);
+			throw new NoticeException("공지 삭제 오류", e);
 		} finally {
 			close(pstmt);
 		}
@@ -190,7 +190,7 @@ public class NoticeDao {
 	public int updateNotice(Connection conn, NoticeExt notice) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String sql = prop.getProperty("updateBoard");
+		String sql = prop.getProperty("updateNotice");
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, notice.getTitle());
@@ -198,7 +198,7 @@ public class NoticeDao {
 			pstmt.setInt(3, notice.getNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
-			throw new NoticeException("게시글 수정 오류", e);
+			throw new NoticeException("공지 수정 오류", e);
 		} finally {
 			close(pstmt);
 		}

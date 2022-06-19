@@ -31,9 +31,9 @@
          <h2>커뮤니티</h2>
          <div id="condition">
                   <select name="searchType" id="searchType">
-                      <option value="default">전체</option>
+                       <option value="boardList_All" <%= searchKeyword == null ? "selected" : "" %>>전체</option>
                        <option value="title" <%="title".equals(searchType)?"selected":""%>>제목</option>
-                     <option value="content" <%="content".equals(searchType)?"selected":""%>>글 내용</option>
+                       <option value="content" <%="content".equals(searchType)?"selected":""%>>글 내용</option>
                        <option value="member_Id" <%="member_Id".equals(searchType)?"selected":""%>>작성자</option>
                    </select>
  
@@ -64,15 +64,15 @@
              </div>
    		</div>   
 
-   <table class="table table-hover" id="tbl-board">
-          <thead id="list-head">
-         <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th style="text-align: center;">작성자</th>
-            <th style="text-align: center;">작성일</th>
-            <th style="text-align: center;">첨부파일</th><%--첨부파일이 있는 경우 /images/file.png 표시 width:16px --%>
-            <th style="text-align: center;">조회수</th>
+   		<table class="table table-hover" id="tbl-board">
+         	 <thead id="list-head">
+        	 <tr>
+           		 <th>번호</th>
+           		 <th>제목</th>
+           		 <th style="text-align: center;">작성자</th>
+           		 <th style="text-align: center;">작성일</th>
+           		 <th style="text-align: center;">첨부파일</th><%--첨부파일이 있는 경우 /images/file.png 표시 width:16px --%>
+           		 <th style="text-align: center;">조회수</th>
          </tr>
       </thead>
       <tbody>
@@ -90,8 +90,7 @@
          <tr>
             <td><%= board.getNo() %></td>
             <td>
-               <a href="<%= request.getContextPath() %>
-               /board/boardView?no=<%= board.getNo() %>" style="text-decoration-line:none; color:black;">
+               <a href="<%= request.getContextPath() %>/board/boardView?no=<%= board.getNo() %>" style="text-decoration-line:none; color:black;">
                <%= board.getTitle() %>
                </a>
                <%-- 댓글개수 표시 --%>
@@ -114,11 +113,13 @@
 %>
       </tbody>
    </table>
-   
+      <% if(loginMember != null && (loginMember.getMemberRole() == MemberRole.P) && (loginMember.getMemberRole() == MemberRole.D)){ %>
+	<input 
+		type="button" value="글쓰기" id="btn-add" 
+		onclick="location.href='<%= request.getContextPath() %>/notice/noticeEnroll';"/>
+<% } %>
 	</div>
-   		<div id="pagebar">
-    		  <%= pagebar %>
-  		 </div>
+   		
 </div>   
 <script>
 window.onload = () => {
@@ -173,4 +174,7 @@ window.onload = () => {
 
 </script>
 </section>
+<div id="pagebar">
+    		  <%= pagebar %>
+  		 </div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

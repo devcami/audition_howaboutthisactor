@@ -55,43 +55,24 @@ public class NoticeEnrollServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			// 2. MultipartRequest객체 생성
-			// b. 파일저장경로
-			// "D:\\Workspaces\\webserver_workspace\\hello-mvc\\src\\main\\webapp\\upload\\board"
-//			ServletContext application = getServletContext();
-//			String webRoot = application.getRealPath("/");
-//			// File.separator 운영체제별 경로 구분자 (window: \, mac/linux: /)
-//			String saveDirectory = webRoot + "upload" + File.separator + "board";
-			String saveDirectory = getServletContext().getRealPath("/upload/notice");
-			System.out.println("saveDirectory = " + saveDirectory);
-			// c. 최대파일크기 10MB 
-			int maxPostSize = 1024 * 1024 * 10;
-			// d. 인코딩
-			String encoding = "utf-8";
-			// e. 파일명 재지정 정책 객체
-			// DefaultFileRenamePolicy 파일명 중복시 numbering처리함.
-//			FileRenamePolicy policy = new DefaultFileRenamePolicy();
-			FileRenamePolicy policy = new HelloMvcFileRenamePolicy();
-			MultipartRequest multiReq = 
-					new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
-			
+			  request.setCharacterEncoding("utf-8");
+		
 			// 3. 사용자입력값 처리
 			// dto 객체 생성
-			String title = multiReq.getParameter("title");
-			String memberId = multiReq.getParameter("memberId");
-			String content = multiReq.getParameter("content");
+			String title = request.getParameter("title");
+			String memberId = request.getParameter("memberId");
+			String content = request.getParameter("content");
 			NoticeExt notice = new NoticeExt();
+			
 			notice.setTitle(title);
 			notice.setMemberId(memberId);
 			notice.setContent(content);
 			
-			File upFile1 = multiReq.getFile("upFile1");
-			File upFile2 = multiReq.getFile("upFile2");
-			
-			
+					
+			System.out.println("notice = " + notice);
 			// 4. 업무로직
-			int result = noticeService.insertNotice(notice);
 			
+			int result = noticeService.insertNotice(notice);
 			// 5. redirect
 			response.sendRedirect(request.getContextPath() + "/notice/noticeView?no=" + notice.getNo());
 			

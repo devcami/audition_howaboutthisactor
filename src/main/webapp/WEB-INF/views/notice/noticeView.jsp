@@ -48,23 +48,12 @@
 			<% if(canEdit){ %>
 		   <div>
 		  <%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
-		  		 <input type="button" value="수정하기" onclick="updateBoard()">
-		   		 <input type="button" value="삭제하기" onclick="deleteBoard()">
+		  		 <input type="button" value="수정하기" onclick="updateNotice()">
+		   		 <input type="button" value="삭제하기" onclick="deleteNotice()">
 			<% } %>
 		   </div>
                    	
 	<hr style="margin-top:30px;" />	
-	
-	<table>
-		<tr>
-	 		<td>
-              <a href="<%= request.getContextPath() %>
-               /notice/noticeView?no=<%= notice.getNo() %>" style="text-decoration-line:none; color:black;">
-               <%= notice.getTitle() %>
-               </a>
-        	</td>
-        </tr>       
-    </table>
  
 <script>
 /**
@@ -73,8 +62,8 @@
 document.querySelectorAll(".btn-delete").forEach((button) => {
 	button.onclick = (e) => {
 		if(!confirm("정말 삭제하시겠습니까?")) return;
-		document.boardCommentDelFrm.no.value = e.target.value;
-		document.boardCommentDelFrm.submit();
+		document.noticeCommentDelFrm.no.value = e.target.value;
+		document.noticeommentDelFrm.submit();
 	}
 });
 		
@@ -110,7 +99,7 @@ const commentSubmitHandler = (e) => {
 
 };
 
-document.boardCommentFrm.onsubmit = commentSubmitHandler;
+document.noticeCommentFrm.onsubmit = commentSubmitHandler;
 
 const loginAlert = () => {
 	alert("로그인후 이용할 수 있습니다.");
@@ -129,12 +118,14 @@ const loginAlert = () => {
  * - no전송
  * - 저장된 파일 삭제 : java.io.File 
  */
-const deleteBoard = () => {
-	if(confirm("정말 이 게시글을 삭제하시겠습니까?"))
-		document.boardDeleteFrm.submit();
-};	
+const deleteNotice = () => {
+	if(confirm("정말 이 공지를 삭제하시겠습니까?"))
+		document.noticeDeleteFrm.submit();
+}
+});	
 
-const updateBoard = () => {
+
+const updateNotice = () => {
 	location.href = "<%= request.getContextPath() %>/notice/noticeUpdate?no=<%= notice.getNo() %>";
 }
 <% } %>

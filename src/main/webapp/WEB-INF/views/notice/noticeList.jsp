@@ -56,8 +56,7 @@
          	<tr>
            		 <td><%= notice.getNo() %></td>
            		 <td>
-             	 <a href="<%= request.getContextPath() %>
-             	  /notice/noticeView?no=<%= notice.getNo() %>" style="text-decoration-line:none; color:black;">
+             	 <a href="<%= request.getContextPath() %>/notice/noticeView?no=<%= notice.getNo() %>" style="text-decoration-line:none; color:black;">
                		<%= notice.getTitle() %>
               	 </a>
               		 <%-- 댓글개수 표시 --%>
@@ -81,11 +80,10 @@
 		onclick="location.href='<%= request.getContextPath() %>/notice/noticeEnroll';"/>
 <% } %>
 
-   		<div id="pagebar">
-   		   <%= pagebar %>
-   		</div>
-   	
  </div>
 </div>
 </section>
+	<div id="pagebar">
+   		   <%= pagebar %>
+   		</div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
