@@ -14,7 +14,7 @@ import ann.model.service.AnnService;
  * Servlet implementation class ActorSearchView
  */
 @WebServlet("/actor/ActorSearchView")
-public class ActorSearchView extends HttpServlet {
+public class ActorSearchViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ActorService actorService = new ActorService();
   
