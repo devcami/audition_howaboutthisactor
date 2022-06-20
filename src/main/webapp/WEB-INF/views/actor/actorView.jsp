@@ -8,8 +8,7 @@
 <%@page import="member.model.dto.MemberRole"%>
 <%@page import="member.model.dto.Member"%>
 <%@page import="java.sql.Date"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@page language="java" contentType="text/html; charset=UTF-8"s    pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %> 
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/actorView.css" />
@@ -123,8 +122,6 @@ const addWishlist = (e) => {
 			<th>특기</th>
 			<td colspan="3"><span><%= actorInfo.getSpeciality() %></span></td>
 		</tr>
-
-
 		<tr>
 			<td><br></td>
 		</tr>
@@ -169,14 +166,19 @@ const addWishlist = (e) => {
 	<tr>
 		<td colspan="6" style="border-top: 1px solid grey;"></td>
 	</tr>
+	
+	<tr>
+		<td>
+
+		<td>
+	</tr>
+	
 	</tbody>
-	<% }%>
+	<% } %>
+
 </table>
 <% } %>
 
 <!-- 민지님 ! ! "로그인 한 사람 == 지금 ActorView 작성한 사람" if문 안에 
 	포트폴리오 수정하기 버튼 하나 만들어서 버튼 클릭 시 마이페이지에 포트폴리오 수정하는 곳으로 이동하게 만들어보세요 ㅎㅎ  -->
-<% if(loginMember.getMemberId() == actorInfo.getMemberId()){ %>
-<% } %>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
