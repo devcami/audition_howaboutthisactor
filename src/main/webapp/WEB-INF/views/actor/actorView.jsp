@@ -177,6 +177,7 @@ const addWishlist = (e) => {
 <!-- 민지님 ! ! "로그인 한 사람 == 지금 ActorView 작성한 사람" if문 안에 
 	포트폴리오 수정하기 버튼 하나 만들어서 버튼 클릭 시 마이페이지에 포트폴리오 수정하는 곳으로 이동하게 만들어보세요 ㅎㅎ  -->
 <% if(loginMember.getMemberId() == actorInfo.getMemberId()){ %>
+
 <% } %>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
