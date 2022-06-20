@@ -87,7 +87,7 @@
 				<div class="list-item-title">공고찾기</div>
 				<div class="list-item-detail">나에게 딱 맞는 작품찾기</div>
 				<button class="list-item-button"
-					onclick="location.href='<%= request.getContextPath() %>/ann/annList'">
+					onclick="location.href='<%= request.getContextPath() %>/ann/annListAsync'">
 					click</button>
 			</div>
 			<div class="list-item">

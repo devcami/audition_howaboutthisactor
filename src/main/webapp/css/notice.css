@@ -4,6 +4,7 @@
   display: flex;
   font-family: 'Hahmlet', serif;
   justify-content: center;
+  margin: 0 130px 0 30px;
   /* margin: 0 130px 0 30px; */
 }
 .top-logo{
@@ -128,28 +129,22 @@ div#search-content {
 }
 
 
-
-
-
-
-   div#pagebar {
-	   text-align: center;
-	   font-size: 20px;
-	   margin: 100px 0 20px;
-	   color: #639488;
+div#pagebar {
+	text-align: center;
+	font-size: 20px;
+	margin: 0px 0 20px;
+	color: #639488;
    }
-   div#pagebar span.cPage {
-	   padding: 6px;
-	   color: #639488;
+ div#pagebar span.cPage {
+	padding: 6px;
+	color: #639488;
    }
-   div#pagebar a {
-	   padding: 10px;
-	   text-decoration: none;
-	   color: #bbded6;
-	   transition: all 0.2s ease-in-out;
+div#pagebar a {
+	padding: 10px;
+	text-decoration: none;
+	color: #bbded6;
+	transition: all 0.2s ease-in-out;
    }
-   
-   
    
    
    
