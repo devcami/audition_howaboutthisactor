@@ -53,6 +53,7 @@ public class ActorViewServlet extends HttpServlet {
 				}
 			}
 			actorInfo.setAttachment(profile);
+			int attachNo = actorInfo.getAttachNo();
 			
 			List<PortfolioWork> pList = mypageService.findAllWork(memberId);
 			
@@ -60,6 +61,9 @@ public class ActorViewServlet extends HttpServlet {
 			request.setAttribute("profile", profile);
 			request.setAttribute("pList", pList);
 			request.setAttribute("wishlistActor", wishlistActor);
+			request.setAttribute("memberId", memberId);
+			request.setAttribute("loginId", loginId);
+			request.setAttribute("attachNo", attachNo);
 				
 			request.getRequestDispatcher("/WEB-INF/views/actor/actorView.jsp").forward(request, response);
 		} catch (Exception e) {
@@ -69,48 +73,3 @@ public class ActorViewServlet extends HttpServlet {
 	
 	}
 }
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		//3.view단 위임
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
