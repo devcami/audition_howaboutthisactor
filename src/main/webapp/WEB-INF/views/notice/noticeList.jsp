@@ -20,7 +20,7 @@
  <section id="container">
  <div id="Pmypage-submenu" class="submenu">
     <ul>
-      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
+      <li><a href="<%= request.getContextPath() %>/notice/noticeList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
       <li><a href="<%= request.getContextPath() %>/board/boardList" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
     </ul>
  </div>
@@ -85,5 +85,5 @@
 </section>
 	<div id="pagebar">
    		   <%= pagebar %>
-   		</div>
+   	</div>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

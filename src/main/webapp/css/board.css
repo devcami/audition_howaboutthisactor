@@ -4,6 +4,7 @@
   display: flex;
   font-family: 'Hahmlet', serif;
   justify-content: center;
+  margin: 0 130px 0 30px;
   /* margin: 0 130px 0 30px; */
 }
 .top-logo{
@@ -19,7 +20,6 @@
 #Pmypage-submenu {
   margin-top: 100px;
   text-align: right;
-  width: 15%;
 }
 #Pmypage-submenu ul {
   padding: 0;
@@ -97,6 +97,7 @@
   align-items: center;
 }
 #searchType{
+  margin-bottom: 15px;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
   appearance: none;
   background-repeat: no-repeat;
@@ -112,6 +113,7 @@
   margin: 15px 10px;
 }
 .keyword-input{
+	transform: translateY(2px);
   width: 250px;
   height: 30px;
   border-radius: 0.25rem;
