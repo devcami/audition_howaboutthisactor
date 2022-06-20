@@ -506,11 +506,11 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("getTotalContentsByType");
+		sql = sql.replace("#", (String) param.get("searchType"));
 		int totalContents = 0;
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, (String) param.get("searchType"));
-			pstmt.setString(2, "%" + (String) param.get("searchKeyword") + "%");
+			pstmt.setString(1, "%" + (String) param.get("searchKeyword") + "%");
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
 				totalContents = rset.getInt(1);
