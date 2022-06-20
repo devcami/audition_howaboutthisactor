@@ -379,6 +379,8 @@ select * from actor_apply;
 select * from actor_info where actor_no = 45;
 select * from announcement; 
 select * from board;
+
+select count(*) from board where title like '%안녕%';
 select * from board_attachment;
 select * from board_comment;
 select * from cast;
@@ -431,5 +433,5 @@ alter table report modify (member_id varchar2(200));
 alter table wishlist_actor modify (member_id varchar2(200));
 
 select count(*) cnt from member where member_id = 'as';
-
-
+select * from board;
+select * from (select b.*, (select count(*) from board_attachment where board_no = b.no) attach_cnt, (select count(*) from board_comment where board_no = b.no) comment_cnt, row_number() over(order by reg_date desc) rnum from board b where title like '%안녕%') b ;

@@ -9,7 +9,6 @@
    
    String searchType = request.getParameter("searchType");
    String searchKeyword = request.getParameter("searchKeyword");
-
 %>
 
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
