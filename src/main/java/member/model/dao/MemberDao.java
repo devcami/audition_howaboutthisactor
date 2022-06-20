@@ -69,7 +69,7 @@ public class MemberDao {
 		ResultSet rset = null;
 		String sql = prop.getProperty("findPw");
 		Member member = null;
-		
+	/	
 		try {
 			// 1. pstmt객체 & 미완성쿼리 값대입
 			pstmt = conn.prepareStatement(sql);
