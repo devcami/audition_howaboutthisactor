@@ -5,12 +5,12 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <% 
    List<BoardExt> list = (List<BoardExt>) request.getAttribute("list");
-
    String pagebar = (String) request.getAttribute("pagebar");
    
    String searchType = request.getParameter("searchType");
    String searchKeyword = request.getParameter("searchKeyword");
 %>
+
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
@@ -20,7 +20,7 @@
  <div id="Pmypage-submenu" class="submenu">
     <ul>
       <li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
-      <li><a id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
+      <li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
     </ul>
  </div>
 
@@ -71,59 +71,57 @@
            		 <th style="text-align: center;">작성일</th>
            		 <th style="text-align: center;">첨부파일</th><%--첨부파일이 있는 경우 /images/file.png 표시 width:16px --%>
            		 <th style="text-align: center;">조회수</th>
-         </tr>
-      </thead>
-      <tbody>
-
-<%
-   if(list == null || list.isEmpty()){
-%>
-      <tr>
-         <td colspan="6"> 조회된 정보가 없습니다.</td>
-      </tr>
-<%
-   } else {
-      for(BoardExt board : list){
-%>
-         <tr>
-            <td><%= board.getNo() %></td>
-            <td>
-               <a href="<%= request.getContextPath() %>/board/boardView?no=<%= board.getNo() %>" style="text-decoration-line:none; color:black;">
+      		 </tr>
+    		 </thead>
+     		 <tbody>
+			<%
+  			 if(list == null || list.isEmpty()){
+			%>
+      		<tr>
+        		<td colspan="6"> 조회된 정보가 없습니다.</td>
+     		</tr>
+			<%
+   			} else {
+     		 for(BoardExt board : list){
+			%>
+       		<tr>
+           		 <td><%= board.getNo() %></td>
+           		 <td>
+              	 <a href="<%= request.getContextPath() %>/board/boardView?no=<%= board.getNo() %>" style="text-decoration-line:none; color:black;">
                <%= board.getTitle() %>
-               </a>
+              	 </a>
                <%-- 댓글개수 표시 --%>
                <% if(board.getCommentCount() > 0){ %>
                   (<%= board.getCommentCount() %>)
                <% } %>
-            </td>
-            <td style="text-align: center;"><%= board.getMemberId() %></td>
-            <td style="text-align: center;"><%= board.getRegDate() %></td>
-            <td style="text-align: center;">
-      <% if(board.getAttachCount() > 0) { %>               
+            	</td>
+            	<td style="text-align: center;"><%= board.getMemberId() %></td>
+           		<td style="text-align: center;"><%= board.getRegDate() %></td>
+           		<td style="text-align: center;">
+      			<% if(board.getAttachCount() > 0) { %>               
                <img src="<%= request.getContextPath() %>/images/attachfile.png" style="width: 23px" />
-      <% } %>               
-            </td>
-            <td style="text-align: center;"><%= board.getReadCount() %></td>
-         </tr>
-<%    
-      } %>
-      </tbody>
-   </table>
-<%
-   } 
-%>
-      <% if(loginMember != null && (loginMember.getMemberRole() == MemberRole.P) && (loginMember.getMemberRole() == MemberRole.D)){ %>
-	<input 
-		type="button" value="글쓰기" id="btn-add" 
-		onclick="location.href='<%= request.getContextPath() %>/notice/noticeEnroll';"/>
-<% } %>
-   		
+      			<% } %>               
+            	</td>
+           	 	<td style="text-align: center;"><%= board.getReadCount() %></td>
+         	</tr>
+			<%    
+    			 } 	
+   			}
+			%>
+      		</tbody>
+   		</table>
 	</div>
+	<div>
+		<% if(loginMember != null && (loginMember.getMemberRole() != MemberRole.A)){ %>	
+		<input type="button" value="글쓰기" id="btn-add" 
+			   onclick="location.href='<%= request.getContextPath() %>/board/boardEnroll';"/>
+		<% } %>
+	</div>
+	<div id="pagebar">
+		<%= pagebar %>
+	</div>	
 </div>
 </section>
-<div id="pagebar">
-	<%= pagebar %>
-</div>   
 <script>
 const mousein = (menu) => {
   now_menu.classList.remove('current');
@@ -186,8 +184,6 @@ searchType.addEventListener('change', (e) => {
    $('#searchType').css("margin-bottom", '0');
    document.querySelector(`#\${id}`).style.display = "inline-block";
  });
-
-
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

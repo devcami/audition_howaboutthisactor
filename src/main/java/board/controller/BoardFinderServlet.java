@@ -50,10 +50,12 @@ public class BoardFinderServlet extends HttpServlet {
 			param.put("end", end);
 			
 			List<Board> list = boardService.findByType(param);
+			
 			int totalContents = boardService.getTotalContentsByType(param);
 			System.out.println("totalContents : " + totalContents);
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContents, request.getRequestURI() + "?searchType=" + searchType + "&searchKeyword=" + searchKeyword);
-			System.out.println(pagebar);
+//			System.out.println(pagebar);
+			
 			request.setAttribute("list", list);
 			request.setAttribute("searchType", searchType);
 			request.setAttribute("searchKeyword", searchKeyword);
