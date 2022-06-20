@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import common.HelloMvcUtils;
 import member.model.service.MemberService;
 import member.controller.FindPwServlet;
+import member.model.dao.MemberDao;
 
 /**
  * Servlet implementation class FindPwResultServlet
@@ -19,6 +20,14 @@ public class FindPwResultServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("findPwResultServlet 도착");
+		request
+		.getRequestDispatcher("/WEB-INF/views/member/findPwResult.jsp")
+		.forward(request, response);
+//		request.getAttribute("memberId");
+	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -27,16 +36,19 @@ public class FindPwResultServlet extends HttpServlet {
 			
 		 request.setCharacterEncoding("utf-8");
 		 
-		 String memberId = (String) request.getAttribute("memberId");
-		 String password = HelloMvcUtils.encrypt(request.getParameter("password"), memberId);
-//		 System.out.println("memberId@findPwResulteServlet = " + memberId + memberName);
+//		 String memberId = (String) request.getAttribute("memberId");
 
-		 System.out.println(password);
+//		 새 비밀번호 입력받기
+//		 String newPassword = HelloMvcUtils.encrypt(request.getParameter("newPassword"), memberId);
 		 
-		 request.setAttribute("password",  password);
-		 request
-			.getRequestDispatcher("/WEB-INF/views/member/findPwResult.jsp")
-			.forward(request, response);
+//		 System.out.println("memberId@findPwResulteServlet = " + memberId); // memberName
+
+//		 System.out.println("비밀번호 변경용 아이디 확인" + memberId);
+		 
+//		 request.setAttribute("newpassword",  newpassword);
+//		 request
+//			.getRequestDispatcher("/WEB-INF/views/member/findPwResult.jsp")
+//			.forward(request, response);
 		 
 		} catch(Exception e) {
 			e.printStackTrace();

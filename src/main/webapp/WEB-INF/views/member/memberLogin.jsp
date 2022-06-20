@@ -2,10 +2,21 @@
 <%@page import="member.model.dto.Member"%>	
 <%@page import="member.model.dto.Production" %>
 <%@page import="member.model.dto.MemberRole"%>
+
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
+
+<%@ page import="java.net.URL" %>
+<%@ page import="java.net.HttpURLConnection" %>
+<%@ page import="java.io.BufferedReader" %>
+<%@ page import="java.io.InputStreamReader" %>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/mLogin.css" />
+<script src="https://kit.fontawesome.com/92c9a159bd.js" crossorigin="anonymous"></script>
 <%
 
 
@@ -76,12 +87,15 @@ const btnClick = () => {
 					비밀번호
 				</th>
 				<td>
-					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password"><br>
+					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password">
+					<i class="fa-solid fa-eye"></i>
+					 <br>
+					
 				</td>
 			</tr>
 			<tr>
 				<td colspan="2">
-					<input type="checkbox" name="saveId" class="saveId" id="saveId" <%= saveId != null ? "checked" : "" %>/>
+					<input type="checkbox" name="saveId" class="saveId" id="saveId" <%= saveId != null ? "checked" : "" %> />
 					<label for="saveId" class="saveId">아이디저장</label>
 					<input type="submit" id="btn-login" class="btn btn-primary" value="Login" onClick='btnClick()'>
 				</td>
@@ -105,18 +119,6 @@ const btnClick = () => {
  		<script type="text/javascript">
 		    location.href = "<%= request.getContextPath() %>/";    // 메인페이지로 
 		</script>
- 	<%-- 	<table id="loginSuccess">
-			<tbody>
-				<tr>
-					<td><%= loginMember.getMemberName() %>님, 안녕하세요.</td><br>
-				</tr>
-				<tr>
-				<td>
-					<input type="button" value="로그아웃" onclick="location.href='<%= request.getContextPath() %>/member/logout';"/>							
-				</td>
-				</tr>
-			</tbody>
-		</table> --%>
 	<% } %>
 	
 	</form>
@@ -152,6 +154,49 @@ const findPw = () => {
 	frm.submit();
 };
 </script>	
+
+
+<script src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js" charset="utf-8"></script>
+
+<script>
+
+// 토근 삭제는 일단 브라우저에서 하자...(추후 로그아웃 가능)
+
+
+var naverLogin = new naver.LoginWithNaverId(
+		{
+			clientId: "STWpWhi2HZaIbtQUjBBh", //내 애플리케이션 정보에 cliendId를 입력해줍니다.
+			callbackUrl: "http://localhost:9090/app/member/memberLogin", // 내 애플리케이션 API설정의 Callback URL 을 입력해줍니다.
+			isPopup: false,
+			callbackHandle: true
+			
+			
+		}
+	);	
+	
+	naverLogin.init();
+
+window.addEventListener('load', function () {
+	naverLogin.getLoginStatus(function (status) {
+		if (status) {
+			var email = naverLogin.user.getEmail(); // 필수로 설정할것을 받아와 아래처럼 조건문을 줍니다.
+    		
+			console.log(naverLogin.user); 
+    		
+            if( email == undefined || email == null) {
+				alert("이메일은 필수정보입니다. 정보제공을 동의해주세요.");
+				naverLogin.reprompt();
+				return;
+			}
+		} else {
+			console.log("callback 처리에 실패하였습니다.");
+		}
+	});
+});
+
+  </script>
+
+
 
 
 <script>
@@ -206,5 +251,19 @@ function createHiddenLoginForm(kakaoId){
 	document.body.appendChild(frm);
 	frm.submit();
 }
+
+$(document).ready(function(){
+    $('i').on('click',function(){
+        $('input').toggleClass('active');
+        if($('input').hasClass('active')){
+            $(this).attr('class',"fa-solid fa-eye")
+            .prev('input').attr('type',"text");
+        }else{
+            $(this).attr('class',"fa-solid fa-eye")
+            .prev('input').attr('type','password');
+        }
+    });
+});
+
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

@@ -14,8 +14,8 @@ import member.model.service.MemberService;
 /**
  * Servlet implementation class CheckIdDuplicateServlet
  */
-@WebServlet("/member/checkIdDuplicate")
-public class CheckIdDuplicateServlet extends HttpServlet {
+@WebServlet("/member/checkEmailDuplicate")
+public class CheckEmailDuplicateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemberService memberService = new MemberService();
 
@@ -26,18 +26,17 @@ public class CheckIdDuplicateServlet extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		// 사용자 입력값 처리
-		String memberId = request.getParameter("memberId");
-		System.out.println("memberId@CheckIdDuplicateServlet = " + memberId);
+		String email = request.getParameter("email");
+		System.out.println("memberId@CheckEmailDuplicateServlet = " + email);
 		
 		// 업무로직
-		Member member = memberService.findByMemberId(memberId);
+		Member member = memberService.findByEmail(email);
 		boolean available = (member == null);
-		
 		
 		// view단 처리
 		request.setAttribute("available", available);
 		request
-			.getRequestDispatcher("/WEB-INF/views/member/checkIdDuplicate.jsp")
+			.getRequestDispatcher("/WEB-INF/views/member/checkEmailDuplicate.jsp")
 			.forward(request, response);
 	}
 

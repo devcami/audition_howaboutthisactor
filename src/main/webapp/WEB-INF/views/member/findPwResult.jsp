@@ -7,6 +7,7 @@
 
 <%
 	String memberId = (String) request.getAttribute("memberId");
+	System.out.println("resultjps단 아이디" + memberId);
 //	String password = (String) request.getAttribute("password");
 //    System.out.println("resultjsp단 패스워드"+ password);
 
@@ -53,6 +54,11 @@
 	const title = "newPwUpdatePopup";
 	const spec = "width=500px, height=350px";
 	const popup = open("", title, spec);
+	
+	// 두개의 비밀번호 일치
+	if(!newPw1.onblur()){
+		return false;		
+	}
 	
 	alert("비밀번호 변경이 완료되었습니다.")
 };

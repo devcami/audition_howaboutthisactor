@@ -24,6 +24,13 @@ public class MemberService {
 		return member;
 	}
 	
+	public Member findByEmail(String email) {
+		Connection conn = getConnection();
+		Member member = memberDao.findByEmail(conn, email);
+		close(conn);
+		return member;
+	}
+	
 	public String findId(String memberName, String phone) {
 		Connection conn = getConnection();
 		String Id = memberDao.findId(conn, memberName, phone);
@@ -31,13 +38,41 @@ public class MemberService {
 		close(conn);
 		return Id;
 	}
+	/*
+	public Member findPw(String memberId, String memberName) {
+		Connection conn = getConnection();
+		Member member = memberDao.findPw(conn, memberId, memberName);
+		System.out.println("service단 아이디확인"+ memberId);
+		System.out.println("service단 이름확인" + memberName);
+		close(conn);
+		return member;
+	}
+	*/
 	
 	public String findPw(String memberId, String memberName) {
 		Connection conn = getConnection();
 		String password = memberDao.findPw(conn, memberId, memberName);
-		System.out.println("service단 비밀번호"+ password);
+		System.out.println("service단 아이디확인"+ memberId);
+		System.out.println("service단 이름확인" + memberName);
 		close(conn);
 		return password;
+	}
+	
+	public String pwUpdate(Member member) {
+		int result = 0;
+		Connection conn = getConnection();
+		try {
+//			result = memberDao.pwUpdate(conn, member);
+//			System.out.println("service단 아이디확인"+ memberId);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e;
+		} finally {
+			close(conn);
+		}
+//		return result;
+
 	}
 	
 	public int insertMember(Member member) {
