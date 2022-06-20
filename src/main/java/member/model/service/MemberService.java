@@ -57,7 +57,7 @@ public class MemberService {
 		close(conn);
 		return password;
 	}
-	
+/*	
 	public String pwUpdate(Member member) {
 		int result = 0;
 		Connection conn = getConnection();
@@ -74,7 +74,7 @@ public class MemberService {
 //		return result;
 
 	}
-	
+	*/
 	public int insertMember(Member member) {
 		int result = 0;
 		Connection conn = getConnection();
