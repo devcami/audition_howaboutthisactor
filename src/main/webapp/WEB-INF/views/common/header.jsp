@@ -16,7 +16,6 @@
    if(msg != null){
       session.removeAttribute("msg");
    }
-
 %>
 
 
@@ -73,7 +72,6 @@ window.addEventListener('load', () => {
                       url = "/mypage/portfolio";
                       break;
                    }
-
              %>
              	<div class="nav-item"><a class="ahover" href="<%= request.getContextPath() %><%= url %>">마이페이지</a></div>  
 	             <% 
