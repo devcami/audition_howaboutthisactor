@@ -108,7 +108,6 @@ public class NoticeService {
 		int result = 0;
 		Connection conn = getConnection();
 		try {
-			
 			// 1. board 수정
 			result = noticeDao.updateNotice(conn, notice);
 			commit(conn);
