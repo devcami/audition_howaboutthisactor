@@ -6,63 +6,70 @@
 <%@page import="java.util.List"%>	
 
 <%
-	String memberId = (String) request.getAttribute("memberId");
-	System.out.println("resultjps단 아이디" + memberId);
-//	String password = (String) request.getAttribute("password");
-//    System.out.println("resultjsp단 패스워드"+ password);
-
+	Member member = (Member) request.getAttribute("member");
 %>
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="<%=request.getContextPath() %>/js/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/findIdPw.css" />
 <meta charset="UTF-8">
 <title>비밀번호 재설정</title>
 </head>
 <body>
-
-  <form name="pwsearch" method="post">
-      <div class = "container">
-      	<div class = "found-success">
-	      <h4> 비밀번호 재설정 </h4>  
-			<section class = "new_pw">	
-			<div>
-				<label>새로운 비밀번호를 입력해주세요.</label>
-			</div>
-			<div class = "new_password">
-				<label>새로운 비밀번호</label>
-				<input type="text" name="newPw" class = "btn-ps" placeholder = "새 비빌번호를 입력해 주세요.">
-			<br>
-			</div>
-			<div class = "new_password1">
-				<label>새로운 비밀번호 확인</label>
-				<input type="text" name="newPw1" class = "btn-ps1" placeholder = "새 비빌번호를 똑같이 다시 입력해 주세요.">
-			<br>
-			</div>
-			<br>
-	</section>
-	     </div>
-	     <div class = "found-pw-login">
- 		    <input type="button" id="btnLogin" value="비밀번호 변경" onClick ="pwUpdate()"/>
-       	</div>
-       	</div>
-      </form>
-   <script>
-  // 비밀번호 규칙에 맞추어 유효성 검사 해야함...
-  // 비밀번호 입력안하면 창 띄우자!!...
-  const pwUpdate = () => {
-	const title = "newPwUpdatePopup";
-	const spec = "width=500px, height=350px";
-	const popup = open("", title, spec);
-	
-	// 두개의 비밀번호 일치
-	if(!newPw1.onblur()){
+	<h2> 비밀번호 재설정 </h2>
+	<br />  
+		<div>
+			<input type="hidden" name="memberId" id="memberId" value="<%= member.getMemberId() %>" />
+			<label>새 비밀번호</label>
+			<input type="password" name="newPw" id="newPw" class="btn-ps" placeholder = "새 비밀번호를 입력해 주세요.">
+		</div>
+		<div>
+			<label>새 비밀번호 확인</label>
+			<input type="password" name="newPwCheck" id="newPwCheck" class="btn-ps" placeholder = "새 비밀번호를 다시 입력해 주세요.">
+		</div>
+		<input type="button" id="btnPwChange" value="비밀번호 변경" onclick="clickEvent();"/>
+		<input type="button" name="cancel" value="취소" onclick= "window.close()">
+<script>
+newPwCheck.onblur = () => {
+	if(newPwCheck.value !== newPw.value){
+		alert("비밀번호가 일치하지 않습니다.");
+		newPwCheck.select();
+		return false;
+	}
+	return true;
+};
+const clickEvent = () => {
+	if(!/^[A-Za-z0-9!@#$%^&*()]{6,}$/.test(newPw.value)){
+		alert("비밀번호는 영문자/숫자/특수문자!@#$%^&*()로 6글자 이상이어야 합니다.");
+		return false;
+	}
+	if(!newPwCheck.onblur()){
 		return false;		
 	}
 	
-	alert("비밀번호 변경이 완료되었습니다.")
+	$.ajax({
+		url : "<%= request.getContextPath() %>/member/findPwResult",
+		type : "POST",
+		data : {
+			memberId : memberId.value,
+			newPw : newPw.value
+		},
+		success(resp){
+			console.log(resp);	
+			if(resp > 0){
+				alert('비밀번호가 성공적으로 변경되었습니다.');
+				opener.parent.location.reload();
+				window.close();
+			}
+		},
+		error : console.log
+	});
 };
-   </script>
+</script>
    
 </body>
 </html>

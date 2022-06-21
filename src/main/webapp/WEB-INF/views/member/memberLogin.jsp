@@ -20,10 +20,6 @@
 <%
 
 
-//	String msg = (String) session.getAttribute("msg");
-//	if(msg != null)
-//		session.removeAttribute("msg");
-
 String saveId = null; // 아이디저장을 체크한 경우, memberId값이 담길 변수
 Cookie[] cookies = request.getCookies();
 if(cookies != null){
@@ -40,10 +36,6 @@ else {
 <%-- 유효성 검사 --%>
 <script> 
 const btnClick = () => {
-<% if(msg != null){ %>
-	alert("<%= msg %>");
-<% } %>
-	
 	
 <% if(loginMember == null) { %>
 	document.loginFrm.onsubmit = (e) => {
@@ -140,18 +132,15 @@ const findId = () => {
 };
 </script>	
 
-<form name="findPwFrm" action="<%= request.getContextPath() %>/member/findPw">
-	<input type="hidden" name="password" />
-</form>
 <script>
 const findPw = () => {
 	const title = "findPwPopup";
 	const spec = "width=500px, height=350px";
-	const popup = open("", title, spec);
+	const popup = open("<%= request.getContextPath() %>/member/findPw", title, spec);
 	
-	const frm = document.findPwFrm;
-	frm.target = title; // 해당팝업에서 폼을 제출!
-	frm.submit();
+	//const frm = document.findPwFrm;
+	//frm.target = title; // 해당팝업에서 폼을 제출!
+	//frm.submit();
 };
 </script>	
 

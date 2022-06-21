@@ -32,7 +32,7 @@ CREATE TABLE member (
     constraint ck_member_gender check(gender in ('M', 'F')),
     constraint uq_member_email unique(email)
 );
-
+select * from member where member_id = '2291074519Kakao' and phone = '01052037675';
 COMMENT ON COLUMN member.member_role IS 'A 관리자 P 배우 D 디렉터';
 COMMENT ON COLUMN member.gender IS 'F,M';
 COMMENT ON COLUMN member.birthday IS 'yyyymmdd';
