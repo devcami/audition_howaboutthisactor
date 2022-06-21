@@ -178,8 +178,8 @@ const addWishlist = (e) => {
 	<% }%>
 </table>
 			<% if(memberId.equals(loginId)) {%>
-				<div>
-					<input type="button"  value="포트폴리오 수정하기"onClick="myPage()"/>
+				<div class="mypage_head">
+					<input class="mypage" type="button"  value="포트폴리오 수정하기" onClick="myPage()"/>
 				</div>
 			<% } %>
 <% } %>

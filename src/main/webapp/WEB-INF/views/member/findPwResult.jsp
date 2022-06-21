@@ -20,19 +20,22 @@
 <title>비밀번호 재설정</title>
 </head>
 <body>
+	<div id="newPw_head">
 	<h2> 비밀번호 재설정 </h2>
-	<br />  
-		<div>
+	</div>
+	<br><br><br><br>
+		<div class="newPw">
 			<input type="hidden" name="memberId" id="memberId" value="<%= member.getMemberId() %>" />
 			<label>새 비밀번호</label>
 			<input type="password" name="newPw" id="newPw" class="btn-ps" placeholder = "새 비밀번호를 입력해 주세요.">
 		</div>
-		<div>
+		<div class="newPwCheck">
 			<label>새 비밀번호 확인</label>
 			<input type="password" name="newPwCheck" id="newPwCheck" class="btn-ps" placeholder = "새 비밀번호를 다시 입력해 주세요.">
 		</div>
-		<input type="button" id="btnPwChange" value="비밀번호 변경" onclick="clickEvent();"/>
-		<input type="button" name="cancel" value="취소" onclick= "window.close()">
+		<br>
+		<input class="Find" type="button" id="btnPwChange" value="비밀번호 변경" onclick="clickEvent();"/>
+		<input class="Find" type="button" name="cancel" value="취소" onclick= "window.close()">
 <script>
 newPwCheck.onblur = () => {
 	if(newPwCheck.value !== newPw.value){

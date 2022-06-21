@@ -4,6 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/findIdPw.css" />
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
@@ -12,7 +15,7 @@
 <form name="idfindscreen" method = "POST" action= "<%= request.getContextPath() %>/member/findIdResult">
 	<div id="findId_head">
       <h2>아이디 찾기</h2>
-    </div><br><br>
+    </div><br>
 			<div class = "search_title">
 				<h3>휴대폰 본인확인</h3>
 			</div>
@@ -30,8 +33,8 @@
 			<br>
 	</section>
 	<div class ="btnSearch">
-		<input type="button" name="enter" value="찾기" onclick="frmsubmit()">
-		<input type="button" name="cancle" value="취소" onclick= "window.close()">
+		<input class="Find" type="button" id="find" name="enter" value="아이디 찾기" onclick="frmsubmit()">
+		<input class="Find" type="button" name="cancle" value="취소" onclick= "window.close()">
  	</div>
  </form>
 <script>
@@ -51,9 +54,6 @@ const frmsubmit = () => {
 //	console.log(frm);
 	frm.submit();
 };
-
-
-
 
 /* 자동 하이픈 처리 구현...
 function addHypen(obj) {

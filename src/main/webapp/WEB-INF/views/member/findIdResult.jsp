@@ -13,6 +13,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/findIdPw.css" />
 <meta charset="UTF-8">
 <title>아이디 찾기</title>
@@ -20,6 +23,9 @@
 <body>
 <% if(memberId != null){ %>
   <form name="idsearch" method="post">
+  	<div id="findId_result">
+      <h2>아이디 찾기 결과</h2>
+    </div><br>
       <div class = "container">
       	<div class = "found-success">
 	      <h4>  회원님의 아이디는 </h4>  
@@ -27,8 +33,8 @@
 	      <h4>  입니다 </h4>
 	     </div>
 	     <div class = "find-after">
- 		    <input type="button" id="btnLogin" value="창닫기" onClick ="window.close()"/>
- 		    <input type="button" id="btnLogin" value="비밀번호 찾기" onClick ="findPw1()"/>
+ 		    <input class="Find" type="button" id="btnLogin" value="창닫기" onClick ="window.close()"/>
+ 		    <input class="Find" type="button" id="btnLogin" value="비밀번호 찾기" onClick ="findPw1()"/>
        	</div>
       </div>
       </form>
@@ -40,8 +46,8 @@
 	      <h4>  회원정보가 없습니다. </h4>  
 	     </div>
 	     <div class = "find-after">
- 		    <input type="button" id="btnLogin" value="다시 입력하기" onClick ="findId1()"/>
- 		    <input type="button" id="btnLogin" value="창닫기" onClick ="window.close()"/>
+ 		    <input class="Find" type="button" id="btnLogin" value="다시 입력하기" onClick ="findId1()"/>
+ 		    <input class="Find" type="button" id="btnLogin" value="창닫기" onClick ="window.close()"/>
        	</div>
       </div>
    
