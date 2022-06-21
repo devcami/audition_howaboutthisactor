@@ -43,21 +43,6 @@ public class BoardUpdateServlet extends HttpServlet {
 			.forward(request, response);
 	}
 
-	/**
-	 * DB 수정 요청
-	 * 
-	 * 파일업로드 절차
-	 * - 1. 제출폼 enctype="multipart/form-data"
-	 * - 2. MultipartRequest객체 생성 - 파일저장완료
-	 * 		a. HttpServletRequest
-	 * 		b. saveDirectory
-	 * 		c. maxPostSize 최대업로드크기
-	 * 		d. encoding
-	 * 		e. FileRenamePolicy객체 
-	 * - 3. 사용자입력값 처리 - HttpServletRequest가 아닌 MultipartRequest에서 값을 가져오기
-	 * - 4. 업무로직 - db board, attachment 레코드 등록
-	 * - 5. redirect
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 2. MultipartRequest객체 생성 - 파일저장완료
 		String saveDirectory = getServletContext().getRealPath("/upload/board");
