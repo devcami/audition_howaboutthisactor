@@ -102,3 +102,17 @@ th, td{
   position: relative;
   float: right;
 }
+
+
+.w-btn-green2 {
+	font-family: 'Hahmlet', serif;
+    background-color: #519d9e;
+    color: #9dc8c8;
+}
+
+.w-btn-green-outline {
+    border: 3px solid #77af9c;
+    color: darkgray;
+}
+
+
