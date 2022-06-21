@@ -435,3 +435,5 @@ alter table wishlist_actor modify (member_id varchar2(200));
 select count(*) cnt from member where member_id = 'as';
 select * from board;
 select * from (select b.*, (select count(*) from board_attachment where board_no = b.no) attach_cnt, (select count(*) from board_comment where board_no = b.no) comment_cnt, row_number() over(order by reg_date desc) rnum from board b where title like '%안녕%') b ;
+update member set gender = 'F' where member_id = 'director';
+commit;

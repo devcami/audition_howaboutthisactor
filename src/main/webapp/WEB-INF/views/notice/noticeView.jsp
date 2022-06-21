@@ -20,8 +20,8 @@
 <section id="container">
 	 <div id="Pmypage-submenu" class="submenu">
     	<ul>
-      	<li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
-      	<li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
+      	<li><a href="<%= request.getContextPath() %>/notice/noticeList" ">공지 사항</a></li>
+      	<li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current">커뮤니티 게시판</a></li>
     	</ul>
  	</div>	
  	<div id="myboard">

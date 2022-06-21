@@ -1,10 +1,10 @@
 <%@page import="java.util.List"%>
 <%@page import="notice.model.dto.NoticeExt"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	NoticeExt notice = (NoticeExt) request.getAttribute("notice");
+	System.out.println(notice.getNo() + ", " + notice.getMemberId());
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 
@@ -14,7 +14,7 @@
 	name="noticeUpdateFrm" 
 	action="<%=request.getContextPath() %>/notice/noticeUpdate" 
 	method="post"
-	enctype="multipart/form-data">
+	enctype="application/x-www-form-urlencoded">
 	<input type="hidden" name="no" value="<%= notice.getNo() %>" />
 	<table id="tbl-board-view">
 	<tr>
