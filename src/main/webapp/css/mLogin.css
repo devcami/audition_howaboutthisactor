@@ -31,7 +31,7 @@
 	display: inline-block;
 	position: relative;
 	top: 7px;
-	left: 100px;
+	left: 50px;
 }
 #btn-login{
 	width: 300px;
@@ -53,8 +53,14 @@
 table{
 	width: 100%;
 }
+#pwTd{
+	padding-left: 30px;
+}
+#btnTd{
+	padding-right: 50px;
+}
 table td input{
-	width: 80%;
+	width: 400px;
 }
 #btn-group{
 	width: 450px;
@@ -64,4 +70,8 @@ table td input{
 }
 .f-btn:hover{
 	background-color: #bbded695;
+}
+#eye{
+	position: relative;
+	right: 35px;
 }

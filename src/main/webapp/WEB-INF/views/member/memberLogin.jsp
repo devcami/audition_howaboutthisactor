@@ -71,22 +71,21 @@ const btnClick = () => {
 					아이디
 				</th>
 				<td>
-					<input type="text" placeholder="아이디를 입력해주세요." name="memberId" id="_memberId" value="<%= saveId != null ? saveId : "" %>">
+					<input type="text" placeholder="아이디를 입력해주세요." name="memberId" id="_memberId" value="<%= saveId != null ? saveId : "" %>" />
 				</td>
 			</tr>
 			<tr>
 				<th>
 					비밀번호
 				</th>
-				<td>
-					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password">
-					<i class="fa-solid fa-eye"></i>
-					 <br>
-					
+				<td id="pwTd">
+					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password" />
+					<i id="eye" class="fa-solid fa-eye"></i>
+					<br>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td id="btnTd" colspan="2">
 					<input type="checkbox" name="saveId" class="saveId" id="saveId" <%= saveId != null ? "checked" : "" %> />
 					<label for="saveId" class="saveId">아이디저장</label>
 					<input type="submit" id="btn-login" class="btn btn-primary" value="Login" onClick='btnClick()'>
