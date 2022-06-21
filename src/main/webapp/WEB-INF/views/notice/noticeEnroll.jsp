@@ -7,31 +7,37 @@
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
 
-<section id="board-container">
-<div id="board-E">
-<form
-	name="noticeEnrollFrm"
-	action="<%=request.getContextPath() %>/notice/noticeEnroll" 
-	method="post">
-	<table id="tbl-board-view">
-	<tr>
-		<th>제 목</th>
-		<td><input type="text" name="title" required></td>
-	</tr>
-	<tr>
-		<th>작성자</th>
-		<td>
-			<input type="text" name="memberId" value="<%= loginMember.getMemberId() %>" readonly/>
-			 
-		</td>
-	<tr>
-		<th>내 용</th>
-		<td><textarea rows="5" cols="40" name="content"></textarea></td>
-	</tr>
-</table>
-<input type="submit" id="btn-submit" class="btn" type="button" value="등록하기">
-
-</form>
+<section id="container">
+	<div>
+	 <div id="Pmypage-submenu" class="submenu">
+    	<ul>
+      	<li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
+      	<li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
+    	</ul>
+ 	</div>	
+	<div id="board-E">
+		<form
+			name="noticeEnrollFrm"
+			action="<%=request.getContextPath() %>/notice/noticeEnroll" 
+			method="post">
+			<table id="tbl-board-view">
+				<tr>
+					<th>제 목</th>
+						<td><input type="text" name="title" required></td>
+				</tr>
+				<tr>
+					<th>작성자</th>
+						<td>
+							<input type="text" name="memberId" value="<%= loginMember.getMemberId() %>" readonly/>
+						</td>
+				<tr>
+					<th>내 용</th>
+						<td><textarea rows="5" cols="40" name="content"></textarea></td>
+				</tr>
+			</table>
+			<input type="submit" id="btn-submit" class="btn" type="button" value="등록하기">	
+		</form>
+	</div>
 </div>
 </section>
 
