@@ -38,8 +38,7 @@ public class NoticeUpdateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// update board set title = ?, content = ? where no = ?
 		try {
-			
-			 request.setCharacterEncoding("utf-8");
+			request.setCharacterEncoding("utf-8");
 			int no = Integer.parseInt(request.getParameter("no"));
 			String title = request.getParameter("title");
 			String memberId = request.getParameter("memberId");

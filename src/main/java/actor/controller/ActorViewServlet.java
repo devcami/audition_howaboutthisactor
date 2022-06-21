@@ -25,51 +25,51 @@ import wishlist.model.service.WishListService;
  */
 @WebServlet("/actor/actorView")
 public class ActorViewServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private ActorService actorService = new ActorService();
-	private WishListService wishListService = new WishListService();
-	private MypageService mypageService = new MypageService();
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try {
-			int actorNo = Integer.parseInt(request.getParameter("actorNo"));
-			ActorInfo actorInfo = actorService.getActorByActorNo(actorNo);
-			String memberId = actorInfo.getMemberId();
-			
-			// loginMember의 wishList가져오기
-			HttpSession session = request.getSession();
-			Member loginMember = (Member) session.getAttribute("loginMember");
-			String loginId = loginMember.getMemberId();
-			List <WishListActor> wishlistActor = wishListService.actorWishlistbyMemberId(loginId);
-			
-			List<PortAttachment> allAttachList = mypageService.findAllAttachmentByMemberId(memberId);
-			PortAttachment profile  = null;
-			List<PortAttachment> workAttachList = new ArrayList<>();
-			for(PortAttachment pa : allAttachList) {
-				if(pa.getAttachType().equals("P"))
-					profile = pa;
-				else if(pa.getAttachType().equals("W")){
-					workAttachList.add(pa);
-				}
-			}
-			actorInfo.setAttachment(profile);
-			int attachNo = actorInfo.getAttachNo();
-			
-			List<PortfolioWork> pList = mypageService.findAllWork(memberId);
-			
-			request.setAttribute("actorInfo", actorInfo);
-			request.setAttribute("profile", profile);
-			request.setAttribute("pList", pList);
-			request.setAttribute("wishlistActor", wishlistActor);
-			request.setAttribute("memberId", memberId);
-			request.setAttribute("loginId", loginId);
-			request.setAttribute("attachNo", attachNo);
-				
-			request.getRequestDispatcher("/WEB-INF/views/actor/actorView.jsp").forward(request, response);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-	
-	}
+   private static final long serialVersionUID = 1L;
+   private ActorService actorService = new ActorService();
+   private WishListService wishListService = new WishListService();
+   private MypageService mypageService = new MypageService();
+   
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      try {
+         int actorNo = Integer.parseInt(request.getParameter("actorNo"));
+         ActorInfo actorInfo = actorService.getActorByActorNo(actorNo);
+         String memberId = actorInfo.getMemberId();
+         
+         // loginMember의 wishList가져오기
+         HttpSession session = request.getSession();
+         Member loginMember = (Member) session.getAttribute("loginMember");
+         String loginId = loginMember.getMemberId();
+         List <WishListActor> wishlistActor = wishListService.actorWishlistbyMemberId(loginId);
+         
+         List<PortAttachment> allAttachList = mypageService.findAllAttachmentByMemberId(memberId);
+         PortAttachment profile  = null;
+         List<PortAttachment> workAttachList = new ArrayList<>();
+         for(PortAttachment pa : allAttachList) {
+            if(pa.getAttachType().equals("P"))
+               profile = pa;
+            else if(pa.getAttachType().equals("W")){
+               workAttachList.add(pa);
+            }
+         }
+         actorInfo.setAttachment(profile);
+         int attachNo = actorInfo.getAttachNo();
+         
+         List<PortfolioWork> pList = mypageService.findAllWork(memberId);
+         
+         request.setAttribute("actorInfo", actorInfo);
+         request.setAttribute("profile", profile);
+         request.setAttribute("pList", pList);
+         request.setAttribute("wishlistActor", wishlistActor);
+         request.setAttribute("memberId", memberId);
+         request.setAttribute("loginId", loginId);
+         request.setAttribute("attachNo", attachNo);
+            
+         request.getRequestDispatcher("/WEB-INF/views/actor/actorView.jsp").forward(request, response);
+      } catch (Exception e) {
+         e.printStackTrace();
+         throw e;
+      }
+   
+   }
 }
