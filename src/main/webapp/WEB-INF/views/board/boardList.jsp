@@ -16,15 +16,15 @@
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
 
- <section id="container">
- <div id="Pmypage-submenu" class="submenu">
-    <ul>
-      <li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
-      <li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
-    </ul>
- </div>
+<section id="container">
+	 <div id="Pmypage-submenu" class="submenu">
+    	<ul>
+      	<li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
+      	<li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
+    	</ul>
+ 	</div>
 
-<div id="myboard">
+	<div id="myboard">
 	<div>
 		<div id="boardList_head">
 			<h2>커뮤니티</h2>
@@ -111,16 +111,16 @@
       		</tbody>
    		</table>
 	</div>
-	<div>
-		<% if(loginMember != null && (loginMember.getMemberRole() != MemberRole.A)){ %>	
-		<input type="button" value="글쓰기" id="btn-add" 
+		<div>
+			<% if(loginMember != null && (loginMember.getMemberRole() != MemberRole.A)){ %>	
+			<input type="button" value="글쓰기" id="btn-add" class="btn" style="float:right"
 			   onclick="location.href='<%= request.getContextPath() %>/board/boardEnroll';"/>
-		<% } %>
+			<% } %>
+		</div>
+		<div id="pagebar">
+			<%= pagebar %>
+		</div>	
 	</div>
-	<div id="pagebar">
-		<%= pagebar %>
-	</div>	
-</div>
 </section>
 <script>
 const mousein = (menu) => {

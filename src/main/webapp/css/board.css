@@ -78,7 +78,47 @@
   border: 1px solid transparent;
   white-space: nowrap;
   border: none;
-  box-shadow: 1px 3px 5px rgb(0 0 0 / 20%);
+}
+
+.btn-primary {
+  background-color: white;
+  border:none;
+  white-space: nowrap;
+  color: grey;
+  cursor: pointer;
+  border-radius: 0.3rem;
+
+}
+.btn-primary:hover {
+  background-color: red;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  border: none;
+}
+.btn-up {
+	border:none; 
+	background-color:white; 
+	color:grey;
+	cursor: pointer;
+ 	border-radius: 0.3rem;
+  	transition: all 0.3s ease 0s;
+}
+.btn-up:hover{
+	text-decoration-line: underline;
+	color:blue;
+}
+
+.btn-de {
+	border:none; 
+	background-color:white; 
+	color:grey;
+	cursor: pointer;
+ 	border-radius: 0.3rem;
+  	transition: all 0.3s ease 0s;
+}
+.btn-de:hover{
+	text-decoration-line: underline;
+	color:red;
 }
 
 #list-head {
@@ -128,26 +168,21 @@ div#search-content {
   display: none;
 }
 
-
-
-
-
-
-   div#pagebar {
-	   text-align: center;
-	   font-size: 20px;
-	   margin: 0px 0 20px;
-	   color: #639488;
+div#pagebar {
+	text-align: center;
+	font-size: 20px;
+	margin: 0px 0 20px;
+	color: #639488;
    }
-   div#pagebar span.cPage {
-	   padding: 6px;
-	   color: #639488;
+div#pagebar span.cPage {
+	padding: 6px;
+	color: #639488;
    }
-   div#pagebar a {
-	   padding: 10px;
-	   text-decoration: none;
-	   color: #bbded6;
-	   transition: all 0.2s ease-in-out;
+div#pagebar a {
+	padding: 10px;
+	text-decoration: none;
+	color: #bbded6;
+	transition: all 0.2s ease-in-out;
    }
    
    

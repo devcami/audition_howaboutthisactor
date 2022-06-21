@@ -18,53 +18,55 @@
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
 <br />
-<div class="col-lg-8">
-<!-- Post title-->
-	<h1 class="fw-bolder mb-1"><span><%= board.getTitle() %></span></h1>
-	<!-- Post meta content-->
-	<div class="text-muted fst-italic mb-2">
-		Posted on <%= board.getRegDate() %>&nbsp;
-		read count <%= board.getReadCount() %>&nbsp;
-		<button class="btn" style="float:right" onclick="location.href='<%= request.getContextPath() %>/board/boardList'"> 뒤로 가기 </button>&nbsp;
-    </div>
-</div>
-<hr>
+<section  id="container">
+<div id="Pmypage-submenu" class="submenu">
+    <ul>
+      <li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
+      <li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
+    </ul>
+ </div>
+<div id="myboard">
+  <div>
+	<div class="col-lg-8">
+		<h1 class="fw-bolder mb-1"><span><%= board.getTitle() %></span></h1>
+		<div class="text-muted fst-italic mb-2">
+			Posted on <%= board.getRegDate() %>&nbsp;
+			read count <%= board.getReadCount() %>&nbsp;
+			<% if(loginMember != null && loginMember.getMemberRole() != MemberRole.A) {%>	
+			<input type="button" class="btn-up" value="수정하기" onclick="updateBoard()"> 
+			<% } %>
+			<input type="button" class="btn-de" value="삭제하기" onclick="deleteBoard()">	
+			<% if(loginMember != null && loginMember.getMemberRole() != MemberRole.A) { %>	
+			<button type="button" class="btn-primary view"
+			data-bs-toggle="modal" data-bs-target="#reportModal" id="btn-report">신고하기</button>
+			<% } %>
+			<button class="btn" style="float:right" onclick="location.href='<%= request.getContextPath() %>/board/boardList'"> 뒤로 가기 </button>&nbsp;
+    	</div>
+	</div>
+	<hr>
 <!-- Post content-->
-<section class="mb-5">
-	<br />
-	<h2><span><%= board.getContent() %></span></h2>
-</section>
+	<section class="mb-5">
+		<br />
+		<h2><span><%= board.getContent() %></span></h2>
+	</section>
 <%
 List<Attachment> attachments = board.getAttachments();
 if (attachments != null && !attachments.isEmpty()) {
 	for (Attachment attach : attachments) {
 %>
-<div style="float: right;">
-	<img src="<%=request.getContextPath()%>/images/attachfile2.png"
-		width=45px;> <a
-		href="<%=request.getContextPath()%>/board/fileDownload?no=<%=attach.getNo()%>"><%=attach.getOriginalFilename()%></a>
-</div>
+	<div style="float: right;">
+		<img src="<%=request.getContextPath()%>/images/attachfile2.png" width=45px;> 
+		<a href="<%=request.getContextPath()%>/board/fileDownload?no=<%=attach.getNo()%>"><%=attach.getOriginalFilename()%></a>
+	</div>
 <%
 	}
 }
 %>
-<br />
+	<br />
 <%
 if (canEdit) {
 %>
 <div>
-	<%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
-
-	<% if(loginMember != null && loginMember.getMemberRole() != MemberRole.A) {%>	
-	<input type="button" value="수정하기" onclick="updateBoard()"> 
-	<% } %>
-	<input type="button" value="삭제하기" onclick="deleteBoard()">
-	
-	<% if(loginMember != null && loginMember.getMemberRole() != MemberRole.A) { %>	
-	<button type="button" class="btn btn-primary view" data-bs-toggle="modal" data-bs-target="#reportModal" id="btn-report">신고하기</button>
-	<% } %>
-	
-	<!-- Modal -->
 	<div class="modal fade" id="reportModal" tabindex="-1"
 		aria-labelledby="reportModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -144,6 +146,7 @@ if (canEdit) {
 		</tbody>
 	</table>
 <% } %> <!-- IF 문 끝 -->
+</div> 
 	<div class="comment-editor">
 		<form
 			action="<%=request.getContextPath()%>/board/boardCommentEnroll"
@@ -158,14 +161,13 @@ if (canEdit) {
 		</form>
 	</div>
 </div>
-
-<hr style="margin-top: 30px;" />
-
-<form action="<%=request.getContextPath()%>/board/boardCommentDelete" name="boardCommentDelFrm" method="POST">
-	<input type="hidden" name="no" /> <!-- 댓글 번호 -->
-	<input type="hidden" name="boardNo" value="<%= board.getNo() %>" />
-</form>
-
+		<hr	/>
+		<form action="<%=request.getContextPath()%>/board/boardCommentDelete" name="boardCommentDelFrm" method="POST">
+			<input type="hidden" name="no" /> <!-- 댓글 번호 -->
+			<input type="hidden" name="boardNo" value="<%= board.getNo() %>" />
+		</form>
+	</div><!-- myboard 끝 -->
+</section>
 
 <script>
 /**
@@ -314,7 +316,7 @@ const deleteBoard = () => {
 };	
 
 const updateBoard= () => {
-	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>;
+	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>";
 }
 
 <% } 

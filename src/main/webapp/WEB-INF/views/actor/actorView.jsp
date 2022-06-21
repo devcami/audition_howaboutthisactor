@@ -13,6 +13,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %> 
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/actorView.css" />
+
 <%
    PortAttachment profile = (PortAttachment) request.getAttribute("profile"); 
    ActorInfo actorInfo = (ActorInfo) request.getAttribute("actorInfo");
@@ -178,11 +179,12 @@ const addWishlist = (e) => {
    <% }%>
 </table>
          <% if(memberId.equals(loginId)) {%>
-            <div class="w-btn-outline w-btn-green2-outline" >
-            <input type="button"  value="포트폴리오 수정하기"onClick="myPage()"/>
-            </div>
+            <div> <br><br><br>
+            <input  class="btn-move" type="button"  value="포트폴리오 수정하기"onClick="myPage()"/>
+            </div> <br><br>
          <% } %>
 <% } %>
+
 <script>
 function myPage() {
      window.location.href = 'http://localhost:9090/app/mypage/gotoEditPortfolio?memberId=<%= memberId %>&portType=exist&attachNo=<%= attachNo %>'

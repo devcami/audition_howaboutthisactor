@@ -16,45 +16,49 @@
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
-	
+
+<section id="container">
+	 <div id="Pmypage-submenu" class="submenu">
+    	<ul>
+      	<li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
+      	<li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
+    	</ul>
+ 	</div>	
+ 	<div id="myboard">
+		<div>
           <div class="col-lg-8">
           <!-- Post title-->
              <h1 class="fw-bolder mb-1">
              <span><%= notice.getTitle() %></span>
              </h1>
-  
-          <!-- Post meta content-->
+			 <% if (canEdit) { %>
              <div class="text-muted fst-italic mb-2">
               Posted on <%= notice.getRegDate() %>&nbsp;
               read count <%= notice.getReadCount() %>
              &nbsp;
+	  		 <input type="button" class="btn-up"  value="수정하기" onclick="updateNotice()">
+	   		 <input type="button" class="btn-de"  value="삭제하기" onclick="deleteNotice()">
              <button class="btn" style="float:right"
 				onclick="location.href='<%= request.getContextPath() %>/notice/noticeList'">
 			 	 뒤로 가기 </button>
 			 	 &nbsp;
    			 </div>
-  			</div>
+   			 <% } %> 
+  		</div>
 
           <hr>
-         <!-- Post content-->
+        
            <section class="mb-5">
            	<br />
            	<h2>
            		<span><%= notice.getContent() %></span>
            </h2>
            </section>	
-			
-			<br />
-			<% if(canEdit){ %>
-		   <div>
-		  <%-- 작성자와 관리자만 마지막행 수정/삭제버튼이 보일수 있게 할 것 --%>
-		  		 <input type="button" value="수정하기" onclick="updateNotice()">
-		   		 <input type="button" value="삭제하기" onclick="deleteNotice()">
-			<% } %>
-		   </div>
-                   	
-	<hr style="margin-top:30px;" />	
- 
+			<br />          	
+	<hr />	
+ </div>
+</div> <!-- myboard 끝 -->
+</section>
 <script>
 /**
  * .btn-reply click eventhandler binding 
@@ -67,37 +71,6 @@ document.querySelectorAll(".btn-delete").forEach((button) => {
 	}
 });
 		
-		const target = e.target.parentElement.parentElement; // button.btn-reply의 부모tr
-		console.log(target);
-		target.insertAdjacentElement('afterend', tr);
-		
-		
-		// 이벤트핸들링은 1회만 허용.
-		e.target.onclick = null;
-		
-	};
-});
-
-
-document.querySelector("textarea[name=content]").onfocus = (e) => {
-	if(<%= loginMember == null %>)
-		loginAlert();
-};
-
-const commentSubmitHandler = (e) => {
-	if(<%= loginMember == null %>){
-		loginAlert();
-		return false; 		
-	}
-	
-	const contentVal = e.target.content.value.trim();
-	if(!/^(.|\n)+$/.test(contentVal)){
-		alert("댓글 내용을 작성해주세요.");
-		e.target.content.focus();
-		return false;
-	}
-
-};
 
 document.noticeCommentFrm.onsubmit = commentSubmitHandler;
 
@@ -122,14 +95,10 @@ const deleteNotice = () => {
 	if(confirm("정말 이 공지를 삭제하시겠습니까?"))
 		document.noticeDeleteFrm.submit();
 }
-});	
-
-
 const updateNotice = () => {
 	location.href = "<%= request.getContextPath() %>/notice/noticeUpdate?no=<%= notice.getNo() %>";
 }
 <% } %>
-
 </script>
 
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

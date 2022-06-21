@@ -12,7 +12,7 @@
    String searchType = request.getParameter("searchType");
    String searchKeyword = request.getParameter("searchKeyword");
 %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/notice.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
@@ -76,7 +76,7 @@
    		</table>
    <% if(loginMember != null && (loginMember.getMemberRole() == MemberRole.A)){ %>
 	<input 
-		type="button" value="글쓰기" id="btn-add" 
+		type="button" value="글쓰기" id="btn-add" class="btn" style="float:right"
 		onclick="location.href='<%= request.getContextPath() %>/notice/noticeEnroll';"/>
 <% } %>
 

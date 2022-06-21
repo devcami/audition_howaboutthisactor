@@ -27,7 +27,7 @@
 				</td>	
 			<% } else {%>
 				<td>
-					<input type="text" placeholder="10글자이상" name="memberId" id="_memberId" required>
+					<input type="text" placeholder="6글자이상" name="memberId" id="_memberId" required>
 					<input type="button" value="ID 중복검사" onclick="checkIdDuplicate();"/>
 					<input type="hidden" id="idValid" value="0" />
 					<%-- #idValid 0이면 중복검사전, 1이면 중복검사통과 --%>
@@ -36,7 +36,7 @@
 			</tr>
 			<tr>
 				<th></th>
-					<td id="msg1">숫자, 영문자 포함</td>
+					<td id="msg1">숫자, 영문자 포함 6글자 이상</td>
 			</tr>
 			<tr>
 				<th>비밀번호<sup>*</sup></th>	
@@ -216,7 +216,7 @@ const viewGenre = () => {
 
 // 유효성 검사
 document.memberEnrollFrm.onsubmit = () => {
-	// memberId 영문자/숫자 10글자 이상
+	// memberId 영문자/숫자 6글자 이상
 	if(!/^[A-Za-z0-9]{6,}$/.test(_memberId.value)){
 		alert("아이디는 영문자/숫자로 6글자 이상이어야 합니다.");
 		idValid=0;
