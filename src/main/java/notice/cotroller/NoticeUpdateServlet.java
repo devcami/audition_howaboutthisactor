@@ -22,6 +22,7 @@ public class NoticeUpdateServlet extends HttpServlet {
 	 * 수정폼 요청
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		// 1.사용자입력값 처리
 		int no = Integer.parseInt(request.getParameter("no")); // 게시판 넘버
 		
@@ -37,6 +38,8 @@ public class NoticeUpdateServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// update board set title = ?, content = ? where no = ?
 		try {
+			
+			 request.setCharacterEncoding("utf-8");
 			int no = Integer.parseInt(request.getParameter("no"));
 			String title = request.getParameter("title");
 			String memberId = request.getParameter("memberId");
@@ -52,7 +55,8 @@ public class NoticeUpdateServlet extends HttpServlet {
 			// db board(update), attachment(insert) 레코드 등록
 			int result = noticeService.updateNotice(notice);
 			// 첨부파일 삭제 처리
-
+			
+			
 			// 5. redirect
 			response.sendRedirect(request.getContextPath() + "/notice/noticeView?no=" + no);
 		} catch (NumberFormatException e) {
