@@ -11,3 +11,13 @@ body {
          font-size: 16px;
          color: black;
 }
+input#newPw {
+	width : 250px;
+	margin-left:40px;
+}
+input#newPwCheck {
+	width : 250px;
+}
+#pwUpdate div{
+	margin : 20px;
+}

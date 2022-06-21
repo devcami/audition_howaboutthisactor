@@ -20,10 +20,6 @@
 <%
 
 
-//	String msg = (String) session.getAttribute("msg");
-//	if(msg != null)
-//		session.removeAttribute("msg");
-
 String saveId = null; // 아이디저장을 체크한 경우, memberId값이 담길 변수
 Cookie[] cookies = request.getCookies();
 if(cookies != null){
@@ -40,10 +36,6 @@ else {
 <%-- 유효성 검사 --%>
 <script> 
 const btnClick = () => {
-<% if(msg != null){ %>
-	alert("<%= msg %>");
-<% } %>
-	
 	
 <% if(loginMember == null) { %>
 	document.loginFrm.onsubmit = (e) => {
@@ -79,22 +71,21 @@ const btnClick = () => {
 					아이디
 				</th>
 				<td>
-					<input type="text" placeholder="아이디를 입력해주세요." name="memberId" id="_memberId" value="<%= saveId != null ? saveId : "" %>">
+					<input type="text" placeholder="아이디를 입력해주세요." name="memberId" id="_memberId" value="<%= saveId != null ? saveId : "" %>" />
 				</td>
 			</tr>
 			<tr>
 				<th>
 					비밀번호
 				</th>
-				<td>
-					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password">
-					<i class="fa-solid fa-eye"></i>
-					 <br>
-					
+				<td id="pwTd">
+					<input type="password" placeholder="비밀번호를 입력해주세요." name="password" id="_password" />
+					<i id="eye" class="fa-solid fa-eye"></i>
+					<br>
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">
+				<td id="btnTd" colspan="2">
 					<input type="checkbox" name="saveId" class="saveId" id="saveId" <%= saveId != null ? "checked" : "" %> />
 					<label for="saveId" class="saveId">아이디저장</label>
 					<input type="submit" id="btn-login" class="btn btn-primary" value="Login" onClick='btnClick()'>
@@ -140,18 +131,15 @@ const findId = () => {
 };
 </script>	
 
-<form name="findPwFrm" action="<%= request.getContextPath() %>/member/findPw">
-	<input type="hidden" name="password" />
-</form>
 <script>
 const findPw = () => {
 	const title = "findPwPopup";
 	const spec = "width=500px, height=350px";
-	const popup = open("", title, spec);
+	const popup = open("<%= request.getContextPath() %>/member/findPw", title, spec);
 	
-	const frm = document.findPwFrm;
-	frm.target = title; // 해당팝업에서 폼을 제출!
-	frm.submit();
+	//const frm = document.findPwFrm;
+	//frm.target = title; // 해당팝업에서 폼을 제출!
+	//frm.submit();
 };
 </script>	
 

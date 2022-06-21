@@ -49,13 +49,11 @@ public class MemberService {
 	}
 	*/
 	
-	public String findPw(String memberId, String memberName) {
+	public Member findPw(String memberId, String phone) {
 		Connection conn = getConnection();
-		String password = memberDao.findPw(conn, memberId, memberName);
-		System.out.println("service단 아이디확인"+ memberId);
-		System.out.println("service단 이름확인" + memberName);
+		Member member = memberDao.findPw(conn, memberId, phone);
 		close(conn);
-		return password;
+		return member;
 	}
 /*	
 	public String pwUpdate(Member member) {
@@ -117,6 +115,21 @@ public class MemberService {
 		Connection conn = getConnection();
 		int result = memberDao.idDuplicationCheck(conn, memberId);
 		close(conn);
+		return result;
+	}
+
+	public int updatePw(String memberId, String newPw) {
+		int result = 0;
+		Connection conn = getConnection();
+		try {
+			result = memberDao.updatePw(conn, memberId, newPw);
+			commit(conn);
+		} catch (Exception e) {
+			rollback(conn);
+			throw e; 
+		} finally {
+			close(conn);			
+		}
 		return result;
 	}
 }

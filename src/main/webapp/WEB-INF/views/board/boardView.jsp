@@ -314,7 +314,7 @@ const deleteBoard = () => {
 };	
 
 const updateBoard= () => {
-	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>;
+	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>";
 }
 
 <% } 
