@@ -67,44 +67,7 @@ document.querySelectorAll(".btn-delete").forEach((button) => {
 	}
 });
 		
-		const target = e.target.parentElement.parentElement; // button.btn-reply의 부모tr
-		console.log(target);
-		target.insertAdjacentElement('afterend', tr);
-		
-		
-		// 이벤트핸들링은 1회만 허용.
-		e.target.onclick = null;
-		
-	};
-});
 
-
-document.querySelector("textarea[name=content]").onfocus = (e) => {
-	if(<%= loginMember == null %>)
-		loginAlert();
-};
-
-const commentSubmitHandler = (e) => {
-	if(<%= loginMember == null %>){
-		loginAlert();
-		return false; 		
-	}
-	
-	const contentVal = e.target.content.value.trim();
-	if(!/^(.|\n)+$/.test(contentVal)){
-		alert("댓글 내용을 작성해주세요.");
-		e.target.content.focus();
-		return false;
-	}
-
-};
-
-document.noticeCommentFrm.onsubmit = commentSubmitHandler;
-
-const loginAlert = () => {
-	alert("로그인후 이용할 수 있습니다.");
-	document.querySelector("#memberId").focus();
-};
 
 </script>
 
@@ -122,7 +85,6 @@ const deleteNotice = () => {
 	if(confirm("정말 이 공지를 삭제하시겠습니까?"))
 		document.noticeDeleteFrm.submit();
 }
-});	
 
 
 const updateNotice = () => {
