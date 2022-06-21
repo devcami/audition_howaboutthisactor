@@ -145,31 +145,28 @@ public class MemberDao {
 	}
 
 
-	public String findPw(Connection conn, String memberId, String memberName) {
+	public Member findPw(Connection conn, String memberId, String phone) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		String sql = prop.getProperty("findPw");
-		String password = "";
+		Member member = null;
 		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, memberId);
-			pstmt.setString(2, memberName);
+			pstmt.setString(2, phone);
 			
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				memberId = rset.getString("memberId");
-				memberName = rset.getString("memberName");
+				member = handleMemberResultSet(rset);
 			}
-			System.out.println("dao단 아이디 확인용"+ memberId);		
-			System.out.println("dao단 이름 확인용" + memberName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			close(rset);
 			close(pstmt);
 		}
-		return password;
+		return member;
 	}
 
 	public void pwFindUpdate() {
@@ -354,6 +351,24 @@ public class MemberDao {
 			throw new MemberException("아이디 중복 조회 오류!", e);
 		} finally {
 			close(rset);
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int updatePw(Connection conn, String memberId, String newPw) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String sql = prop.getProperty("updatePw");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, newPw);
+			pstmt.setString(2, memberId);
+			result = pstmt.executeUpdate();	
+		} catch (Exception e) {
+			throw new MemberException("비밀번호 찾기-변경 오류", e);
+		} finally {
 			close(pstmt);
 		}
 		return result;

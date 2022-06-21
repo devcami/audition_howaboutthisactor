@@ -9,46 +9,31 @@
 <title>비밀번호 찾기</title>
 </head>
 <body>
-<form name="pwfindscreen" method = "POST" action= "<%= request.getContextPath() %>/member/findPwResult">
-	<div id="findPw_head">
-      <h2>비밀번호 찾기</h2>
-    </div><br><br>
-			<div class = "search_title">
-				<h3>본인확인</h3>
-			</div>
-		<section class = "form_search">	
-			<div class = "find_Id">
-				<label>아이디</label>
-				<input type="text" name="memberId" class = "btn-memberId" placeholder = "등록한 아이디">
-			</div>
-			<div class = "find_name">
-				<label>이름</label>
-				<input type="text" name="memberName" class = "btn-name" placeholder = "등록한 이름">
-			<br>
-			</div>
-			<br>
-	</section>
-	<div class ="btnSearch">
-		<input type="button" name="enter" value="찾기" onclick="frmsubmit1()">
-		<input type="button" name="cancle" value="취소" onclick= "window.close()">
- 	</div>
- </form>
+	<h2>비밀번호 찾기</h2>
+    <br>
+	<form name="pwFindFrm" method = "POST" action= "<%= request.getContextPath() %>/member/findPw">
+		<div class = "search">
+			<h3>본인확인</h3>
+			<label>아이디</label>
+			<input type="text" name="memberId" id="memberId" class="btn-memberId" placeholder = "아이디를 입력해주세요">
+			<br />
+			<label>전화번호</label>
+			<input type="text" name="phone" id="phone" class="btn-phone" placeholder="핸드폰번호를 입력해주세요">
+			<br />
+			<input type="submit" name="enter" value="찾기">
+			<input type="button" name="cancel" value="취소" onclick= "window.close()">
+	 	</div>
+ 	</form>
 <script>
-const frmsubmit1 = () => {
-//	console.log("폼을 보냅니다.");
-	const frm = document.pwfindscreen;
-//	console.log(frm);
-	frm.submit();
-	
- 	if (frm.memberId.value.length < 1) {
-		  alert("아이디를 입력해주세요");
-		  return;
-		 }
-
-		 if (frm.memberName.value.length < 1) {
-			  alert("이름을 입력해주세요");
-			  return;
-		 }
+document.pwFindFrm.onsubmit = () => {
+ 	if (!/^[A-Za-z0-9]+$/.test(memberId.value)) {
+		alert("아이디를 입력해주세요");
+		return false;
+	 }
+	if (!/^[0-9]+$/.test(phone.value)) {
+		alert("핸드폰 번호를 입력해주세요");
+		return false;
+	}
 };
 </script>
 </body>

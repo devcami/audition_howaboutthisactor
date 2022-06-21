@@ -13,8 +13,9 @@
    
    Member loginMember = (Member)session.getAttribute("loginMember");
    String msg = (String) session.getAttribute("msg");   
-   if(msg != null)
+   if(msg != null){
       session.removeAttribute("msg");
+   }
 
 %>
 
