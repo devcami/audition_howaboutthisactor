@@ -26,6 +26,7 @@
  </div>
 <div id="myboard">
    <div>
+   <br />
       <div id="boardList_head">
          <h2>공지 사항</h2>
        </div>

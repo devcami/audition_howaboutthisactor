@@ -37,14 +37,18 @@
 .current {
   color: #bbded6 !important;
 }
-#myboard h2 {
+#myboard2{
+  width: 80%;
+  margin-left: 4%;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 100px;
+}
+#myboard2 h2 {
   font-size: 40px;
   padding: 10px;
   margin: 20px 0 10px;
-}
-#tbl-board-view {
-  width: 100%;
-  border-collapse: collapse
 }
 
 #boardEnroll_head {
@@ -53,6 +57,37 @@
   align-items: flex-end;
 
 }
+
+
+#tbl-board-view{
+	width: 100%;
+}
+
+table th{
+	width: 5%;
+}
+
+input{
+	width: 95%;
+}
+
+table th.right{
+	margin-top: 20px;
+	
+}
+
+input.nic{
+	
+	width: 80px;
+}
+
+ textarea#content{
+ 	margin-top:20px;
+	width: 95%;
+	resize: none;
+	min-height: 30rem;
+}
+
 
 /*버튼*/
 .btn {
@@ -71,3 +106,19 @@
   white-space: nowrap;
   border: none;
 }
+div#pagebar {
+	text-align: center;
+	font-size: 20px;
+	margin: 0px 0 20px;
+	color: #639488;
+   }
+div#pagebar span.cPage {
+	padding: 6px;
+	color: #639488;
+   }
+div#pagebar a {
+	padding: 10px;
+	text-decoration: none;
+	color: #bbded6;
+	transition: all 0.2s ease-in-out;
+   }

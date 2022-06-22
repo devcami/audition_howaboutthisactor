@@ -27,7 +27,7 @@
  	<div id="myboard">
 		<div>
           <div class="col-lg-8">
-          <!-- Post title-->
+			<br />
              <h1 class="fw-bolder mb-1">
              <span><%= notice.getTitle() %></span>
              </h1>

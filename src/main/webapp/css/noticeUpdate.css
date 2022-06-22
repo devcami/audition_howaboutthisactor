@@ -37,21 +37,48 @@
 .current {
   color: #bbded6 !important;
 }
-#myboard h2 {
+
+#myboard2{
+  width: 80%;
+  margin-left: 4%;
+  flex-direction: column;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 100px;
+}
+#myboard2 h2 {
   font-size: 40px;
   padding: 10px;
   margin: 20px 0 10px;
 }
 
-#boardEnroll_head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
+#tbl-board-view{
+	width: 100%;
 }
 
-#tbl-board-view {
-  width: 100%;
-  border-collapse: collapse
+table th{
+	width: 5%;
+}
+
+input{
+	width: 95%;
+}
+
+table th.right{
+	margin-top: 20px;
+	
+}
+
+input.nic{
+	
+	width: 80px;
+}
+
+ textarea#content{
+ 	margin-top:20px;
+	width: 95%;
+	resize: none;
+	min-height: 30rem;
 }
 
 /*버튼*/
@@ -72,33 +99,7 @@
   border: none;
 }
 
-.btn-up {
-	border:none; 
-	background-color:white; 
-	color:grey;
-	cursor: pointer;
- 	border-radius: 0.3rem;
-  	transition: all 0.3s ease 0s;
-}
 
-.btn-up:hover{
-	text-decoration-line: underline;
-	color:blue;
-}
-
-.btn-de {
-	border:none; 
-	background-color:white; 
-	color:grey;
-	cursor: pointer;
- 	border-radius: 0.3rem;
-  	transition: all 0.3s ease 0s;
-}
-
-.btn-de:hover{
-	text-decoration-line: underline;
-	color:red;
-}
 div#pagebar {
 	text-align: center;
 	font-size: 20px;
