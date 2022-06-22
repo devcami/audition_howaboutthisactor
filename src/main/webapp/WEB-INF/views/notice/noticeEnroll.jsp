@@ -1,21 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>   
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/noticeEnroll.css" />
 
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
 
 <section id="container">
-	<div>
 	 <div id="Pmypage-submenu" class="submenu">
     	<ul>
       	<li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
       	<li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
     	</ul>
- 	</div>	
-	<div id="board-E">
+ 	</div>
+ 	<div id="myboard2">
+		<div>	
+			<h2>공지글 작성</h2>
 		<form
 			name="noticeEnrollFrm"
 			action="<%=request.getContextPath() %>/notice/noticeEnroll" 
@@ -23,7 +24,9 @@
 			<table id="tbl-board-view">
 				<tr>
 					<th>제 목</th>
-						<td><input type="text" name="title" required></td>
+						<td>
+						<input type="text" name="title" required>
+						</td>
 				</tr>
 				<tr>
 					<th>작성자</th>
@@ -32,12 +35,16 @@
 						</td>
 				<tr>
 					<th>내 용</th>
-						<td><textarea rows="5" cols="40" name="content"></textarea></td>
+						<td>
+						<textarea onkeyup="adjustHeight();" id="content" name="content"></textarea>
+						</td>
 				</tr>
 			</table>
-			<input type="submit" id="btn-submit" class="btn" type="button" value="등록하기">	
 		</form>
 	</div>
+		<div>
+		<button style="float:right;" id="btn-submit" class="btn" type="button" onclick="enrollSubmit(this);">등록하기</button>
+		</div>
 </div>
 </section>
 
@@ -69,15 +76,22 @@ window.onload = () => {
 		}
 	}
 }
-
-<%-- 폼제출 
-const enrollSubmit(this) = (e) => {
+const enrollSubmit = (e) => {
 	if(confirm('공지를 등록하시겠습니까?')){
 		document.noticeEnrollFrm.submit();
 	}
 };
---%>
 
+
+//textarea 세로 자동 조절
+function adjustHeight() {
+	  var textEle = $('textarea');
+	  textEle[0].style.height = 'auto';
+	  var textEleHeight = textEle.prop('scrollHeight');
+	  textEle.css('height', textEleHeight);
+	};
+
+	adjustHeight(); // 함수를 실행하면 자동으로 textarea의 높이 조절
 
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

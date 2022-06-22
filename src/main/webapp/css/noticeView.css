@@ -1,0 +1,126 @@
+@CHARSET "UTF-8";
+
+#container {
+  display: flex;
+  font-family: 'Hahmlet', serif;
+  justify-content: center;
+  margin: 0 130px 0 30px;
+  /* margin: 0 130px 0 30px; */
+}
+.top-logo{
+  overflow: hidden;
+  height: 180px;
+}
+.top-logo img{
+  width: 100%;
+  position:relative;
+  bottom: 240px; /* 사진 위치*/
+  opacity: 0.7; /* 흐리게*/
+}
+#Pmypage-submenu {
+  margin-top: 100px;
+  text-align: right;
+}
+#Pmypage-submenu ul {
+  padding: 0;
+}
+#Pmypage-submenu li {
+  list-style: none;
+  margin: 15px 0;
+  font-weight: 500;
+  font-size: x-large;
+}
+#Pmypage-submenu a {
+  color: black;
+  text-decoration: none;
+}
+.current {
+  color: #bbded6 !important;
+}
+
+#myboard{
+  width: 80%;
+  margin-left: 4%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 100px;
+}
+
+/*버튼*/
+.btn {
+  font-size: medium;
+  font-family: 'Hahmlet', serif;
+  border: none;
+  background-color: #bbded6;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  transition: all 0.3s ease 0s;
+}
+
+.btn:hover {
+  background-color: #fae3d9;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  border: none;
+}
+
+.btn-up {
+	border:none; 
+	background-color:white; 
+	color:grey;
+	cursor: pointer;
+ 	border-radius: 0.3rem;
+  	transition: all 0.3s ease 0s;
+}
+
+.btn-up:hover{
+	text-decoration-line: underline;
+	color:blue;
+}
+
+.btn-de {
+	border:none; 
+	background-color:white; 
+	color:grey;
+	cursor: pointer;
+ 	border-radius: 0.3rem;
+  	transition: all 0.3s ease 0s;
+}
+
+.btn-de:hover{
+	text-decoration-line: underline;
+	color:red;
+}
+div#pagebar {
+	text-align: center;
+	font-size: 20px;
+	margin: 0px 0 20px;
+	color: #639488;
+   }
+div#pagebar span.cPage {
+	padding: 6px;
+	color: #639488;
+   }
+div#pagebar a {
+	padding: 10px;
+	text-decoration: none;
+	color: #bbded6;
+	transition: all 0.2s ease-in-out;
+   }
+   div#pagebar {
+	text-align: center;
+	font-size: 20px;
+	margin: 0px 0 20px;
+	color: #639488;
+   }
+div#pagebar span.cPage {
+	padding: 6px;
+	color: #639488;
+   }
+div#pagebar a {
+	padding: 10px;
+	text-decoration: none;
+	color: #bbded6;
+	transition: all 0.2s ease-in-out;
+   }
