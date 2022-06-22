@@ -12,7 +12,7 @@
    boolean canEdit = loginMember != null 
 			&& (loginMember.getMemberRole() == MemberRole.A);
 %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/noticeView.css" />
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
@@ -27,7 +27,7 @@
  	<div id="myboard">
 		<div>
           <div class="col-lg-8">
-          <!-- Post title-->
+			<br />
              <h1 class="fw-bolder mb-1">
              <span><%= notice.getTitle() %></span>
              </h1>

@@ -51,17 +51,7 @@
   padding: 10px;
   margin: 20px 0 10px;
 }
-#myboard table {
-  width: 100%;
-  border-collapse: collapse
-}
 
-#boardList_head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-
-}
 /*버튼*/
 .btn {
   font-size: medium;
@@ -95,6 +85,45 @@
   white-space: nowrap;
   border: none;
 }
+.btn-update {
+	border:none; 
+	background-color:white; 
+	color:grey;
+	cursor: pointer;
+ 	border-radius: 0.3rem;
+  	transition: all 0.3s ease 0s;
+}
+.btn-update:hover{
+	text-decoration-line: underline;
+	color:blue;
+}
+
+.btn-delete {
+	border:none; 
+	background-color:white; 
+	color:grey;
+	cursor: pointer;
+ 	border-radius: 0.3rem;
+  	transition: all 0.3s ease 0s;
+}
+.btn-delete:hover{
+	text-decoration-line: underline;
+	color:red;
+}
+
+.btn-reply {
+	border:none; 
+	background-color:white; 
+	color:grey;
+	cursor: pointer;
+ 	border-radius: 0.3rem;
+  	transition: all 0.3s ease 0s;
+}
+.btn-reply:hover{
+	text-decoration-line: underline;
+	color:blue;
+}
+
 .btn-up {
 	border:none; 
 	background-color:white; 
@@ -121,78 +150,68 @@
 	color:red;
 }
 
-#list-head {
-  font-size: medium;
-  border-top: 2px solid gray;
-  border-bottom: 2px solid gray;
-}
-#list-head th{
-  text-align: left;
-  padding-bottom: 7px;
+#back{
+	float: right;
 }
 
-
-#condition {
-  display: flex;
+/**view css*/
+   
+  #condition2 {
   align-items: center;
-}
-#searchType{
-  margin-bottom: 15px;
-  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-  appearance: none;
-  background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 16px 12px;
-  border: 1px solid #ced4da;
-  border-radius: 0.25rem;
-  height: 35px;
-  padding: 0.375rem 2rem 0.375rem 0.75rem;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-}
-.search-type {
-  margin: 15px 10px;
-}
-.keyword-input{
-	transform: translateY(2px);
-  width: 250px;
-  height: 30px;
-  border-radius: 0.25rem;
-}
-div#search-memberId {
-  display: inline-block;
-}
-div#search-title {
-  display: none;
-}
-div#search-content {
-  display: none;
+  width:100%;
+} 
+
+  #condition2#content {
+  hight:60px;
+  width:100%;
+} 
+
+/*댓글*/
+
+table#tbl-comment{
+	width: 100%;
 }
 
+table#tbl-comment th{
+	width: 5%;
+}
+
+ textarea.content{
+ 	margin-top:20px;
+	width: 90%;
+	resize: none;
+	min-height: 5rem;
+
+}
+   
+/*대댓글*/
+table#tbl-comment tr.level2 {
+	font-size: 14px;}
+table#tbl-comment tr.level2 td:first-of-type{
+	padding-left:100px;
+	}
+table#tbl-comment tr.level2 td.cwriterdate {
+	background-color:#e6e6e6;
+	font-size:16px
+	}
+
+
+/*페이지바*/	
 div#pagebar {
 	text-align: center;
 	font-size: 20px;
 	margin: 0px 0 20px;
 	color: #639488;
    }
+   
 div#pagebar span.cPage {
 	padding: 6px;
 	color: #639488;
    }
+   
 div#pagebar a {
 	padding: 10px;
 	text-decoration: none;
 	color: #bbded6;
 	transition: all 0.2s ease-in-out;
    }
-   
-   
-   
-   
-   
-
-
-	
-
-
-
-

@@ -13,7 +13,7 @@
 	&& (loginMember.getMemberId().equals(board.getMemberId())
 	|| loginMember.getMemberRole() == MemberRole.A);
 %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/boardView.css" />
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
@@ -47,7 +47,7 @@
 <!-- Post content-->
 	<section class="mb-5">
 		<br />
-		<h2><span><%= board.getContent() %></span></h2>
+		<h4><span><%= board.getContent() %></span></h4>
 	</section>
 <%
 List<Attachment> attachments = board.getAttachments();
@@ -119,7 +119,6 @@ if (canEdit) {
 		for (BoardComment bc : comments) {
 			boolean canDelete = loginMember != null
 			&& (loginMember.getMemberId().equals(bc.getMemberId()) || loginMember.getMemberRole() == MemberRole.A);
-
 			if (bc.getCommentLevel() == 1) {%>
 			<tr class="level1">
 				<td><sub class="cwriterdate"><%=bc.getMemberId() != null ? bc.getMemberId() : "(탈퇴회원)"%></sub>
@@ -127,8 +126,8 @@ if (canEdit) {
 				</td>
 
 				<td>
-					<button class="btn-reply" value="<%=bc.getNo()%>">답글</button> <% if (canDelete) { %><button
-						class="btn-delete" value="<%=bc.getNo()%>">삭제</button> <% } %>
+					<button class="btn-reply" value="<%=bc.getNo()%>">답글</button> <% if (canDelete) { %>
+					<button class="btn-delete" value="<%=bc.getNo()%>">삭제</button> <% } %>
 				</td>
 			</tr>
 			<% } /*레벨 1*/ else { %>
@@ -156,7 +155,7 @@ if (canEdit) {
 				value="<%=loginMember != null ? loginMember.getMemberId() : ""%>" />
 			<input type="hidden" name="commentLevel" value="1" /> <input
 				type="hidden" name="commentRef" value="0" />
-			<textarea name="content" cols="60" rows="3" placeholder="댓글을 작성하세요"></textarea>
+			<textarea name="content" class="content" cols="60" rows="3" placeholder="댓글을 작성하세요"></textarea>
 			<button type="submit" class="btn" id="btn-comment-enroll1">등록</button>
 		</form>
 	</div>
@@ -180,8 +179,6 @@ document.querySelectorAll(".btn-delete").forEach((button) => {
 		document.boardCommentDelFrm.submit();
 	}
 });
-
-
 // tbody > tr > td > .btn-reply
 document.querySelectorAll(".btn-reply").forEach((button) => {
 	button.onclick = (e) => {
@@ -228,7 +225,7 @@ document.querySelectorAll(".btn-reply").forEach((button) => {
 		textarea.rows = "1";
 		
 		const button = document.createElement("button");
-		button.className = "btn-comment-enroll2";
+		button.className = "btn-up";
 		button.innerText = "등록"
 		
 		frm.append(inputBoardNo);
@@ -269,13 +266,10 @@ document.querySelectorAll(".btn-reply").forEach((button) => {
 		
 	};
 });
-
-
 document.querySelector("textarea[name=content]").onfocus = (e) => {
 	if(<%= loginMember == null %>)
 		loginAlert();
 };
-
 const commentSubmitHandler = (e) => {
 	if(<%= loginMember == null %>){
 		loginAlert();
@@ -290,14 +284,11 @@ const commentSubmitHandler = (e) => {
 	}
 	
 };
-
 document.boardCommentFrm.onsubmit = commentSubmitHandler;
-
 const loginAlert = () => {
 	alert("로그인후 이용할 수 있습니다.");
 	document.querySelector("#memberId").focus();
 };
-
 </script>
 
 <% if(canEdit){ %>
@@ -314,11 +305,9 @@ const deleteBoard = () => {
 	if(confirm("정말 이 게시글을 삭제하시겠습니까?"))
 		document.boardDeleteFrm.submit();
 };	
-
 const updateBoard= () => {
 	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>";
 }
-
 <% } 
 if(loginMember != null && loginMember.getMemberRole() != MemberRole.A){
 %>
@@ -349,6 +338,4 @@ document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
 });
 </script>
 <% } %>
-
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>
-	
