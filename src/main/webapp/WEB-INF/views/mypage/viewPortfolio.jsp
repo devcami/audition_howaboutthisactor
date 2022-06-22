@@ -186,10 +186,11 @@
   				
   				works.forEach((work, i) => {
   					console.log(work)
-  					console.log(work.attachment.renamedFilename);
-  					console.log(work.title);
-  					console.log(work.myrole);
-  					console.log(work.period);
+  					//console.log(work.attachment.renamedFilename);
+  					//console.log(work.title);
+  					//console.log(work.myrole);
+  					//console.log(work.period);
+  					console.log(work.no);
   					
   					
   					const img_src = `<%= request.getContextPath() %>/upload/portfolio/\${work.attachment.renamedFilename}`;

@@ -614,6 +614,8 @@ public class MypageService {
 		int result = 0;
 		Connection conn = getConnection();
 		
+		System.out.println(work);
+		
 		try {
 			// 1. portfolio_work 업데이트
 			result = mypageDao.updatePortWork(conn, work);
@@ -623,6 +625,11 @@ public class MypageService {
 			PortAttachment attach1 = work.getAttach1();
 			PortAttachment attach2 = work.getAttach2();
 			PortAttachment attach3 = work.getAttach3();
+
+			System.out.println("attachment = " + attachment);
+			System.out.println("attach1 = " + attach1);
+			System.out.println("attach2 = " + attach2);
+			System.out.println("attach3 = " + attach3);
 			
 			if(attachment != null) {
 				result = mypageDao.insertAttachment(conn, attachment, "W");
@@ -684,6 +691,13 @@ public class MypageService {
 		PortAttachment bossAttach = mypageDao.getBossWorkAttach(conn, memberId, workNo);
 		close(conn);
 		return bossAttach;
+	}
+
+	public String getVideo(int workNo) {
+		Connection conn = getConnection();
+		String v = mypageDao.getVideo(conn, workNo);
+		close(conn);
+		return v;
 	}
 
 

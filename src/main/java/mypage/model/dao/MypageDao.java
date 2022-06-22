@@ -1534,6 +1534,29 @@ public class MypageDao {
 		}
 		return work;
 	}
+
+	public String getVideo(Connection conn, int workNo) {
+		String video = "";
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("getVideo");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, workNo);
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				video = rset.getString("youtube");
+			}
+		} catch (Exception e) {
+			throw new AnnException("> 경력상세조회 - getWorkByNo 오류", e);
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return video;
+	}
 	
 	
 }

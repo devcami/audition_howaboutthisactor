@@ -33,6 +33,8 @@ public class EditWorkServlet extends HttpServlet {
 			
 			System.out.println("도착");
 			
+			System.out.println(workNo + title + cast + period);
+			
 			
 			PortfolioWorkExt work = new PortfolioWorkExt();
 			
@@ -41,6 +43,7 @@ public class EditWorkServlet extends HttpServlet {
 			work.setTitle(title);
 			work.setMyrole(cast);
 			work.setPeriod(period);
+			work.setVideolink(mypageService.getVideo(workNo));
 			
 			List<PortAttachment> attachs = mypageService.getAllWorkAttach(memberId, workNo);
 
