@@ -297,7 +297,8 @@
 								</tr>
 								<tr class="underline">
 									<th>신체 조건</th>
-									<td><%= ann.getAnnHeight() %> | <%= ann.getAnnBody() %> </td>
+									<td><%= ann.getAnnHeight() != null ? (ann.getAnnHeight().equals("선택해주세요") ? "" : ann.getAnnHeight()) : "" %> 
+									| <%= ann.getAnnBody() != null ? (ann.getAnnBody().equals("선택해주세요") ? "" : ann.getAnnBody()) : "" %> </td>
 								</tr>
 								<tr>
 									<th>출연료</th>
@@ -309,7 +310,7 @@
 								</tr>
 								<tr>
 									<th>배역 설명</th>
-									<td><%= cast.getCastContents() %></td>
+									<td><%= cast.getCastContents() != null ? cast.getCastContents() : ""%></td>
 								</tr>
 							</tbody>
 							</table>

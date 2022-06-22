@@ -11,7 +11,7 @@
    String searchKeyword = request.getParameter("searchKeyword");
 %>
 
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/boardList.css" />
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>

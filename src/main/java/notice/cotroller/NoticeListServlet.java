@@ -43,11 +43,9 @@ public class NoticeListServlet extends HttpServlet {
 			// 2. 업무로직
 			// 2.a content영역
 			List<NoticeExt> list = noticeService.findAll(param);
-			System.out.println(list);
 			// 2.b pagebar영역
 			int totalContents = noticeService.getTotalContents();
 			String pagebar = HelloMvcUtils.getPagebar(cPage, numPerPage, totalContents, request.getRequestURI());
-			System.out.println(pagebar);
 			
 			// 3. view단 처리
 			request.setAttribute("list", list);

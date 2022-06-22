@@ -376,11 +376,9 @@ insert into portfolio values (SEQ_PORTFOLIO_NO.nextval, 'actor', 1, '2019년 10�
 --테이블 정보보기
 -------------------------------------
 select * from actor_apply;
-select * from actor_info where actor_no = 45;
+select * from actor_info;
 select * from announcement; 
 select * from board;
-
-select count(*) from board where title like '%안녕%';
 select * from board_attachment;
 select * from board_comment;
 select * from cast;
@@ -435,3 +433,5 @@ alter table wishlist_actor modify (member_id varchar2(200));
 select count(*) cnt from member where member_id = 'as';
 select * from board;
 select * from (select b.*, (select count(*) from board_attachment where board_no = b.no) attach_cnt, (select count(*) from board_comment where board_no = b.no) comment_cnt, row_number() over(order by reg_date desc) rnum from board b where title like '%안녕%') b ;
+update member set gender = 'F' where member_id = 'director';
+commit;
