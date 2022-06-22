@@ -1,12 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/footer.css">
-
-
 <footer>
 <div id="totop" class="iconbutton">▲</div>
 
     <div class ="foo_div">
-        <img src="${pageContext.request.contextPath}/images/Logo.png">
+        <img src="${pageContext.request.contextPath}/images/logoPink.png">
     </div>
     
     <div class="foo_div1">
@@ -14,17 +11,11 @@
     </div>
 
     <div class="foo_div2">
-      <a  href="" >
-            <img src="${pageContext.request.contextPath}/images/youtube.png" alt="유투브" >
-      </a>
+      <a  href="" ><img src="${pageContext.request.contextPath}/images/youtube.png" alt="유투브" ></a>
 
-      <a href="<%= request.getContextPath() %>">
-          <img src="${pageContext.request.contextPath}/images/home.png" alt="홈">
-      </a>
+      <a href="<%= request.getContextPath() %>"><img src="${pageContext.request.contextPath}/images/home.png" alt="홈"></a>
      
-      <a href="https://github.com/devcami/semi_Project.git">
-          <img src="${pageContext.request.contextPath}/images/gitP.png" alt="깃">
-      </a>
+      <a href="https://github.com/devcami/semi_Project.git"><img src="${pageContext.request.contextPath}/images/gitP.png" alt="깃"></a>
     </div>    
 
 

@@ -21,8 +21,8 @@
 <section  id="container">
 <div id="Pmypage-submenu" class="submenu">
     <ul>
-      <li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
-      <li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
+      <li><a href="<%= request.getContextPath() %>/notice/noticeList">공지 사항</a></li>
+      <li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current">커뮤니티 게시판</a></li>
     </ul>
  </div>
 <div id="myboard">
@@ -33,9 +33,9 @@
 			Posted on <%= board.getRegDate() %>&nbsp;
 			read count <%= board.getReadCount() %>&nbsp;
 			<% if(loginMember != null && loginMember.getMemberRole() != MemberRole.A) {%>	
-			<input type="button" class="btn-up" value="수정하기" onclick="updateBoard()"> 
+			<input type="button" class="btn-up" value="수정하기" onclick="updateBoard();"> 
 			<% } %>
-			<input type="button" class="btn-de" value="삭제하기" onclick="deleteBoard()">	
+			<input type="button" class="btn-de" value="삭제하기" onclick="deleteBoard();">	
 			<% if(loginMember != null && loginMember.getMemberRole() != MemberRole.A) { %>	
 			<button type="button" class="btn-primary view"
 			data-bs-toggle="modal" data-bs-target="#reportModal" id="btn -report">신고하기</button>
@@ -303,8 +303,10 @@ const loginAlert = () => {
  * - 저장된 파일 삭제 : java.io.File 
  */
 const deleteBoard = () => {
-	if(confirm("정말 이 게시글을 삭제하시겠습니까?"))
+	console.log('삭제');
+	if(confirm("정말 이 게시글을 삭제하시겠습니까?")){
 		document.boardDeleteFrm.submit();
+	}
 };	
 const updateBoard= () => {
 	location.href = "<%= request.getContextPath() %>/board/boardUpdate?no=<%= board.getNo() %>";
@@ -337,6 +339,6 @@ document.querySelector("#btn-report-submit").addEventListener('click', (e) => {
    }
   
 });
-</script>
 <% } %>
+</script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

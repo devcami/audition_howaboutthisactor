@@ -23,13 +23,13 @@
             <th><label for="pic">대표사진</label></th>
             <td>
               <div id="work-img-container">
-			     <img src="" alt="" id="work-img" alt=""/>
+			     <img src="<%= request.getContextPath() %>/images/defaultImg.jpg" alt="" id="work-img" alt=""/>
 		      </div>
               <input type="file" name="workpic" id="workpic" accept="image/*" onchange="loadImage(this);">
             </td>
           </tr>
           <tr>
-            <th><label for="title">작품명</label></th>
+            <th><label for="title">작품명</label></th> 
             <td><input type="text" name="title" id="title"></td>
           </tr>
           <tr>
@@ -89,13 +89,10 @@
   	
   	document.addWorkFrm.addEventListener('submit', (e) => {
   		e.preventDefault();
-  		
-  		// 비동기요청 파일업로드 FormData 객체 사용
+  
   		const frmData = new FormData(e.target);
-
   		const ptable = opener.document.getElementById("portTable"); 		
- 
-  		
+
   		$.ajax({
   			url : "<%= request.getContextPath() %>/mypage/enrollwork",
   			method : "POST",
