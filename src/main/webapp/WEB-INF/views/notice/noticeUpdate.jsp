@@ -1,13 +1,12 @@
 <%@page import="java.util.List"%>
 <%@page import="notice.model.dto.NoticeExt"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 <%
 	NoticeExt notice = (NoticeExt) request.getAttribute("notice");
+	System.out.println(notice.getNo() + ", " + notice.getMemberId());
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/noticeUpdate.css" />
-
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>

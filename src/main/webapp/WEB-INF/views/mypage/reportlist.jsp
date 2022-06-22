@@ -53,8 +53,8 @@
          String reportUrl = "";
          
            for(int i = 0; i < list.size(); i++){
-              
               reportUrl = request.getContextPath() + "/board/boardView?no=" + list.get(i).getBoardNo();
+
             boardNo = list.get(i).getBoardNo();
             actorNo = list.get(i).getActor_no();
             annNo = list.get(i).getAnnNo();
@@ -66,15 +66,27 @@
                status = "처리중"; 
             }
             
-            if(boardNo==0 & actorNo!=0 & annNo==0 & commentNo == 0){
+            if(boardNo==0 && actorNo!=0 && annNo==0 && commentNo == 0){
                boardName = "배우 게시판";         
                reportUrl= request.getContextPath() + "/actor/actorView?actorNo=" + list.get(i).getActor_no();
+<<<<<<< HEAD
             } else if(boardNo==0 & actorNo==0 & annNo!=0 & commentNo == 0){
+=======
+            } else if(boardNo==0 && actorNo==0 && annNo!=0 && commentNo == 0){
+>>>>>>> branch 'master' of https://github.com/devcami/semi_Project.git
                boardName = "공고 게시판";
                reportUrl= request.getContextPath() + "/ann/annView?annNo=" + list.get(i).getAnnNo();
+<<<<<<< HEAD
             } else if(boardNo!=0 & actorNo==0 & annNo==0 & commentNo != 0){
+=======
+            } else if(boardNo!=0 && actorNo==0 && annNo==0 && commentNo != 0){
+>>>>>>> branch 'master' of https://github.com/devcami/semi_Project.git
                boardName = "댓글";
+<<<<<<< HEAD
                reportUrl= request.getContextPath() + "/board/boardView?no=" + list.get(i).getBoardNo();
+=======
+               reportUrl= request.getContextPath() + "/board/boardView?boardNo=" + list.get(i).getBoardNo();
+>>>>>>> branch 'master' of https://github.com/devcami/semi_Project.git
             }      
       %>
           <tr>
@@ -85,7 +97,9 @@
           </tr>
      <%    } %>
       <% } else { %>
-         <p>조회된 신고가 없습니다.</p>
+      		<tr>
+      			<td>조회된 공고가 없습니다.</td>
+      		</tr>
       <% } %>
         </tbody>
       </table>

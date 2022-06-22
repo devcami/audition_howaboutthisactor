@@ -13,8 +13,17 @@
 <%
 
 	Production production = (Production) request.getAttribute("production");
-	System.out.println(production);
 %>
+<script>
+<%
+	if(msg != null && msg.equals("마이페이지에서 담당자 정보 등록 후 사용가능합니다."))	{
+%>
+		alert('<%= msg %>');
+		location.href = "<%= request.getContextPath() %>/mypage/companyInfo?memberId=<%= loginMember.getMemberId() %>"
+<%
+	}
+%>
+</script>
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/annEnroll.css" />
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" />  
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>  
@@ -293,6 +302,12 @@
 </section>
 </form>
 <script>
+<%-- 폼제출 --%>
+const enrollSubmit = (e) => {
+	if(confirm('공고를 등록하시겠습니까?')){
+		document.annEnrollFrm.submit();
+	}
+};
 <%-- 상단 프로그레스바 --%>
 var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
 var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
@@ -476,11 +491,6 @@ const nextStep = (e) => {
 	}
 };
 
-<%-- 폼제출 --%>
-const enrollSubmit = (e) => {
-	if(confirm('공고를 등록하시겠습니까?')){
-		document.annEnrollFrm.submit();
-	}
-};
+
 </script>
 <%@ include file="/WEB-INF/views/common/footer.jsp" %>

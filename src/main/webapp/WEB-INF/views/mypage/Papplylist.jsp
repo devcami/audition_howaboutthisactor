@@ -61,16 +61,18 @@
             </div>
           </div>
         </div>
+
               <% } %>
 		<% } else { %>
-			<div><p>조회된 공고가 없습니다.</p></div>
+			<div><p style="font-size: x-large;">조회된 공고가 없습니다.</p></div>
 		<% } %> 
-
+		</div>
     </div>
-	<div id="pagebar">
-		<%= pagebar %>
-	</div>
+      <div id="pagebar">
+	 	<%= pagebar %>
+  	  </div>
   </div>
+
 
   <script>
   

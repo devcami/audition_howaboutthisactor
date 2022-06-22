@@ -20,8 +20,8 @@
 <section id="container">
 	 <div id="Pmypage-submenu" class="submenu">
     	<ul>
-      	<li><a href="<%= request.getContextPath() %>/notice/noticeList" onmouseover="mousein(this);" onmouseout="mouseout(this)">공지 사항</a></li>
-      	<li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current" onmouseover="mousein(this);" onmouseout="mouseout(this)">커뮤니티 게시판</a></li>
+      	<li><a href="<%= request.getContextPath() %>/notice/noticeList" ">공지 사항</a></li>
+      	<li><a href="<%= request.getContextPath() %>/board/boardList" id="now_menu" class="current">커뮤니티 게시판</a></li>
     	</ul>
  	</div>	
  	<div id="myboard">
@@ -72,12 +72,6 @@ document.querySelectorAll(".btn-delete").forEach((button) => {
 });
 		
 
-document.noticeCommentFrm.onsubmit = commentSubmitHandler;
-
-const loginAlert = () => {
-	alert("로그인후 이용할 수 있습니다.");
-	document.querySelector("#memberId").focus();
-};
 
 </script>
 

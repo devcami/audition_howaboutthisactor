@@ -23,7 +23,7 @@
             <th><label for="pic">대표사진</label></th>
             <td>
               <div id="work-img-container">
-			     <img src="" alt="" id="work-img"/>
+			     <img src="" alt="" id="work-img" alt=""/>
 		      </div>
               <input type="file" name="workpic" id="workpic" accept="image/*" onchange="loadImage(this);">
             </td>
