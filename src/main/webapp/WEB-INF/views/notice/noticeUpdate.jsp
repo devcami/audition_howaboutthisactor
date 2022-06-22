@@ -6,7 +6,7 @@
 <%
 	NoticeExt notice = (NoticeExt) request.getAttribute("notice");
 %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/noticeUpdate.css" />
 
 <section id="board-container">
 <h2>게시판 수정</h2>

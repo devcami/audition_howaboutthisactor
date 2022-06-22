@@ -12,7 +12,7 @@
    boolean canEdit = loginMember != null 
 			&& (loginMember.getMemberRole() == MemberRole.A);
 %>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/board.css" />
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/noticeView.css" />
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
