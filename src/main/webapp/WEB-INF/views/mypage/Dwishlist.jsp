@@ -91,7 +91,7 @@
           </div>
         		<% 	} %>
 		<% } else { %>
-			<div><p>조회된 공고가 없습니다.</p></div>
+			<div><p>찜한 배우가 없습니다.</p></div>
 		<% } %>
       </div>
 	  <div id="pagebar">

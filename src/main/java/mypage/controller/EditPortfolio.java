@@ -105,6 +105,21 @@ public class EditPortfolio extends HttpServlet {
 			actorInfo.setAttachNo(oldAttachNo);
 			
 			List<Integer> resultNo = new ArrayList<>();
+			
+			String _delNo = multiReq.getParameter("delFile");
+			
+			if(_delNo != null) {
+				int delNo = Integer.parseInt(_delNo);
+//				System.out.println("삭제할 파일 넘버 = " + delNo);
+				PortAttachment pa = mypageService.findOneAttachByPaNo(delNo);
+//				System.out.println("삭제할 파일 = " + pa);
+				File delFile = new File(saveDirectory, pa.getRenamedFilename());
+				if(delFile.exists()) delFile.delete();
+				int result = mypageService.deleteWorkAttachmentByNo(delNo);
+			}
+			
+			
+			
 
 			File profilePic = multiReq.getFile("profilePic");
 			System.out.println("EditPortfolioServlet@profilePic" + profilePic);
