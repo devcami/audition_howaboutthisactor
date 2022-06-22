@@ -74,9 +74,9 @@ public class UpdateWorkServlet extends HttpServlet {
 			if(delFiles != null) {
 				for(String temp : delFiles) {
 					int paNo = Integer.parseInt(temp);
-					//System.out.println(waNo);
+					System.out.println(paNo);
 					PortAttachment pa = mypageService.findOneAttachByPaNo(paNo);
-					//System.out.println(wa);
+					System.out.println(pa);
 					File delFile = new File(saveDirectory, pa.getRenamedFilename());
 					if(delFile.exists()) delFile.delete();
 					int result = mypageService.deleteWorkAttachmentByNo(paNo);
@@ -101,10 +101,14 @@ public class UpdateWorkServlet extends HttpServlet {
 				attachment.setRenamedFilename(renamedFilename);
 				
 				work.setAttachment(attachment);
-			} else {
+			} 
+			else {
 				PortAttachment attachment = mypageService.getBossWorkAttach(memberId,workNo);
 				work.setAttachment(attachment);
+				attachment.setNo(workNo);
+				System.out.println("여기=" + work.getAttachment());
 			}
+			
 			
 			if(pic1 != null) {
 				PortAttachment attach = new PortAttachment();
