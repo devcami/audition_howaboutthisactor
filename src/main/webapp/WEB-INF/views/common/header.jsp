@@ -30,6 +30,7 @@
 
 <title>배우어때</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/semi.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/css/footer.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
