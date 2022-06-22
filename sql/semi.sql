@@ -376,11 +376,9 @@ insert into portfolio values (SEQ_PORTFOLIO_NO.nextval, 'actor', 1, '2019년 10�
 --테이블 정보보기
 -------------------------------------
 select * from actor_apply;
-select * from actor_info where actor_no = 45;
+select * from actor_info;
 select * from announcement; 
 select * from board;
-
-select count(*) from board where title like '%안녕%';
 select * from board_attachment;
 select * from board_comment;
 select * from cast;

@@ -1,3 +1,4 @@
+<%@page import="member.model.dto.Production"%>
 <%@page import="member.model.dto.MemberRole"%>
 <%@page import="member.model.dto.Member"%>
 <%@page import="java.sql.Date"%>
@@ -13,6 +14,7 @@
 	String searchKeyword = request.getParameter("searchKeyword");
 	
 	int totalPage = (int)request.getAttribute("totalPage");
+	
 %>
 
 <link rel="stylesheet" href="<%= request.getContextPath() %>/css/ann.css" />
