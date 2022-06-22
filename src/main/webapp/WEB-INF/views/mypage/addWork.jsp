@@ -23,7 +23,7 @@
             <th><label for="pic">대표사진</label></th>
             <td>
               <div id="work-img-container">
-			     <img src="" alt="" id="work-img"/>
+			     <img src="" alt="" id="work-img" alt=""/>
 		      </div>
               <input type="file" name="workpic" id="workpic" accept="image/*" onchange="loadImage(this);">
             </td>
@@ -123,7 +123,7 @@
   		            </th>
   		            <td rowspan="5">
   		              <div id="work-img-container">
-  		                <img src="\${img_src}" id="\${imgId}" class="work-img" onclick="editWork(this);">
+  		                <img src="\${img_src}" id="\${imgId}" class="work-img" value="\${work.no}" onclick="editWork(this);">
   		              </div>
   		            </td>
   		            <td><br><br></td>

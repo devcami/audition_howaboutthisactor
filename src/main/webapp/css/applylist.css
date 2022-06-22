@@ -51,7 +51,7 @@
 
 
 #mywish{
-  margin-bottom: 100px;
+  margin-bottom: 300px;
   width: 80%;
   margin-left: 4%;
   display: flex;
@@ -85,6 +85,7 @@ text-align: center;
   flex-wrap: wrap;
   margin-top: 30px;
   margin-left: 20px;
+  margin-bottom: 100px;
   height: 80%;
   align-content: flex-start;
 
