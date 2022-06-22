@@ -156,7 +156,10 @@ const addWishlist = (e) => {
          <div id="work-img-container">
             <img class="work-img"
                src="<%= request.getContextPath() %>/upload/portfolio/<%= pList.get(i).getAttachment().getRenamedFilename() %>"
-               alt="작품사진<%= i + 1 %>" />
+               alt="작품사진<%= i + 1 %>"
+               value="<%= pList.get(i).getNo() %>"
+               onclick="viewWork(this);"
+               style="cursor: pointer;"/>
          </div>
       </td>
    </tr>
@@ -184,7 +187,33 @@ const addWishlist = (e) => {
             </div> <br><br>
          <% } %>
 <% } %>
+  <form name="viewWorkFrm" action="<%= request.getContextPath() %>/mypage/workView">
+  	<input type="hidden" name="selectedWorkNo" id="selectedWorkNo"/>
+  	<input type="hidden" name="memberId" value="<%= loginMember.getMemberId() %>" />
+  </form>
 <script>
+
+const viewWork = (e) => {		
+	
+	const workNo = e.getAttribute('value');
+	document.getElementById("selectedWorkNo").value = workNo;
+	console.log($('#selectedWorkNo').val())
+
+	
+		const title = "viewWorkPopup";
+		const spec = "width=1000px, height=700px";
+		const popup = open("", title, spec);
+	
+		const frm = document.viewWorkFrm;
+		frm.target = title; // 해당 팝업에서 폼을 제출 
+		frm.submit();
+	
+}
+
+
+
+
+
 function myPage() {
 	  window.location.href = 'http://localhost:9090/app/mypage/gotoEditPortfolio?memberId=<%= memberId %>&portType=exist&attachNo=<%= attachNo %>'
 }

@@ -152,7 +152,7 @@
             <td colspan="6" style="border-top: 1px solid grey;"></td>
           </tr>
 		</tbody>
-		<!-- 여기에 경력이 하ㄴ나씩 추가됨 -->
+		<!-- 여기에 경력이 하나씩 추가됨 -->
       </table>
     </form>
   </div>
