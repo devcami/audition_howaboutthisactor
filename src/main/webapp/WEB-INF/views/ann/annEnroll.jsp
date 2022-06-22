@@ -16,7 +16,7 @@
 %>
 <script>
 <%
-	if(msg.equals("마이페이지에서 담당자 정보 등록 후 사용가능합니다."))	{
+	if(msg != null && msg.equals("마이페이지에서 담당자 정보 등록 후 사용가능합니다."))	{
 %>
 		alert('<%= msg %>');
 		location.href = "<%= request.getContextPath() %>/mypage/companyInfo?memberId=<%= loginMember.getMemberId() %>"
