@@ -1,7 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/css/footer.css">
-
-
 <footer>
 <div id="totop" class="iconbutton">▲</div>
 
