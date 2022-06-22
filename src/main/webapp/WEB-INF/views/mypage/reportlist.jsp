@@ -43,39 +43,40 @@
              </tr>
         </thead>
         <tbody id="list-content">
-                <% if(list != null && !list.isEmpty()){
-           String status = "완료";
-         int boardNo = 0;
-         int actorNo = 0;
-         int annNo = 0;
-         int commentNo = 0;
-         String boardName = "게시판";
-         String reportUrl = "";
+ 	<% if(list != null && !list.isEmpty()){
+        String status = "완료";
+      int boardNo = 0;
+      int actorNo = 0;
+      int annNo = 0;
+      int commentNo = 0;
+      String boardName = "게시판";
+      String reportUrl = "";
+      
+        for(int i = 0; i < list.size(); i++){
+           
+           reportUrl = request.getContextPath() + "/board/boardView?no=" + list.get(i).getBoardNo();
+         boardNo = list.get(i).getBoardNo();
+         actorNo = list.get(i).getActor_no();
+         annNo = list.get(i).getAnnNo();
+         commentNo = list.get(i).getCommentNo();
          
-           for(int i = 0; i < list.size(); i++){
-              
-			reportUrl = request.getContextPath() + "/board/boardView?no=" + list.get(i).getBoardNo();
-            boardNo = list.get(i).getBoardNo();
-            actorNo = list.get(i).getActor_no();
-            annNo = list.get(i).getAnnNo();
-            commentNo = list.get(i).getCommentNo();
-            
-            if(list.get(i).getReportStatus().equals("U")){
-               status = "접수";
-            } else if(list.get(i).getReportStatus().equals("I")){
-               status = "처리중"; 
-            }
-            
-            if(boardNo==0 && actorNo!=0 && annNo==0 && commentNo == 0){
-               boardName = "배우 게시판";         
-               reportUrl= request.getContextPath() + "/actor/actorView?actorNo=" + list.get(i).getActor_no();
-            } else if(boardNo==0 && actorNo==0 && annNo!=0 && commentNo == 0){
-               boardName = "공고 게시판";
-               reportUrl= request.getContextPath() + "/ann/annView?annNo=" + list.get(i).getAnnNo();
-            } else if(boardNo!=0 && actorNo==0 && annNo==0 && commentNo != 0){
-               boardName = "댓글";
-               reportUrl= request.getContextPath() + "/board/boardView?boardNo=" + list.get(i).getBoardNo();
-            }      
+         if(list.get(i).getReportStatus().equals("U")){
+            status = "접수";
+         } else if(list.get(i).getReportStatus().equals("I")){
+            status = "처리중"; 
+         }
+         
+         if(boardNo==0 & actorNo!=0 & annNo==0 & commentNo == 0){
+            boardName = "배우 게시판";         
+            reportUrl= request.getContextPath() + "/actor/actorView?actorNo=" + list.get(i).getActor_no();
+         } else if(boardNo==0 & actorNo==0 & annNo!=0 & commentNo == 0){
+            boardName = "공고 게시판";
+            reportUrl= request.getContextPath() + "/ann/annView?annNo=" + list.get(i).getAnnNo();
+         } else if(boardNo!=0 & actorNo==0 & annNo==0 & commentNo != 0){
+            boardName = "댓글";
+            reportUrl= request.getContextPath() + "/board/boardView?no=" + list.get(i).getBoardNo();
+         }  
+   
       %>
           <tr>
             <td><%= list.get(i).getReportDate() %></td>

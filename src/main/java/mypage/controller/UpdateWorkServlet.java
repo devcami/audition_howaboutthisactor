@@ -52,6 +52,9 @@ public class UpdateWorkServlet extends HttpServlet {
 			String myrole = multiReq.getParameter("role");
 			String period = multiReq.getParameter("period");
 			String videolink = multiReq.getParameter("videolink");
+			String bosspic = multiReq.getParameter("Obosspic");
+			
+			System.out.println("Obosspic = " + bosspic);
 			
 			// 경력번호
 			int workNo = Integer.parseInt(multiReq.getParameter("workNo"));
@@ -86,6 +89,7 @@ public class UpdateWorkServlet extends HttpServlet {
 			File pic3 = multiReq.getFile("pic3");
 			
 			if(workpic != null) {
+				
 				PortAttachment attachment = new PortAttachment();
 				
 				String originalFilename = multiReq.getOriginalFileName("workpic");
@@ -96,6 +100,9 @@ public class UpdateWorkServlet extends HttpServlet {
 				attachment.setOriginalFilename(originalFilename);
 				attachment.setRenamedFilename(renamedFilename);
 				
+				work.setAttachment(attachment);
+			} else {
+				PortAttachment attachment = mypageService.getBossWorkAttach(memberId,workNo);
 				work.setAttachment(attachment);
 			}
 			

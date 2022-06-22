@@ -618,7 +618,6 @@ public class MypageService {
 			// 1. portfolio_work 업데이트
 			result = mypageDao.updatePortWork(conn, work);
 
-			
 			// 3. attachment 업데이트
 			PortAttachment attachment = work.getAttachment();
 			PortAttachment attach1 = work.getAttach1();
@@ -678,6 +677,13 @@ public class MypageService {
 		}
 		
 		return work;
+	}
+
+	public PortAttachment getBossWorkAttach(String memberId, int workNo) {
+		Connection conn = getConnection();
+		PortAttachment bossAttach = mypageDao.getBossWorkAttach(conn, memberId, workNo);
+		close(conn);
+		return bossAttach;
 	}
 
 

@@ -64,8 +64,9 @@
             <td rowspan="9">
               <div id="profile-img-container">
                 <img src="<%= img_src %>" id="profile-img">
-              </div>
-              <input type="file" name="profilePic" id="profilePic" accept="image/*" onchange="loadImage(this);">
+              </div>              
+              <input type="button" name="btn-delFile" class="del-btn" id="delFile" value="삭제" onclick="fileDelete(this);"/>
+              <input type="file" name="profilePic" id="profilePic" accept="image/*" onchange="loadImage(this);" style="display: none;">
             </td>
             <th>이름</th>
             <td colspan="3">
@@ -79,7 +80,7 @@
             </td>
             <th style="text-align: right;">나이</th>
             <td>
-              <input type="text" name="Page" id="Page" value="<%= age %>" style="text-align:right;">세
+              <input type="text" name="Page" id="Page" value="<%= age %>" style="text-align:right;" readonly>세
             </td>
           </tr>
           <tr>
@@ -167,7 +168,51 @@
   </form>
   
   <script>
+  	
+  	$('#Pbirth').focusout(function() {
+	    // input 창밖으로 focus가 나갈때  event
+		
+	    // Pbirth input값 가져오기
+	    const _birth = $('#Pbirth').val();
+	   	const birth = _birth.substring(0, 4);
+	   	
+	   	const currentYear = new Date().getFullYear()
+	   	const age = currentYear - birth + 1;
+	   	
+	   	document.getElementById("Page").value = age;
+	   	
+  	});
+  
+	const fileDelete = (e) => {
+		
+  		// 프로필사진 이미지 소스 비우기
+  		$('#profile-img').attr("src", `<%= request.getContextPath() %>/images/default.png`); 
+  				
+  		// 삭제하기 버튼 숨기고
+  		$('#delFile').css('display', 'none');
+  		// 첨부하기 버튼(input) 추가
+  		$('#profilePic').css('display', '');
+  		// $('#Obosspic').val
+
+	  	let input = document.createElement('input');
+  		input.setAttribute('type', 'hidden');
+  		input.setAttribute('name', 'delFile');
+  		input.setAttribute('value', <%= attachNo %>);
+  		e.after(input);
+  		e.style.display = "none";
+
+  	};
+  	
+  	
 	window.onload = () => {
+		
+		const portType = "<%= portType %>";
+		console.log("portType = ", portType);
+		if(portType == "New"){
+			$('#delFile').css('display', 'none');
+			$('#profilePic').css('display', '');
+		}
+		
   		const ptable = document.getElementById("portTable"); 
   		console.log("ptable", ptable);
   		$.ajax({
@@ -261,12 +306,10 @@
           frm.submit();
          
 	  }
-	
-
-
+	  
   	const viewPort = () => {
   			
-		if(Pphone.value != ''){
+		if(Pbirth.value != ''){
 			// birth
 			if(!/^(19[0-9][0-9]|20\d{2})-(0[0-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/.test(Pbirth.value)) {
 				alert("유효한 생년월일을 형식에 맞게 입력하세요.");

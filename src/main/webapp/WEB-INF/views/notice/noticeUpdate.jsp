@@ -7,7 +7,6 @@
 	System.out.println(notice.getNo() + ", " + notice.getMemberId());
 %>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/noticeUpdate.css" />
-
 <div class="top-logo">
  <img src="<%= request.getContextPath() %>/images/community.jpg" alt="게시판로고" />
 </div>
