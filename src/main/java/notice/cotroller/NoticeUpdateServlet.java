@@ -33,7 +33,7 @@ public class NoticeUpdateServlet extends HttpServlet {
 		request.getRequestDispatcher("/WEB-INF/views/notice/noticeUpdate.jsp")
 			.forward(request, response);
 	}
-
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// update board set title = ?, content = ? where no = ?
 		try {
@@ -42,26 +42,19 @@ public class NoticeUpdateServlet extends HttpServlet {
 			String title = request.getParameter("title");
 			String memberId = request.getParameter("memberId");
 			String content = request.getParameter("content");
-			
+			System.out.println(no + ", " + title + ", " + memberId + ", " + content);
 			NoticeExt notice = new NoticeExt();
 			notice.setNo(no);
 			notice.setTitle(title);
 			notice.setMemberId(memberId);
 			notice.setContent(content);
 			
-			// 4. 업무로직 - 
-			// db board(update), attachment(insert) 레코드 등록
 			int result = noticeService.updateNotice(notice);
-			// 첨부파일 삭제 처리
 
-			// 5. redirect
 			response.sendRedirect(request.getContextPath() + "/notice/noticeView?no=" + no);
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}
 		
 	}
