@@ -184,8 +184,12 @@ const addWishlist = (e) => {
             </div> <br><br>
          <% } %>
 <% } %>
-
 <script>
+function myPage() {
+	  window.location.href = 'http://localhost:9090/app/mypage/gotoEditPortfolio?memberId=<%= memberId %>&portType=exist&attachNo=<%= attachNo %>'
+}
+
+
 function myPage() {
      window.location.href = 'http://localhost:9090/app/mypage/gotoEditPortfolio?memberId=<%= memberId %>&portType=exist&attachNo=<%= attachNo %>'
 }

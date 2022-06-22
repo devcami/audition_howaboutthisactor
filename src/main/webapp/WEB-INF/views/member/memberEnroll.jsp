@@ -61,6 +61,10 @@
 				</td>
 			</tr>
 			<tr>
+				<th></th>
+					<td id="msg1">이름은 한글 2글자 이상 가능합니다.</td>
+			</tr>
+			<tr>
 				<th>생년월일<sup>*</sup></th>
 				<td>	
 				<input type="date" name="birthday" id="birthday" required><br/>

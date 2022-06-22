@@ -22,6 +22,7 @@ public class NoticeUpdateServlet extends HttpServlet {
 	 * 수정폼 요청
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
 		// 1.사용자입력값 처리
 		int no = Integer.parseInt(request.getParameter("no")); // 게시판 넘버
 		
