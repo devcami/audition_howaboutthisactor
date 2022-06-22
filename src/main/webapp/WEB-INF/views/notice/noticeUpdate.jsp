@@ -14,7 +14,7 @@
 	name="noticeUpdateFrm" 
 	action="<%=request.getContextPath() %>/notice/noticeUpdate" 
 	method="post"
-	enctype="multipart/form-data">
+	enctype="application/x-www-form-urlencoded">
 	<input type="hidden" name="no" value="<%= notice.getNo() %>" />
 	<table id="tbl-board-view">
 	<tr>
