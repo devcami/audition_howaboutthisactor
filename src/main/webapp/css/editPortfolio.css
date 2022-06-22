@@ -151,7 +151,7 @@
   cursor: pointer;
 }
 
-#portfolio-container input:not(#height):not(#weight):not(.btn):not(.ckbox):not(#Pbirth):not(#Page):not(#profilePic) {
+#portfolio-container input:not(#height):not(#weight):not(.btn):not(.ckbox):not(#Pbirth):not(#Page):not(#profilePic):not(#delFile) {
   font-family: 'Hahmlet', serif;
   font-size: large;
   font-weight: 500;
@@ -213,4 +213,23 @@ input::file-selector-button:hover, button:hover{
 }
 .current {
   color: #bbded6 !important;
+}
+
+#delFile{
+background-color: #ffb6b9;
+    border: none;
+    border-radius: 0.3rem;
+    color: white;
+    font-family: 'Hahmlet', serif;
+    cursor: pointer;
+	width: 78px;
+    height: 38px;
+    margin-top: 7px;
+    letter-spacing: 2px;
+    font-size: large;
+}
+#delFile {
+	    background-color: #fae3d9;
+    	box-shadow: 4px 4px 8px rgb(0 0 0 / 20%);
+    	cursor: pointer;
 }

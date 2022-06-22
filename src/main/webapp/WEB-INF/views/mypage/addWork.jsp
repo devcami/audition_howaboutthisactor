@@ -123,7 +123,7 @@
   		            </th>
   		            <td rowspan="5">
   		              <div id="work-img-container">
-  		                <img src="\${img_src}" id="\${imgId}" class="work-img" onclick="editWork(this);">
+  		                <img src="\${img_src}" id="\${imgId}" class="work-img" value="\${work.no}" onclick="editWork(this);">
   		              </div>
   		            </td>
   		            <td><br><br></td>
