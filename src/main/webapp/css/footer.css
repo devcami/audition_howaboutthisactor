@@ -23,10 +23,11 @@ border-radius: 10%;
     
 }
 .foo_div1 a{
-    
+    text-decoration: none;
     font-weight: bold;
 }
 .foo_div2{
+    text-decoration: none;
     text-align: center;
 }
 
