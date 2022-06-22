@@ -112,9 +112,9 @@
    const actorView = (actor) => {
       	
 	   const actorNo = actor.firstElementChild.lastElementChild.value;
-     
+	   
       // 배우 상세 페이지로 넘겨
-      // location.href=`/app/ann/annView?actorNo=\${actorNO}`;
+      location.href=`/app/actor/actorView?actorNo=\${actorNo}`;
    };
   
     const mousein = (menu) => {

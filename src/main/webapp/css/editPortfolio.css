@@ -127,8 +127,8 @@
 }
 
 #profile-img-container{
-  width: 350px;
-  height: 450px;
+  width: 415px;
+  height: 570px;
   padding: 10px;
   overflow: hidden;
   border: 2px dashed darkgray;
@@ -164,7 +164,7 @@
   font-size: large;
   font-weight: 500;
   border: none;
-  width: 80px;
+  width: 101px;
   border-bottom: solid 2px #bbded6;
 }
 #Pbirth {
@@ -172,7 +172,7 @@
   font-size: large;
   font-weight: 500;
   border: none;
-  width: 150px;
+  width: 205px;
   border-bottom: solid 2px #bbded6;
 }
 #work-table{

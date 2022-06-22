@@ -360,6 +360,7 @@ public class MypageDao {
 			
 		} catch(SQLException e) {
 			throw new MypageException("updatePortfolio@프로필 업데이트 오류!", e);
+			// 왜 안돼 ㅅㅂ
 		} finally {
 			close(pstmt);
 		}
@@ -388,7 +389,7 @@ public class MypageDao {
 			pstmt.setString(10, actorInfo.getActorName());
 			pstmt.setString(11, actorInfo.getBirth());
 			pstmt.setString(12, actorInfo.getPhone());
-			pstmt.setString(13, actorInfo.getEmail());
+			pstmt.setString(13, actorInfo.getEmail());;
 			
 			result = pstmt.executeUpdate();
 			
