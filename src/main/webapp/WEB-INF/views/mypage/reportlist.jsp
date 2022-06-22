@@ -54,7 +54,7 @@
          
            for(int i = 0; i < list.size(); i++){
               
-              reportUrl = "/board/boardView?boardNo=" + list.get(i).getBoardNo();
+			reportUrl = request.getContextPath() + "/board/boardView?no=" + list.get(i).getBoardNo();
             boardNo = list.get(i).getBoardNo();
             actorNo = list.get(i).getActor_no();
             annNo = list.get(i).getAnnNo();
@@ -66,15 +66,15 @@
                status = "처리중"; 
             }
             
-            if(boardNo==0 & actorNo!=0 & annNo==0 & commentNo == 0){
+            if(boardNo==0 && actorNo!=0 && annNo==0 && commentNo == 0){
                boardName = "배우 게시판";         
-               reportUrl= "/ann/actorView?actorNo=" + list.get(i).getActor_no();
-            } else if(boardNo==0 & actorNo==0 & annNo!=0 & commentNo == 0){
+               reportUrl= request.getContextPath() + "/actor/actorView?actorNo=" + list.get(i).getActor_no();
+            } else if(boardNo==0 && actorNo==0 && annNo!=0 && commentNo == 0){
                boardName = "공고 게시판";
-               reportUrl= "/ann/annView?annNo=" + list.get(i).getAnnNo();
-            } else if(boardNo!=0 & actorNo==0 & annNo==0 & commentNo != 0){
+               reportUrl= request.getContextPath() + "/ann/annView?annNo=" + list.get(i).getAnnNo();
+            } else if(boardNo!=0 && actorNo==0 && annNo==0 && commentNo != 0){
                boardName = "댓글";
-               reportUrl= "/ann/boardView?boardNo=" + list.get(i).getBoardNo();
+               reportUrl= request.getContextPath() + "/board/boardView?boardNo=" + list.get(i).getBoardNo();
             }      
       %>
           <tr>
@@ -85,7 +85,9 @@
           </tr>
      <%    } %>
       <% } else { %>
-         <p>조회된 신고가 없습니다.</p>
+      		<tr>
+      			<td>조회된 공고가 없습니다.</td>
+      		</tr>
       <% } %>
         </tbody>
       </table>
