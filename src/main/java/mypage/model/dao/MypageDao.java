@@ -360,6 +360,7 @@ public class MypageDao {
 			
 		} catch(SQLException e) {
 			throw new MypageException("updatePortfolio@프로필 업데이트 오류!", e);
+			// 왜 안돼 ㅅㅂ
 		} finally {
 			close(pstmt);
 		}
