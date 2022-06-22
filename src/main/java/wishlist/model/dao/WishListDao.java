@@ -292,6 +292,7 @@ public class WishListDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, wishListAnn.getAnnNo());
+			pstmt.setString(2, wishListAnn.getMemberId());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
 			throw new AnnException("> 위시리스트 - 공고 찜목록 삭제 오류", e);
@@ -338,7 +339,7 @@ public class WishListDao {
 			pstmt.setInt(2, wishListActor.getActorNo());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
-			throw new AnnException("> 위시리스트 - 공고 찜목록 추가 오류", e);
+			throw new AnnException("> 위시리스트 - 배우 찜목록 추가 오류", e);
 		} finally {
 			close(pstmt);
 		}
@@ -353,9 +354,10 @@ public class WishListDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, wishListActor.getActorNo());
+			pstmt.setString(2, wishListActor.getMemberId());
 			result = pstmt.executeUpdate();
 		} catch (Exception e) {
-			throw new AnnException("> 위시리스트 - 공고 찜목록 삭제 오류", e);
+			throw new AnnException("> 위시리스트 - 배우 찜목록 삭제 오류", e);
 		} finally {
 			close(pstmt);
 		}
