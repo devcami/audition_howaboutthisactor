@@ -38,7 +38,7 @@
 			<input type="button" class="btn-de" value="삭제하기" onclick="deleteBoard();">	
 			<% if(loginMember != null && loginMember.getMemberRole() != MemberRole.A) { %>	
 			<button type="button" class="btn-primary view"
-			data-bs-toggle="modal" data-bs-target="#reportModal" id="btn-report">신고하기</button>
+			data-bs-toggle="modal" data-bs-target="#reportModal" id="btn -report">신고하기</button>
 			<% } %>
 			<button class="btn" style="float:right" onclick="location.href='<%= request.getContextPath() %>/board/boardList'"> 뒤로 가기 </button>&nbsp;
     	</div>
@@ -64,7 +64,8 @@ if (attachments != null && !attachments.isEmpty()) {
 %>
 	<br />
 <%
-if (canEdit) {
+if (loginMember != null 
+&& loginMember.getMemberRole() != MemberRole.A) {
 %>
 <div>
 	<div class="modal fade" id="reportModal" tabindex="-1"
