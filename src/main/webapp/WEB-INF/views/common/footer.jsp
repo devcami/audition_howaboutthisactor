@@ -11,7 +11,7 @@
     </div>
 
     <div class="foo_div2">
-      <a  href="" ><img src="${pageContext.request.contextPath}/images/youtube.png" alt="유투브" ></a>
+      <a  href="https://www.youtube.com/watch?v=962tyDDSE8k" ><img src="${pageContext.request.contextPath}/images/youtube.png" alt="유투브" ></a>
 
       <a href="<%= request.getContextPath() %>"><img src="${pageContext.request.contextPath}/images/home.png" alt="홈"></a>
      
