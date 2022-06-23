@@ -225,6 +225,7 @@
   				
   				works.forEach((work) => {
   					console.log(work)
+  					console.log("work.no=", work.no);
   					
   					const img_src = `<%= request.getContextPath() %>/upload/portfolio/\${work.attachment.renamedFilename}`;
   					const tbodyId = "work" + work.no;

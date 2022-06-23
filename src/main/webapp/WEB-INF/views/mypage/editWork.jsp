@@ -17,6 +17,8 @@
 	String bossPic = attachs.get(0).getRenamedFilename();
 	int bossPicNo = attachs.get(0).getNo();
 	
+	System.out.println(memberId + title + myRole + period + videoLink);
+	
 	
 %>
 <!DOCTYPE html>
@@ -54,16 +56,16 @@
           </tr>
           <tr>
             <th><label for="myrole">배역</label></th>
-            <td><input type="text" name="role" id="role" value=<%= myRole %>></td>
+            <td><input type="text" name="role" id="role" value="<%= myRole %>"></td>
           </tr>
           <tr>
             <th><label for="period">기간</label></th>
-            <td><input type="text" name="period" id="period" value=<%= period %>></td>
+            <td><input type="text" name="period" id="period" value="<%= period %>"></td>
             
           </tr>
           <tr>
             <th><label for="videolink">참고링크</label></th>
-            <td><textarea name="videolink" id="videolink" cols="35" rows="5" value=<%= videoLink %>></textarea></td>
+            <td><textarea name="videolink" id="videolink" cols="35" rows="5"><%= videoLink %></textarea></td>
             <!-- <td><input type="text" name="video" id="video"></td> -->
           </tr>
 <%
