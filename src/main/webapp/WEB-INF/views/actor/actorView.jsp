@@ -19,7 +19,7 @@
    ActorInfo actorInfo = (ActorInfo) request.getAttribute("actorInfo");
    List<PortfolioWork> pList = (List<PortfolioWork>) request.getAttribute("pList");
    
-   List<WishListActor> wishlistActor = (List<WishListActor>) request.getAttribute("wishListActor");
+   List<WishListActor> wishlistActor = (List<WishListActor>) request.getAttribute("wishlistActor");
 %>
 <%
    String memberId = (String) request.getAttribute("memberId");
@@ -65,7 +65,9 @@ const addWishlist = (e) => {
 <div id="btn-wish-actor" onclick="addWishlist(this);">
 <% if(wishlistActor != null && !wishlistActor.isEmpty()){
       for(int i = 0; i < wishlistActor.size(); i++){
-         if(wishlistActor.get(i).getActorNo() == actorInfo.getActorNo()){ %>
+         if(wishlistActor.get(i).getActorNo() == actorInfo.getActorNo()){ 
+         %>
+         
             <img id="fullHeart" src="<%= request.getContextPath() %>/images/fullHeartWish.png" alt="" />
          <% break;
           } else if(i == wishlistActor.size() - 1) { %>
