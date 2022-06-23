@@ -41,7 +41,6 @@ public class ActorViewServlet extends HttpServlet {
          Member loginMember = (Member) session.getAttribute("loginMember");
          String loginId = loginMember.getMemberId();
          List <WishListActor> wishlistActor = wishListService.actorWishlistbyMemberId(loginId);
-         
          List<PortAttachment> allAttachList = mypageService.findAllAttachmentByMemberId(memberId);
          PortAttachment profile  = null;
          List<PortAttachment> workAttachList = new ArrayList<>();

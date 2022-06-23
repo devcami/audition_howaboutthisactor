@@ -48,7 +48,6 @@ public class AnnEnrollServlet extends HttpServlet {
 			int maxPostSize = 1024 * 1024 * 10;
 			String encoding = "utf-8";
 			FileRenamePolicy policy = new HelloMvcFileRenamePolicy();
-			
 			MultipartRequest multiReq = new MultipartRequest(request, saveDirectory, maxPostSize, encoding, policy);
 			
 			// 사용자 입력값 처리 (Frm작성 순서대로)
