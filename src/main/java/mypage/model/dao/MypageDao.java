@@ -1558,5 +1558,4 @@ public class MypageDao {
 		return video;
 	}
 	
-	
 }
